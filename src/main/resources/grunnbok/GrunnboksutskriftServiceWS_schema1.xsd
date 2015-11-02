@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v1/service/grunnboksutskrift" targetNamespace="http://kartverket.no/grunnbok/wsapi/v1/service/grunnboksutskrift" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet" schemaLocation="register_registerenhet.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:element name="ubekreftetGrunnboksutskrift" type="tns:ubekreftetGrunnboksutskrift"/>
+
+  <xs:element name="ubekreftetGrunnboksutskriftPdf" type="tns:ubekreftetGrunnboksutskriftPdf"/>
+
+  <xs:element name="ubekreftetGrunnboksutskriftPdfResponse" type="tns:ubekreftetGrunnboksutskriftPdfResponse"/>
+
+  <xs:element name="ubekreftetGrunnboksutskriftResponse" type="tns:ubekreftetGrunnboksutskriftResponse"/>
+
+  <xs:element name="ubekreftetHistoriskGrunnboksutskrift" type="tns:ubekreftetHistoriskGrunnboksutskrift"/>
+
+  <xs:element name="ubekreftetHistoriskGrunnboksutskriftPdf" type="tns:ubekreftetHistoriskGrunnboksutskriftPdf"/>
+
+  <xs:element name="ubekreftetHistoriskGrunnboksutskriftPdfResponse" type="tns:ubekreftetHistoriskGrunnboksutskriftPdfResponse"/>
+
+  <xs:element name="ubekreftetHistoriskGrunnboksutskriftResponse" type="tns:ubekreftetHistoriskGrunnboksutskriftResponse"/>
+
+  <xs:complexType name="ubekreftetGrunnboksutskrift">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ubekreftetGrunnboksutskriftResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ubekreftetGrunnboksutskriftPdf">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ubekreftetGrunnboksutskriftPdfResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" nillable="true" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ubekreftetHistoriskGrunnboksutskriftPdf">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ubekreftetHistoriskGrunnboksutskriftPdfResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" nillable="true" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ubekreftetHistoriskGrunnboksutskrift">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ubekreftetHistoriskGrunnboksutskriftResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v1/domain/register" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v1/service/kommune" targetNamespace="http://kartverket.no/grunnbok/wsapi/v1/service/kommune" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register" schemaLocation="register.xsd"/>
+
+  <xs:element name="findAlleKommuner" type="tns:findAlleKommuner"/>
+
+  <xs:element name="findAlleKommunerResponse" type="tns:findAlleKommunerResponse"/>
+
+  <xs:complexType name="findAlleKommuner">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAlleKommunerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns2:KommuneIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

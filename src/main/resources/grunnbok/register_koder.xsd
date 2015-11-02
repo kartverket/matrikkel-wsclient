@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/koder"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/koder"
+        xmlns:kodelistens="http://kartverket.no/grunnbok/wsapi/v1/domain/kodeliste"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="kodeliste.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/kodeliste"/>
+
+    <!-- ========================================================= -->
+    <!-- register/koder:                                           -->
+    <!-- Koder i register subdomain                                -->
+    <!-- ========================================================= -->
+
+    <!-- DokumentstatusKode -->
+
+    <xs:complexType name="DokumentstatusKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentstatusKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:DokumentstatusKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentstatusKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- EmbeteKode -->
+
+    <xs:complexType name="EmbeteKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EmbeteKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:EmbeteKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EmbeteKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- RegisterenhetsrettstypeKode -->
+
+    <xs:complexType name="RegisterenhetsrettstypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettstypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:RegisterenhetsrettstypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettstypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- IdentifikasjonsnummertypeKode -->
+
+    <xs:complexType name="IdentifikasjonsnummertypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="IdentifikasjonsnummertypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:IdentifikasjonsnummertypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IdentifikasjonsnummertypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- RettstypeKode -->
+
+    <xs:complexType name="RettstypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettstypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:RettstypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettstypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- MaalformKode -->
+
+    <xs:complexType name="MaalformKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MaalformKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:MaalformKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MaalformKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- ValutakodeKode -->
+
+    <xs:complexType name="ValutakodeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ValutakodeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:ValutakodeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ValutakodeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- LandkodeKode -->
+
+    <xs:complexType name="LandkodeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LandkodeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:LandkodeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LandkodeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- KonsesjonsgrenseKode -->
+
+    <xs:complexType name="KonsesjonsgrenseKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KonsesjonsgrenseKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:KonsesjonsgrenseKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KonsesjonsgrenseKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- SameietypeKode -->
+
+    <xs:complexType name="SameietypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SameietypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:SameietypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SameietypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- PeriodeKode -->
+
+    <xs:complexType name="PeriodeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PeriodeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:PeriodeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PeriodeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    
+    <!-- FormaalKode -->
+
+    <xs:complexType name="FormaalKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FormaalKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:FormaalKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FormaalKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- OmsetningstypeKode -->
+
+    <xs:complexType name="OmsetningstypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmsetningstypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:OmsetningstypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OmsetningstypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- DokumentavgiftsaarsakKode -->
+
+        <xs:complexType name="DokumentavgiftsaarsakKodeId">
+            <xs:complexContent>
+                <xs:extension base="kodelistens:KodeId">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+
+        <xs:complexType name="DokumentavgiftsaarsakKodeIdList">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:DokumentavgiftsaarsakKodeId"/>
+            </xs:sequence>
+        </xs:complexType>
+
+        <xs:complexType name="DokumentavgiftsaarsakKode">
+            <xs:complexContent>
+                <xs:extension base="kodelistens:GrunnbokKode">
+                    <xs:sequence>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+
+    <!-- RettsstiftelsestypeKode -->
+
+    <xs:complexType name="RettsstiftelsestypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelsestypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:RettsstiftelsestypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelsestypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                    <xs:element name="rettstypeId" type="register_koderns:RettstypeKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- TeksttypeKode -->
+
+    <xs:complexType name="TeksttypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TeksttypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:TeksttypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TeksttypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- TilleggsdeltypeKode -->
+
+        <xs:complexType name="TilleggsdeltypeKodeId">
+            <xs:complexContent>
+                <xs:extension base="kodelistens:KodeId">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+
+        <xs:complexType name="TilleggsdeltypeKodeIdList">
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:TilleggsdeltypeKodeId"/>
+            </xs:sequence>
+        </xs:complexType>
+
+        <xs:complexType name="TilleggsdeltypeKode">
+            <xs:complexContent>
+                <xs:extension base="kodelistens:GrunnbokKode">
+                    <xs:sequence>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+
+    <!-- AarsaksparagrafKode -->
+
+    <xs:complexType name="AarsaksparagrafKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AarsaksparagrafKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:AarsaksparagrafKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AarsaksparagrafKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- AarsakGebyrfritakKode -->
+
+    <xs:complexType name="AarsakGebyrfritakKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AarsakGebyrfritakKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:AarsakGebyrfritakKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AarsakGebyrfritakKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- BrukstypeKode -->
+
+    <xs:complexType name="BrukstypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BrukstypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:BrukstypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BrukstypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- BoligtypeKode -->
+
+    <xs:complexType name="BoligtypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BoligtypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:BoligtypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BoligtypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- ArkivtypeKode -->
+
+    <xs:complexType name="ArkivtypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ArkivtypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:ArkivtypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ArkivtypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- DokumentkildeKode -->
+
+    <xs:complexType name="DokumentkildeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentkildeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:DokumentkildeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentkildeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- EdokDokumentnavnKode -->
+
+    <xs:complexType name="EdokDokumentnavnKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EdokDokumentnavnKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:EdokDokumentnavnKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EdokDokumentnavnKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- EdokDokumentVersjonKode -->
+
+    <xs:complexType name="EdokDokumentVersjonKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EdokDokumentVersjonKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:EdokDokumentVersjonKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EdokDokumentVersjonKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- AarsakTilFjerningKode -->
+
+    <xs:complexType name="AarsakTilFjerningKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AarsakTilFjerningKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:AarsakTilFjerningKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AarsakTilFjerningKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- FoeringsstatusKode -->
+
+    <xs:complexType name="FoeringsstatusKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FoeringsstatusKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:FoeringsstatusKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FoeringsstatusKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+</xs:schema>

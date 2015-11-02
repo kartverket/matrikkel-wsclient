@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet"
+        xmlns:register_registerenhetns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper"
+        xmlns:registerns="http://kartverket.no/grunnbok/wsapi/v1/domain/register"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/koder"
+        xmlns:register_adressens="http://kartverket.no/grunnbok/wsapi/v1/domain/register/adresse"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/koder"/>
+    <xs:import schemaLocation="register_adresse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/adresse"/>
+    <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register"/>
+
+    <!-- ========================================================= -->
+    <!-- register/registerenhet:                                   -->
+    <!-- Registerenhet i register subdomain                        -->
+    <!-- ========================================================= -->
+
+    <!-- Registerenhet -->
+
+    <xs:complexType name="RegisterenhetId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_registerenhetns:RegisterenhetId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:RegisterenhetIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Registerenhet">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="utgaatt" type="xs:boolean"/>
+                    <xs:element name="omnummerertTilId" type="register_registerenhetns:RegisterenhetId" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdent">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectIdent"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_registerenhetns:RegisterenhetIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Matrikkelenhet -->
+
+    <xs:complexType name="MatrikkelenhetId">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:RegisterenhetId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_registerenhetns:MatrikkelenhetId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:MatrikkelenhetId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:MatrikkelenhetIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Matrikkelenhet">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:Registerenhet">
+                <xs:sequence>
+                    <xs:element name="kommuneId" type="registerns:KommuneId"/>
+                    <xs:element name="gaardsnummer" type="xs:int"/>
+                    <xs:element name="bruksnummer" type="xs:int"/>
+                    <xs:element name="festenummer" type="xs:int"/>
+                    <xs:element name="seksjonsnummer" type="xs:int"/>
+                    <xs:element name="tinglyst" type="xs:boolean"/>
+                    <xs:element name="manglerDokumenterFraManuellGrunnbok" type="xs:boolean"/>
+                    <xs:element name="sameietypeId" type="register_koderns:SameietypeKodeId"/>
+                    <xs:element name="beregnetErSeksjonert" type="xs:boolean"/>
+                    <xs:element name="beregnetHarAktiveFestegrunner" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdent">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:RegisterenhetIdent">
+                <xs:sequence>
+                    <xs:element name="kommunenummer" type="xs:string"/>
+                    <xs:element name="gaardsnummer" type="xs:int"/>
+                    <xs:element name="bruksnummer" type="xs:int"/>
+                    <xs:element name="festenummer" type="xs:int"/>
+                    <xs:element name="seksjonsnummer" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_registerenhetns:MatrikkelenhetIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Festegrunn -->
+
+    <xs:complexType name="FestegrunnId">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:MatrikkelenhetId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FestegrunnIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_registerenhetns:FestegrunnId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FestegrunnIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:FestegrunnId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FestegrunnIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:FestegrunnIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Festegrunn">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:Matrikkelenhet">
+                <xs:sequence>
+                    <xs:element name="festetPaaIds" type="register_registerenhetns:MatrikkelenhetIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Seksjon -->
+
+    <xs:complexType name="SeksjonId">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:MatrikkelenhetId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_registerenhetns:SeksjonId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:SeksjonId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:SeksjonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Seksjon">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:Matrikkelenhet">
+                <xs:sequence>
+                    <xs:element name="seksjonertPaaIds" type="register_registerenhetns:MatrikkelenhetIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Borettslagsandel -->
+
+    <xs:complexType name="BorettslagsandelId">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:RegisterenhetId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_registerenhetns:BorettslagsandelId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:BorettslagsandelId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:BorettslagsandelIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Borettslagsandel">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:Registerenhet">
+                <xs:sequence>
+                    <xs:element name="borettslagId" type="registerns:BorettslagId"/>
+                    <xs:element name="andelsnummer" type="xs:long"/>
+                    <xs:element name="adresseId" type="register_adressens:AdresseId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelIdent">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetns:RegisterenhetIdent">
+                <xs:sequence>
+                    <xs:element name="borettslagnummer" type="xs:string"/>
+                    <xs:element name="andelsnummer" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_registerenhetns:BorettslagsandelIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Seksjonssameieandel -->
+
+    <xs:complexType name="SeksjonssameieandelId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieandelIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_registerenhetns:SeksjonssameieandelId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieandelIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:SeksjonssameieandelId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieandelIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetns:SeksjonssameieandelIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Seksjonssameieandel">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                    <xs:element name="teller" type="xs:long"/>
+                    <xs:element name="nevner" type="xs:long"/>
+                    <xs:element name="loepenummer" type="xs:int"/>
+                    <xs:element name="formaalId" type="register_koderns:FormaalKodeId"/>
+                    <xs:element name="tilleggsdeltypeId" type="register_koderns:TilleggsdeltypeKodeId" nillable="true"/>
+                    <xs:element name="seksjonId" type="register_registerenhetns:SeksjonId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

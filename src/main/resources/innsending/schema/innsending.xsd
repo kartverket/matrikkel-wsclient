@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:inn="http://kartverket.no/grunnbok/wsapi/internal/domain/innsending"
+        elementFormDefault="qualified"
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/internal/domain/innsending">
+
+    <!--
+    Gyldige rotelementer
+    -->
+    <xs:element name="forsendelse" type="inn:Forsendelse"/>
+    <xs:element name="behandlingsstatus" type="inn:Behandlingsstatus"/>
+    <xs:element name="innsendingId" type="xs:string"/>
+    <xs:element name="dokument" type="inn:Dokument"/>
+    <xs:element name="foelgebrev" type="inn:Foelgebrev"/>
+
+    <xs:complexType name="Forsendelse">
+        <xs:sequence>
+            <xs:element name="innsendingId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="innsendersReferanse" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="signertMelding" type="inn:SignertMelding" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="usignertMelding" type="inn:UsignertMelding" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="ikkeDigitaleSignaturer" type="inn:SignaturList" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Behandlingsstatus">
+        <xs:sequence>
+            <xs:element name="innsendingId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="registreringstidspunkt" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+            <!-- representerer sak.behandlingsutfall-->
+            <xs:element name="behandlingsutfall" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <!-- representerer sak.behandlingsutfall-->
+            <xs:element name="saksstatus" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="tinglysingsinformasjon" type="inn:Tinglysingsinformasjon" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="avvisningsinformasjon" type="inn:Avvisningsinformasjon" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Tinglysingsinformasjon">
+        <xs:sequence>
+            <!--
+            TODO: Gjøre denne til paakrevet nå vi får tak i informasjonen
+            -->
+            <xs:element name="dokumentinformasjon" type="inn:DokumentinformasjonList"/>
+            <xs:element name="signerteGrunnboksutskrifter" type="inn:SignertGrunnboksutskriftList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentinformasjonList">
+        <xs:sequence>
+            <xs:element name="dokumentinformasjon" type="inn:Dokumentinformasjon" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Avvisningsinformasjon">
+        <xs:sequence>
+            <xs:element name="kontrollresultater" type="inn:KontrollresultatList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Dokumentinformasjon">
+        <xs:sequence>
+            <xs:element name="dokumentreferanse" type="xs:string"/>
+            <xs:element name="dokumentaar" type="xs:int"/>
+            <xs:element name="dokumentnummer" type="xs:long"/>
+            <xs:element name="embetenummer" type="xs:string"/>
+            <xs:element name="rettsstiftelsesinformasjon" type="inn:RettsstiftelsesinformasjonList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelsesinformasjonList">
+        <xs:sequence>
+            <xs:element name="rettsstiftelsesinformasjon" type="inn:Rettsstiftelsesinformasjon" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Rettsstiftelsesinformasjon">
+        <xs:sequence>
+            <xs:element name="rettsstiftelsesreferanse" type="xs:string"/>
+            <!--
+           Denne kan ikke være påkrevet før vi får dette feltet inn i modellen
+            -->
+            <xs:element name="rettsstiftelsesnummer" type="xs:int" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SignertGrunnboksutskriftList">
+        <xs:sequence>
+            <xs:element name="signertGrunnboksutskrift" type="inn:SignertGrunnboksutskrift" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="SignertGrunnboksutskrift">
+        <xs:sequence>
+            <xs:element name="gjelderFor" type="inn:Registerenhet"/>
+            <xs:element name="signertUtskrift" type="inn:SDODokument" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KontrollresultatList">
+        <xs:sequence>
+            <xs:element name="kontrollresultat" type="inn:Kontrollresultat" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Kontrollresultat">
+        <xs:sequence>
+            <xs:element name="dokumentindeks" type="xs:int" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="rettsstiftelsesindeks" type="xs:int" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="kodeverdi" type="xs:string"/>
+            <xs:element name="navn" type="xs:string"/>
+            <xs:element name="utfall" type="xs:string"/>
+            <xs:element name="begrunnelser" type="inn:BegrunnelseList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BegrunnelseList">
+        <xs:sequence>
+            <xs:element name="begrunnelse" type="inn:Begrunnelse" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Begrunnelse">
+        <xs:sequence>
+            <xs:element name="kodeverdi" type="xs:string"/>
+            <xs:element name="tekst" type="xs:string"/>
+            <xs:element name="elementnavn" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UsignertMelding">
+        <xs:sequence>
+            <xs:element name="dokumenter" type="inn:DokumentList"/>
+            <xs:element name="foelgebrev" type="inn:Foelgebrev" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Foelgebrev">
+        <xs:sequence>
+            <xs:element name="innsendersIdentifikasjonsnummer" type="xs:string"/>
+            <xs:element name="dokumentrekkefoelge" type="inn:ReferanseList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SDODokument">
+        <xs:sequence>
+            <xs:element name="signertDokument" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SDODokumentList">
+        <xs:sequence>
+            <xs:element name="SDODokument" type="inn:SDODokument" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Referanse">
+        <xs:sequence>
+            <xs:element name="gjelderDokumentreferanse" type="xs:string"/>
+            <!--
+            Disse må være utfylt når referansen gjelder signerte dokumenter.
+            -->
+            <xs:element name="digest" type="xs:base64Binary" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="digestAlgoritme" type="xs:string" minOccurs="0" maxOccurs="1">
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ReferanseList">
+        <xs:sequence>
+            <xs:element name="referanse" type="inn:Referanse" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Signatur">
+        <xs:sequence>
+            <xs:element name="gjelderDokumentreferanse" type="xs:string"/>
+            <xs:element name="personidentifikasjonsnummer" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SignaturList">
+        <xs:sequence>
+            <xs:element name="signatur" type="inn:Signatur" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="SignertMelding">
+        <xs:sequence>
+            <xs:element name="dokumenter" type="inn:SDODokumentList"/>
+            <xs:element name="foelgebrev" type="inn:SDODokument" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Kode">
+        <xs:sequence>
+            <xs:element name="kodeverdi" type="xs:string"/>
+            <xs:element name="navn" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Beloep">
+        <xs:sequence>
+            <xs:element name="beloepsverdi" type="xs:long"/>
+            <xs:element name="valutakode" type="inn:Kode"/>
+            <xs:element name="beloepstekst" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BeloepList">
+        <xs:sequence>
+            <xs:element name="beloep" type="inn:Beloep" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Person">
+        <xs:sequence>
+            <xs:element name="navn" type="xs:string"/>
+            <xs:element name="identifikasjonsnummer" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonList">
+        <xs:sequence>
+            <xs:element name="person" type="inn:Person" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ErklaeringOmSivilstand">
+        <xs:sequence>
+            <xs:element name="erklaeringFor" type="inn:Person"/>
+            <xs:element name="kreverSamtykke" type="xs:boolean"/>
+            <xs:element name="ektefellePartner" type="inn:Person" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ErklaeringOmSivilstandList">
+        <xs:sequence>
+            <xs:element name="erklaeringOmSivilstand" type="inn:ErklaeringOmSivilstand" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Registerenhet">
+        <xs:choice>
+            <xs:element name="matrikkelenhet" type="inn:Matrikkelenhet"/>
+            <xs:element name="borettslagsandel" type="inn:Borettslagsandel"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="Matrikkelenhet">
+        <xs:sequence>
+            <xs:element name="kommunenummer" type="inn:Kommunenummer"/>
+            <!-- Vi ønsker kanskje ikke å hekte på navn på veien ut.
+            -->
+            <xs:element name="kommunenavn" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="gaardsnummer" type="xs:int"/>
+            <xs:element name="bruksnummer" type="xs:int"/>
+            <xs:element name="festenummer" type="xs:int"/>
+            <xs:element name="seksjonsnummer" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetList">
+        <xs:sequence>
+            <xs:element name="matrikkelenhet" type="inn:Matrikkelenhet" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetFraTil">
+        <xs:sequence>
+            <xs:element name="fra" type="inn:Matrikkelenhet"/>
+            <xs:element name="til" type="inn:Matrikkelenhet"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetFraTilList">
+        <xs:sequence>
+            <xs:element name="matrikkelenhetFraTil" type="inn:MatrikkelenhetFraTil" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Borettslagsandel">
+        <xs:sequence>
+            <xs:element name="borettslagnummer" type="xs:string"/>
+            <!-- Vi ønsker kanskje ikke å hekte på navn på vei ut...?
+            -->
+            <xs:element name="borettslagnavn" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="andelsnummer" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Registerenhetsrett">
+        <xs:sequence>
+            <xs:element name="registerenhetsrettstype" type="inn:Kode"/>
+            <xs:element name="registerenhet" type="inn:Registerenhet"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettList">
+        <xs:sequence>
+            <xs:element name="registerenhetsrett" type="inn:Registerenhetsrett" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelAvRegisterenhetsrett">
+        <xs:sequence>
+            <xs:element name="registerenhetsrett" type="inn:Registerenhetsrett"/>
+            <xs:element name="begrensetTil" type="inn:RegisterenhetsrettsandelList" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelAvRegisterenhetsrettList">
+        <xs:sequence>
+            <xs:element name="delAvRegisterenhetsrett" type="inn:DelAvRegisterenhetsrett" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseReferanse">
+        <xs:sequence>
+            <xs:element name="dokumentaar" type="xs:int"/>
+            <xs:element name="dokumentnummer" type="xs:long"/>
+            <xs:element name="embetenummer" type="xs:string"/>
+            <xs:element name="rettsstiftelsesnummer" type="xs:int"/>
+            <xs:element name="rettsstiftelsestype" type="inn:Kode"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelAvRett">
+        <xs:sequence>
+            <xs:element name="rettsstiftelse" type="inn:RettsstiftelseReferanse"/>
+            <xs:element name="begrensetTil" type="inn:DelAvRegisterenhetsrettList" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelAvRettList">
+        <xs:sequence>
+            <xs:element name="delAvRett" type="inn:DelAvRett" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Tekst">
+        <xs:sequence>
+            <xs:element name="teksttype" type="inn:Kode"/>
+            <xs:element name="fritekst" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TekstList">
+        <xs:sequence>
+            <xs:element name="tekst" type="inn:Tekst" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Dokument">
+        <xs:sequence>
+            <xs:element name="dokumentreferanse" type="xs:string"/>
+            <xs:element name="rettsstiftelser" type="inn:RettsstiftelseList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentList">
+        <xs:sequence>
+            <xs:element name="dokument" type="inn:Dokument" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseList">
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="eierskifteMatrikkelenhet" type="inn:OverdragelseAvRegisterenhetsrett"/>
+                <xs:element name="overdragelseAvFesterett" type="inn:OverdragelseAvRegisterenhetsrett"/>
+                <xs:element name="eierskifteBorettslagsandel" type="inn:OverdragelseAvRegisterenhetsrett"/>
+                <xs:element name="pant" type="inn:Pant"/>
+                <xs:element name="annenHeftelse" type="inn:AnnenHeftelse"/>
+                <xs:element name="tvangsforretning" type="inn:Tvangsforretning"/>
+                <xs:element name="sletting" type="inn:Sletting"/>
+                <xs:element name="anmerkningPaaPerson" type="inn:AnmerkningPaaPerson"/>
+                <xs:element name="fradeling" type="inn:Matrikkelenhetsendring"/>
+                <xs:element name="sammenslaaingAvMatrikkelenheter" type="inn:Matrikkelenhetsendring"/>
+                <xs:element name="overfoeringFraTidligereFestenummer" type="inn:Matrikkelenhetsendring"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Rettsstiftelse">
+        <xs:sequence>
+            <xs:element name="rettsstiftelsesreferanse" type="xs:string"/>
+            <xs:element name="rettsstiftelsestype" type="inn:Kode"/>
+            <xs:element name="tekster" type="inn:TekstList" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Heftelse">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsstiftelse">
+                <xs:sequence>
+                    <xs:element name="rettighetshavere" type="inn:PersonList" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="realkobletTil" type="inn:RegisterenhetsrettList"
+                                minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="HeftelseIRegisterenhetsrett">
+        <xs:complexContent>
+            <xs:extension base="inn:Heftelse">
+                <xs:sequence>
+                    <xs:element name="hefterI" type="inn:DelAvRegisterenhetsrettList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnnenHeftelse">
+        <xs:complexContent>
+            <xs:extension base="inn:HeftelseIRegisterenhetsrett"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="HeftelseMedBeloep">
+        <xs:complexContent>
+            <xs:extension base="inn:HeftelseIRegisterenhetsrett">
+                <xs:sequence>
+                    <xs:element name="beloep" type="inn:BeloepList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Pant">
+        <xs:complexContent>
+            <xs:extension base="inn:HeftelseMedBeloep">
+                <xs:sequence>
+                    <xs:element name="pantsettere" type="inn:PersonList"/>
+                    <xs:element name="erklaeringerOmSivilstand" type="inn:ErklaeringOmSivilstandList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Tvangsforretning">
+        <xs:complexContent>
+            <xs:extension base="inn:HeftelseMedBeloep">
+                <xs:sequence>
+                    <xs:element name="avholdtTvangsforretning" type="inn:AvholdtTvangsforretning"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AvholdtTvangsforretning">
+        <xs:sequence>
+            <xs:element name="avholdtDato">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Dato med udefinert tidssone.</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:date">
+                        <xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="avholdtKlokkeslett">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tidspunkt med udefinert tidssone.</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:time">
+                        <xs:pattern value="[0-9]{2}:[0-9]{2}:[0-9]{2}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="saksoekere" type="inn:PersonList"/>
+            <xs:element name="saksoekte" type="inn:PersonList"/>
+            <xs:element name="prosessfullmektiger" type="inn:PersonList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OverdragelseAvRegisterenhetsrett">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsstiftelse">
+                <xs:sequence>
+                    <xs:element name="omsetning" type="inn:Omsetning"/>
+                    <xs:element name="erklaeringerOmSivilstand" type="inn:ErklaeringOmSivilstandList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Omsetning">
+        <xs:sequence>
+            <xs:element name="utlystTilSalgPaaDetFrieMarked" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="omsetningstype" type="inn:Kode" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="vederlag" type="inn:Beloep" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="dokumentavgiftsplikt" type="inn:Dokumentavgiftsplikt" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="omsatteRegisterenhetsretter" type="inn:OmsattRegisterenhetsrettList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Dokumentavgiftsplikt">
+        <xs:sequence>
+            <xs:element name="dokumentavgiftsgrunnlag" type="inn:Beloep"/>
+            <xs:element name="dokumentavgiftsaarsak" type="inn:Kode"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OmsattRegisterenhetsrett">
+        <xs:sequence>
+            <xs:element name="boligtype" type="inn:Kode"/>
+            <xs:element name="brukstype" type="inn:Kode"/>
+            <xs:element name="registerenhetsrett" type="inn:Registerenhetsrett"/>
+            <xs:element name="omsatteRegisterenhetsrettsandeler" type="inn:OmsatteRegisterenhetsrettsandeler"
+                        minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OmsattRegisterenhetsrettList">
+        <xs:sequence>
+            <xs:element name="omsattRegisterenhetsrett" type="inn:OmsattRegisterenhetsrett" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OmsatteRegisterenhetsrettsandeler">
+        <xs:sequence>
+            <xs:element name="kjoepte" type="inn:RegisterenhetsrettsandelList"/>
+            <xs:element name="solgte" type="inn:RegisterenhetsrettsandelList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Registerenhetsrettsandel">
+        <xs:sequence>
+            <xs:element name="teller" type="xs:long"/>
+            <xs:element name="nevner" type="xs:long"/>
+            <xs:element name="rettighetshaver" type="inn:Person" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="realkobletTil" type="inn:Registerenhet" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettsandelList">
+        <xs:sequence>
+            <xs:element name="registerenhetsrettsandel" type="inn:Registerenhetsrettsandel" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Rettsendring">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsstiftelse">
+                <xs:sequence>
+                    <xs:element name="endrer" type="inn:DelAvRettList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Sletting">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsendring"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Anmerkning">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsstiftelse">
+                <xs:sequence>
+                    <xs:element name="saksnummer" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaPerson">
+        <xs:complexContent>
+            <xs:extension base="inn:Anmerkning">
+                <xs:sequence>
+                    <xs:element name="anmerketPerson" type="inn:Person"/>
+                    <xs:element name="konkursbo" type="inn:Person" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="bostyrer" type="inn:Person" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Registerenhetsendring">
+        <xs:complexContent>
+            <!-- Modellerer ikke inn omsetning, helt uklart om dette noen gang blir aktuelt og i så fall påvirker det bare matrikkelen -->
+            <xs:extension base="inn:Rettsstiftelse"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Matrikkelenhetsendring">
+        <xs:complexContent>
+            <xs:extension base="inn:Registerenhetsendring">
+                <xs:sequence>
+                    <xs:element name="fra" type="inn:MatrikkelenhetList"/>
+                    <xs:element name="til" type="inn:MatrikkelenhetList"/>
+                    <xs:element name="omnummereringAvUnderliggende" type="inn:MatrikkelenhetFraTilList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="Kommunenummer">
+        <xs:restriction base="xs:string">
+            <xs:length value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

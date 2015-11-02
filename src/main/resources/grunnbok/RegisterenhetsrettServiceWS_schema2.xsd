@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v1/service/servicetyper" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v1/service/registerenhetsrett" targetNamespace="http://kartverket.no/grunnbok/wsapi/v1/service/registerenhetsrett" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet" schemaLocation="register_registerenhet.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/service/servicetyper" schemaLocation="servicetyper.xsd"/>
+
+  <xs:element name="findRetterForEnheter" type="tns:findRetterForEnheter"/>
+
+  <xs:element name="findRetterForEnheterResponse" type="tns:findRetterForEnheterResponse"/>
+
+  <xs:complexType name="findRetterForEnheter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRetterForEnheterResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilRegisterenhetsrettIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

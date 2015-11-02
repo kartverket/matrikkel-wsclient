@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:inn="http://kartverket.no/grunnbok/wsapi/internal/domain/innsending"
+           xmlns:tns="http://kartverket.no/grunnbok/wsapi/internal/service/innsending"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           version="1.0"
+           targetNamespace="http://kartverket.no/grunnbok/wsapi/internal/service/innsending">
+
+
+    <xs:import namespace="http://kartverket.no/grunnbok/wsapi/internal/domain/innsending"
+               schemaLocation="schema/innsending.xsd"/>
+
+    <xs:element name="tinglysMelding" type="tns:ForsendelseElementType"/>
+    <xs:element name="tinglysMeldingResponse" type="tns:BehandlingsstatusElementType"/>
+
+    <xs:element name="validerMelding" type="tns:ForsendelseElementType"/>
+    <xs:element name="validerMeldingResponse" type="tns:BehandlingsstatusElementType"/>
+
+    <xs:element name="allokerInnsendingId" type="tns:Void"/>
+    <xs:element name="allokerInnsendingIdResponse" type="tns:InnsendingIdElementType"/>
+
+    <xs:element name="findBehandlingsstatus" type="tns:InnsendingIdElementType"/>
+    <xs:element name="findBehandlingsstatusResponse" type="tns:BehandlingsstatusElementType"/>
+
+    <xs:element name="serviceException" nillable="true" type="tns:InnsendingServiceFaultInfo"/>
+
+    <!--
+    Deklarasjon av elementtyper som gjør at vi kan henvise til typer i innsending.xsd
+    med gyldige elementnavn.
+    -->
+
+
+    <xs:complexType name="ForsendelseElementType">
+        <xs:sequence>
+            <xs:element ref="inn:forsendelse"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InnsendingIdElementType">
+        <xs:sequence>
+            <xs:element ref="inn:innsendingId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BehandlingsstatusElementType">
+        <xs:sequence>
+            <xs:element ref="inn:behandlingsstatus"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--
+    Vi har ingen eksterne referanser til denne (enda).
+    -->
+
+    <xs:complexType name="DokumentElementType">
+        <xs:sequence>
+            <xs:element ref="inn:dokument"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="InnsendingServiceFaultInfo">
+        <xs:sequence>
+            <xs:element name="feiltype" type="xs:string"/>
+            <xs:element name="feilbeskrivelse" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Void">
+        <xs:sequence/>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/adresse"
+        xmlns:register_adressens="http://kartverket.no/grunnbok/wsapi/v1/domain/register/adresse"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/koder"
+        xmlns:registerns="http://kartverket.no/grunnbok/wsapi/v1/domain/register"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/koder"/>
+    <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register"/>
+
+    <!-- ========================================================= -->
+    <!-- register/adresse:                                         -->
+    <!-- Adresser i register subdomain                             -->
+    <!-- ========================================================= -->
+
+    <!-- Adresse -->
+
+    <xs:complexType name="AdresseId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AdresseIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_adressens:AdresseId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AdresseIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:AdresseId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AdresseIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:AdresseIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Adresse">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="landkodeId" nillable="true" type="register_koderns:LandkodeKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- UtenlandskAdresse -->
+
+    <xs:complexType name="UtenlandskAdresseId">
+        <xs:complexContent>
+            <xs:extension base="register_adressens:AdresseId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="UtenlandskAdresseIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_adressens:UtenlandskAdresseId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UtenlandskAdresseIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:UtenlandskAdresseId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="UtenlandskAdresseIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:UtenlandskAdresseIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="UtenlandskAdresse">
+        <xs:complexContent>
+            <xs:extension base="register_adressens:Adresse">
+                <xs:sequence>
+                    <xs:element name="adressetekst" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Vegadresse -->
+
+    <xs:complexType name="VegadresseId">
+        <xs:complexContent>
+            <xs:extension base="register_adressens:AdresseId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VegadresseIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_adressens:VegadresseId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VegadresseIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:VegadresseId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VegadresseIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:VegadresseIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Vegadresse">
+        <xs:complexContent>
+            <xs:extension base="register_adressens:Adresse">
+                <xs:sequence>
+                    <xs:element name="kommuneId" type="registerns:KommuneId"/>
+                    <xs:element name="adressekode" type="xs:int"/>
+                    <xs:element name="adressenavn" type="xs:string" nillable="true"/>
+                    <xs:element name="husnummer" type="xs:int"/>
+                    <xs:element name="bokstav" type="xs:string" nillable="true"/>
+                    <xs:element name="bolignummer" type="xs:string" nillable="true"/>
+                    <xs:element name="bruksenhetIdFraMatrikkelen" type="xs:long"/>
+                    <xs:element name="adresseIdFraMatrikkelen" type="xs:long"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Matrikkeladresse -->
+
+    <xs:complexType name="MatrikkeladresseId">
+        <xs:complexContent>
+            <xs:extension base="register_adressens:AdresseId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkeladresseIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_adressens:MatrikkeladresseId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkeladresseIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:MatrikkeladresseId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkeladresseIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:MatrikkeladresseIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Matrikkeladresse">
+        <xs:complexContent>
+            <xs:extension base="register_adressens:Adresse">
+                <xs:sequence>
+                    <xs:element name="kommuneId" type="registerns:KommuneId"/>
+                    <xs:element name="gaardsnummer" type="xs:int"/>
+                    <xs:element name="bruksnummer" type="xs:int"/>
+                    <xs:element name="festenummer" type="xs:int"/>
+                    <xs:element name="undernummer" type="xs:int"/>
+                    <xs:element name="bolignummer" type="xs:string"/>
+                    <xs:element name="bruksenhetIdFraMatrikkelen" type="xs:long"/>
+                    <xs:element name="adresseIdFraMatrikkelen" type="xs:long"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- KonvertertAdresse -->
+
+    <xs:complexType name="KonvertertAdresseId">
+        <xs:complexContent>
+            <xs:extension base="register_adressens:AdresseId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KonvertertAdresseIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_adressens:KonvertertAdresseId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KonvertertAdresseIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:KonvertertAdresseId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KonvertertAdresseIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_adressens:KonvertertAdresseIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KonvertertAdresse">
+        <xs:complexContent>
+            <xs:extension base="register_adressens:Adresse">
+                <xs:sequence>
+                    <xs:element name="adressetekst" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+</xs:schema>

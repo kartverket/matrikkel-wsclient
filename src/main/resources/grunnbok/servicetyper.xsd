@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v1/service/servicetyper"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper"
+        xmlns:registerns="http://kartverket.no/grunnbok/wsapi/v1/domain/register"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/koder"
+        xmlns:register_registerenhetns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet"
+        xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse"
+        xmlns:register_anmerkningns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/anmerkning"
+        xmlns:register_heftelsens="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/heftelse"
+        xmlns:register_overdragelsens="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/overdragelse"
+        xmlns:register_registerenhetsendringns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/registerenhetsendring"
+        xmlns:register_rettsendringns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/rettsendring"
+        xmlns:register_personns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/person"
+        xmlns:register_dokumentns="http://kartverket.no/grunnbok/wsapi/v1/domain/register/dokument"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper"/>
+    <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/koder"/>
+    <xs:import schemaLocation="register_registerenhet.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet"/>
+    <xs:import schemaLocation="register_person.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/person"/>
+    <xs:import schemaLocation="register_rettsstiftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse"/>
+    <xs:import schemaLocation="register_rettsstiftelse_anmerkning.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/anmerkning"/>
+    <xs:import schemaLocation="register_rettsstiftelse_heftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/heftelse"/>
+    <xs:import schemaLocation="register_rettsstiftelse_overdragelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/overdragelse"/>
+    <xs:import schemaLocation="register_rettsstiftelse_registerenhetsendring.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/registerenhetsendring"/>
+    <xs:import schemaLocation="register_rettsstiftelse_rettsendring.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse/rettsendring"/>
+    <xs:import schemaLocation="register_dokument.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/dokument"/>
+
+    <!-- ========================================================= -->
+    <!-- Servicetyper:                                             -->
+    <!-- Typer som kun brukes av webtjenestene.                    -->
+    <!-- Finnes ikke i domenet.                                    -->
+    <!-- ========================================================= -->
+
+    <!-- KommuneServiceWSI -->
+
+    <xs:complexType name="KommuneIdentTilKommuneIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="registerns:KommuneIdent"/>
+                        <xs:element name="value" type="registerns:KommuneId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!--  OverfoeringServiceWSI -->
+
+    <xs:complexType name="RettsstiftelseIdTilOverfoeringIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_rettsstiftelsens:RettsstiftelseId"/>
+                        <xs:element name="value" type="register_rettsstiftelsens:OverfoeringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--  RegisterenhetServiceWSI -->
+
+    <xs:complexType name="RegisterenhetIdForRegisterenhetIdentMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="register_registerenhetns:RegisterenhetIdent"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdentTilMatrikkelenhetIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:MatrikkelenhetIdent"/>
+                        <xs:element name="value" type="register_registerenhetns:MatrikkelenhetId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdTilMatrikkelenhetIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:MatrikkelenhetId"/>
+                        <xs:element name="value" type="register_registerenhetns:MatrikkelenhetId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelIdentTilBorettslagsandelIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:BorettslagsandelIdent"/>
+                        <xs:element name="value" type="register_registerenhetns:BorettslagsandelId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdTilFestegrunnIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="register_registerenhetns:FestegrunnIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdTilSeksjonIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="register_registerenhetns:SeksjonIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdentTilRegisterenhetId">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetIdent"/>
+                        <xs:element name="value" type="register_registerenhetns:RegisterenhetId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettIdentTilRegisterenhetsrettId">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="registerns:RegisterenhetsrettIdent"/>
+                        <xs:element name="value" type="registerns:RegisterenhetsrettId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- RegisterenhetsrettsandelServiceWSI -->
+
+    <xs:complexType name="RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="registerns:RegisterenhetsrettId"/>
+                        <xs:element name="value" type="registerns:RegisterenhetsrettsandelIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdTilRegisterenhetsrettsandelIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="registerns:RegisterenhetsrettsandelIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonIdTilRegisterenhetsrettsandelIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_personns:PersonId"/>
+                        <xs:element name="value" type="registerns:RegisterenhetsrettsandelIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- RegisterenhetsrettServiceWSI -->
+
+    <xs:complexType name="RegisterenhetIdTilRegisterenhetsrettIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="registerns:RegisterenhetsrettIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- RettsstiftelseServiceWSI -->
+
+    <xs:simpleType name="TransferMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Objects"/>
+            <xs:enumeration value="IdsOnly"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="RettstypeKodeIdTilRettsstiftelsestypeKodeIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_koderns:RettstypeKodeId"/>
+                        <xs:element name="value" type="register_koderns:RettsstiftelsestypeKodeIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseIdListTransfer">
+        <xs:sequence>
+            <xs:element name="rettsstiftelseIds" type="register_rettsstiftelsens:RettsstiftelseIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="HeftelseIdListTransfer">
+        <xs:sequence>
+            <xs:element name="heftelseIds" type="register_heftelsens:HeftelseIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ServituttIdListTransfer">
+        <xs:sequence>
+            <xs:element name="servituttIds" type="register_heftelsens:ServituttIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AnnenRettighetIdListTransfer">
+        <xs:sequence>
+            <xs:element name="annenRettighetIds" type="register_heftelsens:AnnenRettighetIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VilkaarIFestekontraktIdListTransfer">
+        <xs:sequence>
+            <xs:element name="vilkaarIFestekontraktIds" type="register_heftelsens:VilkaarIFestekontraktIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OverdragelseAvRegisterenhetsrettIdListTransfer">
+        <xs:sequence>
+            <xs:element name="overdragelseIds" type="register_overdragelsens:OverdragelseAvRegisterenhetsrettIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsendringIdListTransfer">
+        <xs:sequence>
+            <xs:element name="registerenhetsendringIds" type="register_registerenhetsendringns:RegisterenhetsendringIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="registerns:RegisterenhetsrettsandelId"/>
+                        <xs:element name="value" type="register_overdragelsens:OverdragelseAvRegisterenhetsrettId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="RettsstiftelseIdTilAnmerkningIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_rettsstiftelsens:RettsstiftelseId"/>
+                        <xs:element name="value" type="register_anmerkningns:AnmerkningIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseIdTilRettsendringIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_rettsstiftelsens:RettsstiftelseId"/>
+                        <xs:element name="value" type="register_rettsendringns:RettsendringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseIdTilHeftelseIAnnenRettIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_rettsstiftelsens:RettsstiftelseId"/>
+                        <xs:element name="value" type="register_heftelsens:HeftelseIAnnenRettIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettIdTilHeftelseIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="registerns:RegisterenhetsrettId"/>
+                        <xs:element name="value" type="register_heftelsens:HeftelseIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettsandelIdTilHeftelseIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="registerns:RegisterenhetsrettsandelId"/>
+                        <xs:element name="value" type="register_heftelsens:HeftelseIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdTilRegisterenhetsendringIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="register_registerenhetsendringns:RegisterenhetsendringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdTilMatrikkelenhetsendringIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="register_registerenhetsendringns:MatrikkelenhetsendringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdTilBorettslagsandelsendringIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="register_registerenhetsendringns:BorettslagsandelsendringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieandelIdTilRegisterenhetsendringIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:SeksjonssameieandelId"/>
+                        <xs:element name="value" type="register_registerenhetsendringns:RegisterenhetsendringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- SeksjonssameieandelServiceWSI -->
+
+    <xs:complexType name="RegisterenhetIdTilSeksjonssameieandelIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="register_registerenhetns:SeksjonssameieandelIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- IdentServiceWSI -->
+
+    <xs:complexType name="RettsstiftelseIdentTilRettsstiftelseIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_rettsstiftelsens:RettsstiftelseIdent"/>
+                        <xs:element name="value" type="register_rettsstiftelsens:RettsstiftelseId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagIdentTilBorettslagIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="registerns:BorettslagIdent"/>
+                        <xs:element name="value" type="registerns:BorettslagId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="DokumentIdentTilDokumentIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_dokumentns:DokumentIdent"/>
+                        <xs:element name="value" type="register_dokumentns:DokumentId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonIdentTilPersonIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_personns:PersonIdent"/>
+                        <xs:element name="value" type="register_personns:PersonId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- IdToIdentMap -->
+    <xs:complexType name="BubbleIdTilIdentMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="basistyperns:GrunnbokBubbleObjectId" />
+                        <xs:element name="value" nillable="true" type="basistyperns:GrunnbokBubbleObjectIdent" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

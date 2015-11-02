@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v1/domain/register" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v1/domain/register/dokument" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v1/service/servicetyper" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v1/service/ident" xmlns:ns5="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet" xmlns:ns6="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse" xmlns:ns7="http://kartverket.no/grunnbok/wsapi/v1/domain/register/person" targetNamespace="http://kartverket.no/grunnbok/wsapi/v1/service/ident" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register" schemaLocation="register.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/service/servicetyper" schemaLocation="servicetyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/dokument" schemaLocation="register_dokument.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/registerenhet" schemaLocation="register_registerenhet.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/rettsstiftelse" schemaLocation="register_rettsstiftelse.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v1/domain/register/person" schemaLocation="register_person.xsd"/>
+
+  <xs:element name="ValidationException" type="tns:ValidationException"/>
+
+  <xs:element name="findBorettslagIdsForIdents" type="tns:findBorettslagIdsForIdents"/>
+
+  <xs:element name="findBorettslagIdsForIdentsResponse" type="tns:findBorettslagIdsForIdentsResponse"/>
+
+  <xs:element name="findBorettslagsandelIdsForIdents" type="tns:findBorettslagsandelIdsForIdents"/>
+
+  <xs:element name="findBorettslagsandelIdsForIdentsResponse" type="tns:findBorettslagsandelIdsForIdentsResponse"/>
+
+  <xs:element name="findDokumentIdsForIdents" type="tns:findDokumentIdsForIdents"/>
+
+  <xs:element name="findDokumentIdsForIdentsResponse" type="tns:findDokumentIdsForIdentsResponse"/>
+
+  <xs:element name="findIdentsForIds" type="tns:findIdentsForIds"/>
+
+  <xs:element name="findIdentsForIdsResponse" type="tns:findIdentsForIdsResponse"/>
+
+  <xs:element name="findKommuneIdsForIdents" type="tns:findKommuneIdsForIdents"/>
+
+  <xs:element name="findKommuneIdsForIdentsResponse" type="tns:findKommuneIdsForIdentsResponse"/>
+
+  <xs:element name="findMatrikkelenhetIdsForIdents" type="tns:findMatrikkelenhetIdsForIdents"/>
+
+  <xs:element name="findMatrikkelenhetIdsForIdentsResponse" type="tns:findMatrikkelenhetIdsForIdentsResponse"/>
+
+  <xs:element name="findPersonIdsForIdents" type="tns:findPersonIdsForIdents"/>
+
+  <xs:element name="findPersonIdsForIdentsResponse" type="tns:findPersonIdsForIdentsResponse"/>
+
+  <xs:element name="findRegisterenhetIdsForIdents" type="tns:findRegisterenhetIdsForIdents"/>
+
+  <xs:element name="findRegisterenhetIdsForIdentsResponse" type="tns:findRegisterenhetIdsForIdentsResponse"/>
+
+  <xs:element name="findRegisterenhetsrettIdsForIdents" type="tns:findRegisterenhetsrettIdsForIdents"/>
+
+  <xs:element name="findRegisterenhetsrettIdsForIdentsResponse" type="tns:findRegisterenhetsrettIdsForIdentsResponse"/>
+
+  <xs:element name="findRettsstiftelseIdsForIdents" type="tns:findRettsstiftelseIdsForIdents"/>
+
+  <xs:element name="findRettsstiftelseIdsForIdentsResponse" type="tns:findRettsstiftelseIdsForIdentsResponse"/>
+
+  <xs:complexType name="findBorettslagIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns1:BorettslagIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findBorettslagIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:BorettslagIdentTilBorettslagIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findDokumentIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns4:DokumentIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findDokumentIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:DokumentIdentTilDokumentIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findBorettslagsandelIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns5:BorettslagsandelIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findBorettslagsandelIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:BorettslagsandelIdentTilBorettslagsandelIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstiftelseIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns6:RettsstiftelseIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstiftelseIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdentTilRettsstiftelseIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findMatrikkelenhetIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns5:MatrikkelenhetIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findMatrikkelenhetIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:MatrikkelenhetIdentTilMatrikkelenhetIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findKommuneIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns1:KommuneIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findKommuneIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:KommuneIdentTilKommuneIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ValidationException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="feilkode" type="xs:string"/>
+      <xs:element minOccurs="0" name="feilkodebeskrivelse" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRegisterenhetsrettIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns1:RegisterenhetsrettIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRegisterenhetsrettIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettIdentTilRegisterenhetsrettId"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIdentsForIds">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ids" type="ns2:GrunnbokBubbleObjectIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIdentsForIdsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:BubbleIdTilIdentMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRegisterenhetIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns5:RegisterenhetIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRegisterenhetIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdentTilRegisterenhetId"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findPersonIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns7:PersonIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findPersonIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:PersonIdentTilPersonIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

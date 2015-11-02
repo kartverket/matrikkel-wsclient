@@ -1,0 +1,791 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.server.lib.slf.no/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="LIBWebServiceBeanService" targetNamespace="http://ws.server.lib.slf.no/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.server.lib.slf.no/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://ws.server.lib.slf.no/">
+  <xs:element name="driftsenter" type="tns:wsDriftsentreDTO"/>
+  <xs:element name="findEiendom" type="tns:findEiendom"/>
+  <xs:element name="findEiendomResponse" type="tns:findEiendomResponse"/>
+  <xs:element name="findSoknadData" type="tns:findSoknadData"/>
+  <xs:element name="findSoknadDataResponse" type="tns:findSoknadDataResponse"/>
+  <xs:element name="getBedrift" type="tns:getBedrift"/>
+  <xs:element name="getBedriftResponse" type="tns:getBedriftResponse"/>
+  <xs:element name="getDriftssenterForOrgnr" type="tns:getDriftssenterForOrgnr"/>
+  <xs:element name="getDriftssenterForOrgnrResponse" type="tns:getDriftssenterForOrgnrResponse"/>
+  <xs:element name="getEiendom" type="tns:getEiendom"/>
+  <xs:element name="getEiendomResponse" type="tns:getEiendomResponse"/>
+  <xs:element name="getForetak" type="tns:getForetak"/>
+  <xs:element name="getForetakResponse" type="tns:getForetakResponse"/>
+  <xs:element name="getHovednummerByLbeId" type="tns:getHovednummerByLbeId"/>
+  <xs:element name="getHovednummerByLbeIdResponse" type="tns:getHovednummerByLbeIdResponse"/>
+  <xs:element name="getHovednummerForGrunneiendom" type="tns:getHovednummerForGrunneiendom"/>
+  <xs:element name="getHovednummerForGrunneiendomResponse" type="tns:getHovednummerForGrunneiendomResponse"/>
+  <xs:element name="getPerson" type="tns:getPerson"/>
+  <xs:element name="getPersonResponse" type="tns:getPersonResponse"/>
+  <xs:element name="getSkonto" type="tns:getSkonto"/>
+  <xs:element name="getSkontoResponse" type="tns:getSkontoResponse"/>
+  <xs:complexType name="getHovednummerByLbeId">
+    <xs:sequence>
+      <xs:element name="lbe_id" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getHovednummerByLbeIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsHovednummerSDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsHovednummerSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bruksnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="festenr" type="xs:string"/>
+      <xs:element minOccurs="0" name="gardsnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="kommunenr" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="findEiendom">
+    <xs:sequence>
+      <xs:element name="kommunenr" type="xs:string"/>
+      <xs:element name="gardsnr" type="xs:string"/>
+      <xs:element name="bruksnr" type="xs:string"/>
+      <xs:element name="festenr" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="findEiendomResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:wsEiendomSDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsEiendomSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="aktiv" type="xs:string"/>
+      <xs:element minOccurs="0" name="bruksNr" type="xs:string"/>
+      <xs:element minOccurs="0" name="bruksnavn" type="xs:string"/>
+      <xs:element minOccurs="0" name="festeNr" type="xs:string"/>
+      <xs:element minOccurs="0" name="gardidnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="gardsNr" type="xs:string"/>
+      <xs:element minOccurs="0" name="komNr" type="xs:string"/>
+      <xs:element minOccurs="0" name="koordNord" type="xs:string"/>
+      <xs:element minOccurs="0" name="koordOst" type="xs:string"/>
+      <xs:element minOccurs="0" name="koordSys" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getDriftssenterForOrgnr">
+    <xs:sequence>
+      <xs:element name="orgnr" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getDriftssenterForOrgnrResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="respons" type="tns:wsDriftsentreDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsDriftsentreDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="driftsentre">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="driftsenter" nillable="true" type="tns:wsProdusentknytningDTO"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsProdusentknytningDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="orgnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="navn" type="xs:string"/>
+      <xs:element minOccurs="0" name="komnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="gardsnr" type="xs:int"/>
+      <xs:element minOccurs="0" name="bruksnr" type="xs:int"/>
+      <xs:element minOccurs="0" name="festenr" type="xs:int"/>
+      <xs:element minOccurs="0" name="gardidnr" type="xs:int"/>
+      <xs:element minOccurs="0" name="produsentnummer" type="xs:string"/>
+      <xs:element name="aktiv" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="koordinater" type="tns:wsKoordinatDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsKoordinatDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="koordsys" type="xs:int"/>
+      <xs:element minOccurs="0" name="nord" type="xs:int"/>
+      <xs:element minOccurs="0" name="ost" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getEiendom">
+    <xs:sequence>
+      <xs:element name="kommunenr" type="xs:string"/>
+      <xs:element name="gardsnr" type="xs:string"/>
+      <xs:element name="bruksnr" type="xs:string"/>
+      <xs:element name="festenr" type="xs:string"/>
+      <xs:element name="landbrukseiendom" type="xs:int"/>
+      <xs:element name="eiere" type="xs:int"/>
+      <xs:element name="bedrifter" type="xs:int"/>
+      <xs:element name="skonti" type="xs:int"/>
+      <xs:element name="grunneiendommer" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getEiendomResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsEiendomDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsEiendomDTO">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="bedrifts" nillable="true" type="tns:wsBedriftSDTO"/>
+      <xs:element minOccurs="0" name="eiendom" type="tns:wsEiendomEDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="eiers" nillable="true" type="tns:wsEierSDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="grunneiendoms" nillable="true" type="tns:wsGrunneiendomSDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="skontos" nillable="true" type="tns:wsSkontoSDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsBedriftSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="aktiv" type="xs:string"/>
+      <xs:element minOccurs="0" name="arealDrift" type="xs:string"/>
+      <xs:element minOccurs="0" name="lbrBedrId" type="xs:string"/>
+      <xs:element minOccurs="0" name="navn" type="xs:string"/>
+      <xs:element minOccurs="0" name="oppstartDato" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsEiendomEDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:wsEiendomSDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arealAnnet" type="xs:string"/>
+          <xs:element minOccurs="0" name="arealDisp" type="xs:string"/>
+          <xs:element minOccurs="0" name="arealJord" type="xs:string"/>
+          <xs:element minOccurs="0" name="arealSkog" type="xs:string"/>
+          <xs:element minOccurs="0" name="endrDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="fulldyrket" type="xs:string"/>
+          <xs:element minOccurs="0" name="grunnkrets" type="xs:string"/>
+          <xs:element minOccurs="0" name="innmarksbeite" type="xs:string"/>
+          <xs:element minOccurs="0" name="kilde" type="xs:string"/>
+          <xs:element minOccurs="0" name="opprDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="overflate" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="wsEierSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="eierRolle" type="xs:string"/>
+      <xs:element minOccurs="0" name="fodselsnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="foretakType" type="xs:string"/>
+      <xs:element minOccurs="0" name="fraDato" type="xs:string"/>
+      <xs:element minOccurs="0" name="navn" type="xs:string"/>
+      <xs:element minOccurs="0" name="orgnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="postnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="poststed" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsGrunneiendomSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="aktiv" type="xs:string"/>
+      <xs:element minOccurs="0" name="bruk" type="xs:string"/>
+      <xs:element minOccurs="0" name="bruksNr" type="xs:string"/>
+      <xs:element minOccurs="0" name="etablDato" type="xs:string"/>
+      <xs:element minOccurs="0" name="festeNr" type="xs:string"/>
+      <xs:element minOccurs="0" name="gardsNr" type="xs:string"/>
+      <xs:element minOccurs="0" name="komNr" type="xs:string"/>
+      <xs:element minOccurs="0" name="skyld" type="xs:string"/>
+      <xs:element minOccurs="0" name="type" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsSkontoSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="aktiv" type="xs:string"/>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="saldo" type="xs:string"/>
+      <xs:element minOccurs="0" name="skontonr" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getBedrift">
+    <xs:sequence>
+      <xs:element name="lbeBedrId" type="xs:string"/>
+      <xs:element name="bedriftdata" type="xs:int"/>
+      <xs:element name="foretak" type="xs:int"/>
+      <xs:element name="soknader" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getBedriftResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsBedriftDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsBedriftDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bedrift" type="tns:wsBedriftEDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="foretaks" nillable="true" type="tns:wsForetakSDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="soknads" nillable="true" type="tns:wsSoknadRadSDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsBedriftEDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:wsBedriftSDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="endrDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="kilde" type="xs:string"/>
+          <xs:element minOccurs="0" name="lopenr" type="xs:string"/>
+          <xs:element minOccurs="0" name="nedleggelseDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="opprDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="sistEndrDato" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="wsForetakSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="foretakType" type="xs:string"/>
+      <xs:element minOccurs="0" name="navn" type="xs:string"/>
+      <xs:element minOccurs="0" name="orgnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="postnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="poststed" type="xs:string"/>
+      <xs:element minOccurs="0" name="rolleType" type="xs:string"/>
+      <xs:element minOccurs="0" name="uregid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsSoknadRadSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="datakategori" type="xs:string"/>
+      <xs:element minOccurs="0" name="fodselsnrOrgnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="periode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getSkonto">
+    <xs:sequence>
+      <xs:element name="kontonr" type="xs:string"/>
+      <xs:element name="skontoId" type="xs:string"/>
+      <xs:element name="fraAar" type="xs:string"/>
+      <xs:element name="tilAar" type="xs:string"/>
+      <xs:element name="skonto" type="xs:int"/>
+      <xs:element name="skontoYear" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getSkontoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsSkontoDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsSkontoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="skonto" type="tns:wsSkontoEDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="skontoYears" nillable="true" type="tns:wsSkontoYearDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsSkontoEDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:wsSkontoSDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="endrDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="grendnr" type="xs:string"/>
+          <xs:element minOccurs="0" name="mvaKontroll" type="xs:string"/>
+          <xs:element minOccurs="0" name="opprDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="skontoStatus" type="xs:string"/>
+          <xs:element minOccurs="0" name="spraak" type="xs:string"/>
+          <xs:element minOccurs="0" name="storrelsesgruppe" type="xs:string"/>
+          <xs:element minOccurs="0" name="trekkfullmakt" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="wsSkontoYearDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="aar" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="avvirknings" nillable="true" type="tns:wsAvvirkningSDTO"/>
+      <xs:element minOccurs="0" name="skontoId" type="xs:string"/>
+      <xs:element minOccurs="0" name="skontonr" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="tiltaks" nillable="true" type="tns:wsTiltakSDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsAvvirkningSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="antallKbm" type="xs:string"/>
+      <xs:element minOccurs="0" name="antallKilo" type="xs:string"/>
+      <xs:element minOccurs="0" name="antallStk" type="xs:string"/>
+      <xs:element minOccurs="0" name="anvistBrutto" type="xs:string"/>
+      <xs:element minOccurs="0" name="belop" type="xs:string"/>
+      <xs:element minOccurs="0" name="virkeskatKode" type="xs:string"/>
+      <xs:element minOccurs="0" name="virkeskatTekst" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsTiltakSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="antall" type="xs:string"/>
+      <xs:element minOccurs="0" name="anvist" type="xs:string"/>
+      <xs:element minOccurs="0" name="areal" type="xs:string"/>
+      <xs:element minOccurs="0" name="enhet" type="xs:string"/>
+      <xs:element minOccurs="0" name="hovedkode" type="xs:string"/>
+      <xs:element minOccurs="0" name="hovedkodeTekst" type="xs:string"/>
+      <xs:element minOccurs="0" name="sumTilskudd" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getHovednummerForGrunneiendom">
+    <xs:sequence>
+      <xs:element name="kommunenr" type="xs:string"/>
+      <xs:element name="gardsnr" type="xs:string"/>
+      <xs:element name="bruksnr" type="xs:string"/>
+      <xs:element name="festenr" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getHovednummerForGrunneiendomResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsEiendomSDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPerson">
+    <xs:sequence>
+      <xs:element name="fodselsnr" type="xs:string"/>
+      <xs:element name="persondata" type="xs:int"/>
+      <xs:element name="landbrukseiendommer" type="xs:int"/>
+      <xs:element name="foretak" type="xs:int"/>
+      <xs:element name="skonti" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPersonResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsPersonDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsPersonDTO">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="eiendoms" nillable="true" type="tns:wsEiendomSDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="foretaks" nillable="true" type="tns:wsForetakSDTO"/>
+      <xs:element minOccurs="0" name="person" type="tns:wsPersonEDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="skontos" nillable="true" type="tns:wsSkontoSDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsPersonEDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:wsPersonSDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="adresse1" type="xs:string"/>
+          <xs:element minOccurs="0" name="adresse2" type="xs:string"/>
+          <xs:element minOccurs="0" name="adresse3" type="xs:string"/>
+          <xs:element minOccurs="0" name="aktiv" type="xs:string"/>
+          <xs:element minOccurs="0" name="endrDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="epost" type="xs:string"/>
+          <xs:element minOccurs="0" name="kilde" type="xs:string"/>
+          <xs:element minOccurs="0" name="land" type="xs:string"/>
+          <xs:element minOccurs="0" name="mobiltlf" type="xs:string"/>
+          <xs:element minOccurs="0" name="opprDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="status" type="xs:string"/>
+          <xs:element minOccurs="0" name="sted" type="xs:string"/>
+          <xs:element minOccurs="0" name="telefon" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="wsPersonSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="etternavn" type="xs:string"/>
+      <xs:element minOccurs="0" name="fodselsnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="fornavn" type="xs:string"/>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="kommunenr" type="xs:string"/>
+      <xs:element minOccurs="0" name="postnr" type="xs:string"/>
+      <xs:element minOccurs="0" name="poststed" type="xs:string"/>
+      <xs:element minOccurs="0" name="rolleTypeForetak" type="xs:string"/>
+      <xs:element minOccurs="0" name="rolleTypeSkonto" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getForetak">
+    <xs:sequence>
+      <xs:element name="orgnr" type="xs:string"/>
+      <xs:element name="uregid" type="xs:string"/>
+      <xs:element name="foretaksdata" type="xs:int"/>
+      <xs:element name="bedrifter" type="xs:int"/>
+      <xs:element name="personer" type="xs:int"/>
+      <xs:element name="foretak" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getForetakResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsForetakDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsForetakDTO">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="bedrifts" nillable="true" type="tns:wsBedriftSDTO"/>
+      <xs:element minOccurs="0" name="foretak" type="tns:wsForetakEDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="persons" nillable="true" type="tns:wsPersonSDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="tilknyttedeForetaks" nillable="true" type="tns:wsForetakSDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsForetakEDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:wsForetakSDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="adresse1" type="xs:string"/>
+          <xs:element minOccurs="0" name="adresse2" type="xs:string"/>
+          <xs:element minOccurs="0" name="adresse3" type="xs:string"/>
+          <xs:element minOccurs="0" name="aktiv" type="xs:string"/>
+          <xs:element minOccurs="0" name="endrDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="opprDato" type="xs:string"/>
+          <xs:element minOccurs="0" name="oppstartDato" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="findSoknadData">
+    <xs:sequence>
+      <xs:element name="orgnr" type="xs:string"/>
+      <xs:element name="periode" type="xs:string"/>
+      <xs:element name="areal" type="xs:int"/>
+      <xs:element name="produksjon" type="xs:int"/>
+      <xs:element name="okologisk" type="xs:int"/>
+      <xs:element name="tilskudd" type="xs:int"/>
+      <xs:element name="dispensasjon" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="findSoknadDataResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:wsSoknadProdtilDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsSoknadProdtilDTO">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="areals" nillable="true" type="tns:wsDisponertArealSDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="belops" nillable="true" type="tns:wsBelopSDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="dispensasjons" nillable="true" type="tns:wsDispensasjonSDTO"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="okologiskProduksjons" nillable="true" type="tns:wsProduksjonSDTO"/>
+      <xs:element minOccurs="0" name="periode" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="produksjons" nillable="true" type="tns:wsProduksjonSDTO"/>
+      <xs:element minOccurs="0" name="samdrift" type="xs:string"/>
+      <xs:element minOccurs="0" name="status" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsDisponertArealSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="areal" type="xs:string"/>
+      <xs:element minOccurs="0" name="arealBratt" type="xs:string"/>
+      <xs:element minOccurs="0" name="arealFulldyrket" type="xs:string"/>
+      <xs:element minOccurs="0" name="arealInnmarksbeite" type="xs:string"/>
+      <xs:element minOccurs="0" name="arealOverflate" type="xs:string"/>
+      <xs:element minOccurs="0" name="arealUteAvDrift" type="xs:string"/>
+      <xs:element minOccurs="0" name="eiendomId" type="xs:string"/>
+      <xs:element minOccurs="0" name="kategori" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsBelopSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="belop" type="xs:string"/>
+      <xs:element minOccurs="0" name="belopKode" type="xs:string"/>
+      <xs:element minOccurs="0" name="belopTekst" type="xs:string"/>
+      <xs:element minOccurs="0" name="delBelop" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsDispensasjonSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="dispensasjonKode" type="xs:string"/>
+      <xs:element minOccurs="0" name="dispensasjonTekst" type="xs:string"/>
+      <xs:element minOccurs="0" name="inntilPeriode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsProduksjonSDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="enhet" type="xs:string"/>
+      <xs:element minOccurs="0" name="prodGruppe" type="xs:string"/>
+      <xs:element minOccurs="0" name="prodKode" type="xs:string"/>
+      <xs:element minOccurs="0" name="prodTekst" type="xs:string"/>
+      <xs:element minOccurs="0" name="totaltAntall" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GeneralException" type="tns:GeneralException"/>
+  <xs:complexType name="GeneralException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="DriftsentreNotFound" type="tns:DriftsentreNotFound"/>
+  <xs:complexType name="DriftsentreNotFound">
+    <xs:sequence>
+      <xs:element name="reason" nillable="true" type="xs:string"/>
+      <xs:element name="orgnr" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IllegalOrgnr" type="tns:IllegalOrgnr"/>
+  <xs:complexType name="IllegalOrgnr">
+    <xs:sequence>
+      <xs:element name="reason" nillable="true" type="xs:string"/>
+      <xs:element name="orgnr" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserException" type="tns:UserException"/>
+  <xs:complexType name="UserException">
+    <xs:sequence/>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getHovednummerByLbeId">
+    <wsdl:part element="tns:getHovednummerByLbeId" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBedrift">
+    <wsdl:part element="tns:getBedrift" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findSoknadDataResponse">
+    <wsdl:part element="tns:findSoknadDataResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getHovednummerByLbeIdResponse">
+    <wsdl:part element="tns:getHovednummerByLbeIdResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBedriftResponse">
+    <wsdl:part element="tns:getBedriftResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findSoknadData">
+    <wsdl:part element="tns:findSoknadData" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDriftssenterForOrgnrResponse">
+    <wsdl:part element="tns:getDriftssenterForOrgnrResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getForetak">
+    <wsdl:part element="tns:getForetak" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPersonResponse">
+    <wsdl:part element="tns:getPersonResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findEiendom">
+    <wsdl:part element="tns:findEiendom" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEiendomResponse">
+    <wsdl:part element="tns:getEiendomResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IllegalOrgnr">
+    <wsdl:part element="tns:IllegalOrgnr" name="IllegalOrgnr">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getForetakResponse">
+    <wsdl:part element="tns:getForetakResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DriftsentreNotFound">
+    <wsdl:part element="tns:DriftsentreNotFound" name="DriftsentreNotFound">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSkontoResponse">
+    <wsdl:part element="tns:getSkontoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEiendom">
+    <wsdl:part element="tns:getEiendom" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getHovednummerForGrunneiendom">
+    <wsdl:part element="tns:getHovednummerForGrunneiendom" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GeneralException">
+    <wsdl:part element="tns:GeneralException" name="GeneralException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDriftssenterForOrgnr">
+    <wsdl:part element="tns:getDriftssenterForOrgnr" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPerson">
+    <wsdl:part element="tns:getPerson" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findEiendomResponse">
+    <wsdl:part element="tns:findEiendomResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UserException">
+    <wsdl:part element="tns:UserException" name="UserException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getHovednummerForGrunneiendomResponse">
+    <wsdl:part element="tns:getHovednummerForGrunneiendomResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSkonto">
+    <wsdl:part element="tns:getSkonto" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="LIBWebService">
+    <wsdl:operation name="getHovednummerByLbeId">
+      <wsdl:input message="tns:getHovednummerByLbeId" name="getHovednummerByLbeId">
+    </wsdl:input>
+      <wsdl:output message="tns:getHovednummerByLbeIdResponse" name="getHovednummerByLbeIdResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findEiendom">
+      <wsdl:input message="tns:findEiendom" name="findEiendom">
+    </wsdl:input>
+      <wsdl:output message="tns:findEiendomResponse" name="findEiendomResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDriftssenterForOrgnr">
+      <wsdl:input message="tns:getDriftssenterForOrgnr" name="getDriftssenterForOrgnr">
+    </wsdl:input>
+      <wsdl:output message="tns:getDriftssenterForOrgnrResponse" name="getDriftssenterForOrgnrResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:DriftsentreNotFound" name="DriftsentreNotFound">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IllegalOrgnr" name="IllegalOrgnr">
+    </wsdl:fault>
+      <wsdl:fault message="tns:GeneralException" name="GeneralException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getEiendom">
+      <wsdl:input message="tns:getEiendom" name="getEiendom">
+    </wsdl:input>
+      <wsdl:output message="tns:getEiendomResponse" name="getEiendomResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBedrift">
+      <wsdl:input message="tns:getBedrift" name="getBedrift">
+    </wsdl:input>
+      <wsdl:output message="tns:getBedriftResponse" name="getBedriftResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSkonto">
+      <wsdl:input message="tns:getSkonto" name="getSkonto">
+    </wsdl:input>
+      <wsdl:output message="tns:getSkontoResponse" name="getSkontoResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UserException" name="UserException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getHovednummerForGrunneiendom">
+      <wsdl:input message="tns:getHovednummerForGrunneiendom" name="getHovednummerForGrunneiendom">
+    </wsdl:input>
+      <wsdl:output message="tns:getHovednummerForGrunneiendomResponse" name="getHovednummerForGrunneiendomResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPerson">
+      <wsdl:input message="tns:getPerson" name="getPerson">
+    </wsdl:input>
+      <wsdl:output message="tns:getPersonResponse" name="getPersonResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getForetak">
+      <wsdl:input message="tns:getForetak" name="getForetak">
+    </wsdl:input>
+      <wsdl:output message="tns:getForetakResponse" name="getForetakResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findSoknadData">
+      <wsdl:input message="tns:findSoknadData" name="findSoknadData">
+    </wsdl:input>
+      <wsdl:output message="tns:findSoknadDataResponse" name="findSoknadDataResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LIBWebServiceBeanServiceSoapBinding" type="tns:LIBWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="findEiendom">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findEiendom">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findEiendomResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getHovednummerByLbeId">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getHovednummerByLbeId">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getHovednummerByLbeIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDriftssenterForOrgnr">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getDriftssenterForOrgnr">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDriftssenterForOrgnrResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DriftsentreNotFound">
+        <soap:fault name="DriftsentreNotFound" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IllegalOrgnr">
+        <soap:fault name="IllegalOrgnr" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="GeneralException">
+        <soap:fault name="GeneralException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getEiendom">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getEiendom">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getEiendomResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBedrift">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBedrift">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBedriftResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSkonto">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getSkonto">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSkontoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="UserException">
+        <soap:fault name="UserException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getHovednummerForGrunneiendom">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getHovednummerForGrunneiendom">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getHovednummerForGrunneiendomResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getForetak">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getForetak">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getForetakResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPerson">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getPerson">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPersonResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findSoknadData">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="findSoknadData">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findSoknadDataResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LIBWebServiceBeanService">
+    <wsdl:port binding="tns:LIBWebServiceBeanServiceSoapBinding" name="LIBWebServiceBeanPort">
+      <soap:address location="https://www.slf.dep.no/libservice/services/lib"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
