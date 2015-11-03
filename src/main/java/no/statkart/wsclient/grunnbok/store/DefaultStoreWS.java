@@ -18,7 +18,7 @@ public class DefaultStoreWS implements StoreWS {
    private final StoreService storeService;
 
    public DefaultStoreWS(final String brukernavn, final String passord, final String endpointUrl, HostnameVerifier hostnameVerifier) {
-      storeService = WebServiceBuilder.builder(new StoreServiceWS().getStoreServicePort())
+      storeService = WebServiceBuilder.builder(new StoreServiceWS().getStoreServicePort(), StoreService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

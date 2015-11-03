@@ -18,7 +18,7 @@ public class DefaultLandbruksregisterWS implements LandbruksregisterWS {
             .build());
 
       int timeoutMillis = 10000;
-      landbruksregisterService = WebServiceBuilder.builder(libWebServiceBeanService.getLIBWebServiceBeanPort())
+      landbruksregisterService = WebServiceBuilder.builder(libWebServiceBeanService.getLIBWebServiceBeanPort(), LIBWebService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

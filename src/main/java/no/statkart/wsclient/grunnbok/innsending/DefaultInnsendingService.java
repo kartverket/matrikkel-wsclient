@@ -22,7 +22,7 @@ public class DefaultInnsendingService implements InnsendingService {
             ? innsendingServiceWS.getInnsendingServicePort(new SchemaValidationFeature())
             : innsendingServiceWS.getInnsendingServicePort();
 
-      innsendingWebService = WebServiceBuilder.builder(innsendingServicePort)
+      innsendingWebService = WebServiceBuilder.builder(innsendingServicePort, no.kartverket.grunnbok.wsapi.internal.service.innsending.InnsendingService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

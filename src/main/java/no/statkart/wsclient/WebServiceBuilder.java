@@ -23,13 +23,15 @@ public final class WebServiceBuilder<T> {
    private HostnameVerifier hostnameVerifier;
    private boolean createProxy;
    private T unproxiedService;
+   private Class<T> clazzOfWebService;
 
-   private WebServiceBuilder(T unproxiedService) {
+   private WebServiceBuilder(T unproxiedService, Class<T> clazzOfWebService) {
       this.unproxiedService = unproxiedService;
+      this.clazzOfWebService = clazzOfWebService;
    }
 
-   public static <T> WebServiceBuilder<T> builder(T unproxiedService) {
-      WebServiceBuilder<T> builder = new WebServiceBuilder<T>(unproxiedService);
+   public static <T> WebServiceBuilder<T> builder(T unproxiedService, Class<T> clazzOfWebService) {
+      WebServiceBuilder<T> builder = new WebServiceBuilder<T>(unproxiedService, clazzOfWebService);
       return builder
             .defaultTimeout()
             .defaultHostnameVerifier();
@@ -88,8 +90,10 @@ public final class WebServiceBuilder<T> {
       requestContext.put(JAXWSProperties.REQUEST_TIMEOUT, timeout);//Millis Sun/Oracle HTTP Stack
 
       if( createProxy ) {
-         InvocationHandler invocationHandler = new OutboundServiceProxyInvocationHandler(unproxiedService);
-         return (T) Proxy.newProxyInstance(unproxiedService.getClass().getClassLoader(), new Class[]{unproxiedService.getClass()}, invocationHandler);
+         //The service may be wrapped in a proxy object it self
+         T service = clazzOfWebService.cast(unproxiedService);
+         InvocationHandler invocationHandler = new OutboundServiceProxyInvocationHandler(service);
+         return (T) Proxy.newProxyInstance(clazzOfWebService.getClassLoader(), new Class[]{clazzOfWebService}, invocationHandler);
       } else {
          return unproxiedService;
       }

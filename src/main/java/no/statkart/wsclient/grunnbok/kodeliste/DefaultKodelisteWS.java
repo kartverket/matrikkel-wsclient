@@ -18,7 +18,7 @@ public class DefaultKodelisteWS implements KodelisteWS {
    private final KodelisteService kodelisteService;
 
    public DefaultKodelisteWS(String brukernavn, String passord, String endpointUrl, HostnameVerifier hostnameVerifier) {
-      kodelisteService = WebServiceBuilder.builder(new KodelisteServiceWS().getKodelisteServicePort())
+      kodelisteService = WebServiceBuilder.builder(new KodelisteServiceWS().getKodelisteServicePort(), KodelisteService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

@@ -20,7 +20,8 @@ public class DefaultRegisterenhetsrettsandelWS implements Registerenhetsrettsand
    private final RegisterenhetsrettsandelService registerenhetsrettsandelService;
 
    public DefaultRegisterenhetsrettsandelWS(String brukernavn, String passord, String endpointUrl, HostnameVerifier hostnameVerifier) {
-      registerenhetsrettsandelService = WebServiceBuilder.builder(new RegisterenhetsrettsandelServiceWS().getRegisterenhetsrettsandelServicePort())
+      registerenhetsrettsandelService = WebServiceBuilder.builder(
+            new RegisterenhetsrettsandelServiceWS().getRegisterenhetsrettsandelServicePort(), RegisterenhetsrettsandelService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

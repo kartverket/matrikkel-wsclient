@@ -17,7 +17,7 @@ public class DefaultGrunnboksutskriftWS implements GrunnboksutskriftWS {
    private final GrunnboksutskriftInternService service;
 
    public DefaultGrunnboksutskriftWS(String brukernavn, String passord, String endpointUrl, HostnameVerifier hostnameVerifier) {
-      service = WebServiceBuilder.builder(new GrunnboksutskriftInternServiceWS().getGrunnboksutskriftInternServicePort())
+      service = WebServiceBuilder.builder(new GrunnboksutskriftInternServiceWS().getGrunnboksutskriftInternServicePort(), GrunnboksutskriftInternService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

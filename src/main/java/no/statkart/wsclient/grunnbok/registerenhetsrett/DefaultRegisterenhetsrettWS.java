@@ -18,7 +18,7 @@ public class DefaultRegisterenhetsrettWS implements RegisterenhetsrettWS {
    private final RegisterenhetsrettService registerenhetsrettService;
 
    public DefaultRegisterenhetsrettWS(String brukernavn, String passord, String endpointUrl, HostnameVerifier hostnameVerifier) {
-      registerenhetsrettService = WebServiceBuilder.builder(new RegisterenhetsrettServiceWS().getRegisterenhetsrettServicePort())
+      registerenhetsrettService = WebServiceBuilder.builder(new RegisterenhetsrettServiceWS().getRegisterenhetsrettServicePort(), RegisterenhetsrettService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

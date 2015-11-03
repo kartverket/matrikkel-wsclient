@@ -23,7 +23,7 @@ public class DefaultRettsstiftelseWS implements RettsstiftelseWS {
    private final RettsstiftelseService rettsstiftelseService;
 
    public DefaultRettsstiftelseWS(String brukernavn, String passord, String endpointUrl, HostnameVerifier hostnameVerifier) {
-      rettsstiftelseService = WebServiceBuilder.builder(new RettsstiftelseServiceWS().getRettsstiftelseServicePort())
+      rettsstiftelseService = WebServiceBuilder.builder(new RettsstiftelseServiceWS().getRettsstiftelseServicePort(), RettsstiftelseService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

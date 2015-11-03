@@ -20,7 +20,7 @@ public class DefaultEndringsloggWS implements EndringsloggWS {
    private final EndringsloggService endringsloggService;
 
    public DefaultEndringsloggWS(final String brukernavn, final String passord, final String endpointUrl, HostnameVerifier hostnameVerifier) {
-      endringsloggService = WebServiceBuilder.builder(new EndringsloggServiceWS().getEndringsloggServicePort())
+      endringsloggService = WebServiceBuilder.builder(new EndringsloggServiceWS().getEndringsloggServicePort(), EndringsloggService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

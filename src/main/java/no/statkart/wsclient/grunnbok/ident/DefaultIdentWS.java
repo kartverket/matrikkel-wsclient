@@ -21,7 +21,7 @@ public class DefaultIdentWS implements IdentWS {
    private final IdentService identService;
 
    public DefaultIdentWS(String brukernavn, String passord, String endpointUrl, HostnameVerifier hostnameVerifier) {
-      identService = WebServiceBuilder.builder(new IdentServiceWS().getIdentServicePort())
+      identService = WebServiceBuilder.builder(new IdentServiceWS().getIdentServicePort(), IdentService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
