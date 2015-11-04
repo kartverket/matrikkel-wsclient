@@ -40,14 +40,14 @@ import org.joda.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
 
-public class InnsendingServiceMapper extends AbstractMapper<InnsendingServiceMapping> {
+public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
    public static final String WS_PACKAGE_NAME = "no.kartverket.grunnbok.wsapi.internal.domain.innsending";
    public static final String DOMAIN_PACKAGE_NAME = "no.statkart.wsclient.grunnbok.innsending.domene";
 
    @SuppressWarnings("unchecked")
    InnsendingServiceMapper() {
-      super(InnsendingServiceMapping.class);
+      super(Mapping.class);
       MappingResolver mappingResolver = new MappingResolver();
       mappingResolver.addPackageMapping(WS_PACKAGE_NAME, DOMAIN_PACKAGE_NAME);
       setMappingResolver(mappingResolver);
@@ -494,9 +494,9 @@ public class InnsendingServiceMapper extends AbstractMapper<InnsendingServiceMap
       return getMapping().w2d(wsBehandlingsstatus, Behandlingsstatus.class);
    }
 
-   private static class LocalDateTimeMapper extends AbstractTypeMapper<LocalDateTime, LocalDateTime, InnsendingServiceMapping> {
+   private static class LocalDateTimeMapper extends AbstractTypeMapper<LocalDateTime, LocalDateTime, Mapping> {
       public LocalDateTimeMapper() {
-         super(LocalDateTime.class, LocalDateTime.class, InnsendingServiceMapping.class);
+         super(LocalDateTime.class, LocalDateTime.class, Mapping.class);
       }
 
       @Override
@@ -510,9 +510,9 @@ public class InnsendingServiceMapper extends AbstractMapper<InnsendingServiceMap
       }
    }
 
-   private static class LocalDateMapper extends AbstractTypeMapper<LocalDate, LocalDate, InnsendingServiceMapping> {
+   private static class LocalDateMapper extends AbstractTypeMapper<LocalDate, LocalDate, Mapping> {
       public LocalDateMapper() {
-         super(LocalDate.class, LocalDate.class, InnsendingServiceMapping.class);
+         super(LocalDate.class, LocalDate.class, Mapping.class);
       }
 
       @Override
@@ -526,9 +526,9 @@ public class InnsendingServiceMapper extends AbstractMapper<InnsendingServiceMap
       }
    }
 
-   private static class LocalTimeMapper extends AbstractTypeMapper<LocalTime, LocalTime, InnsendingServiceMapping> {
+   private static class LocalTimeMapper extends AbstractTypeMapper<LocalTime, LocalTime, Mapping> {
       public LocalTimeMapper() {
-         super(LocalTime.class, LocalTime.class, InnsendingServiceMapping.class);
+         super(LocalTime.class, LocalTime.class, Mapping.class);
       }
 
       @Override
