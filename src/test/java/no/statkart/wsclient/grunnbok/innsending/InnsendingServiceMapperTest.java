@@ -14,14 +14,14 @@ import no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelsesinformasjo
 import no.statkart.wsclient.grunnbok.innsending.domene.SDODokument;
 import no.statkart.wsclient.grunnbok.innsending.domene.SignertGrunnboksutskrift;
 import no.statkart.wsclient.grunnbok.innsending.domene.Tinglysingsinformasjon;
-import no.statkart.wsclient.grunnbok.innsending.domene.builder.ForsendelseBuilder;
+import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.ForsendelseBuilder;
 import no.statkart.wsclient.grunnbok.innsending.ws.builder.BehandlingsstatusBuilder;
 import org.testng.annotations.Test;
 
 import javax.xml.bind.JAXBElement;
 import java.util.List;
 
-import static no.statkart.wsclient.grunnbok.innsending.domene.builder.ForsendelseBuilder.*;
+import static no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.ForsendelseBuilder.*;
 import static no.statkart.wsclient.grunnbok.innsending.ws.builder.BehandlingsstatusBuilder.BEGRUNNELSE_ELEMENTNAVN;
 import static no.statkart.wsclient.grunnbok.innsending.ws.builder.BehandlingsstatusBuilder.BEGRUNNELSE_KODEVERDI;
 import static no.statkart.wsclient.grunnbok.innsending.ws.builder.BehandlingsstatusBuilder.BEGRUNNELSE_TEKST;
