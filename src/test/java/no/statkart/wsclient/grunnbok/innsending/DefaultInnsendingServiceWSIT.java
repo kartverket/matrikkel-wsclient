@@ -17,17 +17,17 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 @Test
-public class DefaultInnsendingServiceIT {
+public class DefaultInnsendingServiceWSIT {
 
    private static final String ADDRESS_TO_LOCAL_STUB_SERVICE = "http://localhost:9000/services/InnsendingService";
 
    private static Endpoint endpoint;
-   private static InnsendingService innsendingService;
+   private static InnsendingServiceWS innsendingService;
 
    @BeforeTest
    public static void setUp() {
       endpoint = Endpoint.publish(ADDRESS_TO_LOCAL_STUB_SERVICE, new InnsendingServiceStub());
-      innsendingService = new DefaultInnsendingService("grunnbokdevEkstern", "", ADDRESS_TO_LOCAL_STUB_SERVICE, true);
+      innsendingService = new DefaultInnsendingServiceWS("grunnbokdevEkstern", "", ADDRESS_TO_LOCAL_STUB_SERVICE, true);
    }
 
    @AfterTest
