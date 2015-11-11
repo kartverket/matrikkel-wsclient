@@ -123,6 +123,7 @@ task wsImportInnsendingService(dependsOn: createGeneratedDir) {
             destDir: sourceSets.main.output.classesDir,
             sourcedestdir: generatedSrcDir,
             wsdl: sourceWsdl,
+            wsdlLocation: '/innsending/InnsendingServiceWS.wsdl',
             binding: jaxbBindingsFile,
             xnocompile: true)
   }
@@ -139,6 +140,7 @@ task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
             destdir: sourceSets.main.output.classesDir,
             sourcedestdir: generatedSrcDir,
             wsdl: sourceWsdl,
+            wsdlLocation: '/landbruksregisteret/landbruksregisteret.wsdl',
             xnocompile: true) {
       xjcarg(value: "-Xequals")
       xjcarg(value: "-XhashCode")
@@ -158,7 +160,7 @@ task wsImportGrunnbok(dependsOn: createGeneratedDir) {
               destdir: sourceSets.main.output.classesDir,
               sourcedestdir: generatedSrcDir,
               wsdl: file.file,
-              // wsdlLocation: '/grunnbok/' + file.getRelativePath()
+              wsdlLocation: '/grunnbok/' + file.getRelativePath(),
               xnocompile: true) {
         xjcarg(value: "-Xequals")
         xjcarg(value: "-XhashCode")
