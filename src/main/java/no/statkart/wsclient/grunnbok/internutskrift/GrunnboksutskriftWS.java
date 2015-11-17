@@ -1,4 +1,4 @@
-package no.statkart.wsclient.grunnbok.grunnboksutskrift;
+package no.statkart.wsclient.grunnbok.internutskrift;
 
 import no.kartverket.grunnbok.wsapi.v1.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v1.domain.register.registerenhet.RegisterenhetId;
