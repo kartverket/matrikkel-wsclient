@@ -12,11 +12,11 @@ import javax.net.ssl.HostnameVerifier;
 /**
  *
  */
-public class DefaultGrunnboksutskriftWS implements GrunnboksutskriftWS {
+public class DefaultGrunnboksutskriftInternWS implements GrunnboksutskriftInternWS {
 
    private final GrunnboksutskriftInternService service;
 
-   public DefaultGrunnboksutskriftWS(String brukernavn, String passord, String endpointUrl, HostnameVerifier hostnameVerifier) {
+   public DefaultGrunnboksutskriftInternWS(String brukernavn, String passord, String endpointUrl, HostnameVerifier hostnameVerifier) {
       service = WebServiceBuilder.builder(new GrunnboksutskriftInternServiceWS().getGrunnboksutskriftInternServicePort(), GrunnboksutskriftInternService.class)
             .withBruker(brukernavn)
             .withPassord(passord)

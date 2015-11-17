@@ -7,7 +7,7 @@ import no.kartverket.grunnbok.wsapi.v1.service.exception.ServiceException;
 /**
  *
  */
-public interface GrunnboksutskriftWS {
+public interface GrunnboksutskriftInternWS {
 
    String ubekreftetHistoriskGrunnboksutskrift(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException;
 
