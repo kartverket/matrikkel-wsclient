@@ -9,16 +9,25 @@ sourceCompatibility = sourceCompatibilityVersion
 
 def generatedSrcDir = file("$buildDir/generated-src")
 
+configurations {
+  provided
+}
+
 sourceSets {
   main {
+    compileClasspath += configurations.provided
     java {
       srcDirs 'src/main/java', generatedSrcDir
     }
   }
+  test {
+    runtimeClasspath += configurations.provided
+  }
 }
 
-//Needed to make IDEA see the generated classes
 idea.module {
+  scopes.PROVIDED.plus += [ configurations.provided ]
+  //Needed to make IDEA see the generated classes
   excludeDirs -= file("$buildDir")
   sourceDirs += generatedSrcDir
 }
@@ -64,7 +73,7 @@ dependencies {
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-tools:'+jaxb2Version
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-commons-lang:2.3'
 
-  compile 'com.sun.xml.ws:jaxws-rt:2.2.10'
+  provided 'com.sun.xml.ws:jaxws-rt:2.2.10'
   compile 'no.statkart.skif:skif-service-common:2.4-build64'
   compile 'joda-time:joda-time:2.8.2'
   compile 'com.google.guava:guava:18.0'
