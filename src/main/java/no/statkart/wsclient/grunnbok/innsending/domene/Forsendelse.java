@@ -7,8 +7,7 @@ import java.util.List;
 
 public class Forsendelse {
 
-   private String innsendingId;
-   private String innsendersReferanse;
+   private String forsendelsesreferanse;
    private SignertMelding signertMelding;
    private UsignertMelding usignertMelding;
    private List<Signatur> ikkeDigitaleSignaturer = Lists.newArrayList();
@@ -21,20 +20,12 @@ public class Forsendelse {
       return ikkeDigitaleSignaturer;
    }
 
-   public String getInnsendersReferanse() {
-      return innsendersReferanse;
+   public String getForsendelsesreferanse() {
+      return forsendelsesreferanse;
    }
 
-   public void setInnsendersReferanse(String innsendersReferanse) {
-      this.innsendersReferanse = innsendersReferanse;
-   }
-
-   public String getInnsendingId() {
-      return innsendingId;
-   }
-
-   public void setInnsendingId(String innsendingId) {
-      this.innsendingId = innsendingId;
+   public void setForsendelsesreferanse(String forsendelsesreferanse) {
+      this.forsendelsesreferanse = forsendelsesreferanse;
    }
 
    public SignertMelding getSignertMelding() {

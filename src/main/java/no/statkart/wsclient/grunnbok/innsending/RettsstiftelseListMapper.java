@@ -1,16 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending;
 
 import com.google.common.reflect.TypeToken;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.AnmerkningPaaPerson;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.AnnenHeftelse;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Matrikkelenhetsendring;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.ObjectFactory;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.OverdragelseAvRegisterenhetsrett;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Pant;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Rettsstiftelse;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.RettsstiftelseList;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Sletting;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Tvangsforretning;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
 import no.statkart.skif.mapper.Mapping;
 import no.statkart.skif.mapper.TypeMapper;
 import no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring;
@@ -20,19 +11,9 @@ import no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstift
 import javax.xml.bind.JAXBElement;
 import java.util.List;
 
-import static no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FRADELING;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OVERFOERING_FRA_TIDLIGERE_FESTENUMMER;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.SAMMENSLAAING_AV_MATRIKKELENHETER;
-import static no.statkart.wsclient.grunnbok.innsending.domene.OverdragelseAvRegisterenhetsrett.TypeOverdragelseAvRegisterenhetsrett.EIERSKIFTE_BORETTSLAGSANDEL;
-import static no.statkart.wsclient.grunnbok.innsending.domene.OverdragelseAvRegisterenhetsrett.TypeOverdragelseAvRegisterenhetsrett.EIERSKIFTE_MATRIKKELENHET;
-import static no.statkart.wsclient.grunnbok.innsending.domene.OverdragelseAvRegisterenhetsrett.TypeOverdragelseAvRegisterenhetsrett.OVERDRAGELSE_AV_FESTERETT;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.ANMERKNING_PAA_PERSON;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.ANNEN_HEFTELSE;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.MATRIKKELENHETSENDRING;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.OVERDRAGELSE_AV_REGISTERENHETSRETT;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.PANT;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.SLETTING;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.TVANGSFORRETNING;
+import static no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.*;
+import static no.statkart.wsclient.grunnbok.innsending.domene.OverdragelseAvRegisterenhetsrett.TypeOverdragelseAvRegisterenhetsrett.*;
+import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.*;
 
 /**
  *

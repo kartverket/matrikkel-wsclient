@@ -1,8 +1,8 @@
 package no.statkart.wsclient.grunnbok.innsending.ws.builder;
 
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Registerenhet;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.SDODokument;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.SignertGrunnboksutskrift;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Registerenhet;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SDODokument;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskrift;
 
 /**
  *
@@ -10,6 +10,7 @@ import no.kartverket.grunnbok.wsapi.internal.domain.innsending.SignertGrunnboksu
 public class SignertGrunnboksutskriftBuilder {
    protected Registerenhet gjelderFor;
    protected SDODokument signertUtskrift;
+   private String dokumentreferanse;
 
    private SignertGrunnboksutskriftBuilder() {
    }
@@ -28,14 +29,21 @@ public class SignertGrunnboksutskriftBuilder {
       return this;
    }
 
+   public SignertGrunnboksutskriftBuilder withDokumentreferanse(String dokumentreferanse) {
+      this.dokumentreferanse = dokumentreferanse;
+      return this;
+   }
+
    public SignertGrunnboksutskriftBuilder but() {
-      return aSignertGrunnboksutskrift().withGjelderFor(gjelderFor).withSignertUtskrift(signertUtskrift);
+      return aSignertGrunnboksutskrift().withGjelderFor(gjelderFor).withSignertUtskrift(signertUtskrift)
+            .withDokumentreferanse(dokumentreferanse);
    }
 
    public SignertGrunnboksutskrift build() {
       SignertGrunnboksutskrift signertGrunnboksutskrift = new SignertGrunnboksutskrift();
       signertGrunnboksutskrift.setGjelderFor(gjelderFor);
       signertGrunnboksutskrift.setSignertUtskrift(signertUtskrift);
+      signertGrunnboksutskrift.setDokumentreferanse(dokumentreferanse);
       return signertGrunnboksutskrift;
    }
 }

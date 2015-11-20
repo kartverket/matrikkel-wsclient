@@ -1,20 +1,20 @@
 package no.statkart.wsclient.grunnbok.innsending;
 
 import com.sun.xml.ws.developer.SchemaValidationFeature;
-import no.kartverket.grunnbok.wsapi.internal.service.innsending.InnsendingService;
-import no.kartverket.grunnbok.wsapi.internal.service.innsending.ServiceException;
+import no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingService;
+import no.kartverket.grunnbok.wsapi.v2.service.innsending.ServiceException;
 import no.statkart.wsclient.HandlerResolverBuilder;
 import no.statkart.wsclient.WebServiceBuilder;
-import no.statkart.wsclient.grunnbok.innsending.domene.Behandlingsstatus;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
+import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus;
 
 public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
 
    private final InnsendingService innsendingWebService;
-   private InnsendingServiceMapper innsendingServiceMapper = new InnsendingServiceMapper();
+   private final InnsendingServiceMapper innsendingServiceMapper = new InnsendingServiceMapper();
 
-   public DefaultInnsendingServiceWS(final String brukernavn, final String passord, final String endpointUrl, boolean enableSchemaValidation) {
-      no.kartverket.grunnbok.wsapi.internal.service.innsending.InnsendingServiceWS webServiceClient = new no.kartverket.grunnbok.wsapi.internal.service.innsending.InnsendingServiceWS();
+   public DefaultInnsendingServiceWS(String brukernavn, String passord, String endpointUrl, boolean enableSchemaValidation) {
+      no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS webServiceClient = new no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS();
       webServiceClient.setHandlerResolver(HandlerResolverBuilder.builder()
             .enableLogging().build());
 
@@ -22,7 +22,7 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
             ? webServiceClient.getInnsendingServicePort(new SchemaValidationFeature())
             : webServiceClient.getInnsendingServicePort();
 
-      innsendingWebService = WebServiceBuilder.builder(innsendingServicePort, no.kartverket.grunnbok.wsapi.internal.service.innsending.InnsendingService.class)
+      innsendingWebService = WebServiceBuilder.builder(innsendingServicePort, InnsendingService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
@@ -34,36 +34,27 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
    }
 
    @Override
-   public String allokerInnsendingId() {
+   public Forsendelsesstatus valider(Forsendelse forsendelse) {
       try {
-         return innsendingWebService.allokerInnsendingId();
+         return innsendingServiceMapper.mapForsendelsesstatus(innsendingWebService.valider(innsendingServiceMapper.mapForsendelse(forsendelse)));
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
       }
    }
 
    @Override
-   public Behandlingsstatus validerMelding(Forsendelse forsendelse) {
+   public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
       try {
-         return innsendingServiceMapper.mapBehandlingsstatus(innsendingWebService.validerMelding(innsendingServiceMapper.mapForsendelse(forsendelse)));
+         return innsendingServiceMapper.mapForsendelsesstatus(innsendingWebService.sendTilTinglysing(innsendingServiceMapper.mapForsendelse(forsendelse)));
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
       }
    }
 
    @Override
-   public Behandlingsstatus tinglysMelding(Forsendelse forsendelse) {
+   public Forsendelsesstatus hentStatus(String innsendingId) {
       try {
-         return innsendingServiceMapper.mapBehandlingsstatus(innsendingWebService.tinglysMelding(innsendingServiceMapper.mapForsendelse(forsendelse)));
-      } catch( ServiceException e ) {
-         throw new RuntimeException(e);
-      }
-   }
-
-   @Override
-   public Behandlingsstatus findBehandlingsstatus(String innsendingId) {
-      try {
-         return innsendingServiceMapper.mapBehandlingsstatus(innsendingWebService.findBehandlingsstatus(innsendingId));
+         return innsendingServiceMapper.mapForsendelsesstatus(innsendingWebService.hentStatus(innsendingId));
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
       }

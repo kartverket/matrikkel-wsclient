@@ -1,7 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending.ws.builder;
 
 
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Matrikkelenhet;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhet;
 
 /**
  *

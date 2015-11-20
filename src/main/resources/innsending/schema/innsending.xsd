@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xs:schema
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        xmlns:inn="http://kartverket.no/grunnbok/wsapi/internal/domain/innsending"
+        xmlns:inn="http://kartverket.no/grunnbok/wsapi/v2/domain/innsending"
         elementFormDefault="qualified"
         version="1.0"
-        targetNamespace="http://kartverket.no/grunnbok/wsapi/internal/domain/innsending">
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/innsending">
 
     <!--
     Gyldige rotelementer
     -->
     <xs:element name="forsendelse" type="inn:Forsendelse"/>
-    <xs:element name="behandlingsstatus" type="inn:Behandlingsstatus"/>
-    <xs:element name="innsendingId" type="xs:string"/>
+    <xs:element name="forsendelsesstatus" type="inn:Forsendelsesstatus"/>
     <xs:element name="dokument" type="inn:Dokument"/>
     <xs:element name="foelgebrev" type="inn:Foelgebrev"/>
+    <xs:element name="innsendingId" type="xs:string"/>
 
     <xs:complexType name="Forsendelse">
         <xs:sequence>
-            <xs:element name="innsendingId" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="innsendersReferanse" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="forsendelsesreferanse" type="xs:string"/>
             <xs:element name="signertMelding" type="inn:SignertMelding" minOccurs="0" maxOccurs="1"/>
             <xs:element name="usignertMelding" type="inn:UsignertMelding" minOccurs="0" maxOccurs="1"/>
             <xs:element name="ikkeDigitaleSignaturer" type="inn:SignaturList" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="Behandlingsstatus">
+    <xs:complexType name="Forsendelsesstatus">
         <xs:sequence>
             <xs:element name="innsendingId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="forsendelsesreferanse" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="registreringstidspunkt" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
             <!-- representerer sak.behandlingsutfall-->
             <xs:element name="behandlingsutfall" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -97,7 +97,8 @@
     <xs:complexType name="SignertGrunnboksutskrift">
         <xs:sequence>
             <xs:element name="gjelderFor" type="inn:Registerenhet"/>
-            <xs:element name="signertUtskrift" type="inn:SDODokument" />
+            <xs:element name="signertUtskrift" type="inn:SDODokument"/>
+            <xs:element name="dokumentreferanse" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -256,7 +257,7 @@
 
     <xs:complexType name="Matrikkelenhet">
         <xs:sequence>
-            <xs:element name="kommunenummer" type="inn:Kommunenummer"/>
+            <xs:element name="kommunenummer" type="xs:string"/>
             <!-- Vi ønsker kanskje ikke å hekte på navn på veien ut.
             -->
             <xs:element name="kommunenavn" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -282,7 +283,8 @@
 
     <xs:complexType name="MatrikkelenhetFraTilList">
         <xs:sequence>
-            <xs:element name="matrikkelenhetFraTil" type="inn:MatrikkelenhetFraTil" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="matrikkelenhetFraTil" type="inn:MatrikkelenhetFraTil" minOccurs="0"
+                        maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -610,11 +612,5 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-
-    <xs:simpleType name="Kommunenummer">
-        <xs:restriction base="xs:string">
-            <xs:length value="4"/>
-        </xs:restriction>
-    </xs:simpleType>
 
 </xs:schema>

@@ -1,7 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending;
 
 import com.google.common.collect.Lists;
-import no.statkart.wsclient.grunnbok.innsending.domene.Behandlingsstatus;
+import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus;
 import no.statkart.wsclient.grunnbok.innsending.domene.SDODokument;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.ForsendelseBuilder;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.SDODokumentBuilder;
@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.WebServiceException;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 @Test
@@ -35,14 +34,9 @@ public class DefaultInnsendingServiceWSIT {
       endpoint.stop();
    }
 
-   public void allokerInnsendingId() throws Exception {
-      String allokertInnsendingsId = innsendingService.allokerInnsendingId();
-      assertEquals(allokertInnsendingsId, "15");
-   }
-
    public void tinglysMelding() throws Exception {
-      Behandlingsstatus behandlingsstatus = innsendingService.tinglysMelding(ForsendelseBuilder.defaultForsendelse().build());
-      assertNotNull(behandlingsstatus);
+      Forsendelsesstatus forsendelsesstatus = innsendingService.sendTilTinglysing(ForsendelseBuilder.defaultForsendelse().build());
+      assertNotNull(forsendelsesstatus);
    }
 
    @Test(expectedExceptions = WebServiceException.class)
@@ -54,7 +48,7 @@ public class DefaultInnsendingServiceWSIT {
                   .withDokumenter(Lists.newArrayList(sdoDokumentWithoutBytes))
                   .build());
 
-      innsendingService.tinglysMelding(invalidForsendelse.build());
+      innsendingService.sendTilTinglysing(invalidForsendelse.build());
    }
 
 }

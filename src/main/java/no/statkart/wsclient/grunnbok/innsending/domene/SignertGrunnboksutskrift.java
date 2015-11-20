@@ -8,6 +8,15 @@ public class SignertGrunnboksutskrift {
 
    private Registerenhet gjelderFor;
    private SDODokument signertUtskrift;
+   private String dokumentreferanse;
+
+   public String getDokumentreferanse() {
+      return dokumentreferanse;
+   }
+
+   public void setDokumentreferanse(String dokumentreferanse) {
+      this.dokumentreferanse = dokumentreferanse;
+   }
 
    public Registerenhet getGjelderFor() {
       return gjelderFor;

@@ -11,6 +11,7 @@ import no.statkart.wsclient.grunnbok.innsending.domene.SignertGrunnboksutskrift;
 public class SignertGrunnboksutskriftBuilder {
    protected Registerenhet gjelderFor;
    protected SDODokument signertUtskrift;
+   protected String dokumentreferanse;
 
    private SignertGrunnboksutskriftBuilder() {
    }
@@ -29,14 +30,21 @@ public class SignertGrunnboksutskriftBuilder {
       return this;
    }
 
+   public SignertGrunnboksutskriftBuilder withDokumentreferanse(String dokumentreferanse) {
+      this.dokumentreferanse = dokumentreferanse;
+      return this;
+   }
+
    public SignertGrunnboksutskriftBuilder but() {
-      return aSignertGrunnboksutskrift().withGjelderFor(gjelderFor).withSignertUtskrift(signertUtskrift);
+      return aSignertGrunnboksutskrift().withGjelderFor(gjelderFor).withSignertUtskrift(signertUtskrift)
+            .withDokumentreferanse(dokumentreferanse);
    }
 
    public SignertGrunnboksutskrift build() {
       SignertGrunnboksutskrift signertGrunnboksutskrift = new SignertGrunnboksutskrift();
       signertGrunnboksutskrift.setGjelderFor(gjelderFor);
       signertGrunnboksutskrift.setSignertUtskrift(signertUtskrift);
+      signertGrunnboksutskrift.setDokumentreferanse(dokumentreferanse);
       return signertGrunnboksutskrift;
    }
 }

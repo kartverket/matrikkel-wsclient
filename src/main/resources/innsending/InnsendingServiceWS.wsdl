@@ -1,79 +1,67 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-             xmlns:tns="http://kartverket.no/grunnbok/wsapi/internal/service/innsending"
+             xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/innsending"
              xmlns:xs="http://www.w3.org/2001/XMLSchema"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              name="InnsendingServiceWS"
-             targetNamespace="http://kartverket.no/grunnbok/wsapi/internal/service/innsending"
+             targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/innsending"
              xmlns="http://schemas.xmlsoap.org/wsdl/"
-             xsi:schemaLocation="http://kartverket.no/grunnbok/wsapi/internal/service/innsending innsendingParameters.xsd">
+             xsi:schemaLocation="http://kartverket.no/grunnbok/wsapi/v2/service/innsending innsendingParameters.xsd">
 
     <types>
         <xs:schema>
-            <xs:import namespace="http://kartverket.no/grunnbok/wsapi/internal/service/innsending" schemaLocation="innsendingParameters.xsd"/>
+            <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/innsending" schemaLocation="innsendingParameters.xsd"/>
         </xs:schema>
     </types>
 
-    <message name="tinglysMeldingRequest">
-        <part name="parameters" element="tns:tinglysMelding"/>
+    <message name="sendTilTinglysingRequest">
+        <part name="parameters" element="tns:sendTilTinglysing"/>
     </message>
-    <message name="tinglysMeldingResponse">
-        <part name="parameters" element="tns:tinglysMeldingResponse"/>
-    </message>
-
-    <message name="validerMeldingRequest">
-        <part name="parameters" element="tns:validerMelding"/>
-    </message>
-    <message name="validerMeldingResponse">
-        <part name="parameters" element="tns:validerMeldingResponse"/>
+    <message name="sendTilTinglysingResponse">
+        <part name="parameters" element="tns:sendTilTinglysingResponse"/>
     </message>
 
-    <message name="allokerInnsendingIdRequest">
-        <part name="parameters" element="tns:allokerInnsendingId"/>
+    <message name="validerRequest">
+        <part name="parameters" element="tns:valider"/>
     </message>
-    <message name="allokerInnsendingIdResponse">
-        <part name="parameters" element="tns:allokerInnsendingIdResponse"/>
+    <message name="validerResponse">
+        <part name="parameters" element="tns:validerResponse"/>
     </message>
 
-    <message name="findBehandlingsstatusRequest">
-        <part name="parameters" element="tns:findBehandlingsstatus"/>
+    <message name="hentStatusRequest">
+        <part name="parameters" element="tns:hentStatus"/>
     </message>
-    <message name="findBehandlingsstatusResponse">
-        <part name="parameters" element="tns:findBehandlingsstatusResponse"/>
+    <message name="hentStatusResponse">
+        <part name="parameters" element="tns:hentStatusResponse"/>
     </message>
 
     <message name="serviceException">
         <part name="fault" element="tns:serviceException"/>
     </message>
-    
+
     <portType name="InnsendingService">
-        <operation name="tinglysMelding">
-            <input message="tns:tinglysMeldingRequest"/>
-            <output message="tns:tinglysMeldingResponse"/>
+        <operation name="sendTilTinglysing">
+            <input message="tns:sendTilTinglysingRequest"/>
+            <output message="tns:sendTilTinglysingResponse"/>
             <fault message="tns:serviceException" name="ServiceException"/>
         </operation>
-        <operation name="validerMelding">
-            <input message="tns:validerMeldingRequest"/>
-            <output message="tns:validerMeldingResponse"/>
-            <fault message="tns:serviceException" name="ServiceException"/>
-        </operation>
-
-        <operation name="findBehandlingsstatus">
-            <input message="tns:findBehandlingsstatusRequest"/>
-            <output message="tns:findBehandlingsstatusResponse"/>
+        <operation name="valider">
+            <input message="tns:validerRequest"/>
+            <output message="tns:validerResponse"/>
             <fault message="tns:serviceException" name="ServiceException"/>
         </operation>
 
-        <operation name="allokerInnsendingId">
-            <input message="tns:allokerInnsendingIdRequest"/>
-            <output message="tns:allokerInnsendingIdResponse"/>
+        <operation name="hentStatus">
+            <input message="tns:hentStatusRequest"/>
+            <output message="tns:hentStatusResponse"/>
             <fault message="tns:serviceException" name="ServiceException"/>
         </operation>
+
     </portType>
 
     <binding name="InnsendingServicePortBinding" type="tns:InnsendingService">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-        <operation name="tinglysMelding">
+        <operation name="sendTilTinglysing">
             <soap:operation soapAction=""/>
             <input>
                 <soap:body use="literal"/>
@@ -85,7 +73,7 @@
                 <soap:fault name="ServiceException" use="literal"/>
             </fault>
         </operation>
-        <operation name="validerMelding">
+        <operation name="valider">
             <soap:operation soapAction=""/>
             <input>
                 <soap:body use="literal"/>
@@ -97,19 +85,7 @@
                 <soap:fault name="ServiceException" use="literal"/>
             </fault>
         </operation>
-        <operation name="findBehandlingsstatus">
-            <soap:operation soapAction=""/>
-            <input>
-                <soap:body use="literal"/>
-            </input>
-            <output>
-                <soap:body use="literal"/>
-            </output>
-            <fault name="ServiceException">
-                <soap:fault name="ServiceException" use="literal"/>
-            </fault>
-        </operation>
-        <operation name="allokerInnsendingId">
+        <operation name="hentStatus">
             <soap:operation soapAction=""/>
             <input>
                 <soap:body use="literal"/>

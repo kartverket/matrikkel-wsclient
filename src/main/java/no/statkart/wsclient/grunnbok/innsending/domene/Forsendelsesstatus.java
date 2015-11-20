@@ -3,9 +3,10 @@ package no.statkart.wsclient.grunnbok.innsending.domene;
 
 import org.joda.time.LocalDateTime;
 
-public class Behandlingsstatus {
+public class Forsendelsesstatus {
 
    private String innsendingId;
+   private String forsendelsesreferanse;
    private LocalDateTime registreringstidspunkt;
    private String behandlingsutfall;
    private String saksstatus;
@@ -26,6 +27,14 @@ public class Behandlingsstatus {
 
    public void setInnsendingId(String innsendingId) {
       this.innsendingId = innsendingId;
+   }
+
+   public String getForsendelsesreferanse() {
+      return forsendelsesreferanse;
+   }
+
+   public void setForsendelsesreferanse(String forsendelsesreferanse) {
+      this.forsendelsesreferanse = forsendelsesreferanse;
    }
 
    public String getBehandlingsutfall() {

@@ -1,9 +1,9 @@
 package no.statkart.wsclient.grunnbok.innsending;
 
 import com.google.common.collect.Maps;
-import no.statkart.wsclient.grunnbok.innsending.domene.Behandlingsstatus;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
-import no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatus.BehandlingsstatusBuilder;
+import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus;
+import no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatus.ForsendelsesstatusBuilder;
 
 import java.util.Map;
 
@@ -12,42 +12,34 @@ import java.util.Map;
  */
 public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
-   private int innsendingIdCounter = 0;
-   private Map<Integer, Behandlingsstatus> tinglysMeldingResponseByInnsendingId = Maps.newHashMap();
+   private Map<String, Forsendelsesstatus> tinglysMeldingResponseByInnsendingId = Maps.newHashMap();
 
    @Override
-   public String allokerInnsendingId() {
-      innsendingIdCounter++;
-      return String.valueOf(innsendingIdCounter);
-   }
-
-   @Override
-   public Behandlingsstatus validerMelding(Forsendelse forsendelse) {
+   public Forsendelsesstatus valider(Forsendelse forsendelse) {
       throw new UnsupportedOperationException("Koster penger!");
    }
 
    @Override
-   public Behandlingsstatus tinglysMelding(Forsendelse forsendelse) {
-      int innsendingId = Integer.valueOf(forsendelse.getInnsendingId());
-      Behandlingsstatus behandlingsstatus = tinglysMeldingResponseByInnsendingId.get(innsendingId);
-      if( behandlingsstatus == null ) {
-         throw new RuntimeException("The stub must be provided with a Behandlingsstatus for innsendingId: " + innsendingId);
+   public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
+      String forsendelsesreferanse = forsendelse.getForsendelsesreferanse();
+      Forsendelsesstatus forsendelsesstatus = tinglysMeldingResponseByInnsendingId.get(forsendelsesreferanse);
+      if (forsendelsesstatus == null) {
+         throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for forsendelsesreferanse: " + forsendelsesreferanse);
       }
-      return behandlingsstatus;
+      return forsendelsesstatus;
    }
 
    @Override
-   public Behandlingsstatus findBehandlingsstatus(String innsendingId) {
-      int innsendingIdAsInt = Integer.valueOf(innsendingId);
-      Behandlingsstatus behandlingsstatus = tinglysMeldingResponseByInnsendingId.get(innsendingIdAsInt);
-      if( behandlingsstatus == null ) {
-         throw new RuntimeException("The stub must be provided with a Behandlingsstatus for innsendingId: " + innsendingIdAsInt);
+   public Forsendelsesstatus hentStatus(String forsendelsesreferanse) {
+      Forsendelsesstatus forsendelsesstatus = tinglysMeldingResponseByInnsendingId.get(forsendelsesreferanse);
+      if (forsendelsesstatus == null) {
+         throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for forsendelsesreferanse: " + forsendelsesreferanse);
       }
-      return behandlingsstatus;
+      return forsendelsesstatus;
    }
 
-   public void behandlingStatusForInnsendingId(int innsendingId, BehandlingsstatusBuilder statusBuilder) {
-      tinglysMeldingResponseByInnsendingId.put(innsendingId, statusBuilder.build());
+   public void behandlingStatusForInnsendingId(String forsendelsesreferanse, ForsendelsesstatusBuilder statusBuilder) {
+      tinglysMeldingResponseByInnsendingId.put(forsendelsesreferanse, statusBuilder.build());
    }
 
 }

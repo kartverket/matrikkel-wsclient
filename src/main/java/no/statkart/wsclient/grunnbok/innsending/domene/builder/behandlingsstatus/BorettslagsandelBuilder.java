@@ -1,7 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatus;
 
 
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Borettslagsandel;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Borettslagsandel;
 
 /**
  *

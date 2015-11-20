@@ -1,16 +1,14 @@
 package no.statkart.wsclient.grunnbok.innsending;
 
-import no.statkart.wsclient.grunnbok.innsending.domene.Behandlingsstatus;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
+import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus;
 
 public interface InnsendingServiceWS {
 
-   String allokerInnsendingId();
+   Forsendelsesstatus valider(Forsendelse forsendelse);
 
-   Behandlingsstatus validerMelding(Forsendelse forsendelse);
+   Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse);
 
-   Behandlingsstatus tinglysMelding(Forsendelse forsendelse);
-
-   Behandlingsstatus findBehandlingsstatus(String innsendingId);
+   Forsendelsesstatus hentStatus(String innsendingId);
 
 }

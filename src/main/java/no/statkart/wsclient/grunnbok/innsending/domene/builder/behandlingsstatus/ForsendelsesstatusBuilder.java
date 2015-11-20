@@ -1,9 +1,8 @@
 package no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatus;
 
 import com.google.common.collect.Lists;
-
 import no.statkart.wsclient.grunnbok.innsending.domene.Avvisningsinformasjon;
-import no.statkart.wsclient.grunnbok.innsending.domene.Behandlingsstatus;
+import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus;
 import no.statkart.wsclient.grunnbok.innsending.domene.Tinglysingsinformasjon;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDateTime;
@@ -11,7 +10,7 @@ import org.joda.time.LocalDateTime;
 /**
  *
  */
-public class BehandlingsstatusBuilder {
+public class ForsendelsesstatusBuilder {
    public static final int DOKUMENTNUMMER = 22;
    public static final String DEFAULT_INNSENDING_ID = "1";
    public static final LocalDateTime DEFAULT_REGISTRERINGS_TIDSPUNKT = new LocalDateTime(2015, DateTimeConstants.OCTOBER, 16, 12, 5, 6, 178);
@@ -37,69 +36,81 @@ public class BehandlingsstatusBuilder {
    public static final String KONTROLL_RESULTAT_NAVN = "Resultat 1";
    public static final int KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS = 2;
    public static final String KONTROLL_RESULTAT_UTFALL = "Ikke tinglyst";
+   public static final String DEFAULT_FORSENDELSESREFERANSE = "67XY";
 
    protected Avvisningsinformasjon avvisningsinformasjon;
    protected String innsendingId;
+   private String forsendelsesreferanse;
    protected LocalDateTime registreringstidspunkt;
    protected String behandlingsutfall;
    protected String saksstatus;
    protected Tinglysingsinformasjon tinglysingsinformasjon;
 
-   private BehandlingsstatusBuilder() {
+   private ForsendelsesstatusBuilder() {
    }
 
-   public static BehandlingsstatusBuilder aBehandlingsstatus() {
-      return new BehandlingsstatusBuilder();
+   public static ForsendelsesstatusBuilder aBehandlingsstatus() {
+      return new ForsendelsesstatusBuilder();
    }
 
-   public BehandlingsstatusBuilder withAvvisningsinformasjon(Avvisningsinformasjon avvisningsinformasjon) {
+   public ForsendelsesstatusBuilder withAvvisningsinformasjon(Avvisningsinformasjon avvisningsinformasjon) {
       this.avvisningsinformasjon = avvisningsinformasjon;
       return this;
    }
 
-   public BehandlingsstatusBuilder withInnsendingId(String innsendingId) {
+   public ForsendelsesstatusBuilder withInnsendingId(String innsendingId) {
       this.innsendingId = innsendingId;
       return this;
    }
 
-   public BehandlingsstatusBuilder withRegistreringstidspunkt(LocalDateTime registreringstidspunkt) {
+   public ForsendelsesstatusBuilder withForsendelsesreferanse(String forsendelsesreferanse) {
+      this.forsendelsesreferanse = forsendelsesreferanse;
+      return this;
+   }
+
+   public ForsendelsesstatusBuilder withRegistreringstidspunkt(LocalDateTime registreringstidspunkt) {
       this.registreringstidspunkt = registreringstidspunkt;
       return this;
    }
 
-   public BehandlingsstatusBuilder withBehandlingsutfall(String behandlingsutfall) {
+   public ForsendelsesstatusBuilder withBehandlingsutfall(String behandlingsutfall) {
       this.behandlingsutfall = behandlingsutfall;
       return this;
    }
 
-   public BehandlingsstatusBuilder withSaksstatus(String saksstatus) {
+   public ForsendelsesstatusBuilder withSaksstatus(String saksstatus) {
       this.saksstatus = saksstatus;
       return this;
    }
 
-   public BehandlingsstatusBuilder withTinglysingsinformasjon(Tinglysingsinformasjon tinglysingsinformasjon) {
+   public ForsendelsesstatusBuilder withTinglysingsinformasjon(Tinglysingsinformasjon tinglysingsinformasjon) {
       this.tinglysingsinformasjon = tinglysingsinformasjon;
       return this;
    }
 
-   public BehandlingsstatusBuilder but() {
-      return aBehandlingsstatus().withAvvisningsinformasjon(avvisningsinformasjon).withInnsendingId(innsendingId).withRegistreringstidspunkt(registreringstidspunkt).withBehandlingsutfall(behandlingsutfall).withSaksstatus(saksstatus).withTinglysingsinformasjon(tinglysingsinformasjon);
+   public ForsendelsesstatusBuilder but() {
+      return aBehandlingsstatus().withAvvisningsinformasjon(avvisningsinformasjon).withInnsendingId(innsendingId)
+            .withForsendelsesreferanse(forsendelsesreferanse).withRegistreringstidspunkt(registreringstidspunkt)
+            .withBehandlingsutfall(behandlingsutfall).withSaksstatus(saksstatus)
+            .withTinglysingsinformasjon(tinglysingsinformasjon);
    }
 
-   public Behandlingsstatus build() {
-      Behandlingsstatus behandlingsstatus = new Behandlingsstatus();
-      behandlingsstatus.setAvvisningsinformasjon(avvisningsinformasjon);
-      behandlingsstatus.setInnsendingId(innsendingId);
-      behandlingsstatus.setRegistreringstidspunkt(registreringstidspunkt);
-      behandlingsstatus.setBehandlingsutfall(behandlingsutfall);
-      behandlingsstatus.setSaksstatus(saksstatus);
-      behandlingsstatus.setTinglysingsinformasjon(tinglysingsinformasjon);
-      return behandlingsstatus;
+   public Forsendelsesstatus build() {
+      Forsendelsesstatus forsendelsesstatus = new Forsendelsesstatus();
+      forsendelsesstatus.setAvvisningsinformasjon(avvisningsinformasjon);
+      forsendelsesstatus.setInnsendingId(innsendingId);
+      forsendelsesstatus.setForsendelsesreferanse(forsendelsesreferanse);
+      forsendelsesstatus.setRegistreringstidspunkt(registreringstidspunkt);
+      forsendelsesstatus.setBehandlingsutfall(behandlingsutfall);
+      forsendelsesstatus.setSaksstatus(saksstatus);
+      forsendelsesstatus.setTinglysingsinformasjon(tinglysingsinformasjon);
+      return forsendelsesstatus;
    }
 
-   public static BehandlingsstatusBuilder defaultBehandlingsstatus() {
+   public static ForsendelsesstatusBuilder defaultBehandlingsstatus() {
       return aBehandlingsstatus()
             .withInnsendingId(DEFAULT_INNSENDING_ID)
+            .withForsendelsesreferanse(DEFAULT_FORSENDELSESREFERANSE)
             .withRegistreringstidspunkt(DEFAULT_REGISTRERINGS_TIDSPUNKT)
             .withBehandlingsutfall(DEFAULT_BEHANDLINGSUTFALL)
             .withSaksstatus(DEFAULT_SAKS_STATUS)

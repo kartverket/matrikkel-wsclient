@@ -1,9 +1,9 @@
 package no.statkart.wsclient.grunnbok.innsending.ws.builder;
 
 import com.google.common.collect.Lists;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Begrunnelse;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.BegrunnelseList;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Kontrollresultat;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Begrunnelse;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.BegrunnelseList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Kontrollresultat;
 
 import java.util.List;
 

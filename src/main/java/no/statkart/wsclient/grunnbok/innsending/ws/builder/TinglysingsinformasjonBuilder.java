@@ -1,11 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending.ws.builder;
 
 import com.google.common.collect.Lists;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Dokumentinformasjon;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.DokumentinformasjonList;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.SignertGrunnboksutskrift;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.SignertGrunnboksutskriftList;
-import no.kartverket.grunnbok.wsapi.internal.domain.innsending.Tinglysingsinformasjon;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
 
 import java.util.List;
 
