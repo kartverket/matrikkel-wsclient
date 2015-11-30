@@ -1,5 +1,9 @@
 package no.statkart.wsclient.grunnbok.innsending.domene;
 
+import com.google.common.base.Objects;
+
+import static com.google.common.base.Objects.equal;
+
 /**
  *
  */
@@ -58,5 +62,24 @@ public class Matrikkelenhet {
 
    public void setSeksjonsnummer(int seksjonsnummer) {
       this.seksjonsnummer = seksjonsnummer;
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hashCode(kommunenummer, kommunenavn, gaardsnummer, bruksnummer, festenummer, seksjonsnummer);
+   }
+
+   @Override
+   public boolean equals(Object obj) {
+      if (obj == null || obj.getClass() != getClass()) {
+         return false;
+      }
+      Matrikkelenhet other = (Matrikkelenhet) obj;
+      return equal(kommunenummer, other.getKommunenummer()) &&
+            equal(kommunenavn, other.getKommunenavn()) &&
+            equal(gaardsnummer, other.getGaardsnummer()) &&
+            equal(bruksnummer, other.getBruksnummer()) &&
+            equal(festenummer, other.getFestenummer()) &&
+            equal(seksjonsnummer, other.getSeksjonsnummer());
    }
 }

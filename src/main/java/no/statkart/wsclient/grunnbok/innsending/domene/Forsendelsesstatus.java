@@ -1,7 +1,11 @@
 package no.statkart.wsclient.grunnbok.innsending.domene;
 
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import org.joda.time.LocalDateTime;
+
+import java.util.Collection;
 
 public class Forsendelsesstatus {
 
@@ -12,6 +16,21 @@ public class Forsendelsesstatus {
    private String saksstatus;
    private Tinglysingsinformasjon tinglysingsinformasjon;
    private Avvisningsinformasjon avvisningsinformasjon;
+
+   public SignertGrunnboksutskrift findBekreftetGrunnboksutskriftForMatrikkelenhet(final Matrikkelenhet matrikkelenhet) {
+      if (tinglysingsinformasjon != null) {
+         Collection<SignertGrunnboksutskrift> utskrifterForMatrikkelenhet = Collections2.filter(tinglysingsinformasjon.getSignerteGrunnboksutskrifter(), new Predicate<SignertGrunnboksutskrift>() {
+            @Override
+            public boolean apply(SignertGrunnboksutskrift signertGrunnboksutskrift) {
+               return matrikkelenhet.equals(signertGrunnboksutskrift.getGjelderFor().getMatrikkelenhet());
+            }
+         });
+         if (utskrifterForMatrikkelenhet.size() == 1) {
+            return utskrifterForMatrikkelenhet.iterator().next();
+         }
+      }
+      return null;
+   }
 
    public Avvisningsinformasjon getAvvisningsinformasjon() {
       return avvisningsinformasjon;
