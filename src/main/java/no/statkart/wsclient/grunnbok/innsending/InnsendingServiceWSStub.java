@@ -2,13 +2,12 @@ package no.statkart.wsclient.grunnbok.innsending;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
-import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus;
-import no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhet;
+import no.statkart.wsclient.grunnbok.innsending.domene.*;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatus.*;
-import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDateTime;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,6 +15,7 @@ import java.util.Map;
  */
 public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
+   private static int nextInnsendingId = 1;
    private Map<String, Forsendelsesstatus> forsendelsesstatusByInnsendingIdMap = new ForsendelsesstatusProvider().createInitState();
 
    @Override
@@ -25,25 +25,29 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    @Override
    public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
+      System.out.println("----------------sendTilTinglysing----------------------");
       String forsendelsesreferanse = forsendelse.getForsendelsesreferanse();
-      Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(forsendelsesreferanse);
-      if (forsendelsesstatus == null) {
-         throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for forsendelsesreferanse: " + forsendelsesreferanse);
-      }
+      Forsendelsesstatus forsendelsesstatus = createForsendelsestatus(forsendelse);
+      forsendelsesstatusByInnsendingIdMap.put(forsendelsesstatus.getInnsendingId(), forsendelsesstatus);
+      System.out.println("----------------sendTilTinglysing ferdig----------------------");
       return forsendelsesstatus;
    }
 
    @Override
-   public Forsendelsesstatus hentStatus(String forsendelsesreferanse) {
-      Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(forsendelsesreferanse);
+   public Forsendelsesstatus hentStatus(String innsendingId) {
+      System.out.println("----------------hentStatus----------------------");
+      Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
       if (forsendelsesstatus == null) {
-         throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for forsendelsesreferanse: " + forsendelsesreferanse);
+         throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for innsendingId 2: " + innsendingId);
       }
+      System.out.println("----------------hentStatus ferdig----------------------");
       return forsendelsesstatus;
    }
 
-   public void behandlingStatusForInnsendingId(String forsendelsesreferanse, ForsendelsesstatusBuilder statusBuilder) {
-      forsendelsesstatusByInnsendingIdMap.put(forsendelsesreferanse, statusBuilder.build());
+   private static String getNextInnseningsIdAndIncreaseSequence() {
+      String innsendingsId = Integer.toString(nextInnsendingId);
+      nextInnsendingId++;
+      return innsendingsId;
    }
 
    private static class ForsendelsesstatusProvider {
@@ -59,40 +63,69 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                .withFestenummer(0)
                .withSeksjonsnummer(0);
          Matrikkelenhet enhetINittedal = enhetINittedalBuilder.build();
-
-         SignertGrunnboksutskriftBuilder utskriftBuilder1 = SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
-               .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
-                     .withMatrikkelenhet(enhetINittedal)
-                     .build())
-               .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
-                     .withSignertDokument("Dokument1".getBytes())
-                     .build());
-
-         Forsendelsesstatus forsendelsesstatus = ForsendelsesstatusBuilder.aBehandlingsstatus()
-               .withInnsendingId("1")
-               .withForsendelsesreferanse("67XY")
-               .withRegistreringstidspunkt(new LocalDateTime(2015, DateTimeConstants.OCTOBER, 16, 12, 5, 6, 178))
-               .withBehandlingsutfall("OK")
-               .withSaksstatus("Prosessert")
-               .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
-                     .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
-                           .withDokumentnummer(22)
-                           .withEmbetenummer("34")
-                           .withDokumentaar(2015)
-                           .withDokumentreferanse("Referanse1")
-                           .withRettsstiftelsesinformasjonList(Lists.newArrayList(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
-                                 .withRettsstiftelsesnummer(235)
-                                 .withRettsstiftelsesreferanse("Xyz")
-                                 .build()))
-                           .build()))
-                     .withSignerteGrunnboksutskrifter(Lists.newArrayList(utskriftBuilder1.build()))
-                     .build())
-               .build();
-
+         SignertGrunnboksutskrift grunnboksutskrift = createGrunnboksutskrift(enhetINittedal);
+         Forsendelsesstatus forsendelsesstatus = createForsendelsestatus(Lists.newArrayList(grunnboksutskrift));
          forsendelsesstatusByInnsendingIdMap.put("1", forsendelsesstatus);
-
          return forsendelsesstatusByInnsendingIdMap;
       }
    }
+
+
+   private static Forsendelsesstatus createForsendelsestatus(Forsendelse forsendelse) {
+      List<SignertGrunnboksutskrift> grunnboksutskrifter = createGrunnboksutskrifter(forsendelse);
+      return createForsendelsestatus(grunnboksutskrifter);
+   }
+
+   private static Forsendelsesstatus createForsendelsestatus(List<SignertGrunnboksutskrift> grunnboksutskrifter) {
+      return ForsendelsesstatusBuilder.aBehandlingsstatus()
+            .withInnsendingId(getNextInnseningsIdAndIncreaseSequence())
+            .withForsendelsesreferanse("67XY")
+            .withRegistreringstidspunkt(new LocalDateTime())
+            .withBehandlingsutfall("OK")
+            .withSaksstatus("Prosessert")
+            .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
+                  .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
+                        .withDokumentnummer(22)
+                        .withEmbetenummer("34")
+                        .withDokumentaar(2015)
+                        .withDokumentreferanse("Referanse1")
+                        .withRettsstiftelsesinformasjonList(Lists.newArrayList(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
+                              .withRettsstiftelsesnummer(235)
+                              .withRettsstiftelsesreferanse("Xyz")
+                              .build()))
+                        .build()))
+                  .withSignerteGrunnboksutskrifter(grunnboksutskrifter)
+                  .build())
+            .build();
+   }
+
+   private static List<SignertGrunnboksutskrift> createGrunnboksutskrifter(Forsendelse forsendelse) {
+      List<SignertGrunnboksutskrift> grunnboksutskrifter = new ArrayList<SignertGrunnboksutskrift>();
+      List<Matrikkelenhet> matrikkelenheterIForsendelse = new ArrayList<Matrikkelenhet>();
+      for (Dokument dokument : forsendelse.getUsignertMelding().getDokumenter()) {
+         for (Rettsstiftelse rettsstiftelse : dokument.getRettsstiftelser()) {
+            if(Rettsstiftelse.Rettsstiftelsestype.MATRIKKELENHETSENDRING.equals(rettsstiftelse.getRettstiftelsestype())){
+               Matrikkelenhetsendring matrikkelenhetsendring = (Matrikkelenhetsendring) rettsstiftelse;
+               matrikkelenheterIForsendelse.addAll(matrikkelenhetsendring.getFra());
+               matrikkelenheterIForsendelse.addAll(matrikkelenhetsendring.getTil());
+            }
+         }
+      }
+      for (Matrikkelenhet matrikkelenhet : matrikkelenheterIForsendelse) {
+         grunnboksutskrifter.add(createGrunnboksutskrift(matrikkelenhet));
+      }
+      return grunnboksutskrifter;
+   }
+
+   private static SignertGrunnboksutskrift createGrunnboksutskrift(Matrikkelenhet matrikkelenhet) {
+      return SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
+               .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
+                     .withMatrikkelenhet(matrikkelenhet)
+                     .build())
+               .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
+                     .withSignertDokument("Dokument1".getBytes())
+                     .build()).build();
+   }
+
 
 }
