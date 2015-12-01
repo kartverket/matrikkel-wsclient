@@ -9,6 +9,7 @@ public class Matrikkelenhetsendring extends Registerenhetsendring {
    private List<Matrikkelenhet> fra = Lists.newArrayList();
    private List<Matrikkelenhet> til = Lists.newArrayList();
    private List<MatrikkelenhetFraTil> omnummereringAvUnderliggende = Lists.newArrayList();
+   private List<Person> rekvirenterAvForretning = Lists.newArrayList();
 
    public List<MatrikkelenhetFraTil> getOmnummereringAvUnderliggende() {
       return omnummereringAvUnderliggende;
@@ -55,5 +56,13 @@ public class Matrikkelenhetsendring extends Registerenhetsendring {
 
    public void setTil(List<Matrikkelenhet> til) {
       this.til = til;
+   }
+
+   public List<Person> getRekvirenterAvForretning() {
+      return rekvirenterAvForretning;
+   }
+
+   public void setRekvirenterAvForretning(List<Person> rekvirenterAvForretning) {
+      this.rekvirenterAvForretning = rekvirenterAvForretning;
    }
 }

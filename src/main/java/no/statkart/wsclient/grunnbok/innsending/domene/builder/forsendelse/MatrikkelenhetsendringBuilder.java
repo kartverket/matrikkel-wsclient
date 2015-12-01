@@ -1,11 +1,8 @@
 package no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse;
 
 import com.google.common.collect.Lists;
-import no.statkart.wsclient.grunnbok.innsending.domene.Kode;
-import no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhet;
-import no.statkart.wsclient.grunnbok.innsending.domene.MatrikkelenhetFraTil;
-import no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring;
-import no.statkart.wsclient.grunnbok.innsending.domene.Tekst;
+import no.kartverket.grunnbok.wsapi.v1.domain.register.person.PersonId;
+import no.statkart.wsclient.grunnbok.innsending.domene.*;
 
 import java.util.List;
 
@@ -16,6 +13,7 @@ public class MatrikkelenhetsendringBuilder {
    private List<Matrikkelenhet> fra = Lists.newArrayList();
    private List<Matrikkelenhet> til = Lists.newArrayList();
    private List<MatrikkelenhetFraTil> omnummereringAvUnderliggende = Lists.newArrayList();
+   private List<Person> rekvirenterAvForretning = Lists.newArrayList();
    private String rettsstiftelsesreferanse;
    private Kode rettsstiftelsestype;
    private List<Tekst> tekster = Lists.newArrayList();
@@ -58,6 +56,11 @@ public class MatrikkelenhetsendringBuilder {
       return this;
    }
 
+   public MatrikkelenhetsendringBuilder withRekvirenterAvForretning(List<Person> rekvirenterAvForretning) {
+      this.rekvirenterAvForretning = rekvirenterAvForretning;
+      return this;
+   }
+
    public MatrikkelenhetsendringBuilder ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring typeMatrikkelenhetsendring) {
       this.typeMatrikkelenhetsendring = typeMatrikkelenhetsendring;
       return this;
@@ -92,6 +95,7 @@ public class MatrikkelenhetsendringBuilder {
       matrikkelenhetsendring.setOmnummereringAvUnderliggende(omnummereringAvUnderliggende);
       matrikkelenhetsendring.setRettsstiftelsesreferanse(rettsstiftelsesreferanse);
       matrikkelenhetsendring.setRettsstiftelsestype(rettsstiftelsestype);
+      matrikkelenhetsendring.setRekvirenterAvForretning(rekvirenterAvForretning);
       matrikkelenhetsendring.setTekster(tekster);
       return matrikkelenhetsendring;
    }

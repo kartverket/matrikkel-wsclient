@@ -605,6 +605,7 @@
         <xs:complexContent>
             <xs:extension base="inn:Registerenhetsendring">
                 <xs:sequence>
+                    <xs:element name="rekvirenterAvForretning" type="inn:PersonList"/>
                     <xs:element name="fra" type="inn:MatrikkelenhetList"/>
                     <xs:element name="til" type="inn:MatrikkelenhetList"/>
                     <xs:element name="omnummereringAvUnderliggende" type="inn:MatrikkelenhetFraTilList"/>
