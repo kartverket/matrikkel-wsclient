@@ -44,13 +44,13 @@ import no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelsesinformasjo
 import no.statkart.wsclient.grunnbok.innsending.domene.SDODokument;
 import no.statkart.wsclient.grunnbok.innsending.domene.SignertGrunnboksutskrift;
 import no.statkart.wsclient.grunnbok.innsending.domene.Tinglysingsinformasjon;
-import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.ForsendelseBuilder;
+import no.statkart.wsclient.grunnbok.innsending.testdatafactory.ForsendelseFactory;
 import org.testng.annotations.Test;
 
 import javax.xml.bind.JAXBElement;
 import java.util.List;
 
-import static no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.ForsendelseBuilder.*;
+import static no.statkart.wsclient.grunnbok.innsending.testdatafactory.ForsendelseFactory.*;
 import static no.statkart.wsclient.grunnbok.innsending.ws.builder.ForsendelsesstatusBuilder.*;
 import static no.statkart.wsclient.grunnbok.innsending.ws.builder.ForsendelsesstatusBuilder.DOKUMENTREFERANSE;
 import static no.statkart.wsclient.grunnbok.innsending.ws.builder.ForsendelsesstatusBuilder.RETTSSTIFTELSESNUMMER;
@@ -60,7 +60,7 @@ import static org.testng.Assert.*;
 public class InnsendingServiceMapperTest {
 
    public void mapFromForsendelseToWSStructure() {
-      Forsendelse forsendelse = defaultForsendelse().build();
+      Forsendelse forsendelse = ForsendelseFactory.defaultForsendelse().build();
       no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse wsForsendelse = new InnsendingServiceMapper().mapForsendelse(forsendelse);
 
       assertEquals(wsForsendelse.getForsendelsesreferanse(), FORSENDELSESREFERANSE);
@@ -82,7 +82,7 @@ public class InnsendingServiceMapperTest {
       List<Dokument> dokumentList = usignertMelding.getDokumenter().getDokument();
       assertEquals(dokumentList.size(), 1);
       Dokument dokument = dokumentList.get(0);
-      assertEquals(dokument.getDokumentreferanse(), ForsendelseBuilder.DOKUMENTREFERANSE);
+      assertEquals(dokument.getDokumentreferanse(), ForsendelseFactory.DOKUMENTREFERANSE);
 
       List<JAXBElement<? extends Rettsstiftelse>> rettstiftelser = dokument.getRettsstiftelser().getEierskifteMatrikkelenhetOrOverdragelseAvFesterettOrEierskifteBorettslagsandel();
       assertEquals(rettstiftelser.size(), 7);
@@ -175,7 +175,7 @@ public class InnsendingServiceMapperTest {
       assertEquals(rettsstiftelse.getDokumentaar(), RETTSSTIFTELSE_DOKUMENTAAR);
       assertEquals(rettsstiftelse.getDokumentnummer(), RETTSSTIFTELSE_DOKUMENTNUMMER);
       assertEquals(rettsstiftelse.getEmbetenummer(), RETTSSTIFTELSE_EMBETENUMMER);
-      assertEquals(rettsstiftelse.getRettsstiftelsesnummer(), ForsendelseBuilder.RETTSSTIFTELSESNUMMER);
+      assertEquals(rettsstiftelse.getRettsstiftelsesnummer(), ForsendelseFactory.RETTSSTIFTELSESNUMMER);
       assertEquals(rettsstiftelse.getRettsstiftelsestype().getKodeverdi(), RETTSSTIFTELSE_RETTSTIFTELSESTYPE_KODEVERDI);
    }
 

@@ -6,6 +6,7 @@ import no.statkart.wsclient.grunnbok.innsending.domene.SDODokument;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.ForsendelseBuilder;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.SDODokumentBuilder;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.SignertMeldingBuilder;
+import no.statkart.wsclient.grunnbok.innsending.testdatafactory.ForsendelseFactory;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -35,14 +36,14 @@ public class DefaultInnsendingServiceWSIT {
    }
 
    public void tinglysMelding() throws Exception {
-      Forsendelsesstatus forsendelsesstatus = innsendingService.sendTilTinglysing(ForsendelseBuilder.defaultForsendelse().build());
+      Forsendelsesstatus forsendelsesstatus = innsendingService.sendTilTinglysing(ForsendelseFactory.defaultForsendelse().build());
       assertNotNull(forsendelsesstatus);
    }
 
    @Test(expectedExceptions = WebServiceException.class)
    public void invalidForsendelse() throws Exception {
       SDODokument sdoDokumentWithoutBytes = SDODokumentBuilder.aSDODokument().build();
-      ForsendelseBuilder invalidForsendelse = ForsendelseBuilder.defaultForsendelse()
+      ForsendelseBuilder invalidForsendelse = ForsendelseFactory.defaultForsendelse()
             .but()
             .withSignertMelding(SignertMeldingBuilder.aSignertMelding()
                   .withDokumenter(Lists.newArrayList(sdoDokumentWithoutBytes))
