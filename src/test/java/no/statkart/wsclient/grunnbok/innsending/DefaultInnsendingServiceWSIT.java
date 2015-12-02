@@ -1,6 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending;
 
 import com.google.common.collect.Lists;
+import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus;
 import no.statkart.wsclient.grunnbok.innsending.domene.SDODokument;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.ForsendelseBuilder;
@@ -37,6 +38,12 @@ public class DefaultInnsendingServiceWSIT {
 
    public void tinglysMelding() throws Exception {
       Forsendelsesstatus forsendelsesstatus = innsendingService.sendTilTinglysing(ForsendelseFactory.defaultForsendelse().build());
+      assertNotNull(forsendelsesstatus);
+   }
+
+   public void tinglysFradelingForretning() throws Exception {
+      Forsendelse forsendelse = ForsendelseFactory.fradelingForsendelse();
+      Forsendelsesstatus forsendelsesstatus = innsendingService.sendTilTinglysing(forsendelse);
       assertNotNull(forsendelsesstatus);
    }
 

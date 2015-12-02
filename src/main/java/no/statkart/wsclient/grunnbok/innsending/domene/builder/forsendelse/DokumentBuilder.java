@@ -1,15 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse;
 
 import com.google.common.collect.Lists;
-import no.statkart.wsclient.grunnbok.innsending.domene.AnmerkningPaaPerson;
-import no.statkart.wsclient.grunnbok.innsending.domene.AnnenHeftelse;
-import no.statkart.wsclient.grunnbok.innsending.domene.Dokument;
-import no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring;
-import no.statkart.wsclient.grunnbok.innsending.domene.OverdragelseAvRegisterenhetsrett;
-import no.statkart.wsclient.grunnbok.innsending.domene.Pant;
-import no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse;
-import no.statkart.wsclient.grunnbok.innsending.domene.Sletting;
-import no.statkart.wsclient.grunnbok.innsending.domene.Tvangsforretning;
+import no.statkart.wsclient.grunnbok.innsending.domene.*;
 
 import java.util.List;
 
@@ -24,7 +16,9 @@ public class DokumentBuilder {
    }
 
    public static DokumentBuilder aDokument() {
-      return new DokumentBuilder();
+      DokumentBuilder dokumentBuilder = new DokumentBuilder();
+      dokumentBuilder.withDokumentreferanse("1"); //vi vil alltid kun ha ett dokument, kan derfor hardkode denne verdien
+      return dokumentBuilder;
    }
 
    public DokumentBuilder withDokumentreferanse(String dokumentreferanse) {

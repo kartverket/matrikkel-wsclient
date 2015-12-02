@@ -1,7 +1,6 @@
 package no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse;
 
 import com.google.common.collect.Lists;
-import no.kartverket.grunnbok.wsapi.v1.domain.register.person.PersonId;
 import no.statkart.wsclient.grunnbok.innsending.domene.*;
 
 import java.util.List;
@@ -26,6 +25,8 @@ public class MatrikkelenhetsendringBuilder {
    public static MatrikkelenhetsendringBuilder aFradeling() {
       MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
       matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FRADELING);
+      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
+      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("TI_FRD").withNavn("FRADELINGSDOKUMENT").build());
       return matrikkelenhetsendringBuilder;
    }
 

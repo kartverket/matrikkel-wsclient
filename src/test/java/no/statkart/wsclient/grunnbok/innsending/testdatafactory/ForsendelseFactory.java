@@ -1,11 +1,14 @@
 package no.statkart.wsclient.grunnbok.innsending.testdatafactory;
 
 import com.google.common.collect.Lists;
+import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
 import no.statkart.wsclient.grunnbok.innsending.domene.Tekst;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.*;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
+
+import java.util.Arrays;
 
 public class ForsendelseFactory {
 
@@ -327,4 +330,27 @@ public class ForsendelseFactory {
                   .build());
    }
 
+   public static Forsendelse fradelingForsendelse() {
+      Forsendelse forsendelse = ForsendelseBuilder.aForsendelse()
+            .withForsendelsesReferanse(FORSENDELSESREFERANSE)
+            .withUsignertMelding(UsignertMeldingBuilder.anUsignertMelding()
+                  .withFoelgebrev(FoelgebrevBuilder.aFoelgebrev()
+                        .withInnsendersIdentifikasjonsnummer("12313") //rekvirent for tinglysing
+                        .build())
+                  .withDokumenter(Arrays.asList(DokumentBuilder.aDokument()
+                        .withMatrikkelenhetsendring(MatrikkelenhetsendringBuilder.aFradeling()
+                              .withTil(Arrays.asList(
+                                    MatrikkelenhetFactory.createMatrikkelenhet(KOMMUNENUMMER_OSLO, KOMMUNENAVN_OSLO, 2, 90)
+                              ))
+                              .withFra(Arrays.asList(
+                                    MatrikkelenhetFactory.createMatrikkelenhet(KOMMUNENUMMER_OSLO, KOMMUNENAVN_OSLO, 2, 91)
+                              ))
+                              .withRekvirenterAvForretning(Arrays.asList(PersonBuilder.aPerson().withIdentifikasjonsnummer("12345678910").withNavn("navn").build()))
+                              .build())
+                        .build()))
+                  .build())
+            .build();
+
+      return forsendelse;
+   }
 }

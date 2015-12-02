@@ -25,22 +25,19 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    @Override
    public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
-      System.out.println("----------------sendTilTinglysing----------------------");
       String forsendelsesreferanse = forsendelse.getForsendelsesreferanse();
+      new InnsendingServiceMapper().mapForsendelse(forsendelse);
       Forsendelsesstatus forsendelsesstatus = createForsendelsestatus(forsendelse);
       forsendelsesstatusByInnsendingIdMap.put(forsendelsesstatus.getInnsendingId(), forsendelsesstatus);
-      System.out.println("----------------sendTilTinglysing ferdig----------------------");
       return forsendelsesstatus;
    }
 
    @Override
    public Forsendelsesstatus hentStatus(String innsendingId) {
-      System.out.println("----------------hentStatus----------------------");
       Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
       if (forsendelsesstatus == null) {
          throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for innsendingId 2: " + innsendingId);
       }
-      System.out.println("----------------hentStatus ferdig----------------------");
       return forsendelsesstatus;
    }
 
@@ -79,16 +76,16 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    private static Forsendelsesstatus createForsendelsestatus(List<SignertGrunnboksutskrift> grunnboksutskrifter) {
       return ForsendelsesstatusBuilder.aBehandlingsstatus()
             .withInnsendingId(getNextInnseningsIdAndIncreaseSequence())
-            .withForsendelsesreferanse("67XY")
+            .withForsendelsesreferanse("1")
             .withRegistreringstidspunkt(new LocalDateTime())
             .withBehandlingsutfall("OK")
             .withSaksstatus("Prosessert")
             .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
                   .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
-                        .withDokumentnummer(22)
+                        .withDokumentnummer(1)
                         .withEmbetenummer("34")
                         .withDokumentaar(2015)
-                        .withDokumentreferanse("Referanse1")
+                        .withDokumentreferanse("1")
                         .withRettsstiftelsesinformasjonList(Lists.newArrayList(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
                               .withRettsstiftelsesnummer(235)
                               .withRettsstiftelsesreferanse("Xyz")
