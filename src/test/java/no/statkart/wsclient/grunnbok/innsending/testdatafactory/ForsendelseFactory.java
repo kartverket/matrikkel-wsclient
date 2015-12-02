@@ -335,7 +335,8 @@ public class ForsendelseFactory {
             .withForsendelsesReferanse(FORSENDELSESREFERANSE)
             .withUsignertMelding(UsignertMeldingBuilder.anUsignertMelding()
                   .withFoelgebrev(FoelgebrevBuilder.aFoelgebrev()
-                        .withInnsendersIdentifikasjonsnummer("12313") //rekvirent for tinglysing
+                        .withInnsendersIdentifikasjonsnummer("12313")
+                        .withDokumentrekkefoelge(Arrays.asList(ReferanseBuilder.aReferanse().withGjelderDokumentreferanse("1").build()))//rekvirent for tinglysing
                         .build())
                   .withDokumenter(Arrays.asList(DokumentBuilder.aDokument()
                         .withMatrikkelenhetsendring(MatrikkelenhetsendringBuilder.aFradeling()

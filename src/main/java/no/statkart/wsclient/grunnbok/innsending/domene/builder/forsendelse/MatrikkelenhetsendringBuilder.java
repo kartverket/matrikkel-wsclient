@@ -26,7 +26,7 @@ public class MatrikkelenhetsendringBuilder {
       MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
       matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FRADELING);
       matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
-      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("TI_FRD").withNavn("FRADELINGSDOKUMENT").build());
+      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("FR_REG").withNavn("REGISTRERING AV GRUNN").build());
       return matrikkelenhetsendringBuilder;
    }
 
