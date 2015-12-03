@@ -8,8 +8,6 @@ import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
-import java.util.Arrays;
-
 public class ForsendelseFactory {
 
    public static final String DEFAULT_BELOEPSTEKST = "kroner";
@@ -331,27 +329,26 @@ public class ForsendelseFactory {
    }
 
    public static Forsendelse fradelingForsendelse() {
-      Forsendelse forsendelse = ForsendelseBuilder.aForsendelse()
+
+      return ForsendelseBuilder.aForsendelse()
             .withForsendelsesReferanse(FORSENDELSESREFERANSE)
             .withUsignertMelding(UsignertMeldingBuilder.anUsignertMelding()
                   .withFoelgebrev(FoelgebrevBuilder.aFoelgebrev()
-                        .withInnsendersIdentifikasjonsnummer("12313")
-                        .withDokumentrekkefoelge(Arrays.asList(ReferanseBuilder.aReferanse().withGjelderDokumentreferanse("1").build()))//rekvirent for tinglysing
+                        .withInnsendersIdentifikasjonsnummer("12313") //rekvirent for tinglysing
+                        .withDokumentrekkefoelge(Lists.newArrayList(ReferanseBuilder.aReferanse().withGjelderDokumentreferanse("1").build()))
                         .build())
-                  .withDokumenter(Arrays.asList(DokumentBuilder.aDokument()
+                  .withDokumenter(Lists.newArrayList((DokumentBuilder.aDokument()
                         .withMatrikkelenhetsendring(MatrikkelenhetsendringBuilder.aFradeling()
-                              .withTil(Arrays.asList(
+                              .withTil(Lists.newArrayList(
                                     MatrikkelenhetFactory.createMatrikkelenhet(KOMMUNENUMMER_OSLO, KOMMUNENAVN_OSLO, 2, 90)
                               ))
-                              .withFra(Arrays.asList(
+                              .withFra(Lists.newArrayList(
                                     MatrikkelenhetFactory.createMatrikkelenhet(KOMMUNENUMMER_OSLO, KOMMUNENAVN_OSLO, 2, 91)
                               ))
-                              .withRekvirenterAvForretning(Arrays.asList(PersonBuilder.aPerson().withIdentifikasjonsnummer("12345678910").withNavn("navn").build()))
+                              .withRekvirenterAvForretning(Lists.newArrayList(PersonBuilder.aPerson().withIdentifikasjonsnummer("12345678910").withNavn("navn").build()))
                               .build())
-                        .build()))
+                        .build())))
                   .build())
             .build();
-
-      return forsendelse;
    }
 }
