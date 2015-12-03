@@ -6,7 +6,9 @@ import com.google.common.collect.Collections2;
 import org.joda.time.LocalDateTime;
 
 import java.util.Collection;
+import java.util.EnumSet;
 
+@SuppressWarnings("InstanceVariableMayNotBeInitialized")
 public class Forsendelsesstatus {
 
    private String innsendingId;
@@ -16,6 +18,27 @@ public class Forsendelsesstatus {
    private String saksstatus;
    private Tinglysingsinformasjon tinglysingsinformasjon;
    private Avvisningsinformasjon avvisningsinformasjon;
+
+   public enum Behandlingsutfall {
+      UAVKLART,
+      TINGLYST,
+      FORELOEPIG_NEKTET,
+      ANKET,
+      NEKTET,
+      AVVIST;
+
+      public boolean erSluttUtfall() {
+         return EnumSet.of(TINGLYST, AVVIST).contains(this);
+      }
+
+      public static Behandlingsutfall parse(String behandlingsutfall) {
+         try {
+            return valueOf(behandlingsutfall);
+         } catch (IllegalArgumentException iae) {
+            throw new RuntimeException("Unknown value received for behandlingsutfall: " + behandlingsutfall, iae);
+         }
+      }
+   }
 
    public SignertGrunnboksutskrift findBekreftetGrunnboksutskriftForMatrikkelenhet(final Matrikkelenhet matrikkelenhet) {
       if (tinglysingsinformasjon != null) {
@@ -30,6 +53,11 @@ public class Forsendelsesstatus {
          }
       }
       return null;
+   }
+
+   public boolean erFerdigbehandlet() {
+      String behandlingsutfall = getBehandlingsutfall();
+      return behandlingsutfall != null && Behandlingsutfall.parse(behandlingsutfall).erSluttUtfall();
    }
 
    public Avvisningsinformasjon getAvvisningsinformasjon() {
@@ -54,6 +82,10 @@ public class Forsendelsesstatus {
 
    public void setForsendelsesreferanse(String forsendelsesreferanse) {
       this.forsendelsesreferanse = forsendelsesreferanse;
+   }
+
+   public Behandlingsutfall getBehandlingsutfallAsEnum() {
+      return behandlingsutfall != null ? Behandlingsutfall.parse(behandlingsutfall) : null;
    }
 
    public String getBehandlingsutfall() {
