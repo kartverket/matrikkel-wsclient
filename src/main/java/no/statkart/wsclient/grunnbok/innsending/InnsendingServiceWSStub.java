@@ -3,6 +3,7 @@ package no.statkart.wsclient.grunnbok.innsending;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import no.statkart.wsclient.grunnbok.innsending.domene.*;
+import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus.Behandlingsutfall;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatus.*;
 import org.joda.time.LocalDateTime;
 
@@ -16,7 +17,7 @@ import java.util.Map;
 public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    private static int nextInnsendingId = 1;
-   private Map<String, Forsendelsesstatus> forsendelsesstatusByInnsendingIdMap = new ForsendelsesstatusProvider().createInitState();
+   private static Map<String, Forsendelsesstatus> forsendelsesstatusByInnsendingIdMap = new ForsendelsesstatusProvider().createInitState();
 
    @Override
    public Forsendelsesstatus valider(Forsendelse forsendelse) {
@@ -36,7 +37,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    public Forsendelsesstatus hentStatus(String innsendingId) {
       Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
       if (forsendelsesstatus == null) {
-         throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for innsendingId 2: " + innsendingId);
+         throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for innsendingId: " + innsendingId);
       }
       return forsendelsesstatus;
    }
@@ -45,6 +46,14 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
       String innsendingsId = Integer.toString(nextInnsendingId);
       nextInnsendingId++;
       return innsendingsId;
+   }
+
+   public static void forsendelseAvvist(String innsendingId) {
+      Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
+      if(forsendelsesstatus==null) {
+         throw new RuntimeException("The stub has no knowledge of any entry linked to innsendingId: "+innsendingId);
+      }
+      forsendelsesstatus.setBehandlingsutfall(Behandlingsutfall.AVVIST.name());
    }
 
    private static class ForsendelsesstatusProvider {
@@ -78,8 +87,8 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
             .withInnsendingId(getNextInnseningsIdAndIncreaseSequence())
             .withForsendelsesreferanse("1")
             .withRegistreringstidspunkt(new LocalDateTime())
-            .withBehandlingsutfall("OK")
-            .withSaksstatus("Prosessert")
+            .withBehandlingsutfall(Behandlingsutfall.UAVKLART.name())
+            .withSaksstatus("UNDER_BEHANDLING")
             .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
                   .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
                         .withDokumentnummer(1)
