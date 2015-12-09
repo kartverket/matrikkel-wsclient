@@ -4,10 +4,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import no.statkart.wsclient.grunnbok.innsending.domene.*;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus.Behandlingsutfall;
+import no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatus.*;
 import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -76,7 +78,6 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
       }
    }
 
-
    private static Forsendelsesstatus createForsendelsestatus(Forsendelse forsendelse) {
       List<SignertGrunnboksutskrift> grunnboksutskrifter = createGrunnboksutskrifter(forsendelse);
       return createForsendelsestatus(grunnboksutskrifter);
@@ -107,10 +108,10 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    private static List<SignertGrunnboksutskrift> createGrunnboksutskrifter(Forsendelse forsendelse) {
       List<SignertGrunnboksutskrift> grunnboksutskrifter = new ArrayList<SignertGrunnboksutskrift>();
-      List<Matrikkelenhet> matrikkelenheterIForsendelse = new ArrayList<Matrikkelenhet>();
+      Collection<Matrikkelenhet> matrikkelenheterIForsendelse = new ArrayList<Matrikkelenhet>();
       for (Dokument dokument : forsendelse.getUsignertMelding().getDokumenter()) {
          for (Rettsstiftelse rettsstiftelse : dokument.getRettsstiftelser()) {
-            if(Rettsstiftelse.Rettsstiftelsestype.MATRIKKELENHETSENDRING.equals(rettsstiftelse.getRettstiftelsestype())){
+            if(rettsstiftelse.getRettstiftelsestype() == Rettsstiftelsestype.MATRIKKELENHETSENDRING){
                Matrikkelenhetsendring matrikkelenhetsendring = (Matrikkelenhetsendring) rettsstiftelse;
                matrikkelenheterIForsendelse.addAll(matrikkelenhetsendring.getFra());
                matrikkelenheterIForsendelse.addAll(matrikkelenhetsendring.getTil());
