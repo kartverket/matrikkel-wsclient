@@ -8,6 +8,8 @@ import org.joda.time.LocalDateTime;
 import java.util.Collection;
 import java.util.EnumSet;
 
+import static com.google.common.base.Objects.equal;
+
 @SuppressWarnings("InstanceVariableMayNotBeInitialized")
 public class Forsendelsesstatus {
 
@@ -45,7 +47,12 @@ public class Forsendelsesstatus {
          Collection<SignertGrunnboksutskrift> utskrifterForMatrikkelenhet = Collections2.filter(tinglysingsinformasjon.getSignerteGrunnboksutskrifter(), new Predicate<SignertGrunnboksutskrift>() {
             @Override
             public boolean apply(SignertGrunnboksutskrift signertGrunnboksutskrift) {
-               return matrikkelenhet.equals(signertGrunnboksutskrift.getGjelderFor().getMatrikkelenhet());
+               Matrikkelenhet matrikkelenhetForGrunnboksutskrift = signertGrunnboksutskrift.getGjelderFor().getMatrikkelenhet();
+               return equal(matrikkelenhet.getKommunenummer(), matrikkelenhetForGrunnboksutskrift.getKommunenummer())
+                     && equal(matrikkelenhet.getGaardsnummer(), matrikkelenhetForGrunnboksutskrift.getGaardsnummer())
+                     && equal(matrikkelenhet.getBruksnummer(), matrikkelenhetForGrunnboksutskrift.getBruksnummer())
+                     && equal(matrikkelenhet.getFestenummer(), matrikkelenhetForGrunnboksutskrift.getFestenummer())
+                     && equal(matrikkelenhet.getSeksjonsnummer(), matrikkelenhetForGrunnboksutskrift.getSeksjonsnummer());
             }
          });
          if (utskrifterForMatrikkelenhet.size() == 1) {
