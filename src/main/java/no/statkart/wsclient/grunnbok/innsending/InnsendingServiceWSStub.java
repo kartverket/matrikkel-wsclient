@@ -67,7 +67,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                .withKommunenummer("100000201")
                .withKommunenavn("Nittedal")
                .withGaardsnummer(2)
-               .withBruksnummer(126)
+               .withBruksnummer(45)
                .withFestenummer(0)
                .withSeksjonsnummer(0);
          Matrikkelenhet enhetINittedal = enhetINittedalBuilder.build();
