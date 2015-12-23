@@ -10,12 +10,9 @@ import org.joda.time.LocalTime;
 
 public class ForsendelseFactory {
 
-   public static final String DEFAULT_BELOEPSTEKST = "kroner";
    public static final long DEFAULT_BELOEPSVERDI = 100L;
-   public static final String DEFAULT_BELOEP_VALUTA_KODE = "KR";
    public static final String PANT_RETTSSTIFTELSESREFERANSE = "234567";
    public static final long REGISTERENHETSRETTSANDEL_DEFAULT_NEVNER = 4;
-   public static final long REGISTERENHETSRETTSANDEL_DEFAULT_TELLER = 1;
    public static final String ANNEN_HEFTELSE_RETTSSTIFTELSESREFERANSE = "2322323";
    public static final LocalDate OCTOBER_15 = new LocalDate(2015, DateTimeConstants.OCTOBER, 15);
    public static final LocalTime TIME_OF_DAY = new LocalTime(12, 23, 2, 678);
@@ -94,9 +91,6 @@ public class ForsendelseFactory {
    public static final String SOLGT_ANDEL_BORETTSLAGSNAVN = "Tertitten2";
    public static final String SOLGT_ANDEL_BORETTSLAGNUMMER = "2154";
 
-   public static final String DEFAULT_BORETTSLAGSNUMMER = "14";
-   public static final String DEFAULT_BORETTSLAGSNAVN = "Monolitten";
-   public static final int DEFAULT_ANDELSNUMMER = 12;
    public static final String REGISTERENHETSRETTSTYPE_KODEVERDI = "Lovlig";
 
    public static final String DEFAULT_IDENTIFIKASJONSNUMMER = "0200";
@@ -105,9 +99,6 @@ public class ForsendelseFactory {
    public static final String MATRIKKELENHET_FRA_TIL_TIL_KOMMUNENUMMER = "0456";
 
    public static ForsendelseBuilder defaultForsendelse() {
-      PersonBuilder defaultPersonBuilder = PersonBuilder.aPerson()
-            .withIdentifikasjonsnummer(DEFAULT_IDENTIFIKASJONSNUMMER)
-            .withNavn(DEFAULT_PERSON_NAVN);
 
       Tekst defaultTekst = TekstBuilder.aTekst()
             .withFritekst(FRITEKST)
@@ -127,38 +118,6 @@ public class ForsendelseFactory {
             .withKommunenavn(KOMMUNENAVN_OSLO)
             .withKommunenummer(KOMMUNENUMMER_OSLO);
 
-      BeloepBuilder defaultBeloepBuilder = BeloepBuilder.aBeloep()
-            .withBeloepstekst(DEFAULT_BELOEPSTEKST)
-            .withBeloepsverdi(DEFAULT_BELOEPSVERDI)
-            .withValutakode(defaultKode.but().withNavn(DEFAULT_BELOEP_VALUTA_KODE).build());
-
-      ErklaeringOmSivilstandBuilder defaultErklaeringOmSivilstandBuilder = ErklaeringOmSivilstandBuilder.anErklaeringOmSivilstand()
-            .withEktefellePartner(defaultPersonBuilder.build())
-            .withErklaeringFor(defaultPersonBuilder.build())
-            .withKreverSamtykke(KREVER_SAMTYKKE);
-
-      BorettslagsandelBuilder defaultBorettslagsandelBuilder = BorettslagsandelBuilder.aBorettslagsandel()
-            .withBorettslagnummer(DEFAULT_BORETTSLAGSNUMMER)
-            .withBorettslagnavn(DEFAULT_BORETTSLAGSNAVN)
-            .withAndelsnummer(DEFAULT_ANDELSNUMMER);
-
-      RegisterenhetsrettsandelBuilder defaultRegisterenhetsrettsandelBuilder = RegisterenhetsrettsandelBuilder.aRegisterenhetsrettsandel()
-            .withNevner(REGISTERENHETSRETTSANDEL_DEFAULT_NEVNER)
-            .withTeller(REGISTERENHETSRETTSANDEL_DEFAULT_TELLER)
-            .withRettighetshaver(defaultPersonBuilder.build())
-            .withRealkobletTil(RegisterenhetBuilder.aRegisterenhet()
-                  .withBorettslagsandel(defaultBorettslagsandelBuilder.build())
-                  .build());
-
-      RegisterenhetsrettBuilder defaultRegisterenhetsrettBuilder = RegisterenhetsrettBuilder.aRegisterenhetsrett()
-            .withRegisterenhet(RegisterenhetBuilder.aRegisterenhet()
-                  .withMatrikkelenhet(matrikkelenhetIOslo.build())
-                  .build())
-            .withRegisterenhetsrettstype(defaultKode.but().withKodeverdi(REGISTERENHETSRETTSTYPE_KODEVERDI).build());
-
-      DelAvRegisterenhetsrettBuilder defaultDelAvRegisterenhetsrettBuilder = DelAvRegisterenhetsrettBuilder.aDelAvRegisterenhetsrett()
-            .withRegisterenhetsrett(defaultRegisterenhetsrettBuilder.build())
-            .withBegrensetTil(Lists.newArrayList(defaultRegisterenhetsrettsandelBuilder.build()));
 
       return ForsendelseBuilder.aForsendelse()
             .withForsendelsesReferanse(FORSENDELSESREFERANSE)
@@ -192,10 +151,6 @@ public class ForsendelseFactory {
                               .withTekster(Lists.newArrayList(defaultTekst))
                               .withFra(Lists.newArrayList(matrikkelenhetIOslo.build()))
                               .withTil(Lists.newArrayList(matrikkelenhetIOslo.but().withSeksjonsnummer(TIL_MATRIKKELENHET_SEKSJONSNUMMER).build()))
-                              .withOmnummereringAvUnderliggende(Lists.newArrayList(MatrikkelenhetFraTilBuilder.aMatrikkelenhetFraTil()
-                                    .withFra(matrikkelenhetIOslo.but().withBruksnummer(MATRIKKELENHET_FRA_TIL_FRA_BRUKSNUMMER).build())
-                                    .withTil(matrikkelenhetIOslo.but().withKommunenummer(MATRIKKELENHET_FRA_TIL_TIL_KOMMUNENUMMER).build())
-                                    .build()))
                               .build())
                         .build())
                   )

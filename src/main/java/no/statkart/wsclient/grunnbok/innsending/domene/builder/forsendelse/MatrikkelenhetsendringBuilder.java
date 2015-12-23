@@ -52,11 +52,6 @@ public class MatrikkelenhetsendringBuilder {
       return this;
    }
 
-   public MatrikkelenhetsendringBuilder withOmnummereringAvUnderliggende(List<MatrikkelenhetFraTil> omnummereringAvUnderliggende) {
-      this.omnummereringAvUnderliggende = omnummereringAvUnderliggende;
-      return this;
-   }
-
    public MatrikkelenhetsendringBuilder withRekvirenterAvForretning(List<Person> rekvirenterAvForretning) {
       this.rekvirenterAvForretning = rekvirenterAvForretning;
       return this;
