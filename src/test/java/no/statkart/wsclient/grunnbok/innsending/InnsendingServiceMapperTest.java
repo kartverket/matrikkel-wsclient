@@ -85,14 +85,8 @@ public class InnsendingServiceMapperTest {
       assertEquals(dokument.getDokumentreferanse(), ForsendelseFactory.DOKUMENTREFERANSE);
 
       List<JAXBElement<? extends Rettsstiftelse>> rettstiftelser = dokument.getRettsstiftelser().getEierskifteMatrikkelenhetOrOverdragelseAvFesterettOrEierskifteBorettslagsandel();
-      assertEquals(rettstiftelser.size(), 7);
-      assertAnmerkningPaaPerson((AnmerkningPaaPerson) rettstiftelser.get(0).getValue());
-      assertMatrikkelenhetsendring((Matrikkelenhetsendring) rettstiftelser.get(1).getValue());
-      assertOverdragelseAvRegisterenhetsrett((OverdragelseAvRegisterenhetsrett) rettstiftelser.get(2).getValue());
-      assertPant((Pant) rettstiftelser.get(3).getValue());
-      assertAnnenHeftelse((AnnenHeftelse) rettstiftelser.get(4).getValue());
-      assertTvangsforretning((Tvangsforretning) rettstiftelser.get(5).getValue());
-      assertSletting((Sletting) rettstiftelser.get(6).getValue());
+      assertEquals(rettstiftelser.size(), 1);
+      assertMatrikkelenhetsendring((Matrikkelenhetsendring) rettstiftelser.get(0).getValue());
    }
 
    public void mapFromWSResponseToBehandlingsstatus() {
