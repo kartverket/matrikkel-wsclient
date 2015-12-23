@@ -1,7 +1,10 @@
 package no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse;
 
 import com.google.common.collect.Lists;
-import no.statkart.wsclient.grunnbok.innsending.domene.*;
+import no.statkart.wsclient.grunnbok.innsending.domene.Kode;
+import no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhet;
+import no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring;
+import no.statkart.wsclient.grunnbok.innsending.domene.Person;
 
 import java.util.List;
 
@@ -11,11 +14,9 @@ import java.util.List;
 public class MatrikkelenhetsendringBuilder {
    private List<Matrikkelenhet> fra = Lists.newArrayList();
    private List<Matrikkelenhet> til = Lists.newArrayList();
-   private List<MatrikkelenhetFraTil> omnummereringAvUnderliggende = Lists.newArrayList();
    private List<Person> rekvirenterAvForretning = Lists.newArrayList();
    private String rettsstiftelsesreferanse;
    private Kode rettsstiftelsestype;
-   private List<Tekst> tekster = Lists.newArrayList();
 
    private Matrikkelenhetsendring.TypeMatrikkelenhetsendring typeMatrikkelenhetsendring;
 
@@ -72,15 +73,6 @@ public class MatrikkelenhetsendringBuilder {
       return this;
    }
 
-   public MatrikkelenhetsendringBuilder withTekster(List<Tekst> tekster) {
-      this.tekster = tekster;
-      return this;
-   }
-
-   public MatrikkelenhetsendringBuilder but() {
-      return aFradeling().withFra(fra).withTil(til).withRettsstiftelsesreferanse(rettsstiftelsesreferanse).withRettsstiftelsestype(rettsstiftelsestype).withTekster(tekster).ofType(typeMatrikkelenhetsendring);
-   }
-
    public Matrikkelenhetsendring build() {
       if(typeMatrikkelenhetsendring==null) {
          throw new RuntimeException("typeMatrikkelenhetsendring is required");
@@ -88,11 +80,9 @@ public class MatrikkelenhetsendringBuilder {
       Matrikkelenhetsendring matrikkelenhetsendring = new Matrikkelenhetsendring(typeMatrikkelenhetsendring);
       matrikkelenhetsendring.setFra(fra);
       matrikkelenhetsendring.setTil(til);
-      matrikkelenhetsendring.setOmnummereringAvUnderliggende(omnummereringAvUnderliggende);
       matrikkelenhetsendring.setRettsstiftelsesreferanse(rettsstiftelsesreferanse);
       matrikkelenhetsendring.setRettsstiftelsestype(rettsstiftelsestype);
       matrikkelenhetsendring.setRekvirenterAvForretning(rekvirenterAvForretning);
-      matrikkelenhetsendring.setTekster(tekster);
       return matrikkelenhetsendring;
    }
 }

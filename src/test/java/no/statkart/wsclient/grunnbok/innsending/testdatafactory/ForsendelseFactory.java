@@ -2,18 +2,12 @@ package no.statkart.wsclient.grunnbok.innsending.testdatafactory;
 
 import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
-import no.statkart.wsclient.grunnbok.innsending.domene.Tekst;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.*;
 
 public class ForsendelseFactory {
 
 
    public static final String FORSENDELSESREFERANSE = "12AZd";
-   public static final byte[] SIGNERT_MELDING_DOKUMENT = "AByteArray".getBytes();
-   public static final byte[] SIGNERT_MELDING_FOLGE_BREV = "folgebrev".getBytes();
-   public static final String GJELDER_DOKUMENTREFERANSE = "23a";
-   public static final String PERSONIDENTIFIKASJONSNUMMER = "0102010233443";
-
    public static final String FOELGE_BREV_INNSENDERS_IDENTIFIKASJONSNUMMER = "244432";
    public static final String REFERANSE_GJELDER_DOKUMENTREFERANSE = "3232";
    public static final String REFERANSE_DIGEST_ALGORITME = "digestAlgoritme";
@@ -40,12 +34,6 @@ public class ForsendelseFactory {
 
    public static ForsendelseBuilder defaultForsendelse() {
 
-      Tekst defaultTekst = TekstBuilder.aTekst()
-            .withFritekst(FRITEKST)
-            .withTeksttype(KodeBuilder.aKode()
-                  .withNavn(TEKST_TYPE_NAVN).withKodeverdi(TEKST_TYPE_KODEVERDI)
-                  .build())
-            .build();
       KodeBuilder defaultKode = KodeBuilder.aKode()
             .withNavn(DEFAULT_KODE_NAVN)
             .withKodeverdi(DEFAULT_KODEVERDI);
@@ -76,7 +64,6 @@ public class ForsendelseFactory {
                         .withMatrikkelenhetsendring(MatrikkelenhetsendringBuilder.aFradeling()
                               .withRettsstiftelsesreferanse(MATRIKKELENHETSENDRING_RETTSSTIFTELSESREFERANSE)
                               .withRettsstiftelsestype(defaultKode.build())
-                              .withTekster(Lists.newArrayList(defaultTekst))
                               .withFra(Lists.newArrayList(matrikkelenhetIOslo.build()))
                               .withTil(Lists.newArrayList(matrikkelenhetIOslo.but().withSeksjonsnummer(TIL_MATRIKKELENHET_SEKSJONSNUMMER).build()))
                               .build())

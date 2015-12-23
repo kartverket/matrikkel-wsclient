@@ -133,9 +133,6 @@ public class InnsendingServiceMapperTest {
    private static void assertMatrikkelenhetsendring(Matrikkelenhetsendring matrikkelenhetsendring) {
       assertEquals(matrikkelenhetsendring.getRettsstiftelsesreferanse(), MATRIKKELENHETSENDRING_RETTSSTIFTELSESREFERANSE);
       assertKode(matrikkelenhetsendring.getRettsstiftelsestype(), DEFAULT_KODE_NAVN, DEFAULT_KODEVERDI);
-      List<Tekst> tekstList = matrikkelenhetsendring.getTekster().getTekst();
-      assertEquals(tekstList.size(), 1);
-      assertTekst(tekstList.get(0), FRITEKST, TEKST_TYPE_NAVN, TEKST_TYPE_KODEVERDI);
 
       List<no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhet> fraMatrikkelenheter = matrikkelenhetsendring.getFra().getMatrikkelenhet();
       assertEquals(fraMatrikkelenheter.size(), 1);
