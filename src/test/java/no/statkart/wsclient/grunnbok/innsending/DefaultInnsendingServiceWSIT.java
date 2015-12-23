@@ -1,12 +1,12 @@
 package no.statkart.wsclient.grunnbok.innsending;
 
 import com.google.common.collect.Lists;
+import no.statkart.wsclient.grunnbok.innsending.domene.Dokument;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus;
-import no.statkart.wsclient.grunnbok.innsending.domene.SDODokument;
+import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.DokumentBuilder;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.ForsendelseBuilder;
-import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.SDODokumentBuilder;
-import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.SignertMeldingBuilder;
+import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.UsignertMeldingBuilder;
 import no.statkart.wsclient.grunnbok.innsending.testdatafactory.ForsendelseFactory;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -49,11 +49,11 @@ public class DefaultInnsendingServiceWSIT {
 
    @Test(expectedExceptions = WebServiceException.class)
    public void invalidForsendelse() throws Exception {
-      SDODokument sdoDokumentWithoutBytes = SDODokumentBuilder.aSDODokument().build();
+      Dokument dokumentWithoutDokumentReferanse = DokumentBuilder.aDokument().withDokumentreferanse(null).build();
       ForsendelseBuilder invalidForsendelse = ForsendelseFactory.defaultForsendelse()
             .but()
-            .withSignertMelding(SignertMeldingBuilder.aSignertMelding()
-                  .withDokumenter(Lists.newArrayList(sdoDokumentWithoutBytes))
+            .withUsignertMelding(UsignertMeldingBuilder.anUsignertMelding()
+                  .withDokumenter(Lists.newArrayList(dokumentWithoutDokumentReferanse))
                   .build());
 
       innsendingService.sendTilTinglysing(invalidForsendelse.build());

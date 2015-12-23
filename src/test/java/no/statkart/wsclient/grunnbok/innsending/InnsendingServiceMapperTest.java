@@ -6,9 +6,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Kode;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhetsendring;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Referanse;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Rettsstiftelse;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Signatur;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertMelding;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Tekst;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.UsignertMelding;
 import no.statkart.wsclient.grunnbok.innsending.domene.Avvisningsinformasjon;
@@ -32,7 +29,6 @@ import java.util.List;
 import static no.statkart.wsclient.grunnbok.innsending.testdatafactory.ForsendelseFactory.*;
 import static no.statkart.wsclient.grunnbok.innsending.ws.builder.ForsendelsesstatusBuilder.*;
 import static no.statkart.wsclient.grunnbok.innsending.ws.builder.ForsendelsesstatusBuilder.DOKUMENTREFERANSE;
-import static no.statkart.wsclient.grunnbok.innsending.ws.builder.ForsendelsesstatusBuilder.RETTSSTIFTELSESNUMMER;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -44,9 +40,6 @@ public class InnsendingServiceMapperTest {
       no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse wsForsendelse = new InnsendingServiceMapper().mapForsendelse(forsendelse);
 
       assertEquals(wsForsendelse.getForsendelsesreferanse(), FORSENDELSESREFERANSE);
-
-      assertSignertMelding(wsForsendelse);
-      assertIkkeDigitaleSignaturer(wsForsendelse);
 
       UsignertMelding usignertMelding = wsForsendelse.getUsignertMelding();
       Foelgebrev foelgebrev = usignertMelding.getFoelgebrev();
@@ -177,23 +170,6 @@ public class InnsendingServiceMapperTest {
    private static void assertKode(Kode kode, String navn, String kodeverdi) {
       assertEquals(kode.getNavn(), navn);
       assertEquals(kode.getKodeverdi(), kodeverdi);
-   }
-
-   private static void assertIkkeDigitaleSignaturer(no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse wsForsendelse) {
-      SignaturList ikkeDigitaleSignaturer = wsForsendelse.getIkkeDigitaleSignaturer();
-      List<Signatur> signaturList = ikkeDigitaleSignaturer.getSignatur();
-      assertEquals(signaturList.size(), 1);
-      Signatur signatur = signaturList.get(0);
-      assertEquals(signatur.getGjelderDokumentreferanse(), GJELDER_DOKUMENTREFERANSE);
-      assertEquals(signatur.getPersonidentifikasjonsnummer(), PERSONIDENTIFIKASJONSNUMMER);
-   }
-
-   private static void assertSignertMelding(no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse wsForsendelse) {
-      SignertMelding signertMelding = wsForsendelse.getSignertMelding();
-      List<no.kartverket.grunnbok.wsapi.v2.domain.innsending.SDODokument> sdoDokument = signertMelding.getDokumenter().getSDODokument();
-      assertEquals(sdoDokument.size(), 1);
-      assertEquals(sdoDokument.get(0).getSignertDokument(), SIGNERT_MELDING_DOKUMENT);
-      assertEquals(signertMelding.getFoelgebrev().getSignertDokument(), SIGNERT_MELDING_FOLGE_BREV);
    }
 
 }
