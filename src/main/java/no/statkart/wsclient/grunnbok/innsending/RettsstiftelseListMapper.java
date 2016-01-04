@@ -1,19 +1,20 @@
 package no.statkart.wsclient.grunnbok.innsending;
 
 import com.google.common.reflect.TypeToken;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhetsendring;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.ObjectFactory;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Rettsstiftelse;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.RettsstiftelseList;
 import no.statkart.skif.mapper.Mapping;
 import no.statkart.skif.mapper.TypeMapper;
 import no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring;
-import no.statkart.wsclient.grunnbok.innsending.domene.OverdragelseAvRegisterenhetsrett.TypeOverdragelseAvRegisterenhetsrett;
 import no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype;
 
 import javax.xml.bind.JAXBElement;
 import java.util.List;
 
 import static no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.*;
-import static no.statkart.wsclient.grunnbok.innsending.domene.OverdragelseAvRegisterenhetsrett.TypeOverdragelseAvRegisterenhetsrett.*;
-import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.*;
+import static no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.MATRIKKELENHETSENDRING;
 
 /**
  *
@@ -28,40 +29,19 @@ class RettsstiftelseListMapper implements TypeMapper<RettsstiftelseList, List<no
       List<JAXBElement<? extends Rettsstiftelse>> rettsstiftelser = wsObject.getEierskifteMatrikkelenhetOrOverdragelseAvFesterettOrEierskifteBorettslagsandel();
 
       ObjectFactory objectFactory = new ObjectFactory();
-      for( no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse rettsstiftelse : listOfDomainObjects ) {
+      for (no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelse rettsstiftelse : listOfDomainObjects) {
          Rettsstiftelsestype rettstiftelsestype = rettsstiftelse.getRettstiftelsestype();
 
          JAXBElement<? extends Rettsstiftelse> jaxbElement = null;
-         if( ANMERKNING_PAA_PERSON == rettstiftelsestype ) {
-            jaxbElement = objectFactory.createRettsstiftelseListAnmerkningPaaPerson(mapToWebServiceObject(rettsstiftelse, AnmerkningPaaPerson.class));
-         } else if( SLETTING == rettstiftelsestype ) {
-            jaxbElement = objectFactory.createRettsstiftelseListSletting(mapToWebServiceObject(rettsstiftelse, Sletting.class));
-         } else if( TVANGSFORRETNING == rettstiftelsestype ) {
-            jaxbElement = objectFactory.createRettsstiftelseListTvangsforretning(mapToWebServiceObject(rettsstiftelse, Tvangsforretning.class));
-         } else if( ANNEN_HEFTELSE == rettstiftelsestype ) {
-            jaxbElement = objectFactory.createRettsstiftelseListAnnenHeftelse(mapToWebServiceObject(rettsstiftelse, AnnenHeftelse.class));
-         } else if( PANT == rettstiftelsestype ) {
-            jaxbElement = objectFactory.createRettsstiftelseListPant(mapToWebServiceObject(rettsstiftelse, Pant.class));
-         } else if( OVERDRAGELSE_AV_REGISTERENHETSRETT == rettstiftelsestype ) {
-            OverdragelseAvRegisterenhetsrett overdragelseAvRegisterenhetsrettWsObject = mapToWebServiceObject(rettsstiftelse, OverdragelseAvRegisterenhetsrett.class);
-            TypeOverdragelseAvRegisterenhetsrett typeOverdragelse = ((no.statkart.wsclient.grunnbok.innsending.domene.OverdragelseAvRegisterenhetsrett) rettsstiftelse).getTypeOverdragelseAvRegisterenhetsrett();
-
-            if( EIERSKIFTE_MATRIKKELENHET == typeOverdragelse ) {
-               jaxbElement = objectFactory.createRettsstiftelseListEierskifteMatrikkelenhet(overdragelseAvRegisterenhetsrettWsObject);
-            } else if( OVERDRAGELSE_AV_FESTERETT == typeOverdragelse ) {
-               jaxbElement = objectFactory.createRettsstiftelseListOverdragelseAvFesterett(overdragelseAvRegisterenhetsrettWsObject);
-            } else if( EIERSKIFTE_BORETTSLAGSANDEL == typeOverdragelse ) {
-               jaxbElement = objectFactory.createRettsstiftelseListEierskifteBorettslagsandel(overdragelseAvRegisterenhetsrettWsObject);
-            }
-         } else if( MATRIKKELENHETSENDRING == rettstiftelsestype ) {
+         if (rettstiftelsestype == MATRIKKELENHETSENDRING) {
             Matrikkelenhetsendring matrikkelenhetsendringWsObject = mapToWebServiceObject(rettsstiftelse, Matrikkelenhetsendring.class);
             TypeMatrikkelenhetsendring typeMatrikkelenhetsendring = ((no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhetsendring) rettsstiftelse).getTypeMatrikkelenhetsendring();
 
-            if( FRADELING == typeMatrikkelenhetsendring ) {
+            if (typeMatrikkelenhetsendring == FRADELING) {
                jaxbElement = objectFactory.createRettsstiftelseListFradeling(matrikkelenhetsendringWsObject);
-            } else if( SAMMENSLAAING_AV_MATRIKKELENHETER == typeMatrikkelenhetsendring ) {
+            } else if (typeMatrikkelenhetsendring == SAMMENSLAAING_AV_MATRIKKELENHETER) {
                jaxbElement = objectFactory.createRettsstiftelseListSammenslaaingAvMatrikkelenheter(matrikkelenhetsendringWsObject);
-            } else if( OVERFOERING_FRA_TIDLIGERE_FESTENUMMER == typeMatrikkelenhetsendring ) {
+            } else if (typeMatrikkelenhetsendring == OVERFOERING_FRA_TIDLIGERE_FESTENUMMER) {
                jaxbElement = objectFactory.createRettsstiftelseListOverfoeringFraTidligereFestenummer(matrikkelenhetsendringWsObject);
             }
          }

@@ -12,7 +12,7 @@ public abstract class Rettsstiftelse {
    private List<Tekst> tekster = Lists.newArrayList();
 
    public enum Rettsstiftelsestype {
-      ANMERKNING_PAA_PERSON, SLETTING, OVERDRAGELSE_AV_REGISTERENHETSRETT, TVANGSFORRETNING, PANT, ANNEN_HEFTELSE, MATRIKKELENHETSENDRING;
+      MATRIKKELENHETSENDRING
    }
 
    public abstract Rettsstiftelsestype getRettstiftelsestype();

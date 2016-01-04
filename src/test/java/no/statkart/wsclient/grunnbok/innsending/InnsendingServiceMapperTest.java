@@ -6,7 +6,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Kode;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhetsendring;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Referanse;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Rettsstiftelse;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Tekst;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.UsignertMelding;
 import no.statkart.wsclient.grunnbok.innsending.domene.Avvisningsinformasjon;
 import no.statkart.wsclient.grunnbok.innsending.domene.Begrunnelse;
@@ -36,7 +35,7 @@ import static org.testng.Assert.assertTrue;
 public class InnsendingServiceMapperTest {
 
    public void mapFromForsendelseToWSStructure() {
-      Forsendelse forsendelse = ForsendelseFactory.defaultForsendelse().build();
+      Forsendelse forsendelse = defaultForsendelse().build();
       no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse wsForsendelse = new InnsendingServiceMapper().mapForsendelse(forsendelse);
 
       assertEquals(wsForsendelse.getForsendelsesreferanse(), FORSENDELSESREFERANSE);
@@ -128,8 +127,6 @@ public class InnsendingServiceMapperTest {
       assertEquals(kontrollresultat.getUtfall(), KONTROLL_RESULTAT_UTFALL);
    }
 
-
-
    private static void assertMatrikkelenhetsendring(Matrikkelenhetsendring matrikkelenhetsendring) {
       assertEquals(matrikkelenhetsendring.getRettsstiftelsesreferanse(), MATRIKKELENHETSENDRING_RETTSSTIFTELSESREFERANSE);
       assertKode(matrikkelenhetsendring.getRettsstiftelsestype(), DEFAULT_KODE_NAVN, DEFAULT_KODEVERDI);
@@ -154,14 +151,6 @@ public class InnsendingServiceMapperTest {
       assertEquals(matrikkelenhet.getFestenummer(), festenummer);
       assertEquals(matrikkelenhet.getKommunenavn(), kommunenavn);
       assertEquals(matrikkelenhet.getKommunenummer(), kommunenummer);
-   }
-
-
-   private static void assertTekst(Tekst tekst, String fritekst, String tekstTypeNavn, String tekstTypeKodeverdi) {
-      assertEquals(tekst.getFritekst(), fritekst);
-      Kode teksttype = tekst.getTeksttype();
-      assertEquals(teksttype.getNavn(), tekstTypeNavn);
-      assertEquals(teksttype.getKodeverdi(), tekstTypeKodeverdi);
    }
 
    private static void assertKode(Kode kode, String navn, String kodeverdi) {
