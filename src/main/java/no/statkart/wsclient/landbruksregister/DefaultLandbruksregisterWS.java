@@ -17,12 +17,13 @@ public class DefaultLandbruksregisterWS implements LandbruksregisterWS {
             .enableWSSecurity(brukernavn, passord)
             .build());
 
-      int timeoutMillis = 10000;
+      int timeoutMillis = 5000;
       landbruksregisterService = WebServiceBuilder.builder(libWebServiceBeanService.getLIBWebServiceBeanPort(), LIBWebService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
             .withTimeout(timeoutMillis)
+            .withRetries(0)
             .doCreateProxy()
             .build();
    }

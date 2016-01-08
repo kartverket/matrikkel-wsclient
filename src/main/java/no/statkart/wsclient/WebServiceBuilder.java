@@ -15,8 +15,10 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public final class WebServiceBuilder<T> {
    private static final int TIMEOUT_MILLIS = 30000;
+   private static final int DEFAULT_RETRIES = 2; //så 2 retries betyr at det er totalt 3 forsøk på kallet
 
    private int timeout;
+   private int retries;
    private String brukernavn;
    private String passord;
    private String endpointUrl;
@@ -34,6 +36,7 @@ public final class WebServiceBuilder<T> {
       WebServiceBuilder<T> builder = new WebServiceBuilder<T>(unproxiedService, clazzOfWebService);
       return builder
             .defaultTimeout()
+            .defaultRetries()
             .defaultHostnameVerifier();
    }
 
@@ -44,6 +47,16 @@ public final class WebServiceBuilder<T> {
 
    public WebServiceBuilder<T> withTimeout(int timeout) {
       this.timeout = timeout;
+      return this;
+   }
+
+   public WebServiceBuilder<T> defaultRetries() {
+      this.retries = DEFAULT_RETRIES;
+      return this;
+   }
+
+   public WebServiceBuilder<T> withRetries(int numRetries) {
+      this.retries = numRetries;
       return this;
    }
 
@@ -92,7 +105,7 @@ public final class WebServiceBuilder<T> {
       if( createProxy ) {
          //The service may be wrapped in a proxy object it self
          T service = clazzOfWebService.cast(unproxiedService);
-         InvocationHandler invocationHandler = new OutboundServiceProxyInvocationHandler(service);
+         InvocationHandler invocationHandler = new OutboundServiceProxyInvocationHandler(service, retries);
          return (T) Proxy.newProxyInstance(clazzOfWebService.getClassLoader(), new Class[]{clazzOfWebService}, invocationHandler);
       } else {
          return unproxiedService;
