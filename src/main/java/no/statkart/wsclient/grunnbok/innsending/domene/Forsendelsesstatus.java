@@ -30,7 +30,7 @@ public class Forsendelsesstatus {
       AVVIST;
 
       public boolean erSluttUtfall() {
-         return EnumSet.of(TINGLYST, AVVIST).contains(this);
+         return EnumSet.of(TINGLYST, AVVIST, NEKTET).contains(this);
       }
 
       public static Behandlingsutfall parse(String behandlingsutfall) {

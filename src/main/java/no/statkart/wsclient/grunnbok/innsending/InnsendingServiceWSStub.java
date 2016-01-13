@@ -50,12 +50,12 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
       return innsendingsId;
    }
 
-   public static void forsendelseAvvist(String innsendingId) {
+   public static void forsendelseNektetTinglyst(String innsendingId) {
       Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
       if(forsendelsesstatus==null) {
          throw new RuntimeException("The stub has no knowledge of any entry linked to innsendingId: "+innsendingId);
       }
-      forsendelsesstatus.setBehandlingsutfall(Behandlingsutfall.AVVIST.name());
+      forsendelsesstatus.setBehandlingsutfall(Behandlingsutfall.NEKTET.name());
    }
 
    private static class ForsendelsesstatusProvider {
