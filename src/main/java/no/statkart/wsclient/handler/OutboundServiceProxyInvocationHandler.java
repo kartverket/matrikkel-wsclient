@@ -23,10 +23,17 @@ public class OutboundServiceProxyInvocationHandler implements InvocationHandler 
 
    private Object service;
    private int retries;
+   private int sleepTime;
 
    public OutboundServiceProxyInvocationHandler(Object service, int retries) {
       this.service = service;
       this.retries = retries;
+   }
+
+   public OutboundServiceProxyInvocationHandler(Object service, int retries, int sleepTime) {
+      this.service = service;
+      this.retries = retries;
+      this.sleepTime = sleepTime;
    }
 
    @Override
@@ -70,7 +77,7 @@ public class OutboundServiceProxyInvocationHandler implements InvocationHandler 
 
          //Hvis vi trenger å legge inn en delay mellom hvert kall, så gjør det her.
          try {
-            Thread.sleep(60000); //60 sekunder
+            Thread.sleep(sleepTime);
          } catch (InterruptedException e) {
             logger.warn("Thread sleep interrupted", e);
          }

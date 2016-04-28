@@ -36,4 +36,10 @@ public class DefaultStoreWS implements StoreWS {
    public GrunnbokBubbleObjectList getObjects(GrunnbokBubbleObjectIdList ids, GrunnbokContext grunnbokContext) throws ServiceException {
       return storeService.getObjects(ids, grunnbokContext);
    }
+
+   @Override
+   public GrunnbokBubbleObjectList getObjectsIgnoreMissing(GrunnbokBubbleObjectIdList ids, GrunnbokContext grunnbokContext) throws ServiceException {
+      return storeService.getObjectsIgnoreMissing(ids, grunnbokContext);
+   }
+
 }

@@ -16,6 +16,7 @@ import java.util.Map;
 public final class WebServiceBuilder<T> {
    private static final int TIMEOUT_MILLIS = 30000;
    private static final int DEFAULT_RETRIES = 2; //så 2 retries betyr at det er totalt 3 forsøk på kallet
+   private static final int SLEEPTIME_MILLIS = 60000;//Ventetid mellom hvert kall til tjenesten, ved flere forsøk.
 
    private int timeout;
    private int retries;
@@ -26,6 +27,7 @@ public final class WebServiceBuilder<T> {
    private boolean createProxy;
    private T unproxiedService;
    private Class<T> clazzOfWebService;
+   private int sleepTime;
 
    private WebServiceBuilder(T unproxiedService, Class<T> clazzOfWebService) {
       this.unproxiedService = unproxiedService;
@@ -37,7 +39,13 @@ public final class WebServiceBuilder<T> {
       return builder
             .defaultTimeout()
             .defaultRetries()
+            .defaultSleepTime()
             .defaultHostnameVerifier();
+   }
+
+   private WebServiceBuilder defaultSleepTime() {
+      this.sleepTime = SLEEPTIME_MILLIS;
+      return this;
    }
 
    public WebServiceBuilder<T> defaultTimeout() {
@@ -105,7 +113,7 @@ public final class WebServiceBuilder<T> {
       if( createProxy ) {
          //The service may be wrapped in a proxy object it self
          T service = clazzOfWebService.cast(unproxiedService);
-         InvocationHandler invocationHandler = new OutboundServiceProxyInvocationHandler(service, retries);
+         InvocationHandler invocationHandler = new OutboundServiceProxyInvocationHandler(service, retries, sleepTime);
          return (T) Proxy.newProxyInstance(clazzOfWebService.getClassLoader(), new Class[]{clazzOfWebService}, invocationHandler);
       } else {
          return unproxiedService;
