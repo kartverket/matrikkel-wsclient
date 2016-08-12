@@ -74,9 +74,9 @@ dependencies {
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-commons-lang:2.3'
 
   provided 'com.sun.xml.ws:jaxws-rt:2.2.10'
-  compile 'no.statkart.skif:skif-service-common:2.4.5'
+  compile 'no.statkart.skif:skif-service-common:2.7.1'
   compile 'joda-time:joda-time:2.8.2'
-  compile 'com.google.guava:guava:18.0'
+  compile 'com.google.guava:guava:19.0'
   compile 'org.slf4j:slf4j-simple:1.7.12'
   compile ('org.jvnet.jaxb2_commons:jaxb2-basics-runtime:'+jaxb2Version) {
     exclude module: 'jaxb-runtime'
@@ -180,8 +180,8 @@ task wsImportGrunnbok(dependsOn: createGeneratedDir) {
   }
 }
 
-// Konfigurasjon for å samle "samme" Exception med ulikt pakkenavn
-// TODO: Er det virkelig nødvendig å samle disse exceptionene?
+// Konfigurasjon for ï¿½ samle "samme" Exception med ulikt pakkenavn
+// TODO: Er det virkelig nï¿½dvendig ï¿½ samle disse exceptionene?
 ext.mergeServiceExceptionInDifferentPackages = {
   def destination = generatedSrcDir
   def packageString = 'no.kartverket.grunnbok.wsapi.v1.service.exception'
@@ -201,7 +201,7 @@ ext.mergeServiceExceptionInDifferentPackages = {
     file.delete()
   }
 
-  //kjører regexp replace på package statement for flyttet fil
+  //kjï¿½rer regexp replace pï¿½ package statement for flyttet fil
   relocatedFile = new File(replacePath.getPath(), 'ServiceException.java')
   relocatedFile.text = relocatedFile.text.replaceFirst(/(?ms)package[^;]+/, "package " + packageString)
 
