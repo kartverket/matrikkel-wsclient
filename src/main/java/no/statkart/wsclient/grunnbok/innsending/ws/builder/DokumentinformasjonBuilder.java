@@ -1,9 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending.ws.builder;
 
 import com.google.common.collect.Lists;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Dokumentinformasjon;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Rettsstiftelsesinformasjon;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.RettsstiftelsesinformasjonList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
 
 import java.util.List;
 
@@ -16,6 +14,7 @@ public class DokumentinformasjonBuilder {
    protected long dokumentnummer;
    protected String embetenummer;
    protected List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjonList = Lists.newArrayList();
+   private List<Registerenhet> paavirkerRegisterenheter = Lists.newArrayList();
 
    private DokumentinformasjonBuilder() {
    }
@@ -49,8 +48,14 @@ public class DokumentinformasjonBuilder {
       return this;
    }
 
+   public DokumentinformasjonBuilder withPaavirkerRegisterenheter(List<Registerenhet> paavirkerRegisterenheter) {
+      this.paavirkerRegisterenheter = paavirkerRegisterenheter;
+      return this;
+   }
+
+
    public DokumentinformasjonBuilder but() {
-      return aDokumentinformasjon().withDokumentaar(dokumentaar).withDokumentreferanse(dokumentreferanse).withDokumentnummer(dokumentnummer).withEmbetenummer(embetenummer).withRettsstiftelsesinformasjonList(rettsstiftelsesinformasjonList);
+      return aDokumentinformasjon().withDokumentaar(dokumentaar).withDokumentreferanse(dokumentreferanse).withDokumentnummer(dokumentnummer).withEmbetenummer(embetenummer).withRettsstiftelsesinformasjonList(rettsstiftelsesinformasjonList).withPaavirkerRegisterenheter(paavirkerRegisterenheter);
    }
 
    public Dokumentinformasjon build() {
@@ -63,6 +68,11 @@ public class DokumentinformasjonBuilder {
       RettsstiftelsesinformasjonList rettsstiftelsesinformasjon = new RettsstiftelsesinformasjonList();
       rettsstiftelsesinformasjon.getRettsstiftelsesinformasjon().addAll(rettsstiftelsesinformasjonList);
       dokumentinformasjon.setRettsstiftelsesinformasjon(rettsstiftelsesinformasjon);
+
+      RegisterenhetList registerenhetList = new RegisterenhetList();
+      registerenhetList.getRegisterenhet().addAll(paavirkerRegisterenheter);
+      dokumentinformasjon.setPaavirkerRegisterenheter(registerenhetList);
+
       return dokumentinformasjon;
    }
 }

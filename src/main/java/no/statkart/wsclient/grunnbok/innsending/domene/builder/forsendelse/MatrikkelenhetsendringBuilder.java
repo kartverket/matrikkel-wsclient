@@ -39,7 +39,7 @@ public class MatrikkelenhetsendringBuilder {
 
    public static MatrikkelenhetsendringBuilder anOverfoeringFraTidligereFestenummer() {
       MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
-      matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OVERFOERING_FRA_TIDLIGERE_FESTENUMMER);
+      matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FESTENUMMER_GITT_BRUKSNUMMER);
       return matrikkelenhetsendringBuilder;
    }
 

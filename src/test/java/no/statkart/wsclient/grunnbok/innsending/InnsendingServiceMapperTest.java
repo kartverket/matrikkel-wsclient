@@ -7,7 +7,7 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhetsendring;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Referanse;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Rettsstiftelse;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.UsignertMelding;
-import no.statkart.wsclient.grunnbok.innsending.domene.Avvisningsinformasjon;
+import no.statkart.wsclient.grunnbok.innsending.domene.Behandlingsinformasjon;
 import no.statkart.wsclient.grunnbok.innsending.domene.Begrunnelse;
 import no.statkart.wsclient.grunnbok.innsending.domene.Dokumentinformasjon;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
@@ -42,7 +42,7 @@ public class InnsendingServiceMapperTest {
 
       UsignertMelding usignertMelding = wsForsendelse.getUsignertMelding();
       Foelgebrev foelgebrev = usignertMelding.getFoelgebrev();
-      assertEquals(foelgebrev.getInnsendersIdentifikasjonsnummer(), FOELGE_BREV_INNSENDERS_IDENTIFIKASJONSNUMMER);
+      assertEquals(foelgebrev.getInnsender().getIdentifikasjonsnummer(), INNSENDER.getIdentifikasjonsnummer());
 
       List<Referanse> referanseList = foelgebrev.getDokumentrekkefoelge().getReferanse();
       assertEquals(referanseList.size(), 1);
@@ -72,7 +72,7 @@ public class InnsendingServiceMapperTest {
       assertEquals(forsendelsesstatus.getSaksstatus(), DEFAULT_SAKS_STATUS);
 
       assertTinglysingsinformasjon(forsendelsesstatus.getTinglysingsinformasjon());
-      assertAvvisningsinformasjon(forsendelsesstatus.getAvvisningsinformasjon());
+      assertAvvisningsinformasjon(forsendelsesstatus.getBehandlingsinformasjon());
    }
 
    private static void assertTinglysingsinformasjon(Tinglysingsinformasjon tinglysingsinformasjon) {
@@ -107,12 +107,12 @@ public class InnsendingServiceMapperTest {
       SDODokument signertUtskrift = signertGrunnboksutskrift.getSignertUtskrift();
       assertEquals(signertUtskrift.getSignertDokument(), SIGNERT_DOKUMENT_BYTES);
 
-      assertEquals(signertGrunnboksutskrift.getDokumentreferanse(), SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE);
+      assertEquals(signertGrunnboksutskrift.getDokumentreferanser(), SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE);
    }
 
-   private static void assertAvvisningsinformasjon(Avvisningsinformasjon avvisningsinformasjon) {
-      assertEquals(avvisningsinformasjon.getKontrollresultater().size(), 1);
-      Kontrollresultat kontrollresultat = avvisningsinformasjon.getKontrollresultater().get(0);
+   private static void assertAvvisningsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {
+      assertEquals(behandlingsinformasjon.getKontrollresultater().size(), 1);
+      Kontrollresultat kontrollresultat = behandlingsinformasjon.getKontrollresultater().get(0);
       List<Begrunnelse> begrunnelser = kontrollresultat.getBegrunnelser();
 
       Begrunnelse begrunnelse = begrunnelser.get(0);

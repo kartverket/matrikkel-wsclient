@@ -22,7 +22,7 @@ public class Matrikkelenhetsendring extends Registerenhetsendring {
    private TypeMatrikkelenhetsendring typeMatrikkelenhetsendring;
 
    public enum TypeMatrikkelenhetsendring {
-      FRADELING, SAMMENSLAAING_AV_MATRIKKELENHETER, OVERFOERING_FRA_TIDLIGERE_FESTENUMMER
+      FRADELING, SAMMENSLAAING_AV_MATRIKKELENHETER, FESTENUMMER_GITT_BRUKSNUMMER
    }
 
    public Matrikkelenhetsendring(TypeMatrikkelenhetsendring typeMatrikkelenhetsendring) {

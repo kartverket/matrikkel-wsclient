@@ -41,8 +41,8 @@ class RettsstiftelseListMapper implements TypeMapper<RettsstiftelseList, List<no
                jaxbElement = objectFactory.createRettsstiftelseListFradeling(matrikkelenhetsendringWsObject);
             } else if (typeMatrikkelenhetsendring == SAMMENSLAAING_AV_MATRIKKELENHETER) {
                jaxbElement = objectFactory.createRettsstiftelseListSammenslaaingAvMatrikkelenheter(matrikkelenhetsendringWsObject);
-            } else if (typeMatrikkelenhetsendring == OVERFOERING_FRA_TIDLIGERE_FESTENUMMER) {
-               jaxbElement = objectFactory.createRettsstiftelseListOverfoeringFraTidligereFestenummer(matrikkelenhetsendringWsObject);
+            } else if (typeMatrikkelenhetsendring == FESTENUMMER_GITT_BRUKSNUMMER) {
+               jaxbElement = objectFactory.createRettsstiftelseListFestenummerGittBruksnummer(matrikkelenhetsendringWsObject);
             }
          }
 

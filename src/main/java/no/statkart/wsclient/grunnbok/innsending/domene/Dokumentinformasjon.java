@@ -15,6 +15,7 @@ public class Dokumentinformasjon {
    private long dokumentnummer;
    private String embetenummer;
    private List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjon = Lists.newArrayList();
+   private List<Registerenhet> paavirkerRegisterenheter = Lists.newArrayList();
 
    public int getDokumentaar() {
       return dokumentaar;
@@ -54,5 +55,13 @@ public class Dokumentinformasjon {
 
    public void setRettsstiftelsesinformasjon(List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjon) {
       this.rettsstiftelsesinformasjon = rettsstiftelsesinformasjon;
+   }
+
+   public List<Registerenhet> getPaavirkerRegisterenheter() {
+      return paavirkerRegisterenheter;
+   }
+
+   public void setPaavirkerRegisterenheter(List<Registerenhet> paavirkerRegisterenheter) {
+      this.paavirkerRegisterenheter = paavirkerRegisterenheter;
    }
 }

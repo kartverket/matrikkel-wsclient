@@ -19,7 +19,7 @@ public class Forsendelsesstatus {
    private String behandlingsutfall;
    private String saksstatus;
    private Tinglysingsinformasjon tinglysingsinformasjon;
-   private Avvisningsinformasjon avvisningsinformasjon;
+   private Behandlingsinformasjon behandlingsinformasjon;
 
    public enum Behandlingsutfall {
       UAVKLART,
@@ -67,12 +67,12 @@ public class Forsendelsesstatus {
       return behandlingsutfall != null && Behandlingsutfall.parse(behandlingsutfall).erSluttUtfall();
    }
 
-   public Avvisningsinformasjon getAvvisningsinformasjon() {
-      return avvisningsinformasjon;
+   public Behandlingsinformasjon getBehandlingsinformasjon() {
+      return behandlingsinformasjon;
    }
 
-   public void setAvvisningsinformasjon(Avvisningsinformasjon avvisningsinformasjon) {
-      this.avvisningsinformasjon = avvisningsinformasjon;
+   public void setBehandlingsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {
+      this.behandlingsinformasjon = behandlingsinformasjon;
    }
 
    public String getInnsendingId() {

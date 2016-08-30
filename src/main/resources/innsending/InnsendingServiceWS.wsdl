@@ -38,7 +38,7 @@
     <message name="serviceException">
         <part name="fault" element="tns:serviceException"/>
     </message>
-
+    
     <portType name="InnsendingService">
         <operation name="sendTilTinglysing">
             <input message="tns:sendTilTinglysingRequest"/>

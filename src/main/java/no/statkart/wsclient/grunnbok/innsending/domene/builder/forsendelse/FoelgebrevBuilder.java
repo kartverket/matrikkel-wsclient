@@ -3,6 +3,7 @@ package no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse;
 import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbok.innsending.domene.Foelgebrev;
 import no.statkart.wsclient.grunnbok.innsending.domene.Referanse;
+import no.statkart.wsclient.grunnbok.innsending.domene.Saksperson;
 
 import java.util.List;
 
@@ -11,7 +12,10 @@ import java.util.List;
  */
 public class FoelgebrevBuilder {
    private List<Referanse> dokumentrekkefoelge = Lists.newArrayList();
-   private String innsendersIdentifikasjonsnummer;
+
+   private Saksperson innsender;
+   private Saksperson fakturamottaker;
+   private Saksperson mottaker;
 
    private FoelgebrevBuilder() {
    }
@@ -25,19 +29,31 @@ public class FoelgebrevBuilder {
       return this;
    }
 
-   public FoelgebrevBuilder withInnsendersIdentifikasjonsnummer(String innsendersIdentifikasjonsnummer) {
-      this.innsendersIdentifikasjonsnummer = innsendersIdentifikasjonsnummer;
+   public FoelgebrevBuilder withInnsender(Saksperson innsender) {
+      this.innsender = innsender;
+      return this;
+   }
+
+   public FoelgebrevBuilder withFakturamottaker(Saksperson fakturamottaker) {
+      this.fakturamottaker = fakturamottaker;
+      return this;
+   }
+
+   public FoelgebrevBuilder withMottaker(Saksperson mottaker) {
+      this.mottaker = mottaker;
       return this;
    }
 
    public FoelgebrevBuilder but() {
-      return aFoelgebrev().withDokumentrekkefoelge(dokumentrekkefoelge).withInnsendersIdentifikasjonsnummer(innsendersIdentifikasjonsnummer);
+      return aFoelgebrev().withDokumentrekkefoelge(dokumentrekkefoelge).withInnsender(innsender).withFakturamottaker(fakturamottaker).withMottaker(mottaker);
    }
 
    public Foelgebrev build() {
       Foelgebrev foelgebrev = new Foelgebrev();
       foelgebrev.setDokumentrekkefoelge(dokumentrekkefoelge);
-      foelgebrev.setInnsendersIdentifikasjonsnummer(innsendersIdentifikasjonsnummer);
+      foelgebrev.setInnsender(innsender);
+      foelgebrev.setFakturamottaker(fakturamottaker);
+      foelgebrev.setMottaker(mottaker);
       return foelgebrev;
    }
 }

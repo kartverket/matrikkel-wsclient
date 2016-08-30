@@ -8,7 +8,7 @@ import java.util.List;
 /**
  *
  */
-public class Avvisningsinformasjon {
+public class Behandlingsinformasjon {
 
    private List<Kontrollresultat> kontrollresultater = Lists.newArrayList();
 

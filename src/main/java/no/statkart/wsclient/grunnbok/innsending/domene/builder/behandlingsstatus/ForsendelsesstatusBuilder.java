@@ -1,6 +1,6 @@
 package no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatus;
 
-import no.statkart.wsclient.grunnbok.innsending.domene.Avvisningsinformasjon;
+import no.statkart.wsclient.grunnbok.innsending.domene.Behandlingsinformasjon;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelsesstatus;
 import no.statkart.wsclient.grunnbok.innsending.domene.Tinglysingsinformasjon;
 import org.joda.time.LocalDateTime;
@@ -10,7 +10,7 @@ import org.joda.time.LocalDateTime;
  */
 public class ForsendelsesstatusBuilder {
 
-   protected Avvisningsinformasjon avvisningsinformasjon;
+   protected Behandlingsinformasjon behandlingsinformasjon;
    protected String innsendingId;
    private String forsendelsesreferanse;
    protected LocalDateTime registreringstidspunkt;
@@ -25,8 +25,8 @@ public class ForsendelsesstatusBuilder {
       return new ForsendelsesstatusBuilder();
    }
 
-   public ForsendelsesstatusBuilder withAvvisningsinformasjon(Avvisningsinformasjon avvisningsinformasjon) {
-      this.avvisningsinformasjon = avvisningsinformasjon;
+   public ForsendelsesstatusBuilder withAvvisningsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {
+      this.behandlingsinformasjon = behandlingsinformasjon;
       return this;
    }
 
@@ -61,7 +61,7 @@ public class ForsendelsesstatusBuilder {
    }
 
    public ForsendelsesstatusBuilder but() {
-      return aBehandlingsstatus().withAvvisningsinformasjon(avvisningsinformasjon).withInnsendingId(innsendingId)
+      return aBehandlingsstatus().withAvvisningsinformasjon(behandlingsinformasjon).withInnsendingId(innsendingId)
             .withForsendelsesreferanse(forsendelsesreferanse).withRegistreringstidspunkt(registreringstidspunkt)
             .withBehandlingsutfall(behandlingsutfall).withSaksstatus(saksstatus)
             .withTinglysingsinformasjon(tinglysingsinformasjon);
@@ -69,7 +69,7 @@ public class ForsendelsesstatusBuilder {
 
    public Forsendelsesstatus build() {
       Forsendelsesstatus forsendelsesstatus = new Forsendelsesstatus();
-      forsendelsesstatus.setAvvisningsinformasjon(avvisningsinformasjon);
+      forsendelsesstatus.setBehandlingsinformasjon(behandlingsinformasjon);
       forsendelsesstatus.setInnsendingId(innsendingId);
       forsendelsesstatus.setForsendelsesreferanse(forsendelsesreferanse);
       forsendelsesstatus.setRegistreringstidspunkt(registreringstidspunkt);

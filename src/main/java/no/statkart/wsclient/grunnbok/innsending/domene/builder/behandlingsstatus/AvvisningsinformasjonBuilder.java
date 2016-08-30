@@ -1,7 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatus;
 
 import com.google.common.collect.Lists;
-import no.statkart.wsclient.grunnbok.innsending.domene.Avvisningsinformasjon;
+import no.statkart.wsclient.grunnbok.innsending.domene.Behandlingsinformasjon;
 import no.statkart.wsclient.grunnbok.innsending.domene.Kontrollresultat;
 
 import java.util.List;
@@ -28,9 +28,9 @@ public class AvvisningsinformasjonBuilder {
       return anAvvisningsinformasjon().withKontrollresultater(kontrollresultater);
    }
 
-   public Avvisningsinformasjon build() {
-      Avvisningsinformasjon avvisningsinformasjon = new Avvisningsinformasjon();
-      avvisningsinformasjon.setKontrollresultater(kontrollresultater);
-      return avvisningsinformasjon;
+   public Behandlingsinformasjon build() {
+      Behandlingsinformasjon behandlingsinformasjon = new Behandlingsinformasjon();
+      behandlingsinformasjon.setKontrollresultater(kontrollresultater);
+      return behandlingsinformasjon;
    }
 }

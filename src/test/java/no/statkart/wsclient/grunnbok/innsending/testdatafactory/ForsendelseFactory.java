@@ -2,13 +2,14 @@ package no.statkart.wsclient.grunnbok.innsending.testdatafactory;
 
 import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse;
+import no.statkart.wsclient.grunnbok.innsending.domene.Saksperson;
 import no.statkart.wsclient.grunnbok.innsending.domene.builder.forsendelse.*;
 
 public class ForsendelseFactory {
 
 
    public static final String FORSENDELSESREFERANSE = "12AZd";
-   public static final String FOELGE_BREV_INNSENDERS_IDENTIFIKASJONSNUMMER = "244432";
+   public static final Saksperson INNSENDER = new Saksperson();
    public static final String REFERANSE_GJELDER_DOKUMENTREFERANSE = "3232";
    public static final String REFERANSE_DIGEST_ALGORITME = "digestAlgoritme";
    public static final byte[] REFERANSE_DIGEST = "folgebrevDigest".getBytes();
@@ -31,6 +32,9 @@ public class ForsendelseFactory {
 
    public static final int TIL_MATRIKKELENHET_SEKSJONSNUMMER = 2;
 
+   static {
+      INNSENDER.setIdentifikasjonsnummer("244432");
+   }
 
    public static ForsendelseBuilder defaultForsendelse() {
 
@@ -51,7 +55,7 @@ public class ForsendelseFactory {
             .withForsendelsesReferanse(FORSENDELSESREFERANSE)
             .withUsignertMelding(UsignertMeldingBuilder.anUsignertMelding()
                   .withFoelgebrev(FoelgebrevBuilder.aFoelgebrev()
-                        .withInnsendersIdentifikasjonsnummer(FOELGE_BREV_INNSENDERS_IDENTIFIKASJONSNUMMER)
+                        .withInnsender(INNSENDER)
                         .withDokumentrekkefoelge(Lists.newArrayList(
                               ReferanseBuilder.aReferanse()
                                     .withGjelderDokumentreferanse(REFERANSE_GJELDER_DOKUMENTREFERANSE)
@@ -78,7 +82,9 @@ public class ForsendelseFactory {
             .withForsendelsesReferanse(FORSENDELSESREFERANSE)
             .withUsignertMelding(UsignertMeldingBuilder.anUsignertMelding()
                   .withFoelgebrev(FoelgebrevBuilder.aFoelgebrev()
-                        .withInnsendersIdentifikasjonsnummer("12313") //rekvirent for tinglysing
+                        .withInnsender(SakspersonBuilder.aSaksperson()
+                              .withIdentifikasjonsnummer("12313")
+                              .build()) //rekvirent for tinglysing
                         .withDokumentrekkefoelge(Lists.newArrayList(ReferanseBuilder.aReferanse().withGjelderDokumentreferanse("1").build()))
                         .build())
                   .withDokumenter(Lists.newArrayList((DokumentBuilder.aDokument()

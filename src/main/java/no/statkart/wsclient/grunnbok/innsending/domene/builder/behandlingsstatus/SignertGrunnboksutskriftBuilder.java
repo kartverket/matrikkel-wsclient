@@ -5,13 +5,15 @@ import no.statkart.wsclient.grunnbok.innsending.domene.Registerenhet;
 import no.statkart.wsclient.grunnbok.innsending.domene.SDODokument;
 import no.statkart.wsclient.grunnbok.innsending.domene.SignertGrunnboksutskrift;
 
+import java.util.List;
+
 /**
  *
  */
 public class SignertGrunnboksutskriftBuilder {
    protected Registerenhet gjelderFor;
    protected SDODokument signertUtskrift;
-   protected String dokumentreferanse;
+   protected List<String> dokumentreferanser;
 
    private SignertGrunnboksutskriftBuilder() {
    }
@@ -30,21 +32,21 @@ public class SignertGrunnboksutskriftBuilder {
       return this;
    }
 
-   public SignertGrunnboksutskriftBuilder withDokumentreferanse(String dokumentreferanse) {
-      this.dokumentreferanse = dokumentreferanse;
+   public SignertGrunnboksutskriftBuilder withDokumentreferanse(List<String> dokumentreferanser) {
+      this.dokumentreferanser = dokumentreferanser;
       return this;
    }
 
    public SignertGrunnboksutskriftBuilder but() {
       return aSignertGrunnboksutskrift().withGjelderFor(gjelderFor).withSignertUtskrift(signertUtskrift)
-            .withDokumentreferanse(dokumentreferanse);
+            .withDokumentreferanse(dokumentreferanser);
    }
 
    public SignertGrunnboksutskrift build() {
       SignertGrunnboksutskrift signertGrunnboksutskrift = new SignertGrunnboksutskrift();
       signertGrunnboksutskrift.setGjelderFor(gjelderFor);
       signertGrunnboksutskrift.setSignertUtskrift(signertUtskrift);
-      signertGrunnboksutskrift.setDokumentreferanse(dokumentreferanse);
+      signertGrunnboksutskrift.setDokumentreferanser(dokumentreferanser);
       return signertGrunnboksutskrift;
    }
 }

@@ -1,7 +1,7 @@
 package no.statkart.wsclient.grunnbok.innsending.ws.builder;
 
 import com.google.common.collect.Lists;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Avvisningsinformasjon;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Behandlingsinformasjon;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Kontrollresultat;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.KontrollresultatList;
 
@@ -10,27 +10,27 @@ import java.util.List;
 /**
  *
  */
-public class AvvisningsinformasjonBuilder {
+public class BehandlingsinformasjonBuilder {
    protected List<Kontrollresultat> kontrollresultater = Lists.newArrayList();
 
-   private AvvisningsinformasjonBuilder() {
+   private BehandlingsinformasjonBuilder() {
    }
 
-   public static AvvisningsinformasjonBuilder anAvvisningsinformasjon() {
-      return new AvvisningsinformasjonBuilder();
+   public static BehandlingsinformasjonBuilder anAvvisningsinformasjon() {
+      return new BehandlingsinformasjonBuilder();
    }
 
-   public AvvisningsinformasjonBuilder withKontrollresultater(List<Kontrollresultat> kontrollresultater) {
+   public BehandlingsinformasjonBuilder withKontrollresultater(List<Kontrollresultat> kontrollresultater) {
       this.kontrollresultater = kontrollresultater;
       return this;
    }
 
-   public AvvisningsinformasjonBuilder but() {
+   public BehandlingsinformasjonBuilder but() {
       return anAvvisningsinformasjon().withKontrollresultater(kontrollresultater);
    }
 
-   public Avvisningsinformasjon build() {
-      Avvisningsinformasjon avvisningsinformasjon = new Avvisningsinformasjon();
+   public Behandlingsinformasjon build() {
+      Behandlingsinformasjon avvisningsinformasjon = new Behandlingsinformasjon();
       KontrollresultatList kontrollresultatList = new KontrollresultatList();
       kontrollresultatList.getKontrollresultat().addAll(kontrollresultater);
       avvisningsinformasjon.setKontrollresultater(kontrollresultatList);

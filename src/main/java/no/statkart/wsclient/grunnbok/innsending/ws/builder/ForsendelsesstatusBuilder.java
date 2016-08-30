@@ -1,11 +1,15 @@
 package no.statkart.wsclient.grunnbok.innsending.ws.builder;
 
 import com.google.common.collect.Lists;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Avvisningsinformasjon;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Behandlingsinformasjon;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelsesstatus;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Registerenhet;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Tinglysingsinformasjon;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDateTime;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -37,9 +41,9 @@ public class ForsendelsesstatusBuilder {
    public static final String KONTROLL_RESULTAT_NAVN = "Resultat 1";
    public static final int KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS = 2;
    public static final String KONTROLL_RESULTAT_UTFALL = "Ikke tinglyst";
-   public static final String SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE = "235A";
+   public static final List<String> SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE = Collections.singletonList("235A");
 
-   protected Avvisningsinformasjon avvisningsinformasjon;
+   protected Behandlingsinformasjon behandlingsinformasjon;
    protected String innsendingId;
    private String forsendelsesreferanse;
    protected LocalDateTime registreringstidspunkt;
@@ -54,8 +58,8 @@ public class ForsendelsesstatusBuilder {
       return new ForsendelsesstatusBuilder();
    }
 
-   public ForsendelsesstatusBuilder withAvvisningsinformasjon(Avvisningsinformasjon avvisningsinformasjon) {
-      this.avvisningsinformasjon = avvisningsinformasjon;
+   public ForsendelsesstatusBuilder withBehandlingsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {
+      this.behandlingsinformasjon = behandlingsinformasjon;
       return this;
    }
 
@@ -90,7 +94,7 @@ public class ForsendelsesstatusBuilder {
    }
 
    public ForsendelsesstatusBuilder but() {
-      return aBehandlingsstatus().withAvvisningsinformasjon(avvisningsinformasjon).withInnsendingId(innsendingId)
+      return aBehandlingsstatus().withBehandlingsinformasjon(behandlingsinformasjon).withInnsendingId(innsendingId)
             .withForsendelsesreferanse(forsendelsesreferanse)
             .withRegistreringstidspunkt(registreringstidspunkt).withBehandlingsutfall(behandlingsutfall)
             .withSaksstatus(saksstatus).withTinglysingsinformasjon(tinglysingsinformasjon);
@@ -98,7 +102,7 @@ public class ForsendelsesstatusBuilder {
 
    public Forsendelsesstatus build() {
       Forsendelsesstatus forsendelsesstatus = new Forsendelsesstatus();
-      forsendelsesstatus.setAvvisningsinformasjon(avvisningsinformasjon);
+      forsendelsesstatus.setBehandlingsinformasjon(behandlingsinformasjon);
       forsendelsesstatus.setInnsendingId(innsendingId);
       forsendelsesstatus.setForsendelsesreferanse(forsendelsesreferanse);
       forsendelsesstatus.setRegistreringstidspunkt(registreringstidspunkt);
@@ -125,6 +129,13 @@ public class ForsendelsesstatusBuilder {
                               .withRettsstiftelsesnummer(RETTSSTIFTELSESNUMMER)
                               .withRettsstiftelsesreferanse(RETTSSTIFTELSESREFERANSE)
                               .build()))
+                        .withPaavirkerRegisterenheter(Lists.newArrayList(RegisterenhetBuilder.aRegisterenhet()
+                              .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
+                                    .withKommunenummer("0233")
+                                    .withGaardsnummer(12)
+                                    .withBruksnummer(13)
+                                    .build())
+                              .build()))
                         .build()))
                   .withSignerteGrunnboksutskrifter(Lists.newArrayList(SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
                         .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
@@ -140,10 +151,10 @@ public class ForsendelsesstatusBuilder {
                         .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
                               .withSignertDokument(SIGNERT_DOKUMENT_BYTES)
                               .build())
-                        .withDokumentreferanse(SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE)
+                        .withDokumentreferanser(SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE)
                         .build()))
                   .build())
-            .withAvvisningsinformasjon(AvvisningsinformasjonBuilder.anAvvisningsinformasjon()
+            .withBehandlingsinformasjon(BehandlingsinformasjonBuilder.anAvvisningsinformasjon()
                   .withKontrollresultater(Lists.newArrayList(KontrollresultatBuilder.aKontrollresultat()
                         .withBegrunnelser(Lists.newArrayList(BegrunnelseBuilder.aBegrunnelse()
                               .withKodeverdi(BEGRUNNELSE_KODEVERDI)

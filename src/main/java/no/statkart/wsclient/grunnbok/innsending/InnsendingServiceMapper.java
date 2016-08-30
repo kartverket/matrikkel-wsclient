@@ -62,6 +62,8 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
       addMapper(new BegrunnelseListMapper());
       addMapper(new MatrikkelenhetFraTilListMapper());
       addMapper(new RettsstiftelseListMapper());
+      addMapper(new RegisterenhetListMapper());
+      addMapper(new DokumentreferanseListMapper());
    }
 
    Forsendelse mapForsendelse(no.statkart.wsclient.grunnbok.innsending.domene.Forsendelse domainForsendelse) {
@@ -278,6 +280,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
       }
    }
 
+
    private class DokumentinformasjonListMapper extends InnsendingListMapper<DokumentinformasjonList, List<Dokumentinformasjon>> {
       public DokumentinformasjonListMapper() {
          super(InnsendingServiceMapper.this.getMapping(), DokumentinformasjonList.class, (Class<List<Dokumentinformasjon>>) new TypeToken<List<Dokumentinformasjon>>() {
@@ -477,4 +480,55 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
          return domainObjects;
       }
    }
+
+   private class RegisterenhetListMapper extends InnsendingListMapper<RegisterenhetList, List<Registerenhet>> {
+      public RegisterenhetListMapper() {
+         super(InnsendingServiceMapper.this.getMapping(), RegisterenhetList.class, (Class<List<Registerenhet>>) new TypeToken<List<Registerenhet>>() {
+         }.getRawType());
+      }
+
+      @Override
+      public RegisterenhetList mapDomainObject(List<Registerenhet> source) {
+         RegisterenhetList wsObject = new RegisterenhetList();
+         for (Registerenhet domainObject : source) {
+            wsObject.getRegisterenhet().add(getMapping().d2w(domainObject, no.kartverket.grunnbok.wsapi.v2.domain.innsending.Registerenhet.class));
+         }
+         return wsObject;
+      }
+
+      @Override
+      public List<Registerenhet> mapWsapiObject(RegisterenhetList source) {
+         List<Registerenhet> domainObjects = Lists.newArrayList();
+         for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Registerenhet wsObject : source.getRegisterenhet()) {
+            domainObjects.add(getMapping().w2d(wsObject, Registerenhet.class));
+         }
+         return domainObjects;
+      }
+   }
+
+   private class DokumentreferanseListMapper extends InnsendingListMapper<DokumentreferanseList, List<String>> {
+      public DokumentreferanseListMapper() {
+         super(InnsendingServiceMapper.this.getMapping(), DokumentreferanseList.class, (Class<List<String>>) new TypeToken<List<String>>() {
+         }.getRawType());
+      }
+
+      @Override
+      public DokumentreferanseList mapDomainObject(List<String> source) {
+         DokumentreferanseList wsObject = new DokumentreferanseList();
+         for (String domainObject : source) {
+            wsObject.getDokumentreferanse().add(getMapping().d2w(domainObject, String.class));
+         }
+         return wsObject;
+      }
+
+      @Override
+      public List<String> mapWsapiObject(DokumentreferanseList source) {
+         List<String> domainObjects = Lists.newArrayList();
+         for (String wsObject : source.getDokumentreferanse()) {
+            domainObjects.add(getMapping().w2d(wsObject, String.class));
+         }
+         return domainObjects;
+      }
+   }
+
 }

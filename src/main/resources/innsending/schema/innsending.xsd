@@ -14,6 +14,7 @@
     <xs:element name="dokument" type="inn:Dokument"/>
     <xs:element name="foelgebrev" type="inn:Foelgebrev"/>
     <xs:element name="innsendingId" type="xs:string"/>
+    <xs:element name="usignertMelding" type="inn:UsignertMelding"/>
 
     <xs:complexType name="Forsendelse">
         <xs:sequence>
@@ -34,7 +35,7 @@
             <!-- representerer sak.behandlingsutfall-->
             <xs:element name="saksstatus" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="tinglysingsinformasjon" type="inn:Tinglysingsinformasjon" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="avvisningsinformasjon" type="inn:Avvisningsinformasjon" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="behandlingsinformasjon" type="inn:Behandlingsinformasjon" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -54,7 +55,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="Avvisningsinformasjon">
+    <xs:complexType name="Behandlingsinformasjon">
         <xs:sequence>
             <xs:element name="kontrollresultater" type="inn:KontrollresultatList"/>
         </xs:sequence>
@@ -67,6 +68,7 @@
             <xs:element name="dokumentnummer" type="xs:long"/>
             <xs:element name="embetenummer" type="xs:string"/>
             <xs:element name="rettsstiftelsesinformasjon" type="inn:RettsstiftelsesinformasjonList"/>
+            <xs:element name="paavirkerRegisterenheter" type="inn:RegisterenhetList"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -93,12 +95,17 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:complexType name="SignertGrunnboksutskrift">
         <xs:sequence>
             <xs:element name="gjelderFor" type="inn:Registerenhet"/>
             <xs:element name="signertUtskrift" type="inn:SDODokument"/>
-            <xs:element name="dokumentreferanse" type="xs:string"/>
+            <xs:element name="dokumentreferanser" type="inn:DokumentreferanseList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentreferanseList">
+        <xs:sequence>
+            <xs:element name="dokumentreferanse" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -143,8 +150,18 @@
 
     <xs:complexType name="Foelgebrev">
         <xs:sequence>
-            <xs:element name="innsendersIdentifikasjonsnummer" type="xs:string"/>
+            <xs:element name="innsender" type="inn:Saksperson"/>
+            <xs:element name="fakturamottaker" type="inn:Saksperson" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="mottaker" type="inn:Saksperson" minOccurs="0" maxOccurs="1"/>
             <xs:element name="dokumentrekkefoelge" type="inn:ReferanseList"/>
+            <xs:element name="maalform" type="inn:Kode" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Saksperson">
+        <xs:sequence>
+            <xs:element name="identifikasjonsnummer" type="xs:string"/>
+            <xs:element name="referanse" type="xs:string" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -164,7 +181,7 @@
         <xs:sequence>
             <xs:element name="gjelderDokumentreferanse" type="xs:string"/>
             <!--
-            Disse må være utfylt når referansen gjelder signerte dokumenter.
+            Disse må være utfylt når referansen gjelder signerte dokumenter, men ikke når dokument og følgebrev er signert sammen.
             -->
             <xs:element name="digest" type="xs:base64Binary" minOccurs="0" maxOccurs="1"/>
             <xs:element name="digestAlgoritme" type="xs:string" minOccurs="0" maxOccurs="1">
@@ -194,10 +211,12 @@
 
     <xs:complexType name="SignertMelding">
         <xs:sequence>
-            <xs:element name="dokumenter" type="inn:SDODokumentList"/>
+            <xs:element name="dokumenter" type="inn:SDODokumentList" minOccurs="0" maxOccurs="1"/>
             <xs:element name="foelgebrev" type="inn:SDODokument" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="dokumenterOgFoelgebrev" type="inn:SDODokument" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
+
 
     <xs:complexType name="Kode">
         <xs:sequence>
@@ -248,11 +267,23 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="Omfang">
+        <xs:sequence>
+            <xs:element name="vilkaarGjelder" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="Registerenhet">
         <xs:choice>
             <xs:element name="matrikkelenhet" type="inn:Matrikkelenhet"/>
             <xs:element name="borettslagsandel" type="inn:Borettslagsandel"/>
         </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetList">
+        <xs:sequence>
+            <xs:element name="registerenhet" type="inn:Registerenhet" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="Matrikkelenhet">
@@ -326,6 +357,15 @@
 
     </xs:complexType>
 
+    <xs:complexType name="RettsstiftelseHenvisning">
+        <xs:choice>
+            <xs:element name="rettsstiftelseReferanse" type="inn:RettsstiftelseReferanse"/>
+            <xs:element name="pant" type="inn:Pant"/>
+            <xs:element name="annenHeftelse" type="inn:AnnenHeftelse"/>
+            <xs:element name="tvangsforretning" type="inn:Tvangsforretning"/>
+        </xs:choice>
+    </xs:complexType>
+
     <xs:complexType name="RettsstiftelseReferanse">
         <xs:sequence>
             <xs:element name="dokumentaar" type="xs:int"/>
@@ -336,9 +376,16 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="RettsstiftelseHenvisningList">
+        <xs:sequence>
+            <xs:element name="rettsstiftelseHenvisning" type="inn:RettsstiftelseHenvisning" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="DelAvRett">
         <xs:sequence>
-            <xs:element name="rettsstiftelse" type="inn:RettsstiftelseReferanse"/>
+            <xs:element name="rettsstiftelse" type="inn:RettsstiftelseHenvisning"/>
             <xs:element name="begrensetTil" type="inn:DelAvRegisterenhetsrettList" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
@@ -388,7 +435,9 @@
                 <xs:element name="anmerkningPaaPerson" type="inn:AnmerkningPaaPerson"/>
                 <xs:element name="fradeling" type="inn:Matrikkelenhetsendring"/>
                 <xs:element name="sammenslaaingAvMatrikkelenheter" type="inn:Matrikkelenhetsendring"/>
-                <xs:element name="overfoeringFraTidligereFestenummer" type="inn:Matrikkelenhetsendring"/>
+                <xs:element name="festenummerGittBruksnummer" type="inn:Matrikkelenhetsendring"/>
+                <xs:element name="prioritetsbestemmelseForDokumentnummer"
+                            type="inn:PrioritetsbestemmelseForDokumentnummer"/>
             </xs:choice>
         </xs:sequence>
     </xs:complexType>
@@ -445,6 +494,7 @@
                 <xs:sequence>
                     <xs:element name="pantsettere" type="inn:PersonList"/>
                     <xs:element name="erklaeringerOmSivilstand" type="inn:ErklaeringOmSivilstandList"/>
+                    <xs:element name="omfang" type="inn:Omfang" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -572,11 +622,23 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <xs:complexType name="PrioritetsbestemmelseForDokumentnummer">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="veketFor" type="inn:RettsstiftelseHenvisningList"/>
+                    <xs:element name="sidestiltMed" type="inn:RettsstiftelseHenvisningList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
     <xs:complexType name="Anmerkning">
         <xs:complexContent>
             <xs:extension base="inn:Rettsstiftelse">
                 <xs:sequence>
                     <xs:element name="saksnummer" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="forvaltere" type="inn:PersonList" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -587,7 +649,6 @@
             <xs:extension base="inn:Anmerkning">
                 <xs:sequence>
                     <xs:element name="anmerketPerson" type="inn:Person"/>
-                    <xs:element name="konkursbo" type="inn:Person" minOccurs="0" maxOccurs="1"/>
                     <xs:element name="bostyrer" type="inn:Person" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>

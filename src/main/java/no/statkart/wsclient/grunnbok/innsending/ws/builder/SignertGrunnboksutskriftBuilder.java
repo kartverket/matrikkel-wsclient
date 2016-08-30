@@ -1,8 +1,11 @@
 package no.statkart.wsclient.grunnbok.innsending.ws.builder;
 
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.DokumentreferanseList;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Registerenhet;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SDODokument;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskrift;
+
+import java.util.List;
 
 /**
  *
@@ -10,7 +13,7 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskrif
 public class SignertGrunnboksutskriftBuilder {
    protected Registerenhet gjelderFor;
    protected SDODokument signertUtskrift;
-   private String dokumentreferanse;
+   private List<String> dokumentreferanser;
 
    private SignertGrunnboksutskriftBuilder() {
    }
@@ -29,21 +32,23 @@ public class SignertGrunnboksutskriftBuilder {
       return this;
    }
 
-   public SignertGrunnboksutskriftBuilder withDokumentreferanse(String dokumentreferanse) {
-      this.dokumentreferanse = dokumentreferanse;
+   public SignertGrunnboksutskriftBuilder withDokumentreferanser(List<String> dokumentreferanser) {
+      this.dokumentreferanser = dokumentreferanser;
       return this;
    }
 
    public SignertGrunnboksutskriftBuilder but() {
       return aSignertGrunnboksutskrift().withGjelderFor(gjelderFor).withSignertUtskrift(signertUtskrift)
-            .withDokumentreferanse(dokumentreferanse);
+            .withDokumentreferanser(dokumentreferanser);
    }
 
    public SignertGrunnboksutskrift build() {
       SignertGrunnboksutskrift signertGrunnboksutskrift = new SignertGrunnboksutskrift();
       signertGrunnboksutskrift.setGjelderFor(gjelderFor);
       signertGrunnboksutskrift.setSignertUtskrift(signertUtskrift);
-      signertGrunnboksutskrift.setDokumentreferanse(dokumentreferanse);
+      DokumentreferanseList dokumentreferanseList = new DokumentreferanseList();
+      dokumentreferanseList.getDokumentreferanse().addAll(dokumentreferanser);
+      signertGrunnboksutskrift.setDokumentreferanser(dokumentreferanseList);
       return signertGrunnboksutskrift;
    }
 }

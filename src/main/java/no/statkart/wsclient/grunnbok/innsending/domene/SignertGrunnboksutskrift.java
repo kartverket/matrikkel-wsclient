@@ -1,6 +1,8 @@
 package no.statkart.wsclient.grunnbok.innsending.domene;
 
 
+import java.util.List;
+
 /**
  *
  */
@@ -8,14 +10,14 @@ public class SignertGrunnboksutskrift {
 
    private Registerenhet gjelderFor;
    private SDODokument signertUtskrift;
-   private String dokumentreferanse;
+   private List<String> dokumentreferanser;
 
-   public String getDokumentreferanse() {
-      return dokumentreferanse;
+   public List<String> getDokumentreferanser() {
+      return dokumentreferanser;
    }
 
-   public void setDokumentreferanse(String dokumentreferanse) {
-      this.dokumentreferanse = dokumentreferanse;
+   public void setDokumentreferanser(List<String> dokumentreferanse) {
+      this.dokumentreferanser = dokumentreferanse;
    }
 
    public Registerenhet getGjelderFor() {

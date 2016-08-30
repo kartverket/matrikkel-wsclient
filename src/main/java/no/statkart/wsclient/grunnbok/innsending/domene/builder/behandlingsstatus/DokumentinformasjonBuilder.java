@@ -2,6 +2,7 @@ package no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatu
 
 import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbok.innsending.domene.Dokumentinformasjon;
+import no.statkart.wsclient.grunnbok.innsending.domene.Registerenhet;
 import no.statkart.wsclient.grunnbok.innsending.domene.Rettsstiftelsesinformasjon;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class DokumentinformasjonBuilder {
    protected long dokumentnummer;
    protected String embetenummer;
    protected List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjonList = Lists.newArrayList();
+   protected List<Registerenhet> paavirkerRegisterenheter = Lists.newArrayList();
 
    private DokumentinformasjonBuilder() {
    }
@@ -48,8 +50,13 @@ public class DokumentinformasjonBuilder {
       return this;
    }
 
+   public DokumentinformasjonBuilder withPaavirkerRegisterenheterList(List<Registerenhet> paavirkerRegisterenheter) {
+      this.paavirkerRegisterenheter = paavirkerRegisterenheter;
+      return this;
+   }
+
    public DokumentinformasjonBuilder but() {
-      return aDokumentinformasjon().withDokumentaar(dokumentaar).withDokumentreferanse(dokumentreferanse).withDokumentnummer(dokumentnummer).withEmbetenummer(embetenummer).withRettsstiftelsesinformasjonList(rettsstiftelsesinformasjonList);
+      return aDokumentinformasjon().withDokumentaar(dokumentaar).withDokumentreferanse(dokumentreferanse).withDokumentnummer(dokumentnummer).withEmbetenummer(embetenummer).withRettsstiftelsesinformasjonList(rettsstiftelsesinformasjonList).withPaavirkerRegisterenheterList(paavirkerRegisterenheter);
    }
 
    public Dokumentinformasjon build() {
@@ -59,6 +66,7 @@ public class DokumentinformasjonBuilder {
       dokumentinformasjon.setDokumentnummer(dokumentnummer);
       dokumentinformasjon.setEmbetenummer(embetenummer);
       dokumentinformasjon.setRettsstiftelsesinformasjon(rettsstiftelsesinformasjonList);
+      dokumentinformasjon.setPaavirkerRegisterenheter(paavirkerRegisterenheter);
       return dokumentinformasjon;
    }
 }
