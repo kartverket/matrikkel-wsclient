@@ -40,20 +40,9 @@ test {
 
 repositories {
   maven {
-    url NEXUS_BASE_URL + "/snapshots/"
-    credentials {
-      username NEXUS_USERNAME
-      password NEXUS_PASSWORD
-    }
+    name = 'public'
+    url project.ext.properties.get('MAVEN_REPO', 'http://nexus.statkart.no:8090/nexus/content/groups/public')
   }
-  maven {
-    url NEXUS_BASE_URL + "/releases/"
-    credentials {
-      username NEXUS_USERNAME
-      password NEXUS_PASSWORD
-    }
-  }
-  mavenCentral()
 }
 
 configurations {
