@@ -9,7 +9,8 @@ import no.statkart.wsclient.grunnbok.innsending.ws.builder.ForsendelsesstatusBui
 import javax.jws.WebService;
 
 /**
- *
+ * Dummy stub som ikke returnerer statiske data.
+ * PS: Denne er kun tiltenkt brukt for interne tester!
  */
 @WebService(
       serviceName = "InnsendingServiceWS",

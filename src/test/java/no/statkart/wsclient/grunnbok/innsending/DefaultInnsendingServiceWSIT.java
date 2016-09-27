@@ -17,6 +17,9 @@ import javax.xml.ws.WebServiceException;
 
 import static org.testng.Assert.assertNotNull;
 
+/**
+ * Test av {@link DefaultInnsendingServiceWS} som mapper
+ */
 @Test
 public class DefaultInnsendingServiceWSIT {
 
