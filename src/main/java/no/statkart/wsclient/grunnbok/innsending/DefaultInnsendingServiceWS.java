@@ -36,7 +36,9 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
    @Override
    public Forsendelsesstatus valider(Forsendelse forsendelse) {
       try {
-         return innsendingServiceMapper.mapForsendelsesstatus(innsendingWebService.valider(innsendingServiceMapper.mapForsendelse(forsendelse)));
+         final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs = innsendingServiceMapper.mapForsendelse(forsendelse);
+         return innsendingServiceMapper.mapForsendelsesstatus(
+               innsendingWebService.valider(mappedArgs));
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
       }
@@ -45,7 +47,9 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
    @Override
    public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
       try {
-         return innsendingServiceMapper.mapForsendelsesstatus(innsendingWebService.sendTilTinglysing(innsendingServiceMapper.mapForsendelse(forsendelse)));
+         final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs = innsendingServiceMapper.mapForsendelse(forsendelse);
+         return innsendingServiceMapper.mapForsendelsesstatus(
+               innsendingWebService.sendTilTinglysing(mappedArgs));
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
       }
@@ -54,7 +58,10 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
    @Override
    public Forsendelsesstatus hentStatus(String innsendingId) {
       try {
-         return innsendingServiceMapper.mapForsendelsesstatus(innsendingWebService.hentStatus(innsendingId));
+         @SuppressWarnings("UnnecessaryLocalVariable")
+         final String mappedArgs = innsendingId;
+         return innsendingServiceMapper.mapForsendelsesstatus(
+               innsendingWebService.hentStatus(mappedArgs));
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
       }
