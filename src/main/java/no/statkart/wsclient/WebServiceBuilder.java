@@ -15,8 +15,8 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public final class WebServiceBuilder<T> {
    private static final int TIMEOUT_MILLIS = 30000;
-   private static final int DEFAULT_RETRIES = 2; //så 2 retries betyr at det er totalt 3 forsøk på kallet
-   private static final int SLEEPTIME_MILLIS = 60000;//Ventetid mellom hvert kall til tjenesten, ved flere forsøk.
+   private static final int DEFAULT_RETRIES = 2; //sÃ¥ 2 retries betyr at det er totalt 3 forsÃ¸k pÃ¥ kallet
+   private static final int SLEEPTIME_MILLIS = 60000;//Ventetid mellom hvert kall til tjenesten, ved flere forsÃ¸k.
 
    private int timeout;
    private int retries;
@@ -106,7 +106,7 @@ public final class WebServiceBuilder<T> {
       requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointUrl);
       requestContext.put(BindingProvider.USERNAME_PROPERTY, brukernavn);
       requestContext.put(BindingProvider.PASSWORD_PROPERTY, passord);
-      //TODO: Må en virkelig spesifisere vendor-spesifikk timeout-property?
+      //TODO: MÃ¥ en virkelig spesifisere vendor-spesifikk timeout-property?
       requestContext.put("weblogic.wsee.transport.read.timeout", timeout);//Millis Weblogic HTTP Stack
       requestContext.put(JAXWSProperties.REQUEST_TIMEOUT, timeout);//Millis Sun/Oracle HTTP Stack
 

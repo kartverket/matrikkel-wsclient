@@ -32,6 +32,6 @@ public interface RettsstiftelseWS {
    RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findRettsstiftelserMedUtgaatteAndeler(RegisterenhetsrettsandelIdList andeler,
                                                                                                             GrunnbokContext grunnbokContext) throws ServiceException;
 
-   //TODO: Hvorfor behøver vi denne dersom den kun kalles fra en test?
+   //TODO: Hvorfor behÃ¸ver vi denne dersom den kun kalles fra en test?
    ServituttIdListTransfer findServitutter(RegisterenhetId registerenhetId, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException;
 }

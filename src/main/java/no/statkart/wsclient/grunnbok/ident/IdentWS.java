@@ -17,10 +17,10 @@ public interface IdentWS {
 
    MatrikkelenhetIdentTilMatrikkelenhetIdMap findMatrikkelenhetIdsForIdents(MatrikkelenhetIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException;
 
-   //TODO: Denne brukes kun fra test, hvorfor behøver vi den?
+   //TODO: Denne brukes kun fra test, hvorfor behÃ¸ver vi den?
    BorettslagsandelIdentTilBorettslagsandelIdMap findBorettslagsandelIdsForIdents(BorettslagsandelIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException;
 
-   //TODO: Denne brukes kun fra test, hvorfor behøver vi den?
+   //TODO: Denne brukes kun fra test, hvorfor behÃ¸ver vi den?
    KommuneIdentTilKommuneIdMap findKommuneIdsForIdents(KommuneIdentList idents, GrunnbokContext grunnbokContext)
          throws ServiceException, ValidationException_Exception;
 

@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.UndeclaredThrowableException;
 
 /**
- * Klasse som forsøker et kall til en tjenste opptil flere ganger, dersom den får noen feil, som er mulig at serveren man
+ * Klasse som forsÃ¸ker et kall til en tjenste opptil flere ganger, dersom den fÃ¥r noen feil, som er mulig at serveren man
  * kaller mot kan hente seg inn.
  *
  * Created by hanste on 30.06.2015.
@@ -49,12 +49,12 @@ public class OutboundServiceProxyInvocationHandler implements InvocationHandler 
          } catch (InvocationTargetException e) {
             Throwable t = e.getCause();
             if (t instanceof ClientTransportException) {
-               logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, t);
+               logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet pÃ¥ forsÃ¸k: " + forsok, t);
                exception = (Exception) t;
             } else if (t instanceof WebServiceException) {
                Throwable cause = t.getCause();
                if (cause instanceof IOException) {
-                  logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, t);
+                  logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet pÃ¥ forsÃ¸k: " + forsok, t);
                   exception = (Exception) t;
                } else {
                   throw t;
@@ -63,19 +63,19 @@ public class OutboundServiceProxyInvocationHandler implements InvocationHandler 
                throw t;
             }
          } catch (ClientTransportException e) {
-            logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, e);
+            logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet pÃ¥ forsÃ¸k: " + forsok, e);
             exception = e;
          } catch (WebServiceException e) {
             Throwable cause = e.getCause();
             if (cause instanceof IOException) {
-               logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, e);
+               logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet pÃ¥ forsÃ¸k: " + forsok, e);
                exception = e;
             } else {
                throw e;
             }
          }
 
-         //Hvis vi trenger å legge inn en delay mellom hvert kall, så gjør det her.
+         //Hvis vi trenger Ã¥ legge inn en delay mellom hvert kall, sÃ¥ gjÃ¸r det her.
          try {
             Thread.sleep(sleepTime);
          } catch (InterruptedException e) {
@@ -84,7 +84,7 @@ public class OutboundServiceProxyInvocationHandler implements InvocationHandler 
 
       } while (forsok <= retries);
 
-      //Hvis vi kommer hit så har vi gjort 1 + retries forsøk, som alle har feilet. Da sender vi exception ut.
+      //Hvis vi kommer hit sÃ¥ har vi gjort 1 + retries forsÃ¸k, som alle har feilet. Da sender vi exception ut.
       throw exception;
    }
 }

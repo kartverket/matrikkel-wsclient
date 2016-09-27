@@ -180,8 +180,8 @@ task wsImportGrunnbok(dependsOn: createGeneratedDir) {
   }
 }
 
-// Konfigurasjon for � samle "samme" Exception med ulikt pakkenavn
-// TODO: Er det virkelig n�dvendig � samle disse exceptionene?
+// Konfigurasjon for å samle "samme" Exception med ulikt pakkenavn
+// TODO: Er det virkelig nødvendig å samle disse exceptionene?
 ext.mergeServiceExceptionInDifferentPackages = {
   def destination = generatedSrcDir
   def packageString = 'no.kartverket.grunnbok.wsapi.v1.service.exception'
@@ -201,7 +201,7 @@ ext.mergeServiceExceptionInDifferentPackages = {
     file.delete()
   }
 
-  //kj�rer regexp replace p� package statement for flyttet fil
+  //kjører regexp replace på package statement for flyttet fil
   relocatedFile = new File(replacePath.getPath(), 'ServiceException.java')
   relocatedFile.text = relocatedFile.text.replaceFirst(/(?ms)package[^;]+/, "package " + packageString)
 
@@ -224,3 +224,10 @@ ext.mergeServiceExceptionInDifferentPackages = {
 compileJava.dependsOn(wsImportInnsendingService)
 compileJava.dependsOn(wsImportLandbruksregister)
 compileJava.dependsOn(wsImportGrunnbok)
+
+allprojects {
+  tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:unchecked" << "-Werror"
+  }
+}
