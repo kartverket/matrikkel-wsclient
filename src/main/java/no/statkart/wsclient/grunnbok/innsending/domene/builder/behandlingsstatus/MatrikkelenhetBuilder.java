@@ -4,13 +4,13 @@ package no.statkart.wsclient.grunnbok.innsending.domene.builder.behandlingsstatu
 import no.statkart.wsclient.grunnbok.innsending.domene.Matrikkelenhet;
 
 /**
- *
+ * Fluent opprettelse av {@link Matrikkelenhet}
  */
 public class MatrikkelenhetBuilder {
-   private int bruksnummer;
    private String kommunenummer;
    private String kommunenavn;
    private int gaardsnummer;
+   private int bruksnummer;
    private int festenummer;
    private int seksjonsnummer;
 
@@ -19,11 +19,6 @@ public class MatrikkelenhetBuilder {
 
    public static MatrikkelenhetBuilder aMatrikkelenhet() {
       return new MatrikkelenhetBuilder();
-   }
-
-   public MatrikkelenhetBuilder withBruksnummer(int bruksnummer) {
-      this.bruksnummer = bruksnummer;
-      return this;
    }
 
    public MatrikkelenhetBuilder withKommunenummer(String kommunenummer) {
@@ -41,6 +36,11 @@ public class MatrikkelenhetBuilder {
       return this;
    }
 
+   public MatrikkelenhetBuilder withBruksnummer(int bruksnummer) {
+      this.bruksnummer = bruksnummer;
+      return this;
+   }
+
    public MatrikkelenhetBuilder withFestenummer(int festenummer) {
       this.festenummer = festenummer;
       return this;
@@ -52,15 +52,22 @@ public class MatrikkelenhetBuilder {
    }
 
    public MatrikkelenhetBuilder but() {
-      return aMatrikkelenhet().withBruksnummer(bruksnummer).withKommunenummer(kommunenummer).withKommunenavn(kommunenavn).withGaardsnummer(gaardsnummer).withFestenummer(festenummer).withSeksjonsnummer(seksjonsnummer);
+      return aMatrikkelenhet()
+            .withBruksnummer(bruksnummer)
+            .withKommunenummer(kommunenummer)
+            .withKommunenavn(kommunenavn)
+            .withGaardsnummer(gaardsnummer)
+            .withFestenummer(festenummer)
+            .withSeksjonsnummer(seksjonsnummer)
+            ;
    }
 
    public Matrikkelenhet build() {
       Matrikkelenhet matrikkelenhet = new Matrikkelenhet();
-      matrikkelenhet.setBruksnummer(bruksnummer);
       matrikkelenhet.setKommunenummer(kommunenummer);
       matrikkelenhet.setKommunenavn(kommunenavn);
       matrikkelenhet.setGaardsnummer(gaardsnummer);
+      matrikkelenhet.setBruksnummer(bruksnummer);
       matrikkelenhet.setFestenummer(festenummer);
       matrikkelenhet.setSeksjonsnummer(seksjonsnummer);
       return matrikkelenhet;
