@@ -1,4 +1,4 @@
-group = groupId
+group = 'no.statkart.wsclient'
 version = projectVersion
 
 apply plugin: 'java'
@@ -7,7 +7,7 @@ apply plugin: 'maven-publish'
 
 apply from: file('integration-test.gradle')
 
-sourceCompatibility = sourceCompatibilityVersion
+sourceCompatibility = '1.7'
 
 def generatedSrcDir = file("$buildDir/generated-src")
 

@@ -1,4 +1,4 @@
-rootProject.name = rootProjectName
+rootProject.name = 'matrikkel-wsclient'
 
 /**
  * Vedlikehold av wrapper via kommando. Feks:
