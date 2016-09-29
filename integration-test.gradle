@@ -1,0 +1,47 @@
+apply plugin: 'java'
+
+
+/* ********************************************************************************************************************
+
+ Dette oppsettet integrerer sømløst i IntelliJ 2016.4
+
+ ******************************************************************************************************************* */
+
+
+//Configures the classpath and the source and resource directories
+//of the testIntegration task.
+sourceSets {
+    //Declaring this source set creates compile time and runtime configurations for it.
+    testIntegration {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+        }
+    }
+}
+
+
+//Configures the compile and runtime configurations for our integration tests
+//and includes the dependencies of the test task.
+configurations {
+    testIntegrationCompile.extendsFrom testCompile
+    testIntegrationRuntime.extendsFrom testRuntime
+}
+
+//Create the task that runs the integration tests found from the
+//configured source directory and uses the correct classpath.
+task testIntegration(type: Test) {
+    testClassesDir = sourceSets.testIntegration.output.classesDir
+    classpath = sourceSets.testIntegration.runtimeClasspath
+    outputs.upToDateWhen { false /*false ensures integration tests are run every time you invoke this task */}
+
+    useTestNG() {
+        useDefaultListeners = true
+    }
+}
+
+//Ensure that the check task fails the build if there are failing integration tests.
+check.dependsOn testIntegration
+//Ensure that our unit tests are run before our integration tests
+testIntegration.mustRunAfter test
+

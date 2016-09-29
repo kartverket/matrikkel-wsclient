@@ -5,23 +5,30 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
+apply from: file('integration-test.gradle')
+
 sourceCompatibility = sourceCompatibilityVersion
 
 def generatedSrcDir = file("$buildDir/generated-src")
 
 configurations {
   provided
+  testRuntime.extendsFrom provided
 }
 
 sourceSets {
   main {
-    compileClasspath += configurations.provided
     java {
       srcDirs 'src/main/java', generatedSrcDir
     }
   }
-  test {
-    runtimeClasspath += configurations.provided
+}
+
+sourceSets.all {
+  if (it.name == 'main')  {
+    it.compileClasspath += configurations.provided
+  } else {
+    it.runtimeClasspath += configurations.provided
   }
 }
 
@@ -73,6 +80,7 @@ dependencies {
   }
 
   testCompile 'org.testng:testng:6.9.8'
+  testCompile 'org.assertj:assertj-core:2.5.0' /* assertJ 3.x for java 8 */
 
   testRuntime 'org.apache.cxf:cxf-rt-transports-http-jetty:3.1.3'
 }
