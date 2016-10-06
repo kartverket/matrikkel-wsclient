@@ -8,6 +8,7 @@ public class Begrunnelse {
    private String kodeverdi;
    private String tekst;
    private String elementnavn;
+   private String utfall;
 
    public String getElementnavn() {
       return elementnavn;
@@ -31,5 +32,13 @@ public class Begrunnelse {
 
    public void setTekst(String tekst) {
       this.tekst = tekst;
+   }
+
+   public String getUtfall() {
+      return utfall;
+   }
+
+   public void setUtfall(String utfall) {
+      this.utfall = utfall;
    }
 }

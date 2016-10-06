@@ -137,7 +137,7 @@
             <xs:element name="kodeverdi" type="xs:string"/>
             <xs:element name="tekst" type="xs:string"/>
             <xs:element name="elementnavn" type="xs:string" minOccurs="0" maxOccurs="1"/>
-
+            <xs:element name="utfall" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 

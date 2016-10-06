@@ -9,6 +9,7 @@ public class BegrunnelseBuilder {
    protected String elementnavn;
    protected String kodeverdi;
    protected String tekst;
+   protected String utfall;
 
    private BegrunnelseBuilder() {
    }
@@ -32,6 +33,11 @@ public class BegrunnelseBuilder {
       return this;
    }
 
+   public BegrunnelseBuilder withUtfall(String utfall) {
+      this.utfall = utfall;
+      return this;
+   }
+
    public BegrunnelseBuilder but() {
       return aBegrunnelse().withElementnavn(elementnavn).withKodeverdi(kodeverdi).withTekst(tekst);
    }
@@ -41,6 +47,7 @@ public class BegrunnelseBuilder {
       begrunnelse.setElementnavn(elementnavn);
       begrunnelse.setKodeverdi(kodeverdi);
       begrunnelse.setTekst(tekst);
+      begrunnelse.setUtfall(utfall);
       return begrunnelse;
    }
 }

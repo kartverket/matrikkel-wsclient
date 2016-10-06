@@ -74,6 +74,14 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
       return getMapping().w2d(wsForsendelsesstatus, Forsendelsesstatus.class);
    }
 
+   public static InnsendingServiceMapper getInstance() {
+      return SingletonHolder.INSTANCE;
+   }
+
+   private static class SingletonHolder {
+      private static InnsendingServiceMapper INSTANCE = new InnsendingServiceMapper();
+   }
+
    private static class LocalDateTimeMapper extends AbstractTypeMapper<LocalDateTime, LocalDateTime, Mapping> {
       public LocalDateTimeMapper() {
          super(LocalDateTime.class, LocalDateTime.class, Mapping.class);

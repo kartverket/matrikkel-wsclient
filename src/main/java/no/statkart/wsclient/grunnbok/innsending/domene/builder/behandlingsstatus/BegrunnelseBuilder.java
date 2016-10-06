@@ -10,6 +10,7 @@ public class BegrunnelseBuilder {
    protected String elementnavn;
    protected String kodeverdi;
    protected String tekst;
+   protected String utfall;
 
    private BegrunnelseBuilder() {
    }
@@ -30,6 +31,11 @@ public class BegrunnelseBuilder {
 
    public BegrunnelseBuilder withTekst(String tekst) {
       this.tekst = tekst;
+      return this;
+   }
+
+   public BegrunnelseBuilder withUtfall(String utfall) {
+      this.utfall = utfall;
       return this;
    }
 
