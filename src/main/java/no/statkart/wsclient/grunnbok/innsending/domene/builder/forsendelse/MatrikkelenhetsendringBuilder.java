@@ -40,6 +40,8 @@ public class MatrikkelenhetsendringBuilder {
    public static MatrikkelenhetsendringBuilder anOverfoeringFraTidligereFestenummer() {
       MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
       matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FESTENUMMER_GITT_BRUKSNUMMER);
+      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1");
+      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("FB_FGB").withNavn("FESTENUMMER GITT BRUKSNUMMER").build());
       return matrikkelenhetsendringBuilder;
    }
 
