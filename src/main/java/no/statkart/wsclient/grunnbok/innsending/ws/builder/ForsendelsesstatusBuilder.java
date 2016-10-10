@@ -42,6 +42,7 @@ public class ForsendelsesstatusBuilder {
    public static final int KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS = 2;
    public static final String KONTROLL_RESULTAT_UTFALL = "Ikke tinglyst";
    public static final List<String> SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE = Collections.singletonList("235A");
+   public static final String BEGRUNNELSE_UTFALL = "UAVKLART";
 
    protected Behandlingsinformasjon behandlingsinformasjon;
    protected String innsendingId;
@@ -160,6 +161,7 @@ public class ForsendelsesstatusBuilder {
                               .withKodeverdi(BEGRUNNELSE_KODEVERDI)
                               .withElementnavn(BEGRUNNELSE_ELEMENTNAVN)
                               .withTekst(BEGRUNNELSE_TEKST)
+                              .withUtfall(BEGRUNNELSE_UTFALL)
                               .build()))
                         .withDokumentindeks(KONTROLL_RESULTAT_DOKUMENTINDEKS)
                         .withKodeverdi(KONTROLL_RESULTAT_KODEVERDI)
