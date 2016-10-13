@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/dokument" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/dokument" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" schemaLocation="register_saksinformasjon.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" schemaLocation="servicetyper.xsd"/>
+
+  <xs:element name="findDokumentIdsForSaksinformasjonIds" type="tns:findDokumentIdsForSaksinformasjonIds"/>
+
+  <xs:element name="findDokumentIdsForSaksinformasjonIdsResponse" type="tns:findDokumentIdsForSaksinformasjonIdsResponse"/>
+
+  <xs:complexType name="findDokumentIdsForSaksinformasjonIds">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="saksinformasjonIds" type="ns1:SaksinformasjonIdList"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findDokumentIdsForSaksinformasjonIdsResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="ns3:SaksinformasjonIdTilDokumentIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

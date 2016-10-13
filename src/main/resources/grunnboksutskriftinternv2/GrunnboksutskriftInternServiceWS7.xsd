@@ -1,0 +1,332 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xs:schema xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder">
+
+<xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" schemaLocation="GrunnboksutskriftInternServiceWS15.xsd"/>
+
+<xs:complexType name="SaksbehandlingsenhetKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="EdokDokumentVersjonKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="PeriodeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="TilleggsdeltypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="TeksttypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="ArkivtypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SaksinnholdKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="FamiliePersonkodeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="OmsetningstypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="AnketypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="EmbeteKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RegisterenhetsrettstypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="KonsesjonsgrenseKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="MaalformKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="ArtikkelKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="OrganisasjonstypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="AarsakGebyrfritakKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="BoligtypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="FoeringsstatusKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="FormaalKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="BehandlingsnivaaKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="NaeringskodeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SivilstandKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="DokumentstatusKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="IdentifikasjonsnummertypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SpesifisertRegistreringstypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="EdokDokumentnavnKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="DokumentavgiftsaarsakKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="PersonStatusKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="ValutakodeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SatsKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="BrukstypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RettstypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="AarsaksparagrafKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="BrevtypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="LandkodeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="AarsakTilRettingKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RettsstiftelsestypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="AarsakTilFjerningKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="PersonIdTypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="DokumentkildeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>

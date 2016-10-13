@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"
+        xmlns:register_dokumentns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+        xmlns:register_saksinfons="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"
+        xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+    <xs:import schemaLocation="register_saksinformasjon.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"/>
+    <xs:import schemaLocation="register_rettsstiftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
+
+    <!-- ========================================================= -->
+    <!-- register/dokument:                                        -->
+    <!-- Dokument i register subdomain                             -->
+    <!-- ========================================================= -->
+
+    <!-- Dokument -->
+
+    <xs:complexType name="DokumentId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_dokumentns:DokumentId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_dokumentns:DokumentId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_dokumentns:DokumentIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Dokument">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="dokumentaar" type="xs:int"/>
+                    <xs:element name="dokumentnummer" type="xs:int"/>
+                    <xs:element name="embeteId" type="register_koderns:EmbeteKodeId"/>
+                    <xs:element name="dokumentstatusId" type="register_koderns:DokumentstatusKodeId"/>
+                    <xs:element name="registreringstidspunkt" type="basistyperns:Timestamp" nillable="true"/>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                    <xs:element name="saksinformasjonId" type="register_saksinfons:SaksinformasjonId" nillable="true"/>
+                    <xs:element name="omdokulertTilId" type="register_dokumentns:DokumentId" nillable="true"/>
+                    <xs:element name="gebyr" type="register_rettsstiftelsens:Beloep" nillable="true"/>
+                    <xs:element name="elektroniskInnsendt" type="xs:boolean"/>
+                    <xs:element name="datoregistrert" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

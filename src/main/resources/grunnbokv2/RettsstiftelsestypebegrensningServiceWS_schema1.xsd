@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelsestypebegrensning" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelsestypebegrensning" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" schemaLocation="grunnboksidenter.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" schemaLocation="register_koder.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:element name="kanTinglyse" type="tns:kanTinglyse"/>
+
+  <xs:element name="kanTinglyseResponse" type="tns:kanTinglyseResponse"/>
+
+  <xs:complexType name="kanTinglyse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="personIdent" type="ns1:PersonIdent"/>
+      <xs:element form="qualified" minOccurs="0" name="rettsstiftelsestypeKodeIds" type="ns2:RettsstiftelsestypeKodeIdList"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns3:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="kanTinglyseResponse">
+    <xs:sequence>
+      <xs:element form="qualified" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -22,7 +22,7 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
             ? webServiceClient.getInnsendingServicePort(new SchemaValidationFeature())
             : webServiceClient.getInnsendingServicePort();
 
-      innsendingWebService = WebServiceBuilder.builder(innsendingServicePort, InnsendingService.class)
+      innsendingWebService = WebServiceBuilder.builderv2(innsendingServicePort, InnsendingService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

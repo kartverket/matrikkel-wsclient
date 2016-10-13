@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xs:schema xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter">
+
+<xs:complexType name="RegisterenhetIdent">
+<xs:complexContent>
+<xs:extension base="tns:Ident">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="Ident">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="KommuneIdent">
+<xs:complexContent>
+<xs:extension base="tns:Ident">
+<xs:sequence>
+<xs:element name="kommunenummer" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RegisterenhetsrettIdent">
+<xs:complexContent>
+<xs:extension base="tns:Ident">
+<xs:sequence>
+<xs:element name="registerenhetsrettstype" type="xs:string"/>
+<xs:element name="registerenhetIdent" type="tns:RegisterenhetIdent"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="BorettslagIdent">
+<xs:complexContent>
+<xs:extension base="tns:Ident">
+<xs:sequence>
+<xs:element name="borettslagnummer" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="DokumentIdent">
+<xs:complexContent>
+<xs:extension base="tns:Ident">
+<xs:sequence>
+<xs:element name="dokumentnummer" type="xs:long"/>
+<xs:element name="dokumentaar" type="xs:int"/>
+<xs:element name="embetenummer" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="PersonIdent">
+<xs:complexContent>
+<xs:extension base="tns:Ident">
+<xs:sequence>
+<xs:element name="identifikasjonsnummer" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RettsstiftelseIdent">
+<xs:complexContent>
+<xs:extension base="tns:Ident">
+<xs:sequence>
+<xs:element name="rettsstiftelsesnummer" type="xs:int"/>
+<xs:element name="dokumentIdent" type="tns:DokumentIdent"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="MatrikkelenhetIdent">
+<xs:complexContent>
+<xs:extension base="tns:RegisterenhetIdent">
+<xs:sequence>
+<xs:element name="kommunenummer" type="xs:string"/>
+<xs:element name="gaardsnummer" type="xs:int"/>
+<xs:element name="bruksnummer" type="xs:int"/>
+<xs:element name="festenummer" type="xs:int"/>
+<xs:element name="seksjonsnummer" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="BorettslagsandelIdent">
+<xs:complexContent>
+<xs:extension base="tns:RegisterenhetIdent">
+<xs:sequence>
+<xs:element name="borettslagnummer" type="xs:string"/>
+<xs:element name="andelsnummer" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>

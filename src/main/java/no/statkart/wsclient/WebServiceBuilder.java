@@ -43,6 +43,14 @@ public final class WebServiceBuilder<T> {
             .defaultHostnameVerifier();
    }
 
+   public static <T> WebServiceBuilder<T> builderv2(T unproxiedService, Class<T> clazzOfWebService) {
+      WebServiceBuilder<T> builder = new WebServiceBuilder<T>(unproxiedService, clazzOfWebService);
+      return builder
+            .defaultTimeout()
+            .defaultRetries()
+            .defaultSleepTime();
+   }
+
    private WebServiceBuilder defaultSleepTime() {
       this.sleepTime = SLEEPTIME_MILLIS;
       return this;
@@ -102,7 +110,9 @@ public final class WebServiceBuilder<T> {
       BindingProvider bindingProvider = (BindingProvider) unproxiedService;
       Map<String, Object> requestContext = bindingProvider.getRequestContext();
 
-      requestContext.put(JAXWSProperties.HOSTNAME_VERIFIER, hostnameVerifier);
+      if (hostnameVerifier != null) {
+         requestContext.put(JAXWSProperties.HOSTNAME_VERIFIER, hostnameVerifier);
+      }
       requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointUrl);
       requestContext.put(BindingProvider.USERNAME_PROPERTY, brukernavn);
       requestContext.put(BindingProvider.PASSWORD_PROPERTY, passord);

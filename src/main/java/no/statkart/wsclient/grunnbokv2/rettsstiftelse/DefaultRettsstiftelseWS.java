@@ -1,0 +1,61 @@
+package no.statkart.wsclient.grunnbokv2.rettsstiftelse;
+
+import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.dokument.DokumentId;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.RegisterenhetId;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.RegisterenhetsrettsandelIdList;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.RettsstiftelseIdList;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.heftelse.HeftelseIdList;
+import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
+import no.kartverket.grunnbok.wsapi.v2.service.rettsstiftelse.RettsstiftelseService;
+import no.kartverket.grunnbok.wsapi.v2.service.rettsstiftelse.RettsstiftelseServiceWS;
+import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.*;
+import no.statkart.wsclient.WebServiceBuilder;
+
+import javax.net.ssl.HostnameVerifier;
+
+
+public class DefaultRettsstiftelseWS implements RettsstiftelseWS {
+
+   private final RettsstiftelseService rettsstiftelseService;
+
+   public DefaultRettsstiftelseWS(String brukernavn, String passord, String endpointUrl) {
+      rettsstiftelseService = WebServiceBuilder.builderv2(new RettsstiftelseServiceWS().getRettsstiftelseServicePort(), RettsstiftelseService.class)
+            .withBruker(brukernavn)
+            .withPassord(passord)
+            .withEndpointUrl(endpointUrl)
+            .doCreateProxy()
+            .build();
+   }
+
+   @Override
+   public RegisterenhetsendringIdListTransfer findRegisterenhetsendringer(RegisterenhetId registerenhetId, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException {
+      return rettsstiftelseService.findRegisterenhetsendringer(registerenhetId, transferMode, grunnbokContext);
+   }
+
+   @Override
+   public HeftelseIdListTransfer findHeftelser(RegisterenhetId registerenhetId, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException {
+      return rettsstiftelseService.findHeftelser(registerenhetId, transferMode, grunnbokContext);
+   }
+
+   @Override
+   public RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findOverdragelserMedAktiveAndelerIRegisterenhet(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {
+      return rettsstiftelseService.findOverdragelserMedAktiveAndelerIRegisterenhet(registerenhetId, grunnbokContext);
+   }
+
+   @Override
+   public RettsstiftelseIdList findRettsstiftelserForDokument(DokumentId dokumentId, GrunnbokContext grunnbokContext) throws ServiceException {
+      return rettsstiftelseService.findRettsstiftelserForDokument(dokumentId, grunnbokContext);
+   }
+
+   @Override
+   public RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findRettsstiftelserMedNyeAndeler(RegisterenhetsrettsandelIdList andeler, GrunnbokContext grunnbokContext) throws ServiceException {
+      return rettsstiftelseService.findRettsstiftelserMedNyeAndeler(andeler, grunnbokContext);
+   }
+
+   @Override
+   public RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findRettsstiftelserMedUtgaatteAndeler(RegisterenhetsrettsandelIdList andeler, GrunnbokContext grunnbokContext) throws ServiceException {
+      return rettsstiftelseService.findRettsstiftelserMedUtgaatteAndeler(andeler, grunnbokContext);
+   }
+
+}

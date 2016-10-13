@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" schemaLocation="endringslogg.xsd"/>
+
+  <xs:element name="findIdsEtterId" type="tns:findIdsEtterId"/>
+
+  <xs:element name="findIdsEtterIdResponse" type="tns:findIdsEtterIdResponse"/>
+
+  <xs:element name="findObjekterEtterId" type="tns:findObjekterEtterId"/>
+
+  <xs:element name="findObjekterEtterIdResponse" type="tns:findObjekterEtterIdResponse"/>
+
+  <xs:complexType name="findIdsEtterId">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="ns1:GrunnbokBubbleObjectId"/>
+      <xs:element minOccurs="0" name="domainklasse" type="ns2:Domainklasse"/>
+      <xs:element minOccurs="0" name="filter" type="xs:string"/>
+      <xs:element name="maksAntall" type="xs:int"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIdsEtterIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GrunnbokBubbleObjectIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findObjekterEtterId">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="ns1:GrunnbokBubbleObjectId"/>
+      <xs:element minOccurs="0" name="domainklasse" type="ns2:Domainklasse"/>
+      <xs:element minOccurs="0" name="filter" type="xs:string"/>
+      <xs:element name="maksAntall" type="xs:int"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findObjekterEtterIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:GrunnbokBubbleObjectList"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
+        xmlns:grunnboksidenterns="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <!--
+    Dette skjema inneholder identer som brukes i grunnboken.  
+    -->
+    <xs:complexType name="Ident"/>
+
+    <xs:complexType name="DokumentIdent">
+        <xs:complexContent>
+            <xs:extension base="grunnboksidenterns:Ident">
+                <xs:sequence>
+                    <xs:element name="dokumentnummer" type="xs:long"/>
+                    <xs:element name="dokumentaar" type="xs:int"/>
+                    <xs:element name="embetenummer" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentIdentList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="grunnboksidenterns:DokumentIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdent">
+        <xs:complexContent>
+            <xs:extension base="grunnboksidenterns:Ident"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="grunnboksidenterns:RegisterenhetIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdent">
+        <xs:complexContent>
+            <xs:extension base="grunnboksidenterns:RegisterenhetIdent">
+                <xs:sequence>
+                    <xs:element name="kommunenummer" type="xs:string"/>
+                    <xs:element name="gaardsnummer" type="xs:int"/>
+                    <xs:element name="bruksnummer" type="xs:int"/>
+                    <xs:element name="festenummer" type="xs:int"/>
+                    <xs:element name="seksjonsnummer" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="grunnboksidenterns:MatrikkelenhetIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelIdent">
+        <xs:complexContent>
+            <xs:extension base="grunnboksidenterns:RegisterenhetIdent">
+                <xs:sequence>
+                    <xs:element name="borettslagnummer" type="xs:string"/>
+                    <xs:element name="andelsnummer" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="grunnboksidenterns:BorettslagsandelIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettIdent">
+        <xs:complexContent>
+            <xs:extension base="grunnboksidenterns:Ident">
+                <xs:sequence>
+                    <xs:element name="registerenhetsrettstype" type="xs:string"/>
+                    <xs:element name="registerenhetIdent" type="grunnboksidenterns:RegisterenhetIdent"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="grunnboksidenterns:RegisterenhetsrettIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseIdent">
+        <xs:complexContent>
+            <xs:extension base="grunnboksidenterns:Ident">
+                <xs:sequence>
+                    <xs:element name="rettsstiftelsesnummer" type="xs:int"/>
+                    <xs:element name="dokumentIdent" type="grunnboksidenterns:DokumentIdent"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="grunnboksidenterns:RettsstiftelseIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonIdent">
+        <xs:complexContent>
+            <xs:extension base="grunnboksidenterns:Ident">
+                <xs:sequence>
+                    <xs:element name="identifikasjonsnummer" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PersonIdentList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="grunnboksidenterns:PersonIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KommuneIdent">
+        <xs:complexContent>
+            <xs:extension base="grunnboksidenterns:Ident">
+                <xs:sequence>
+                    <xs:element name="kommunenummer" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KommuneIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="grunnboksidenterns:KommuneIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagIdent">
+        <xs:complexContent>
+            <xs:extension base="grunnboksidenterns:Ident">
+                <xs:sequence>
+                    <xs:element name="borettslagnummer" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagIdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="grunnboksidenterns:BorettslagIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
+
+
+

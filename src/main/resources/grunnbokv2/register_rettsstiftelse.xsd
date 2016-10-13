@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+        xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+        xmlns:register_dokumentns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"
+        xmlns:register_personns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
+        xmlns:register_registerenhetns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"
+        xmlns:register_rettsendringns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring"
+        xmlns:register_anmerkningns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/anmerkning"
+        xmlns:register_heftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register"/>
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+    <xs:import schemaLocation="register_dokument.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"/>
+    <xs:import schemaLocation="register_person.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
+    <xs:import schemaLocation="register_registerenhet.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"/>
+    <xs:import schemaLocation="register_rettsstiftelse_rettsendring.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring"/>
+    <xs:import schemaLocation="register_rettsstiftelse_anmerkning.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/anmerkning"/>
+    <xs:import schemaLocation="register_rettsstiftelse_heftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse"/>
+
+    <!-- ========================================================= -->
+    <!-- register/kode:                                            -->
+    <!-- Koder i register subdomain                                -->
+    <!-- ========================================================= -->
+
+    <!-- Rettsstiftelse -->
+
+    <xs:complexType name="RettsstiftelseId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsstiftelsens:RettsstiftelseId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsstiftelsens:RettsstiftelseId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsstiftelsens:RettsstiftelseIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Rettsstiftelse">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="dokumentId" type="register_dokumentns:DokumentId"/>
+                    <xs:element name="rettsstiftelsesnummer" type="xs:int"/>
+                    <xs:element name="rettsstiftelsestypeId" type="register_koderns:RettsstiftelsestypeKodeId"/>
+                    <xs:element name="aarsakGebyrfritakId" type="register_koderns:AarsakGebyrfritakKodeId"/>
+                    <xs:element name="harGebyr" type="xs:boolean"/>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                    <xs:element name="tekster" type="register_rettsstiftelsens:TekstList"/>
+                    <xs:element name="endretAvIds" type="register_rettsendringns:RettsendringIdListInverseRelation"/>
+                    <xs:element name="anmerketAvIds" type="register_anmerkningns:AnmerkningIdListInverseRelation"/>
+                    <xs:element name="heftelseIAnnenRettIds" type="register_heftelsens:HeftelseIAnnenRettIdListInverseRelation"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Tekst">
+        <xs:sequence>
+            <xs:element name="fritekst" type="xs:string" nillable="true"/>
+            <xs:element name="teksttypeKodeId" type="register_koderns:TeksttypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TekstList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsstiftelsens:Tekst"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Omsetning -->
+
+    <xs:complexType name="Omsetning">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="utlystTilSalgPaaDetFrieMarked" type="xs:boolean" nillable="true"/>
+                    <xs:element name="omsetningstypeId" type="register_koderns:OmsetningstypeKodeId" nillable="true"/>
+                    <xs:element name="vederlag" type="register_rettsstiftelsens:Beloep" nillable="true"/>
+                    <xs:element name="omsatteRegisterenhetsretter" type="register_rettsstiftelsens:OmsattRegisterenhetsrettList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="DokumentavgiftspliktigOmsetning">
+        <xs:complexContent>
+            <xs:extension base="register_rettsstiftelsens:Omsetning">
+                <xs:sequence>
+                    <xs:element name="dokumentavgiftsgrunnlag" type="register_rettsstiftelsens:Beloep" nillable="true"/>
+                    <xs:element name="dokumentavgift" type="register_rettsstiftelsens:Beloep" nillable="true"/>
+                    <xs:element name="dokumentavgiftsaarsakId" type="register_koderns:DokumentavgiftsaarsakKodeId"/>
+                    <xs:element name="harDokumentavgift" type="xs:boolean" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentavgiftsfriOmsetning">
+        <xs:complexContent>
+            <xs:extension base="register_rettsstiftelsens:Omsetning">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmsattRegisterenhetsrett">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="brukstypeId" type="register_koderns:BrukstypeKodeId" nillable="true"/>
+                    <xs:element name="boligtypeId" type="register_koderns:BoligtypeKodeId" nillable="true"/>
+                    <xs:element name="registerenhetsrettId" type="register_registerenhetns:RegisterenhetsrettId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmsattRegisterenhetsrettList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsstiftelsens:OmsattRegisterenhetsrett"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="OmsatteRegisterenhetsrettsandeler">
+        <xs:complexContent>
+            <xs:extension base="register_rettsstiftelsens:OmsattRegisterenhetsrett">
+                <xs:sequence>
+                    <xs:element name="nyeIds" type="register_registerenhetns:RegisterenhetsrettsandelIdList"/>
+                    <xs:element name="utgaatteIds" type="register_registerenhetns:RegisterenhetsrettsandelIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Beloep, BeloepForPeriode og Tidsperiode -->
+
+    <xs:complexType name="Beloep">
+        <xs:sequence>
+            <xs:element name="beloepsverdi" type="xs:decimal"/>
+            <xs:element name="valutakodeId" type="register_koderns:ValutakodeKodeId"/>
+            <xs:element name="beloepstekst" type="xs:string" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BeloepList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsstiftelsens:Beloep"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BeloepForPeriode">
+        <xs:sequence>
+            <xs:element name="periodeId" type="register_koderns:PeriodeKodeId"/>
+            <xs:element name="beloep" type="register_rettsstiftelsens:Beloep"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Tidsperiode">
+        <xs:sequence>
+            <xs:element name="periodeId" type="register_koderns:PeriodeKodeId"/>
+            <xs:element name="lengde" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- DelAvRett -->
+
+    <xs:complexType name="DelAvRett">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="rettsstiftelseId" type="register_rettsstiftelsens:RettsstiftelseId"/>
+                    <xs:element name="begrensetTilRegisterenhetsrettsandelerIds" type="register_registerenhetns:RegisterenhetsrettsandelIdList"/>
+                    <xs:element name="begrensetTilRegisterenhetsrettsandelerHistoriskIds" type="register_registerenhetns:RegisterenhetsrettsandelIdList"/>
+                    <xs:element name="begrensetTilRegisterenhetsretterIds" type="register_registerenhetns:RegisterenhetsrettIdList"/>
+                    <xs:element name="begrensetTilRegisterenhetsretterHistoriskIds" type="register_registerenhetns:RegisterenhetsrettIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelAvRettList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="register_rettsstiftelsens:DelAvRett"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- AvholdtTvangsforretning -->
+
+    <xs:complexType name="AvholdtTvangsforretning">
+        <xs:sequence>
+            <xs:element name="avholdtDato" type="basistyperns:LocalDate" nillable="true"/>
+            <xs:element name="avholdtKlokkeslett" type="basistyperns:LocalTime" nillable="true"/>
+            <xs:element name="saksoekereIds" type="register_personns:PersonIdList"/>
+            <xs:element name="saksoekereHistoriskIds" type="register_personns:PersonIdList"/>
+            <xs:element name="saksoekteIds" type="register_personns:PersonIdList"/>
+            <xs:element name="prosessfullmektigerIds" type="register_personns:PersonIdList"/>
+            <xs:element name="prosessfullmektigerHistoriskIds" type="register_personns:PersonIdList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AvholdtTvangsforretningList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="register_rettsstiftelsens:AvholdtTvangsforretning"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- OverfoeringFraTil -->
+
+    <xs:complexType name="OverfoeringFraTil">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="fraRegisterenhetsrettId" type="register_registerenhetns:RegisterenhetsrettId" nillable="true"/>
+                    <xs:element name="tilRegisterenhetsrettId" type="register_registerenhetns:RegisterenhetsrettId" nillable="true"/>
+                    <xs:element name="fraRegisterenhetsrettsandelId" type="register_registerenhetns:RegisterenhetsrettsandelId" nillable="true"/>
+                    <xs:element name="tilRegisterenhetsrettsandelId" type="register_registerenhetns:RegisterenhetsrettsandelId" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OverfoeringFraTilList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="register_rettsstiftelsens:OverfoeringFraTil"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Overfoering -->
+
+    <xs:complexType name="OverfoeringId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OverfoeringIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsstiftelsens:OverfoeringId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OverfoeringIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsstiftelsens:OverfoeringId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OverfoeringIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsstiftelsens:OverfoeringIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Overfoering">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="overfoerendeRettsstiftelseId" type="register_rettsstiftelsens:RettsstiftelseId" nillable="true"/>
+                    <xs:element name="overfoertRettsstiftelseId" type="register_rettsstiftelsens:RettsstiftelseId" nillable="true"/>
+                    <xs:element name="omfatter" type="register_rettsstiftelsens:OverfoeringFraTilList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

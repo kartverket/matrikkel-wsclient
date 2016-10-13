@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"
+        xmlns:register_saksinfons="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:registerns="http://kartverket.no/grunnbok/wsapi/v2/domain/register"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+    <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register"/>
+
+    <!-- ========================================================= -->
+    <!-- register/saksinformasjon:                               -->
+    <!-- Saksinformasjon i register subdomain                    -->
+    <!-- ========================================================= -->
+
+    <!-- Saksinformasjon -->
+
+    <xs:complexType name="SaksinformasjonId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SaksinformasjonIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_saksinfons:SaksinformasjonId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SaksinformasjonIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_saksinfons:SaksinformasjonId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SaksinformasjonIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_saksinfons:SaksinformasjonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Saksinformasjon">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="saksnummer" type="xs:long"/>
+                    <xs:element name="mottaksdato" type="basistyperns:LocalDate"/>
+                    <xs:element name="foelgebrevsdato" type="basistyperns:LocalDate"/>
+                    <xs:element name="saksstatus" type="register_saksinfons:Saksstatus"/>
+                    <xs:element name="behandlingsutfall" type="register_saksinfons:Behandlingsutfall"/>
+                    <xs:element name="innsender" type="register_saksinfons:Saksperson" nillable="true"/>
+                    <xs:element name="fakturamottaker" type="register_saksinfons:Saksperson" nillable="true"/>
+                    <xs:element name="mottaker" type="register_saksinfons:Saksperson" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Saksperson">
+        <xs:sequence>
+            <xs:element name="identifikasjonsnummertypeId" type="register_koderns:IdentifikasjonsnummertypeKodeId" nillable="true"/>
+            <xs:element name="identifikasjonsnummer" type="xs:string" nillable="true"/>
+            <xs:element name="navn" type="xs:string" nillable="true"/>
+            <xs:element name="adresselinje1" type="xs:string" nillable="true"/>
+            <xs:element name="adresselinje2" type="xs:string" nillable="true"/>
+            <xs:element name="adresselinje3" type="xs:string" nillable="true"/>
+            <xs:element name="epostadresse" type="xs:string" nillable="true"/>
+            <xs:element name="poststedId" type="registerns:PostnummeromraadeId" nillable="true"/>
+            <xs:element name="landkodeId" type="register_koderns:LandkodeKodeId" nillable="true"/>
+            <xs:element name="referanse" type="xs:string" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="Saksstatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="UNDER_BEHANDLING"/>
+            <xs:enumeration value="UTKAST"/>
+            <xs:enumeration value="KLAR_FOR_MOTTAK"/>
+            <xs:enumeration value="MOTTATT"/>
+            <xs:enumeration value="AVSLUTTET"/>
+            <xs:enumeration value="UKJENT_TEKNISK_FEIL"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="SaksstatusList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_saksinfons:Saksstatus"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:simpleType name="Behandlingsutfall">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="UAVKLART"/>
+            <xs:enumeration value="TINGLYST"/>
+            <xs:enumeration value="NEKTET"/>
+            <xs:enumeration value="AVVIST"/>
+            <xs:enumeration value="FORELOEPIG_NEKTET"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="BehandlingsutfallList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_saksinfons:Behandlingsutfall"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

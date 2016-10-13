@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registrering"
+        xmlns:register_registreringns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registrering"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:grunnboksidenterns="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
+        xmlns:meldingns="http://kartverket.no/grunnbok/wsapi/v2/domain/melding"
+        xmlns:koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="grunnboksidenter.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"/>
+    <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+    <xs:import schemaLocation="melding.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/melding"/>
+
+    <!-- ========================================================= -->
+    <!-- register/registrering:                                    -->
+    <!-- Informasjon om foreløpige registreringer                  -->
+    <!-- ========================================================= -->
+
+    <!-- ForeloepigRegistrering -->
+
+    <xs:complexType name="ForeloepigRegistreringId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ForeloepigRegistreringIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_registreringns:ForeloepigRegistreringId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ForeloepigRegistrering">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="meldingId" type="meldingns:MeldingId"/>
+                    <xs:element name="utfall" type="register_registreringns:ForeslaattBehandlingsutfall"/>
+                    <xs:element name="behandlingsstatus" type="register_registreringns:Behandlingsstatus"/>
+                    <xs:element name="avhengerAvIds" type="register_registreringns:ForeloepigRegistreringIdList"/>
+                    <xs:element name="beregnetEffektId" type="register_registreringns:BeregnetEffektId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ForeloepigRegistreringIdToForeloepigRegistreringIdsMap">
+        <!--<xs:annotation>-->
+        <!--<xs:appinfo>-->
+        <!--<IsDictionary-->
+        <!--xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-->
+        <!--true-->
+        <!--</IsDictionary>-->
+        <!--</xs:appinfo>-->
+        <!--</xs:annotation>-->
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="register_registreringns:ForeloepigRegistreringId"/>
+                        <xs:element name="value" type="register_registreringns:ForeloepigRegistreringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- BeregnetEffekt -->
+
+    <xs:complexType name="BeregnetEffektId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BeregnetEffektIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_registreringns:BeregnetEffektId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BeregnetEffekt">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="beregningstidspunkt" type="basistyperns:Timestamp"/>
+                    <xs:element name="effekt" type="register_registreringns:EffektUnitOfWorkTransfer"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EffektUnitOfWorkTransfer">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokUnitOfWorkTransfer">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- IdentRegistrering -->
+
+    <xs:complexType name="IdentRegistreringId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="IdentRegistreringIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_registreringns:IdentRegistreringId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IdentRegistrering">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="ident" type="grunnboksidenterns:Ident"/>
+                    <xs:element name="grunnbokBubbleId" type="basistyperns:GrunnbokBubbleObjectId"/>
+                    <xs:element name="foreloepigRegistreringId"
+                                type="register_registreringns:ForeloepigRegistreringId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="IdentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="grunnboksidenterns:Ident"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IdentToIdentRegistreringIdMap">
+        <!--<xs:annotation>-->
+        <!--<xs:appinfo>-->
+        <!--<IsDictionary-->
+        <!--xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-->
+        <!--true-->
+        <!--</IsDictionary>-->
+        <!--</xs:appinfo>-->
+        <!--</xs:annotation>-->
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="grunnboksidenterns:Ident"/>
+                        <xs:element name="value" type="register_registreringns:IdentRegistreringId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ForeloepigRegistreringIdToIdentRegistreringIdsMap">
+        <!--<xs:annotation>-->
+        <!--<xs:appinfo>-->
+        <!--<IsDictionary-->
+        <!--xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-->
+        <!--true-->
+        <!--</IsDictionary>-->
+        <!--</xs:appinfo>-->
+        <!--</xs:annotation>-->
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="register_registreringns:ForeloepigRegistreringId"/>
+                        <xs:element name="value" type="register_registreringns:IdentRegistreringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokIdToIdentRegistreringIdMap">
+        <!--<xs:annotation>-->
+        <!--<xs:appinfo>-->
+        <!--<IsDictionary-->
+        <!--xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-->
+        <!--true-->
+        <!--</IsDictionary>-->
+        <!--</xs:appinfo>-->
+        <!--</xs:annotation>-->
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="basistyperns:GrunnbokBubbleObjectId"/>
+                        <xs:element name="value" type="register_registreringns:IdentRegistreringId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- RettsstiftelseRegistrering -->
+
+    <xs:complexType name="RettsstiftelseRegistrering">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+
+                    <xs:element name="foreloepigRegistreringId"
+                                type="register_registreringns:ForeloepigRegistreringId"/>
+                    <xs:element name="dokumentIndex" type="xs:int"/>
+                    <xs:element name="rettsstiftelseIndex" type="xs:int"/>
+                    <xs:element name="rettsstiftelsestypeId" type="koderns:RettsstiftelsestypeKodeId"/>
+                    <xs:element name="leserFraIds" type="basistyperns:GrunnbokBubbleObjectIdList"/>
+                    <xs:element name="skriverTilIds" type="basistyperns:GrunnbokBubbleObjectIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="RettsstiftelseRegistreringId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="RettsstiftelseRegistreringIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_registreringns:RettsstiftelseRegistreringId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokIdToRettsstiftelseRegistreringIdsMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="basistyperns:GrunnbokBubbleObjectId"/>
+                        <xs:element name="value" type="register_registreringns:RettsstiftelseRegistreringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ForeloepigRegistreringIdToRettsstiftelseRegistreringIdsMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="register_registreringns:ForeloepigRegistreringId"/>
+                        <xs:element name="value" type="register_registreringns:RettsstiftelseRegistreringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ForeslaattBehandlingsutfall -->
+
+    <xs:simpleType name="ForeslaattBehandlingsutfall">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TINGLYS"/>
+            <xs:enumeration value="NEKT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <!-- Behandlingsstatus -->
+
+    <xs:simpleType name="Behandlingsstatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="KLAR_FOR_MANUELL_BEHANDLING"/>
+            <xs:enumeration value="UNDER_MANUELL_BEHANDLING"/>
+            <xs:enumeration value="VENTER_ENDELIG_NEKT"/>
+            <xs:enumeration value="KLAR_FOR_UTFALL_MEN_AVHENGER_AV_MELDING"/>
+            <xs:enumeration value="KLAR_FOR_UTFALL"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="BehandlingsstatusList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_registreringns:Behandlingsstatus"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+</xs:schema>

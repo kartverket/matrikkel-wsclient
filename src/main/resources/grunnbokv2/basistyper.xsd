@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <!-- ========================================================= -->
+    <!-- Basisklasser:                                             -->
+    <!-- Frittstående klasser og klasser på tvers av subdomains    -->
+    <!-- ========================================================= -->
+
+    <xs:complexType name="Timestamp">
+        <xs:sequence>
+            <xs:element name="timestamp" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LocalTime">
+        <xs:sequence>
+            <xs:element name="time" type="xs:time"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LocalDate">
+        <xs:sequence>
+            <xs:element name="date" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LocalDateTime">
+        <xs:sequence>
+            <xs:element name="dateTime" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokContext">
+        <xs:sequence>
+            <xs:element name="systemVersion" type="xs:string"/>
+            <xs:element name="clientIdentification" type="xs:string"/>
+            <xs:element name="locale" type="xs:string"/>
+            <xs:element name="snapshotVersion" type="basistyperns:Timestamp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StringList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LongList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LocalizedString">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary
+                        xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="xs:string"/>
+                        <xs:element name="value" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- GrunnbokBubbleObject -->
+
+    <xs:complexType name="GrunnbokBubbleObjectId">
+        <xs:sequence>
+            <xs:element name="value" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokBubbleObjectIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SnapshotVersionToGrunnbokBubbleObjectIdMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="basistyperns:Timestamp"/>
+                        <xs:element name="value" type="basistyperns:GrunnbokBubbleObjectId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokBubbleObjectIdToSnapshotBubbleIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary
+                        xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="basistyperns:GrunnbokBubbleObjectId"/>
+                        <xs:element name="value" type="basistyperns:SnapshotVersionToGrunnbokBubbleObjectIdMap"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokBubbleObject">
+        <xs:sequence>
+            <xs:element name="id" type="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokBubbleObjectList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="basistyperns:GrunnbokBubbleObject"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- GrunnbokObjectWithHistory -->
+
+    <xs:complexType name="GrunnbokObjectWithHistoryId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokObjectWithHistory">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObject">
+                <xs:sequence>
+                    <xs:element name="oppdateringsdato" type="basistyperns:Timestamp"/>
+                    <xs:element name="oppdatertAv" type="xs:string"/>
+                    <xs:element name="sluttdato" type="basistyperns:Timestamp" minOccurs="0"/>
+                    <xs:element name="avsluttetAv" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EntityComponent">
+        <xs:sequence>
+            <!-- GBOK-2401: nillable for ikke primitiver verdier -->
+            <xs:element name="id" type="xs:long" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="EntityComponentWithHistory">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponent">
+                <xs:sequence>
+                    <xs:element name="oppdateringsdato" type="basistyperns:Timestamp"/>
+                    <xs:element name="oppdatertAv" type="xs:string"/>
+                    <xs:element name="sluttdato" type="basistyperns:Timestamp" minOccurs="0"/>
+                    <xs:element name="avsluttetAv" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="InverseRelation">
+        <xs:sequence>
+            <xs:element name="materialised" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokUnitOfWorkTransfer">
+        <xs:sequence>
+            <xs:element name="insertedObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+            <xs:element name="updatedObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+            <xs:element name="deletedObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/person" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/person" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" schemaLocation="register_person.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" schemaLocation="register_koder.xsd"/>
+
+  <xs:element name="findPersoner" type="tns:findPersoner"/>
+
+  <xs:element name="findPersonerResponse" type="tns:findPersonerResponse"/>
+
+  <xs:element name="lagNyttPersonloepenummer" type="tns:lagNyttPersonloepenummer"/>
+
+  <xs:element name="lagNyttPersonloepenummerResponse" type="tns:lagNyttPersonloepenummerResponse"/>
+
+  <xs:element name="opprettLoepenummerperson" type="tns:opprettLoepenummerperson"/>
+
+  <xs:element name="opprettLoepenummerpersonResponse" type="tns:opprettLoepenummerpersonResponse"/>
+
+  <xs:complexType name="lagNyttPersonloepenummer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="lagNyttPersonloepenummerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findPersoner">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="navn" type="xs:string"/>
+      <xs:element name="fysiskPerson" type="xs:boolean"/>
+      <xs:element name="juridiskPerson" type="xs:boolean"/>
+      <xs:element name="foedselsaar" type="xs:int"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findPersonerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns2:PersonIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="opprettLoepenummerperson">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="person" type="ns2:Person"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="opprettLoepenummerpersonResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns2:PersonId"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

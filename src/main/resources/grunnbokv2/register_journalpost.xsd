@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/journalpost"
+        xmlns:register_personns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/journalpost"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+
+    <!-- Journalpost -->
+
+    <xs:complexType name="JournalpostId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="JournalpostIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_personns:JournalpostId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Journalpost">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="saksnummer" type="xs:string"/>
+                    <xs:element name="journalDato" type="xs:string"/>
+                    <xs:element name="arkivdel" type="xs:string"/>
+                    <xs:element name="avsender" type="xs:string"/>
+                    <xs:element name="mottaker" type="xs:string"/>
+                    <xs:element name="sakstittel" type="xs:string"/>
+                    <xs:element name="tilgangskode" type="xs:string"/>
+                    <xs:element name="dokumenttype" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

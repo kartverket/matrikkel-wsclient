@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" schemaLocation="register_registerenhet.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" schemaLocation="servicetyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" schemaLocation="register_koder.xsd"/>
+
+  <xs:element name="findRetterForEnheter" type="tns:findRetterForEnheter"/>
+
+  <xs:element name="findRetterForEnheterOgTyper" type="tns:findRetterForEnheterOgTyper"/>
+
+  <xs:element name="findRetterForEnheterOgTyperResponse" type="tns:findRetterForEnheterOgTyperResponse"/>
+
+  <xs:element name="findRetterForEnheterResponse" type="tns:findRetterForEnheterResponse"/>
+
+  <xs:complexType name="findRetterForEnheter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRetterForEnheterResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilRegisterenhetsrettIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRetterForEnheterOgTyper">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
+      <xs:element minOccurs="0" name="registerenhetsrettstypeKodeIds" type="ns4:RegisterenhetsrettstypeKodeIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRetterForEnheterOgTyperResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilRegisterenhetsrettIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

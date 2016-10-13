@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" schemaLocation="register_registerenhet.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" schemaLocation="servicetyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" schemaLocation="register_person.xsd"/>
+
+  <xs:element name="findAndelerForRettighetshavere" type="tns:findAndelerForRettighetshavere"/>
+
+  <xs:element name="findAndelerForRettighetshavereResponse" type="tns:findAndelerForRettighetshavereResponse"/>
+
+  <xs:element name="findAndelerIRetter" type="tns:findAndelerIRetter"/>
+
+  <xs:element name="findAndelerIRetterResponse" type="tns:findAndelerIRetterResponse"/>
+
+  <xs:element name="findAndelerRealkobletTilRegisterenheter" type="tns:findAndelerRealkobletTilRegisterenheter"/>
+
+  <xs:element name="findAndelerRealkobletTilRegisterenheterResponse" type="tns:findAndelerRealkobletTilRegisterenheterResponse"/>
+
+  <xs:complexType name="findAndelerRealkobletTilRegisterenheter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAndelerRealkobletTilRegisterenheterResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilRegisterenhetsrettsandelIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAndelerIRetter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rettIds" type="ns1:RegisterenhetsrettIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAndelerIRetterResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAndelerForRettighetshavere">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="personIds" type="ns4:PersonIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAndelerForRettighetshavereResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:PersonIdTilRegisterenhetsrettsandelIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

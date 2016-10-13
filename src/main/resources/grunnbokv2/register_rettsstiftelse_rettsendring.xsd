@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring"
+        xmlns:register_rettsendringns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+        xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+        xmlns:register_personns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
+        xmlns:register_registerenhetns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+    <xs:import schemaLocation="register_rettsstiftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
+    <xs:import schemaLocation="register_person.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
+    <xs:import schemaLocation="register_registerenhet.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"/>
+
+    <!-- Rettsendring -->
+
+    <xs:complexType name="RettsendringId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsstiftelsens:RettsstiftelseId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsendringns:RettsendringId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:RettsendringId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:RettsendringIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Rettsendring">
+        <xs:complexContent>
+            <xs:extension base="register_rettsstiftelsens:Rettsstiftelse">
+                <xs:sequence>
+                    <xs:element name="endrer" type="register_rettsstiftelsens:DelAvRettList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- PrioritetsbestemmelseForDokumentnummer -->
+
+    <xs:complexType name="PrioritetsbestemmelseForDokumentnummerId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForDokumentnummerIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:PrioritetsbestemmelseForDokumentnummerId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForDokumentnummerIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true"
+                                type="register_rettsendringns:PrioritetsbestemmelseForDokumentnummerId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForDokumentnummerIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true"
+                                type="register_rettsendringns:PrioritetsbestemmelseForDokumentnummerIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForDokumentnummer">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="veketForIds" type="register_rettsstiftelsens:RettsstiftelseIdList"/>
+                    <xs:element name="sidestiltMedIds" type="register_rettsstiftelsens:RettsstiftelseIdList"/>
+                    <xs:element name="medBeloep" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="forBeloep" type="register_rettsstiftelsens:BeloepList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- DelvisSlettingForIkkeTinglystMatrikkelenhet -->
+
+    <xs:complexType name="DelvisSlettingForIkkeTinglystMatrikkelenhetId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelvisSlettingForIkkeTinglystMatrikkelenhetIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:DelvisSlettingForIkkeTinglystMatrikkelenhetId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelvisSlettingForIkkeTinglystMatrikkelenhetIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true"
+                                type="register_rettsendringns:DelvisSlettingForIkkeTinglystMatrikkelenhetId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelvisSlettingForIkkeTinglystMatrikkelenhetIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true"
+                                type="register_rettsendringns:DelvisSlettingForIkkeTinglystMatrikkelenhetIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelvisSlettingForIkkeTinglystMatrikkelenhet">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="slettetForIds" type="register_registerenhetns:MatrikkelenhetIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- TinglysingPaaNy -->
+
+    <xs:complexType name="TinglysingPaaNyId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TinglysingPaaNyIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:TinglysingPaaNyId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TinglysingPaaNyIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:TinglysingPaaNyId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TinglysingPaaNyIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:TinglysingPaaNyIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TinglysingPaaNy">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- DiverseRettsendring -->
+
+    <xs:complexType name="DiverseRettsendringId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DiverseRettsendringIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:DiverseRettsendringId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DiverseRettsendringIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:DiverseRettsendringId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DiverseRettsendringIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:DiverseRettsendringIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DiverseRettsendring">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- RegistreringAvAnke -->
+
+    <xs:complexType name="RegistreringAvAnkeId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringAvAnkeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:RegistreringAvAnkeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringAvAnkeIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:RegistreringAvAnkeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringAvAnkeIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:RegistreringAvAnkeIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringAvAnke">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="nektet" type="basistyperns:LocalDate" nillable="true"/>
+                    <xs:element name="oversendtLagmannsretten" type="basistyperns:LocalDate" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- NyeVilkaarILeieavtale -->
+
+    <xs:complexType name="NyeVilkaarILeieavtaleId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarILeieavtaleIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:NyeVilkaarILeieavtaleId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarILeieavtaleIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:NyeVilkaarILeieavtaleId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarILeieavtaleIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:NyeVilkaarILeieavtaleIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarILeieavtale">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="leieFraDato" type="basistyperns:LocalDate" nillable="true"/>
+                    <xs:element name="leiebeloep" type="register_rettsstiftelsens:BeloepForPeriode" nillable="true"/>
+                    <xs:element name="leietid" type="register_rettsstiftelsens:Tidsperiode" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- NyeVilkaarIFestekontrakt -->
+
+    <xs:complexType name="NyeVilkaarIFestekontraktId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarIFestekontraktIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:NyeVilkaarIFestekontraktId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarIFestekontraktIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:NyeVilkaarIFestekontraktId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarIFestekontraktIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:NyeVilkaarIFestekontraktIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarIFestekontrakt">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="aarligFesteavgift" type="register_rettsstiftelsens:Beloep" nillable="true"/>
+                    <xs:element name="festetidIAntallAar" type="xs:int" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Nedkvittering -->
+
+    <xs:complexType name="NedkvitteringId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NedkvitteringIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsendringns:NedkvitteringId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NedkvitteringIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:NedkvitteringId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NedkvitteringIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:NedkvitteringIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Nedkvittering">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="beloepNedkvittertTil" type="register_rettsstiftelsens:BeloepList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- PrioritetsbestemmelseForIkkeTinglystDokument -->
+
+    <xs:complexType name="PrioritetsbestemmelseForIkkeTinglystDokumentId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForIkkeTinglystDokumentIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:PrioritetsbestemmelseForIkkeTinglystDokumentId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForIkkeTinglystDokumentIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true"
+                                type="register_rettsendringns:PrioritetsbestemmelseForIkkeTinglystDokumentId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForIkkeTinglystDokumentIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true"
+                                type="register_rettsendringns:PrioritetsbestemmelseForIkkeTinglystDokumentIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForIkkeTinglystDokument">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="veketFor" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="sidestiltMed" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="medBeloep" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="forBeloep" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="rettighetshavereIds" type="register_personns:PersonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Transport -->
+
+    <xs:complexType name="TransportId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TransportIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsendringns:TransportId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TransportIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:TransportId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TransportIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:TransportIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Transport">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="tilRettighetshaverIds" type="register_personns:PersonIdList"/>
+                    <xs:element name="fraRettighetshaverIds" type="register_personns:PersonIdList"/>
+                    <xs:element name="fraRealkobletTilIds" type="register_registerenhetns:RegisterenhetsrettIdList"/>
+                    <xs:element name="tilRealkobletTilIds" type="register_registerenhetns:RegisterenhetsrettIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Andelseier -->
+
+    <xs:complexType name="AndelseierId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AndelseierIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsendringns:AndelseierId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AndelseierIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:AndelseierId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AndelseierIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:AndelseierIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Andelseier">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="rettighetshavereIds" type="register_personns:PersonIdList"/>
+                    <xs:element name="rettighetshavereHistoriskIds" type="register_personns:PersonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Sletting -->
+
+    <xs:complexType name="SlettingId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SlettingIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_rettsendringns:SlettingId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SlettingIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:SlettingId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SlettingIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:SlettingIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Sletting">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="aarsaksparagrafId" type="register_koderns:AarsaksparagrafKodeId" nillable="true"/>
+                    <xs:element name="prokuraUtstederId" type="register_personns:PersonId" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- DelvisSletting -->
+
+    <xs:complexType name="DelvisSlettingId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelvisSlettingIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:DelvisSlettingId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelvisSlettingIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:DelvisSlettingId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelvisSlettingIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:DelvisSlettingIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelvisSletting">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="aarsaksparagrafId" type="register_koderns:AarsaksparagrafKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Ombytte -->
+
+    <xs:complexType name="OmbytteId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmbytteIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:OmbytteId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OmbytteIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:OmbytteId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmbytteIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:OmbytteIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Ombytte">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="paaberoptOmbytteMedIds" type="register_rettsstiftelsens:RettsstiftelseIdList"/>
+                    <xs:element name="paaberoptPrioritetFra" type="basistyperns:LocalDate"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- RettsendringPaaSeksjonering -->
+
+    <xs:complexType name="RettsendringPaaSeksjoneringId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringPaaSeksjoneringIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:RettsendringPaaSeksjoneringId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringPaaSeksjoneringIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:RettsendringPaaSeksjoneringId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringPaaSeksjoneringIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_rettsendringns:RettsendringPaaSeksjoneringIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringPaaSeksjonering">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="omsetning" type="register_rettsstiftelsens:Omsetning"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

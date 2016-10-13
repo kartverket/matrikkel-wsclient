@@ -184,6 +184,50 @@ task wsImportGrunnbok(dependsOn: createGeneratedDir) {
   }
 }
 
+task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
+  def sourceWsdlDir = file('src/main/resources/grunnboksutskriftinternv2')
+  inputs.dir sourceWsdlDir
+  outputs.dir generatedSrcDir
+
+  doLast {
+    ant.taskdef(name: 'wsimport', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImportWithXJCBinding.asPath)
+    fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
+      ant.wsimport(keep: true,
+              destdir: sourceSets.main.output.classesDir,
+              sourcedestdir: generatedSrcDir,
+              wsdl: file.file,
+              wsdlLocation: '/grunnboksutskriftinternv2/' + file.getRelativePath(),
+              xnocompile: true) {
+        xjcarg(value: "-Xequals")
+        xjcarg(value: "-XhashCode")
+      }
+    }
+  }
+}
+
+task wsImportGrunnbokv2(dependsOn: createGeneratedDir) {
+  def sourceWsdlDir = file('src/main/resources/grunnbokv2')
+  inputs.dir sourceWsdlDir
+  outputs.dir generatedSrcDir
+
+  doLast {
+    ant.taskdef(name: 'wsimport', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImportWithXJCBinding.asPath)
+    fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
+      ant.wsimport(keep: true,
+              destdir: sourceSets.main.output.classesDir,
+              sourcedestdir: generatedSrcDir,
+              wsdl: file.file,
+              wsdlLocation: '/grunnbokv2/' + file.getRelativePath(),
+              xnocompile: true) {
+        xjcarg(value: "-Xequals")
+        xjcarg(value: "-XhashCode")
+      }
+    }
+
+    mergeServiceExceptionInDifferentPackagesv2()
+  }
+}
+
 // Konfigurasjon for å samle "samme" Exception med ulikt pakkenavn
 // TODO: Er det virkelig nødvendig å samle disse exceptionene?
 ext.mergeServiceExceptionInDifferentPackages = {
@@ -194,7 +238,7 @@ ext.mergeServiceExceptionInDifferentPackages = {
     replacePath.mkdirs()
   }
 
-  def exceptionFiles = fileTree(dir: destination, includes: ['**/*Exception.java'], excludes: ['**/exception/*'])
+  def exceptionFiles = fileTree(dir: destination, includes: ['**/v1/**/*Exception.java'], excludes: ['**/exception/*'])
   def File relocatedFile
   logger.info("replacePath ${replacePath}")
   //flytter alle exceptions til felles katalog
@@ -209,7 +253,48 @@ ext.mergeServiceExceptionInDifferentPackages = {
   relocatedFile = new File(replacePath.getPath(), 'ServiceException.java')
   relocatedFile.text = relocatedFile.text.replaceFirst(/(?ms)package[^;]+/, "package " + packageString)
 
-  def javaFiles = fileTree(dir: destination, includes: ['**/*.java'])
+  def javaFiles = fileTree(dir: destination, includes: ['**/v1/**/*.java'])
+  //legger til import statements for de andre java filene
+  javaFiles.files.each { File file ->
+    logger.info("adding exception import statement in ${file}")
+    file.text = file.text.replaceFirst('import ', "import ${packageString}.*;\nimport ")
+  }
+
+  ant.replaceregexp {
+    regexp(pattern: /url = new URL\(([^"]+)"\."\), "(.*)"\);/)
+    substitution(expression: ('url = \\1"/\\2"); if (url == null) throw new MalformedURLException("Not found");'))
+    fileset(dir: destination, erroronmissingdir: true) {
+      include(name: '**/*.java')
+    }
+  }
+}
+
+// Konfigurasjon for å samle "samme" Exception med ulikt pakkenavn
+ext.mergeServiceExceptionInDifferentPackagesv2 = {
+  def destination = generatedSrcDir
+  def packageString = 'no.kartverket.grunnbok.wsapi.v2.exception'
+  def replacePath = new File(destination.getPath() + '/no/kartverket/grunnbok/wsapi/v2/exception')
+  if( !replacePath.exists() ) {
+    replacePath.mkdirs()
+  }
+
+  def exceptionFiles = fileTree(dir: destination, includes: ['**/v2/**/*Exception.java'], excludes: ['**/exception/*'])
+  def File relocatedFile
+  logger.info("replacePath ${replacePath}")
+  //flytter alle exceptions til felles katalog
+  exceptionFiles.files.each { File file ->
+    logger.info("merging exception ${replacePath} <- ${file}")
+
+    ant.copy(file: file, toDir: replacePath)
+    file.delete()
+  }
+
+  //kjÃ¸rer regexp replace pÃ¥ package statement for flyttet fil
+  relocatedFile = new File(replacePath.getPath(), 'ServiceException.java')
+  relocatedFile.text = relocatedFile.text.replaceFirst(/(?ms)package[^;]+/, "package " + packageString)
+
+  def javaFiles = fileTree(dir: destination, includes: ['**/v2/**/*.java'])
+//  def javaFiles = fileTree(dir: destination, includes: ['/no/kartverket/grunnbok/wsapi/v2/**/*.java'])
   //legger til import statements for de andre java filene
   javaFiles.files.each { File file ->
     logger.info("adding exception import statement in ${file}")
@@ -227,7 +312,9 @@ ext.mergeServiceExceptionInDifferentPackages = {
 
 compileJava.dependsOn(wsImportInnsendingService)
 compileJava.dependsOn(wsImportLandbruksregister)
+compileJava.dependsOn(wsImportGrunnboksutskriftInternv2)
 compileJava.dependsOn(wsImportGrunnbok)
+compileJava.dependsOn(wsImportGrunnbokv2)
 
 allprojects {
   tasks.withType(JavaCompile) {

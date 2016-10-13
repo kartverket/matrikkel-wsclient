@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/bruker"
+        xmlns:register_brukerns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/bruker"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+
+    <!-- ========================================================= -->
+    <!-- register/saksbehandling:                                  -->
+    <!-- Saksbehandlingsdata i register subdomain                  -->
+    <!-- ========================================================= -->
+
+    <!-- Bruker -->
+
+    <xs:complexType name="BrukerId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BrukerIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_brukerns:BrukerId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BrukerIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_brukerns:BrukerId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BrukerIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_brukerns:BrukerIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Bruker">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="brukernavn" type="xs:string" />
+                    <xs:element name="navn" type="xs:string" />
+                    <xs:element name="telefon" type="xs:string" nillable="true"/>
+                    <xs:element name="emailadresse" type="xs:string" nillable="true"/>
+                    <xs:element name="merknad" type="xs:string" nillable="true" />
+                    <xs:element name="gjelderFra" type="basistyperns:LocalDate" nillable="true" />
+                    <xs:element name="historisk" type="xs:boolean" />
+                    <xs:element name="endrePassordVedInnlogging" type="xs:boolean" />
+                    <xs:element name="programvareBruker" type="xs:boolean" />
+                    <xs:element name="maalformId" type="register_koderns:MaalformKodeId" nillable="true"/>
+                    <xs:element name="behandlingsnivaaId" type="register_koderns:BehandlingsnivaaKodeId" nillable="true"/>
+                    <xs:element name="saksbehandlingsenhetId" type="register_koderns:SaksbehandlingsenhetKodeId" nillable="true"/>
+                    <xs:element name="midlertidigSaksbehandlingsenhetId" type="register_koderns:SaksbehandlingsenhetKodeId" nillable="true"/>
+                    <xs:element name="brukerTilgangsgrupper" type="register_brukerns:BrukerTilgangsgruppeList" />
+                    <xs:element name="roller" type="register_brukerns:RolleList" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- OrganisatoriskEnhet -->
+
+    <xs:complexType name="OrganisatoriskEnhetId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OrganisatoriskEnhetIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_brukerns:OrganisatoriskEnhetId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OrganisatoriskEnhetIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_brukerns:OrganisatoriskEnhetId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OrganisatoriskEnhetIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_brukerns:OrganisatoriskEnhetIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OrganisatoriskEnhet">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="navn" type="xs:string"/>
+                    <xs:element name="internGruppe" type="xs:boolean"/>
+                    <xs:element name="foeringsdagAvsluttet" type="xs:boolean"/>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Brukertilgangsgruppe -->
+
+    <xs:complexType name="BrukerTilgangsgruppe">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                    <xs:element name="gjelderFra" type="basistyperns:LocalDate"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BrukerTilgangsgruppeList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="register_brukerns:BrukerTilgangsgruppe"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Tilgangsgruppe -->
+
+    <xs:complexType name="TilgangsgruppeId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TilgangsgruppeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_brukerns:TilgangsgruppeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TilgangsgruppeIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_brukerns:TilgangsgruppeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TilgangsgruppeIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_brukerns:TilgangsgruppeIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Tilgangsgruppe">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                    <xs:element name="gjelderFra" type="basistyperns:LocalDate"/>
+                    <xs:element name="tilgangsgruppenavn" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Rolle -->
+
+    <xs:complexType name="Rolle">
+        <xs:sequence>
+            <xs:element name="navn" type="xs:string"/>
+            <xs:element name="beskrivelse" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RolleList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_brukerns:Rolle"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

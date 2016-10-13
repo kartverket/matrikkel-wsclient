@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/personkoblingsendring"
+        xmlns:register_personkoblingsendringns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/personkoblingsendring"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+        xmlns:register_personns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="register_rettsstiftelse.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
+    <xs:import schemaLocation="register_person.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
+
+    <!-- Personkoblingsendring -->
+
+    <xs:complexType name="PersonkoblingsendringId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsstiftelsens:RettsstiftelseId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PersonkoblingsendringIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_personkoblingsendringns:PersonkoblingsendringId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonkoblingsendringIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personkoblingsendringns:PersonkoblingsendringId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PersonkoblingsendringIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personkoblingsendringns:PersonkoblingsendringIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Personkoblingsendring">
+        <xs:complexContent>
+            <xs:extension base="register_rettsstiftelsens:Rettsstiftelse">
+                <xs:sequence>
+                    <xs:element name="tilId" type="register_personns:PersonId"/>
+                    <xs:element name="fraIds" type="register_personns:PersonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+</xs:schema>

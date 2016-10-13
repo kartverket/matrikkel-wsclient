@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
+        xmlns:register_personns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:registerns="http://kartverket.no/grunnbok/wsapi/v2/domain/register"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+    <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register"/>
+
+    <!-- Person -->
+
+    <xs:complexType name="PersonId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PersonIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_personns:PersonId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personns:PersonId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PersonIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personns:PersonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Person">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="identifikasjonsnummer" type="xs:string"/>
+                    <xs:element name="identifikasjonsnummertypeKodeId" type="register_koderns:IdentifikasjonsnummertypeKodeId"/>
+                    <xs:element name="navn" type="xs:string"/>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="FysiskPersonId">
+        <xs:complexContent>
+            <xs:extension base="register_personns:PersonId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="FysiskPersonIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_personns:FysiskPersonId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FysiskPersonIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personns:FysiskPersonId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FysiskPersonIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personns:FysiskPersonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="FysiskPerson">
+        <xs:complexContent>
+            <xs:extension base="register_personns:Person">
+                <xs:sequence>
+                    <xs:element name="personIdTypeId" type="register_koderns:PersonIdTypeKodeId" nillable="true"/>
+                    <xs:element name="slektsnavn" type="xs:string" nillable="true"/>
+                    <xs:element name="mellomnavn" type="xs:string" nillable="true"/>
+                    <xs:element name="fornavn" type="xs:string" nillable="true"/>
+                    <xs:element name="statsborgerskap" type="xs:string" nillable="true"/>
+                    <xs:element name="personstatusId" type="register_koderns:PersonStatusKodeId" nillable="true"/>
+                    <xs:element name="sivilstandId" type="register_koderns:SivilstandKodeId" nillable="true"/>
+                    <xs:element name="familienummer" type="xs:string" nillable="true"/>
+                    <xs:element name="familiePersonkodeId" type="register_koderns:FamiliePersonkodeKodeId" nillable="true"/>
+                    <xs:element name="umyndiggjort" type="xs:boolean" nillable="true"/>
+                    <xs:element name="spesifisertRegistreringstypeId" type="register_koderns:SpesifisertRegistreringstypeKodeId" nillable="true"/>
+                    <xs:element name="datoDoed" type="basistyperns:LocalDate" nillable="true"/>
+                    <xs:element name="bostedsadresse" type="register_personns:Bostedsadresse" nillable="true"/>
+                    <xs:element name="postadresse" type="register_personns:Personadresse" nillable="true"/>
+                    <xs:element name="hjemlandsadresse" type="register_personns:Personadresse" nillable="true"/>
+                    <xs:element name="hashcodeFraEksternregister" type="xs:string" nillable="true"/>
+                    <xs:element name="sistOppdatertFraEksternregister" type="basistyperns:Timestamp" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LoepenummerPersonId">
+        <xs:complexContent>
+            <xs:extension base="register_personns:PersonId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LoepenummerPersonIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_personns:LoepenummerPersonId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LoepenummerPersonIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personns:LoepenummerPersonId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LoepenummerPersonIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personns:LoepenummerPersonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LoepenummerPerson">
+        <xs:complexContent>
+            <xs:extension base="register_personns:Person">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="JuridiskPersonId">
+        <xs:complexContent>
+            <xs:extension base="register_personns:PersonId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="JuridiskPersonIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_personns:JuridiskPersonId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="JuridiskPersonIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personns:JuridiskPersonId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="JuridiskPersonIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_personns:JuridiskPersonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="JuridiskPerson">
+        <xs:complexContent>
+            <xs:extension base="register_personns:Person">
+                <xs:sequence>
+                    <xs:element name="organisasjonsTypeId" type="register_koderns:OrganisasjonstypeKodeId" nillable="true"/>
+                    <xs:element name="forretningsadresse" type="register_personns:Personadresse" nillable="true"/>
+                    <xs:element name="frivillighetsRegisteret" type="xs:boolean" nillable="true"/>
+                    <xs:element name="naeringskodeId" type="register_koderns:NaeringskodeKodeId" nillable="true"/>
+                    <xs:element name="organisasjonsnavn1" type="xs:string" nillable="true"/>
+                    <xs:element name="organisasjonsnavn2" type="xs:string" nillable="true"/>
+                    <xs:element name="organisasjonsnavn3" type="xs:string" nillable="true"/>
+                    <xs:element name="organisasjonsnavn4" type="xs:string" nillable="true"/>
+                    <xs:element name="organisasjonsnavn5" type="xs:string" nillable="true"/>
+                    <xs:element name="organisasjonsnummerHovedenhet" type="xs:string" nillable="true"/>
+                    <xs:element name="registrertDato" type="basistyperns:LocalDate" nillable="true"/>
+                    <xs:element name="stiftetDato" type="basistyperns:LocalDate" nillable="true"/>
+                    <xs:element name="slettetDato" type="basistyperns:LocalDate" nillable="true"/>
+                    <xs:element name="postadresse" type="register_personns:Personadresse" nillable="true"/>
+                    <xs:element name="hashcodeFraEksternregister" type="xs:string" nillable="true"/>
+                    <xs:element name="sistOppdatertFraEksternregister" type="basistyperns:Timestamp" nillable="true"/>
+                    <xs:element name="saerskiltFinansforetak" type="xs:boolean" nillable="true"/>
+                    <xs:element name="annetSaerskiltForetak" type="xs:boolean" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Bostedsadresse">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="kommuneId" type="registerns:KommuneId" nillable="true"/>
+                    <xs:element name="adressekode" type="xs:int"/>
+                    <xs:element name="husnummer" type="xs:int"/>
+                    <xs:element name="bokstav" type="xs:string" nillable="true"/>
+                    <xs:element name="gaardsnummer" type="xs:int"/>
+                    <xs:element name="bruksnummer" type="xs:int"/>
+                    <xs:element name="festenummer" type="xs:int"/>
+                    <xs:element name="undernummer" type="xs:int"/>
+                    <xs:element name="bruksenhetsnummer" type="xs:string" nillable="true"/>
+                    <xs:element name="postnummeromraadeId" type="registerns:PostnummeromraadeId" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="Personadresse">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="adresselinje1" type="xs:string" nillable="true"/>
+                    <xs:element name="adresselinje2" type="xs:string" nillable="true"/>
+                    <xs:element name="adresselinje3" type="xs:string" nillable="true"/>
+                    <xs:element name="landkodeId" type="register_koderns:LandkodeKodeId" nillable="true"/>
+                    <xs:element name="postnummeromraadeId" type="registerns:PostnummeromraadeId" nillable="true"/>
+                    <xs:element name="utenlandskAdresse" type="xs:string" nillable="true"/>
+                    <xs:element name="utenlandskPoststed" type="xs:string" nillable="true"/>
+                    <xs:element name="forretningskommune" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+
+</xs:schema>

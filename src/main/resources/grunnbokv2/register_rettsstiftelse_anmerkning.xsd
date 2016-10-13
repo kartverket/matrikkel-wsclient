@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/anmerkning"
+        xmlns:register_anmerkningns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/anmerkning"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+        xmlns:register_person="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="register_rettsstiftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
+    <xs:import schemaLocation="register_person.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
+
+    <!-- ========================================================= -->
+    <!-- register/rettsstiftelse/anmerkning:                       -->
+    <!-- Anmerkninger i register subdomain                         -->
+    <!-- ========================================================= -->
+
+    <!-- Anmerkning -->
+
+    <xs:complexType name="AnmerkningId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsstiftelsens:RettsstiftelseId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_anmerkningns:AnmerkningId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_anmerkningns:AnmerkningId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_anmerkningns:AnmerkningIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Anmerkning">
+        <xs:complexContent>
+            <xs:extension base="register_rettsstiftelsens:Rettsstiftelse">
+                <xs:sequence>
+                    <xs:element name="gjelder" type="register_rettsstiftelsens:DelAvRettList"/>
+                    <xs:element name="saksnummer" type="xs:string" nillable="true"/>
+                    <xs:element name="forvaltereIds" type="register_person:PersonIdList"/>
+                    <xs:element name="forvaltereHistoriskIds" type="register_person:PersonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- AnmerkningPaaPerson -->
+
+    <xs:complexType name="AnmerkningPaaPersonId">
+        <xs:complexContent>
+            <xs:extension base="register_anmerkningns:AnmerkningId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaPersonIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_anmerkningns:AnmerkningPaaPersonId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaPersonIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_anmerkningns:AnmerkningPaaPersonId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaPersonIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_anmerkningns:AnmerkningPaaPersonIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaPerson">
+        <xs:complexContent>
+            <xs:extension base="register_anmerkningns:Anmerkning">
+                <xs:sequence>
+                    <xs:element name="bostyrer" type="xs:string" nillable="true"/>
+                    <xs:element name="anmerketPersonId" type="register_person:PersonId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- AnmerkningPaaRegisterenhetsrettsandel -->
+
+    <xs:complexType name="AnmerkningPaaRegisterenhetsrettsandelId">
+        <xs:complexContent>
+            <xs:extension base="register_anmerkningns:AnmerkningId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaRegisterenhetsrettsandelIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_anmerkningns:AnmerkningPaaRegisterenhetsrettsandelId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaRegisterenhetsrettsandelIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_anmerkningns:AnmerkningPaaRegisterenhetsrettsandelId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaRegisterenhetsrettsandelIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_anmerkningns:AnmerkningPaaRegisterenhetsrettsandelIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaRegisterenhetsrettsandel">
+        <xs:complexContent>
+            <xs:extension base="register_anmerkningns:Anmerkning">
+                <xs:sequence>
+                    <xs:element name="tingrett" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+</xs:schema>
