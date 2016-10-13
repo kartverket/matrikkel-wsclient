@@ -1,0 +1,42 @@
+package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
+
+
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Borettslagsandel;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhet;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Registerenhet;
+
+/**
+ *
+ */
+public class RegisterenhetBuilder {
+   private Borettslagsandel borettslagsandel;
+   private Matrikkelenhet matrikkelenhet;
+
+   private RegisterenhetBuilder() {
+   }
+
+   public static RegisterenhetBuilder aRegisterenhet() {
+      return new RegisterenhetBuilder();
+   }
+
+   public RegisterenhetBuilder withBorettslagsandel(Borettslagsandel borettslagsandel) {
+      this.borettslagsandel = borettslagsandel;
+      return this;
+   }
+
+   public RegisterenhetBuilder withMatrikkelenhet(Matrikkelenhet matrikkelenhet) {
+      this.matrikkelenhet = matrikkelenhet;
+      return this;
+   }
+
+   public RegisterenhetBuilder but() {
+      return aRegisterenhet().withBorettslagsandel(borettslagsandel).withMatrikkelenhet(matrikkelenhet);
+   }
+
+   public Registerenhet build() {
+      Registerenhet registerenhet = new Registerenhet();
+      registerenhet.setBorettslagsandel(borettslagsandel);
+      registerenhet.setMatrikkelenhet(matrikkelenhet);
+      return registerenhet;
+   }
+}
