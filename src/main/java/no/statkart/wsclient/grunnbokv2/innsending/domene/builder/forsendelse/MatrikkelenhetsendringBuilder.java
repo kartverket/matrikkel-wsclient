@@ -34,6 +34,8 @@ public class MatrikkelenhetsendringBuilder {
    public static MatrikkelenhetsendringBuilder aSammenslaaingAvMatrikkelenheter() {
       MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
       matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.SAMMENSLAAING_AV_MATRIKKELENHETER);
+      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1");
+      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("SA_SAM").withNavn("SAMMENSLÅING").build());
       return matrikkelenhetsendringBuilder;
    }
 
