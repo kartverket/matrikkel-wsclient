@@ -8,10 +8,7 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.Rettssti
 import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.*;
 import org.joda.time.LocalDateTime;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Stub implementation.
@@ -41,6 +38,8 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
       if (forsendelsesstatus == null) {
          throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for innsendingId: " + innsendingId);
       }
+
+      forsendelsesstatus.getTinglysingsinformasjon().getDokumentinformasjon().iterator().next().setDokumentnummer(new Random().nextInt(Integer.MAX_VALUE));
       return forsendelsesstatus;
    }
 
@@ -74,7 +73,60 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
          SignertGrunnboksutskrift grunnboksutskrift = createGrunnboksutskrift(enhetINittedal);
          Forsendelsesstatus forsendelsesstatus = createForsendelsestatus(Lists.newArrayList(grunnboksutskrift));
          forsendelsesstatusByInnsendingIdMap.put("1", forsendelsesstatus);
+
+         Forsendelsesstatus forsendelsesstatus2 = createForsendelsestatusTinglyst(Lists.newArrayList(createGrunnboksutskrift(
+               MatrikkelenhetBuilder.aMatrikkelenhet()
+                     .withKommunenummer("100001201")
+                     .withKommunenavn("Nittedal")
+                     .withGaardsnummer(2)
+                     .withBruksnummer(90)
+                     .withFestenummer(0)
+                     .withSeksjonsnummer(0)
+                     .build()
+         ), createGrunnboksutskrift(
+               MatrikkelenhetBuilder.aMatrikkelenhet()
+                     .withKommunenummer("100001201")
+                     .withKommunenavn("Nittedal")
+                     .withGaardsnummer(2)
+                     .withBruksnummer(91)
+                     .withFestenummer(0)
+                     .withSeksjonsnummer(0)
+                     .build()
+         )), "2");
+         forsendelsesstatusByInnsendingIdMap.put("2", forsendelsesstatus2);
+
+
          return forsendelsesstatusByInnsendingIdMap;
+      }
+
+      private Forsendelsesstatus createForsendelsestatusTinglyst(List<SignertGrunnboksutskrift> grunnboksutskrifter, String id) {
+         return ForsendelsesstatusBuilder.aBehandlingsstatus()
+               .withInnsendingId(id)
+               .withForsendelsesreferanse("1")
+               .withRegistreringstidspunkt(new LocalDateTime())
+               .withBehandlingsutfall(Behandlingsutfall.TINGLYST.name())
+               .withSaksstatus("TINGLYST")
+               .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
+                     .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
+                           .withDokumentnummer(2)
+                           .withEmbetenummer("34")
+                           .withDokumentaar(2016)
+                           .withDokumentreferanse("1")
+                           .withRettsstiftelsesinformasjonList(Lists.newArrayList(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
+                                 .withRettsstiftelsesnummer(238)
+                                 .withRettsstiftelsesreferanse("Xyz")
+                                 .build()))
+                           .withPaavirkerRegisterenheterList(Lists.newArrayList(RegisterenhetBuilder.aRegisterenhet()
+                                 .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
+                                       .withKommunenummer("0233")
+                                       .withGaardsnummer(12)
+                                       .withBruksnummer(13)
+                                       .build())
+                                 .build()))
+                           .build()))
+                     .withSignerteGrunnboksutskrifter(grunnboksutskrifter)
+                     .build())
+               .build();
       }
    }
 
