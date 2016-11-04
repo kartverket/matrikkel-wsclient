@@ -57,6 +57,14 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
       forsendelsesstatus.setBehandlingsutfall(Behandlingsutfall.NEKTET.name());
    }
 
+   public static void forsendelseTinglyst(String innsendingId) {
+      Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
+      if(forsendelsesstatus==null) {
+         throw new RuntimeException("The stub has no knowledge of any entry linked to innsendingId: "+innsendingId);
+      }
+      forsendelsesstatus.setBehandlingsutfall(Behandlingsutfall.TINGLYST.name());
+   }
+
    private static class ForsendelsesstatusProvider {
 
       public Map<String, Forsendelsesstatus> createInitState() {
