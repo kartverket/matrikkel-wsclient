@@ -552,6 +552,26 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="RegisterenhetIdTilHeftelseIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
+                        <xs:element name="value" type="register_heftelsens:HeftelseIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="RegisterenhetsrettsandelIdTilHeftelseIdsMap">
         <xs:annotation>
             <xs:appinfo>

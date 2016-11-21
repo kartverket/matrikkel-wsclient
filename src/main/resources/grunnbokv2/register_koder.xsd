@@ -234,30 +234,6 @@
         </xs:complexContent>
     </xs:complexType>
 
-    <!-- KonsesjonsgrenseKode -->
-
-    <xs:complexType name="KonsesjonsgrenseKodeId">
-        <xs:complexContent>
-            <xs:extension base="kodelistens:KodeId">
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="KonsesjonsgrenseKodeIdList">
-        <xs:sequence>
-            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:KonsesjonsgrenseKodeId"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="KonsesjonsgrenseKode">
-        <xs:complexContent>
-            <xs:extension base="kodelistens:GrunnbokKode">
-                <xs:sequence>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
     <!-- PeriodeKode -->
 
     <xs:complexType name="PeriodeKodeId">

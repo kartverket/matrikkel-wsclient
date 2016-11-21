@@ -64,7 +64,6 @@
                     <xs:element name="kommunenummer" type="xs:string"/>
                     <xs:element name="navn" type="xs:string"/>
                     <xs:element name="embeteId" type="register_koderns:EmbeteKodeId"/>
-                    <xs:element name="konsesjonsgrenseId" type="register_koderns:KonsesjonsgrenseKodeId"/>
                     <xs:element name="historisk" type="xs:boolean"/>
                 </xs:sequence>
             </xs:extension>

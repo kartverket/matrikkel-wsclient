@@ -72,19 +72,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findDokumentIdsForIdents">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="idents" type="ns1:DokumentIdentList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findDokumentIdsForIdentsResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:DokumentIdentTilDokumentIdMap"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findIdentsForIds">
     <xs:sequence>
       <xs:element minOccurs="0" name="ids" type="ns2:GrunnbokBubbleObjectIdList"/>
@@ -95,6 +82,19 @@
   <xs:complexType name="findIdentsForIdsResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns3:BubbleIdTilIdentMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findDokumentIdsForIdents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idents" type="ns1:DokumentIdentList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findDokumentIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:DokumentIdentTilDokumentIdMap"/>
     </xs:sequence>
   </xs:complexType>
 

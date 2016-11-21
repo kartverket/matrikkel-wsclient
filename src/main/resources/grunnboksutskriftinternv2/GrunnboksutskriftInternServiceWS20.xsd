@@ -1,10 +1,130 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xs:schema xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xs:schema xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring">
 
-<xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="GrunnboksutskriftInternServiceWS18.xsd"/>
+<xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" schemaLocation="GrunnboksutskriftInternServiceWS3.xsd"/>
 
-<xs:complexType name="SaksinformasjonId">
+<xs:complexType name="RettsendringId">
 <xs:complexContent>
-<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:extension base="ns1:RettsstiftelseId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="PrioritetsbestemmelseForDokumentnummerId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="DelvisSlettingId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="DiverseRettsendringId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="DelvisSlettingForIkkeTinglystMatrikkelenhetId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="OmbytteId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RegistreringAvAnkeId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RettsendringPaaSeksjoneringId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="TinglysingPaaNyId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="TransportId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SlettingId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="NyeVilkaarIFestekontraktId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="NedkvitteringId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="NyeVilkaarILeieavtaleId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="AndelseierId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="PrioritetsbestemmelseForIkkeTinglystDokumentId">
+<xs:complexContent>
+<xs:extension base="tns:RettsendringId">
 <xs:sequence/>
 </xs:extension>
 </xs:complexContent>

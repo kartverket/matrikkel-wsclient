@@ -58,9 +58,6 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register" schemaLocation="register.xsd"/>
     </xsd:schema>
     <xsd:schema>
-      <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/melding" schemaLocation="melding.xsd"/>
-    </xsd:schema>
-    <xsd:schema>
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" schemaLocation="kodeliste.xsd"/>
     </xsd:schema>
     <xsd:schema>
@@ -100,18 +97,6 @@
   <message name="unlockResponse">
     <part element="tns:unlockResponse" name="parameters"/>
   </message>
-  <message name="getObjectsIgnoreMissing">
-    <part element="tns:getObjectsIgnoreMissing" name="parameters"/>
-  </message>
-  <message name="getObjectsIgnoreMissingResponse">
-    <part element="tns:getObjectsIgnoreMissingResponse" name="parameters"/>
-  </message>
-  <message name="getVersionsForList">
-    <part element="tns:getVersionsForList" name="parameters"/>
-  </message>
-  <message name="getVersionsForListResponse">
-    <part element="tns:getVersionsForListResponse" name="parameters"/>
-  </message>
   <message name="getVersions">
     <part element="tns:getVersions" name="parameters"/>
   </message>
@@ -123,6 +108,18 @@
   </message>
   <message name="getObjectsResponse">
     <part element="tns:getObjectsResponse" name="parameters"/>
+  </message>
+  <message name="getObjectsIgnoreMissing">
+    <part element="tns:getObjectsIgnoreMissing" name="parameters"/>
+  </message>
+  <message name="getObjectsIgnoreMissingResponse">
+    <part element="tns:getObjectsIgnoreMissingResponse" name="parameters"/>
+  </message>
+  <message name="getVersionsForList">
+    <part element="tns:getVersionsForList" name="parameters"/>
+  </message>
+  <message name="getVersionsForListResponse">
+    <part element="tns:getVersionsForListResponse" name="parameters"/>
   </message>
   <portType name="StoreService">
     <operation name="lock">
@@ -145,16 +142,6 @@
       <output message="tns:unlockResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/unlockResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/unlock/Fault/ServiceException"/>
     </operation>
-    <operation name="getObjectsIgnoreMissing">
-      <input message="tns:getObjectsIgnoreMissing" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsIgnoreMissingRequest"/>
-      <output message="tns:getObjectsIgnoreMissingResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsIgnoreMissingResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsIgnoreMissing/Fault/ServiceException"/>
-    </operation>
-    <operation name="getVersionsForList">
-      <input message="tns:getVersionsForList" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsForListRequest"/>
-      <output message="tns:getVersionsForListResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsForListResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsForList/Fault/ServiceException"/>
-    </operation>
     <operation name="getVersions">
       <input message="tns:getVersions" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsRequest"/>
       <output message="tns:getVersionsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsResponse"/>
@@ -164,6 +151,16 @@
       <input message="tns:getObjects" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsRequest"/>
       <output message="tns:getObjectsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjects/Fault/ServiceException"/>
+    </operation>
+    <operation name="getObjectsIgnoreMissing">
+      <input message="tns:getObjectsIgnoreMissing" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsIgnoreMissingRequest"/>
+      <output message="tns:getObjectsIgnoreMissingResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsIgnoreMissingResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsIgnoreMissing/Fault/ServiceException"/>
+    </operation>
+    <operation name="getVersionsForList">
+      <input message="tns:getVersionsForList" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsForListRequest"/>
+      <output message="tns:getVersionsForListResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsForListResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsForList/Fault/ServiceException"/>
     </operation>
   </portType>
   <binding name="StoreServicePortBinding" type="tns:StoreService">
@@ -216,30 +213,6 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="getObjectsIgnoreMissing">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
-    <operation name="getVersionsForList">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
     <operation name="getVersions">
       <soap:operation soapAction=""/>
       <input>
@@ -253,6 +226,30 @@
       </fault>
     </operation>
     <operation name="getObjects">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getObjectsIgnoreMissing">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getVersionsForList">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

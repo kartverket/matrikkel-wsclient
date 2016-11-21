@@ -61,9 +61,6 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register" schemaLocation="register.xsd"/>
     </xsd:schema>
     <xsd:schema>
-      <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/melding" schemaLocation="melding.xsd"/>
-    </xsd:schema>
-    <xsd:schema>
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" schemaLocation="kodeliste.xsd"/>
     </xsd:schema>
     <xsd:schema>
@@ -76,32 +73,14 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="findTidligereHeftelserIRegisterenhetsrettsandeler">
-    <part element="tns:findTidligereHeftelserIRegisterenhetsrettsandeler" name="parameters"/>
-  </message>
-  <message name="findTidligereHeftelserIRegisterenhetsrettsandelerResponse">
-    <part element="tns:findTidligereHeftelserIRegisterenhetsrettsandelerResponse" name="parameters"/>
-  </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
-  </message>
-  <message name="findBorettslagsandelsendringerForAlleTidligereRegisterenheter">
-    <part element="tns:findBorettslagsandelsendringerForAlleTidligereRegisterenheter" name="parameters"/>
-  </message>
-  <message name="findBorettslagsandelsendringerForAlleTidligereRegisterenheterResponse">
-    <part element="tns:findBorettslagsandelsendringerForAlleTidligereRegisterenheterResponse" name="parameters"/>
-  </message>
-  <message name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
-    <part element="tns:findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet" name="parameters"/>
-  </message>
-  <message name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse">
-    <part element="tns:findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse" name="parameters"/>
-  </message>
   <message name="findRettsstiftelsestypeKoderForRettstypeKoder">
     <part element="tns:findRettsstiftelsestypeKoderForRettstypeKoder" name="parameters"/>
   </message>
   <message name="findRettsstiftelsestypeKoderForRettstypeKoderResponse">
     <part element="tns:findRettsstiftelsestypeKoderForRettstypeKoderResponse" name="parameters"/>
+  </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
   </message>
   <message name="findOverdragelserAvRegisterenhetsrett">
     <part element="tns:findOverdragelserAvRegisterenhetsrett" name="parameters"/>
@@ -211,6 +190,18 @@
   <message name="findOverdragelserAvRegisterenhetsrettForPersonResponse">
     <part element="tns:findOverdragelserAvRegisterenhetsrettForPersonResponse" name="parameters"/>
   </message>
+  <message name="findRettigheterForRegisterenheter">
+    <part element="tns:findRettigheterForRegisterenheter" name="parameters"/>
+  </message>
+  <message name="findRettigheterForRegisterenheterResponse">
+    <part element="tns:findRettigheterForRegisterenheterResponse" name="parameters"/>
+  </message>
+  <message name="findRettsstiftelserMedAktivRettighetshaver">
+    <part element="tns:findRettsstiftelserMedAktivRettighetshaver" name="parameters"/>
+  </message>
+  <message name="findRettsstiftelserMedAktivRettighetshaverResponse">
+    <part element="tns:findRettsstiftelserMedAktivRettighetshaverResponse" name="parameters"/>
+  </message>
   <message name="findRettsstiftelserForDokumentNummerOgAar">
     <part element="tns:findRettsstiftelserForDokumentNummerOgAar" name="parameters"/>
   </message>
@@ -234,6 +225,24 @@
   </message>
   <message name="findFremleieavtalerForAnnenRettighetResponse">
     <part element="tns:findFremleieavtalerForAnnenRettighetResponse" name="parameters"/>
+  </message>
+  <message name="findTidligereHeftelserIRegisterenhetsrettsandeler">
+    <part element="tns:findTidligereHeftelserIRegisterenhetsrettsandeler" name="parameters"/>
+  </message>
+  <message name="findTidligereHeftelserIRegisterenhetsrettsandelerResponse">
+    <part element="tns:findTidligereHeftelserIRegisterenhetsrettsandelerResponse" name="parameters"/>
+  </message>
+  <message name="findBorettslagsandelsendringerForAlleTidligereRegisterenheter">
+    <part element="tns:findBorettslagsandelsendringerForAlleTidligereRegisterenheter" name="parameters"/>
+  </message>
+  <message name="findBorettslagsandelsendringerForAlleTidligereRegisterenheterResponse">
+    <part element="tns:findBorettslagsandelsendringerForAlleTidligereRegisterenheterResponse" name="parameters"/>
+  </message>
+  <message name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
+    <part element="tns:findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet" name="parameters"/>
+  </message>
+  <message name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse">
+    <part element="tns:findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse" name="parameters"/>
   </message>
   <message name="findRettsstiftelserMedNyeAndeler">
     <part element="tns:findRettsstiftelserMedNyeAndeler" name="parameters"/>
@@ -344,21 +353,6 @@
     <part element="tns:findHeftelserResponse" name="parameters"/>
   </message>
   <portType name="RettsstiftelseService">
-    <operation name="findTidligereHeftelserIRegisterenhetsrettsandeler">
-      <input message="tns:findTidligereHeftelserIRegisterenhetsrettsandeler" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findTidligereHeftelserIRegisterenhetsrettsandelerRequest"/>
-      <output message="tns:findTidligereHeftelserIRegisterenhetsrettsandelerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findTidligereHeftelserIRegisterenhetsrettsandelerResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findTidligereHeftelserIRegisterenhetsrettsandeler/Fault/ServiceException"/>
-    </operation>
-    <operation name="findBorettslagsandelsendringerForAlleTidligereRegisterenheter">
-      <input message="tns:findBorettslagsandelsendringerForAlleTidligereRegisterenheter" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findBorettslagsandelsendringerForAlleTidligereRegisterenheterRequest"/>
-      <output message="tns:findBorettslagsandelsendringerForAlleTidligereRegisterenheterResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findBorettslagsandelsendringerForAlleTidligereRegisterenheterResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findBorettslagsandelsendringerForAlleTidligereRegisterenheter/Fault/ServiceException"/>
-    </operation>
-    <operation name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
-      <input message="tns:findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetRequest"/>
-      <output message="tns:findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet/Fault/ServiceException"/>
-    </operation>
     <operation name="findRettsstiftelsestypeKoderForRettstypeKoder">
       <input message="tns:findRettsstiftelsestypeKoderForRettstypeKoder" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettsstiftelsestypeKoderForRettstypeKoderRequest"/>
       <output message="tns:findRettsstiftelsestypeKoderForRettstypeKoderResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettsstiftelsestypeKoderForRettstypeKoderResponse"/>
@@ -454,6 +448,16 @@
       <output message="tns:findOverdragelserAvRegisterenhetsrettForPersonResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findOverdragelserAvRegisterenhetsrettForPersonResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findOverdragelserAvRegisterenhetsrettForPerson/Fault/ServiceException"/>
     </operation>
+    <operation name="findRettigheterForRegisterenheter">
+      <input message="tns:findRettigheterForRegisterenheter" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettigheterForRegisterenheterRequest"/>
+      <output message="tns:findRettigheterForRegisterenheterResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettigheterForRegisterenheterResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettigheterForRegisterenheter/Fault/ServiceException"/>
+    </operation>
+    <operation name="findRettsstiftelserMedAktivRettighetshaver">
+      <input message="tns:findRettsstiftelserMedAktivRettighetshaver" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettsstiftelserMedAktivRettighetshaverRequest"/>
+      <output message="tns:findRettsstiftelserMedAktivRettighetshaverResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettsstiftelserMedAktivRettighetshaverResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettsstiftelserMedAktivRettighetshaver/Fault/ServiceException"/>
+    </operation>
     <operation name="findRettsstiftelserForDokumentNummerOgAar">
       <input message="tns:findRettsstiftelserForDokumentNummerOgAar" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettsstiftelserForDokumentNummerOgAarRequest"/>
       <output message="tns:findRettsstiftelserForDokumentNummerOgAarResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettsstiftelserForDokumentNummerOgAarResponse"/>
@@ -473,6 +477,21 @@
       <input message="tns:findFremleieavtalerForAnnenRettighet" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findFremleieavtalerForAnnenRettighetRequest"/>
       <output message="tns:findFremleieavtalerForAnnenRettighetResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findFremleieavtalerForAnnenRettighetResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findFremleieavtalerForAnnenRettighet/Fault/ServiceException"/>
+    </operation>
+    <operation name="findTidligereHeftelserIRegisterenhetsrettsandeler">
+      <input message="tns:findTidligereHeftelserIRegisterenhetsrettsandeler" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findTidligereHeftelserIRegisterenhetsrettsandelerRequest"/>
+      <output message="tns:findTidligereHeftelserIRegisterenhetsrettsandelerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findTidligereHeftelserIRegisterenhetsrettsandelerResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findTidligereHeftelserIRegisterenhetsrettsandeler/Fault/ServiceException"/>
+    </operation>
+    <operation name="findBorettslagsandelsendringerForAlleTidligereRegisterenheter">
+      <input message="tns:findBorettslagsandelsendringerForAlleTidligereRegisterenheter" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findBorettslagsandelsendringerForAlleTidligereRegisterenheterRequest"/>
+      <output message="tns:findBorettslagsandelsendringerForAlleTidligereRegisterenheterResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findBorettslagsandelsendringerForAlleTidligereRegisterenheterResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findBorettslagsandelsendringerForAlleTidligereRegisterenheter/Fault/ServiceException"/>
+    </operation>
+    <operation name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
+      <input message="tns:findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetRequest"/>
+      <output message="tns:findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet/Fault/ServiceException"/>
     </operation>
     <operation name="findRettsstiftelserMedNyeAndeler">
       <input message="tns:findRettsstiftelserMedNyeAndeler" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse/RettsstiftelseService/findRettsstiftelserMedNyeAndelerRequest"/>
@@ -567,42 +586,6 @@
   </portType>
   <binding name="RettsstiftelseServicePortBinding" type="tns:RettsstiftelseService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="findTidligereHeftelserIRegisterenhetsrettsandeler">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
-    <operation name="findBorettslagsandelsendringerForAlleTidligereRegisterenheter">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
-    <operation name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
     <operation name="findRettsstiftelsestypeKoderForRettstypeKoder">
       <soap:operation soapAction=""/>
       <input>
@@ -831,6 +814,30 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
+    <operation name="findRettigheterForRegisterenheter">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="findRettsstiftelserMedAktivRettighetshaver">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
     <operation name="findRettsstiftelserForDokumentNummerOgAar">
       <soap:operation soapAction=""/>
       <input>
@@ -868,6 +875,42 @@
       </fault>
     </operation>
     <operation name="findFremleieavtalerForAnnenRettighet">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="findTidligereHeftelserIRegisterenhetsrettsandeler">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="findBorettslagsandelsendringerForAlleTidligereRegisterenheter">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

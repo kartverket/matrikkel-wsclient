@@ -134,6 +134,10 @@
 
   <xs:element name="findRettigheterForRegisterenhetResponse" type="tns:findRettigheterForRegisterenhetResponse"/>
 
+  <xs:element name="findRettigheterForRegisterenheter" type="tns:findRettigheterForRegisterenheter"/>
+
+  <xs:element name="findRettigheterForRegisterenheterResponse" type="tns:findRettigheterForRegisterenheterResponse"/>
+
   <xs:element name="findRettsendringer" type="tns:findRettsendringer"/>
 
   <xs:element name="findRettsendringerResponse" type="tns:findRettsendringerResponse"/>
@@ -149,6 +153,10 @@
   <xs:element name="findRettsstiftelserInneholdtAvDokumenter" type="tns:findRettsstiftelserInneholdtAvDokumenter"/>
 
   <xs:element name="findRettsstiftelserInneholdtAvDokumenterResponse" type="tns:findRettsstiftelserInneholdtAvDokumenterResponse"/>
+
+  <xs:element name="findRettsstiftelserMedAktivRettighetshaver" type="tns:findRettsstiftelserMedAktivRettighetshaver"/>
+
+  <xs:element name="findRettsstiftelserMedAktivRettighetshaverResponse" type="tns:findRettsstiftelserMedAktivRettighetshaverResponse"/>
 
   <xs:element name="findRettsstiftelserMedNyeAndeler" type="tns:findRettsstiftelserMedNyeAndeler"/>
 
@@ -462,6 +470,19 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="findRettigheterForRegisterenheter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettigheterForRegisterenheterResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilHeftelseIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="findTidligereFestekontrakter">
     <xs:sequence>
       <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
@@ -486,6 +507,19 @@
   <xs:complexType name="findHeftelserIRegisterenhetsretterResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettIdTilHeftelseIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstiftelserMedAktivRettighetshaver">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="personIds" type="ns5:PersonIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstiftelserMedAktivRettighetshaverResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:PersonIdTilRettsstiftelseIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -746,19 +780,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findBorettslagsandelsendringerAlleRoller">
     <xs:sequence>
       <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
@@ -782,6 +803,19 @@
   <xs:complexType name="findSeksjonssameieendringerForNyeResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns3:SeksjonssameieandelIdTilRegisterenhetsendringIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

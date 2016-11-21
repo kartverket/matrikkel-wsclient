@@ -14,25 +14,25 @@
 <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/exception" schemaLocation="GrunnboksutskriftInternServiceWS12.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling" schemaLocation="GrunnboksutskriftInternServiceWS19.xsd"/>
+<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling" schemaLocation="GrunnboksutskriftInternServiceWS18.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" schemaLocation="GrunnboksutskriftInternServiceWS20.xsd"/>
+<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" schemaLocation="GrunnboksutskriftInternServiceWS19.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring" schemaLocation="GrunnboksutskriftInternServiceWS21.xsd"/>
+<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring" schemaLocation="GrunnboksutskriftInternServiceWS20.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/registerenhetsendring" schemaLocation="GrunnboksutskriftInternServiceWS22.xsd"/>
+<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/registerenhetsendring" schemaLocation="GrunnboksutskriftInternServiceWS21.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/personkoblingsendring" schemaLocation="GrunnboksutskriftInternServiceWS23.xsd"/>
+<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/personkoblingsendring" schemaLocation="GrunnboksutskriftInternServiceWS22.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/overdragelse" schemaLocation="GrunnboksutskriftInternServiceWS24.xsd"/>
+<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/overdragelse" schemaLocation="GrunnboksutskriftInternServiceWS23.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse" schemaLocation="GrunnboksutskriftInternServiceWS25.xsd"/>
+<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse" schemaLocation="GrunnboksutskriftInternServiceWS24.xsd"/>
 </xsd:schema>
 <xsd:schema>
 <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/anmerkning" schemaLocation="GrunnboksutskriftInternServiceWS2.xsd"/>
@@ -74,53 +74,44 @@
 <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" schemaLocation="GrunnboksutskriftInternServiceWS15.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" schemaLocation="GrunnboksutskriftInternServiceWS16.xsd"/>
+<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" schemaLocation="GrunnboksutskriftInternServiceWS16.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" schemaLocation="GrunnboksutskriftInternServiceWS17.xsd"/>
-</xsd:schema>
-<xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="GrunnboksutskriftInternServiceWS18.xsd"/>
+<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="GrunnboksutskriftInternServiceWS17.xsd"/>
 </xsd:schema>
 </types>
-<message name="ubekreftetGrunnboksutskriftHtmlForUtkast">
-<part name="parameters" element="tns:ubekreftetGrunnboksutskriftHtmlForUtkast"/>
+<message name="grunnboksutskriftInfo">
+<part name="parameters" element="tns:grunnboksutskriftInfo"/>
 </message>
-<message name="ubekreftetGrunnboksutskriftHtmlForUtkastResponse">
-<part name="parameters" element="tns:ubekreftetGrunnboksutskriftHtmlForUtkastResponse"/>
+<message name="grunnboksutskriftInfoResponse">
+<part name="parameters" element="tns:grunnboksutskriftInfoResponse"/>
 </message>
 <message name="ServiceException">
 <part xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/exception" name="fault" element="ns3:ServiceException"/>
 </message>
-<message name="ubekreftetHistoriskGrunnboksutskriftHtml">
-<part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskriftHtml"/>
+<message name="delAvGrunnboksutskriftHeftelser">
+<part name="parameters" element="tns:delAvGrunnboksutskriftHeftelser"/>
 </message>
-<message name="ubekreftetHistoriskGrunnboksutskriftHtmlResponse">
-<part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskriftHtmlResponse"/>
+<message name="delAvGrunnboksutskriftHeftelserResponse">
+<part name="parameters" element="tns:delAvGrunnboksutskriftHeftelserResponse"/>
 </message>
-<message name="delAvGrunnboksutskriftOverdragelser">
-<part name="parameters" element="tns:delAvGrunnboksutskriftOverdragelser"/>
+<message name="ubekreftetGrunnboksutskriftHtml">
+<part name="parameters" element="tns:ubekreftetGrunnboksutskriftHtml"/>
 </message>
-<message name="delAvGrunnboksutskriftOverdragelserResponse">
-<part name="parameters" element="tns:delAvGrunnboksutskriftOverdragelserResponse"/>
+<message name="ubekreftetGrunnboksutskriftHtmlResponse">
+<part name="parameters" element="tns:ubekreftetGrunnboksutskriftHtmlResponse"/>
 </message>
-<message name="bekreftetHistoriskGrunnboksutskriftPdf">
-<part name="parameters" element="tns:bekreftetHistoriskGrunnboksutskriftPdf"/>
+<message name="ubekreftetGrunnboksutskrift">
+<part name="parameters" element="tns:ubekreftetGrunnboksutskrift"/>
 </message>
-<message name="bekreftetHistoriskGrunnboksutskriftPdfResponse">
-<part name="parameters" element="tns:bekreftetHistoriskGrunnboksutskriftPdfResponse"/>
+<message name="ubekreftetGrunnboksutskriftResponse">
+<part name="parameters" element="tns:ubekreftetGrunnboksutskriftResponse"/>
 </message>
-<message name="ubekreftetGrunnboksutskriftForUtkast">
-<part name="parameters" element="tns:ubekreftetGrunnboksutskriftForUtkast"/>
+<message name="bekreftetGrunnboksutskriftPdf">
+<part name="parameters" element="tns:bekreftetGrunnboksutskriftPdf"/>
 </message>
-<message name="ubekreftetGrunnboksutskriftForUtkastResponse">
-<part name="parameters" element="tns:ubekreftetGrunnboksutskriftForUtkastResponse"/>
-</message>
-<message name="ubekreftetHistoriskGrunnboksutskriftForUtkast">
-<part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskriftForUtkast"/>
-</message>
-<message name="ubekreftetHistoriskGrunnboksutskriftForUtkastResponse">
-<part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskriftForUtkastResponse"/>
+<message name="bekreftetGrunnboksutskriftPdfResponse">
+<part name="parameters" element="tns:bekreftetGrunnboksutskriftPdfResponse"/>
 </message>
 <message name="ubekreftetHistoriskGrunnboksutskrift">
 <part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskrift"/>
@@ -128,11 +119,11 @@
 <message name="ubekreftetHistoriskGrunnboksutskriftResponse">
 <part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskriftResponse"/>
 </message>
-<message name="delAvGrunnboksutskriftRegisterenhetsendringer">
-<part name="parameters" element="tns:delAvGrunnboksutskriftRegisterenhetsendringer"/>
+<message name="delAvGrunnboksutskriftOverdragelser">
+<part name="parameters" element="tns:delAvGrunnboksutskriftOverdragelser"/>
 </message>
-<message name="delAvGrunnboksutskriftRegisterenhetsendringerResponse">
-<part name="parameters" element="tns:delAvGrunnboksutskriftRegisterenhetsendringerResponse"/>
+<message name="delAvGrunnboksutskriftOverdragelserResponse">
+<part name="parameters" element="tns:delAvGrunnboksutskriftOverdragelserResponse"/>
 </message>
 <message name="delAvGrunnboksutskriftTidligereOverdragelser">
 <part name="parameters" element="tns:delAvGrunnboksutskriftTidligereOverdragelser"/>
@@ -146,82 +137,59 @@
 <message name="delAvGrunnboksutskriftTidligereHeftelserResponse">
 <part name="parameters" element="tns:delAvGrunnboksutskriftTidligereHeftelserResponse"/>
 </message>
-<message name="ubekreftetHistoriskGrunnboksutskriftHtmlForUtkast">
-<part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskriftHtmlForUtkast"/>
+<message name="ubekreftetHistoriskGrunnboksutskriftHtml">
+<part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskriftHtml"/>
 </message>
-<message name="ubekreftetHistoriskGrunnboksutskriftHtmlForUtkastResponse">
-<part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskriftHtmlForUtkastResponse"/>
+<message name="ubekreftetHistoriskGrunnboksutskriftHtmlResponse">
+<part name="parameters" element="tns:ubekreftetHistoriskGrunnboksutskriftHtmlResponse"/>
 </message>
-<message name="ubekreftetGrunnboksutskriftHtml">
-<part name="parameters" element="tns:ubekreftetGrunnboksutskriftHtml"/>
+<message name="delAvGrunnboksutskriftRegisterenhetsendringer">
+<part name="parameters" element="tns:delAvGrunnboksutskriftRegisterenhetsendringer"/>
 </message>
-<message name="ubekreftetGrunnboksutskriftHtmlResponse">
-<part name="parameters" element="tns:ubekreftetGrunnboksutskriftHtmlResponse"/>
+<message name="delAvGrunnboksutskriftRegisterenhetsendringerResponse">
+<part name="parameters" element="tns:delAvGrunnboksutskriftRegisterenhetsendringerResponse"/>
 </message>
-<message name="bekreftetGrunnboksutskriftPdf">
-<part name="parameters" element="tns:bekreftetGrunnboksutskriftPdf"/>
+<message name="bekreftetHistoriskGrunnboksutskriftPdf">
+<part name="parameters" element="tns:bekreftetHistoriskGrunnboksutskriftPdf"/>
 </message>
-<message name="bekreftetGrunnboksutskriftPdfResponse">
-<part name="parameters" element="tns:bekreftetGrunnboksutskriftPdfResponse"/>
-</message>
-<message name="grunnboksutskriftInfo">
-<part name="parameters" element="tns:grunnboksutskriftInfo"/>
-</message>
-<message name="grunnboksutskriftInfoResponse">
-<part name="parameters" element="tns:grunnboksutskriftInfoResponse"/>
-</message>
-<message name="delAvGrunnboksutskriftHeftelser">
-<part name="parameters" element="tns:delAvGrunnboksutskriftHeftelser"/>
-</message>
-<message name="delAvGrunnboksutskriftHeftelserResponse">
-<part name="parameters" element="tns:delAvGrunnboksutskriftHeftelserResponse"/>
-</message>
-<message name="ubekreftetGrunnboksutskrift">
-<part name="parameters" element="tns:ubekreftetGrunnboksutskrift"/>
-</message>
-<message name="ubekreftetGrunnboksutskriftResponse">
-<part name="parameters" element="tns:ubekreftetGrunnboksutskriftResponse"/>
+<message name="bekreftetHistoriskGrunnboksutskriftPdfResponse">
+<part name="parameters" element="tns:bekreftetHistoriskGrunnboksutskriftPdfResponse"/>
 </message>
 <portType name="GrunnboksutskriftInternService">
-<operation name="ubekreftetGrunnboksutskriftHtmlForUtkast">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftHtmlForUtkastRequest" message="tns:ubekreftetGrunnboksutskriftHtmlForUtkast"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftHtmlForUtkastResponse" message="tns:ubekreftetGrunnboksutskriftHtmlForUtkastResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftHtmlForUtkast/Fault/ServiceException"/>
+<operation name="grunnboksutskriftInfo">
+<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/grunnboksutskriftInfoRequest" message="tns:grunnboksutskriftInfo"/>
+<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/grunnboksutskriftInfoResponse" message="tns:grunnboksutskriftInfoResponse"/>
+<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/grunnboksutskriftInfo/Fault/ServiceException"/>
 </operation>
-<operation name="ubekreftetHistoriskGrunnboksutskriftHtml">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftHtmlRequest" message="tns:ubekreftetHistoriskGrunnboksutskriftHtml"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftHtmlResponse" message="tns:ubekreftetHistoriskGrunnboksutskriftHtmlResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftHtml/Fault/ServiceException"/>
+<operation name="delAvGrunnboksutskriftHeftelser">
+<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftHeftelserRequest" message="tns:delAvGrunnboksutskriftHeftelser"/>
+<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftHeftelserResponse" message="tns:delAvGrunnboksutskriftHeftelserResponse"/>
+<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftHeftelser/Fault/ServiceException"/>
 </operation>
-<operation name="delAvGrunnboksutskriftOverdragelser">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftOverdragelserRequest" message="tns:delAvGrunnboksutskriftOverdragelser"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftOverdragelserResponse" message="tns:delAvGrunnboksutskriftOverdragelserResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftOverdragelser/Fault/ServiceException"/>
+<operation name="ubekreftetGrunnboksutskriftHtml">
+<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftHtmlRequest" message="tns:ubekreftetGrunnboksutskriftHtml"/>
+<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftHtmlResponse" message="tns:ubekreftetGrunnboksutskriftHtmlResponse"/>
+<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftHtml/Fault/ServiceException"/>
 </operation>
-<operation name="bekreftetHistoriskGrunnboksutskriftPdf">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetHistoriskGrunnboksutskriftPdfRequest" message="tns:bekreftetHistoriskGrunnboksutskriftPdf"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetHistoriskGrunnboksutskriftPdfResponse" message="tns:bekreftetHistoriskGrunnboksutskriftPdfResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetHistoriskGrunnboksutskriftPdf/Fault/ServiceException"/>
+<operation name="ubekreftetGrunnboksutskrift">
+<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftRequest" message="tns:ubekreftetGrunnboksutskrift"/>
+<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftResponse" message="tns:ubekreftetGrunnboksutskriftResponse"/>
+<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskrift/Fault/ServiceException"/>
 </operation>
-<operation name="ubekreftetGrunnboksutskriftForUtkast">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftForUtkastRequest" message="tns:ubekreftetGrunnboksutskriftForUtkast"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftForUtkastResponse" message="tns:ubekreftetGrunnboksutskriftForUtkastResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftForUtkast/Fault/ServiceException"/>
-</operation>
-<operation name="ubekreftetHistoriskGrunnboksutskriftForUtkast">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftForUtkastRequest" message="tns:ubekreftetHistoriskGrunnboksutskriftForUtkast"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftForUtkastResponse" message="tns:ubekreftetHistoriskGrunnboksutskriftForUtkastResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftForUtkast/Fault/ServiceException"/>
+<operation name="bekreftetGrunnboksutskriftPdf">
+<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetGrunnboksutskriftPdfRequest" message="tns:bekreftetGrunnboksutskriftPdf"/>
+<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetGrunnboksutskriftPdfResponse" message="tns:bekreftetGrunnboksutskriftPdfResponse"/>
+<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetGrunnboksutskriftPdf/Fault/ServiceException"/>
 </operation>
 <operation name="ubekreftetHistoriskGrunnboksutskrift">
 <input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftRequest" message="tns:ubekreftetHistoriskGrunnboksutskrift"/>
 <output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftResponse" message="tns:ubekreftetHistoriskGrunnboksutskriftResponse"/>
 <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskrift/Fault/ServiceException"/>
 </operation>
-<operation name="delAvGrunnboksutskriftRegisterenhetsendringer">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftRegisterenhetsendringerRequest" message="tns:delAvGrunnboksutskriftRegisterenhetsendringer"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftRegisterenhetsendringerResponse" message="tns:delAvGrunnboksutskriftRegisterenhetsendringerResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftRegisterenhetsendringer/Fault/ServiceException"/>
+<operation name="delAvGrunnboksutskriftOverdragelser">
+<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftOverdragelserRequest" message="tns:delAvGrunnboksutskriftOverdragelser"/>
+<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftOverdragelserResponse" message="tns:delAvGrunnboksutskriftOverdragelserResponse"/>
+<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftOverdragelser/Fault/ServiceException"/>
 </operation>
 <operation name="delAvGrunnboksutskriftTidligereOverdragelser">
 <input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftTidligereOverdragelserRequest" message="tns:delAvGrunnboksutskriftTidligereOverdragelser"/>
@@ -233,42 +201,27 @@
 <output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftTidligereHeftelserResponse" message="tns:delAvGrunnboksutskriftTidligereHeftelserResponse"/>
 <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftTidligereHeftelser/Fault/ServiceException"/>
 </operation>
-<operation name="ubekreftetHistoriskGrunnboksutskriftHtmlForUtkast">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftHtmlForUtkastRequest" message="tns:ubekreftetHistoriskGrunnboksutskriftHtmlForUtkast"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftHtmlForUtkastResponse" message="tns:ubekreftetHistoriskGrunnboksutskriftHtmlForUtkastResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftHtmlForUtkast/Fault/ServiceException"/>
+<operation name="ubekreftetHistoriskGrunnboksutskriftHtml">
+<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftHtmlRequest" message="tns:ubekreftetHistoriskGrunnboksutskriftHtml"/>
+<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftHtmlResponse" message="tns:ubekreftetHistoriskGrunnboksutskriftHtmlResponse"/>
+<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetHistoriskGrunnboksutskriftHtml/Fault/ServiceException"/>
 </operation>
-<operation name="ubekreftetGrunnboksutskriftHtml">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftHtmlRequest" message="tns:ubekreftetGrunnboksutskriftHtml"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftHtmlResponse" message="tns:ubekreftetGrunnboksutskriftHtmlResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftHtml/Fault/ServiceException"/>
+<operation name="delAvGrunnboksutskriftRegisterenhetsendringer">
+<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftRegisterenhetsendringerRequest" message="tns:delAvGrunnboksutskriftRegisterenhetsendringer"/>
+<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftRegisterenhetsendringerResponse" message="tns:delAvGrunnboksutskriftRegisterenhetsendringerResponse"/>
+<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftRegisterenhetsendringer/Fault/ServiceException"/>
 </operation>
-<operation name="bekreftetGrunnboksutskriftPdf">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetGrunnboksutskriftPdfRequest" message="tns:bekreftetGrunnboksutskriftPdf"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetGrunnboksutskriftPdfResponse" message="tns:bekreftetGrunnboksutskriftPdfResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetGrunnboksutskriftPdf/Fault/ServiceException"/>
-</operation>
-<operation name="grunnboksutskriftInfo">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/grunnboksutskriftInfoRequest" message="tns:grunnboksutskriftInfo"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/grunnboksutskriftInfoResponse" message="tns:grunnboksutskriftInfoResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/grunnboksutskriftInfo/Fault/ServiceException"/>
-</operation>
-<operation name="delAvGrunnboksutskriftHeftelser">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftHeftelserRequest" message="tns:delAvGrunnboksutskriftHeftelser"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftHeftelserResponse" message="tns:delAvGrunnboksutskriftHeftelserResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/delAvGrunnboksutskriftHeftelser/Fault/ServiceException"/>
-</operation>
-<operation name="ubekreftetGrunnboksutskrift">
-<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftRequest" message="tns:ubekreftetGrunnboksutskrift"/>
-<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskriftResponse" message="tns:ubekreftetGrunnboksutskriftResponse"/>
-<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/ubekreftetGrunnboksutskrift/Fault/ServiceException"/>
+<operation name="bekreftetHistoriskGrunnboksutskriftPdf">
+<input wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetHistoriskGrunnboksutskriftPdfRequest" message="tns:bekreftetHistoriskGrunnboksutskriftPdf"/>
+<output wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetHistoriskGrunnboksutskriftPdfResponse" message="tns:bekreftetHistoriskGrunnboksutskriftPdfResponse"/>
+<fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift/GrunnboksutskriftInternService/bekreftetHistoriskGrunnboksutskriftPdf/Fault/ServiceException"/>
 </operation>
 </portType>
 <binding name="GrunnboksutskriftInternServicePortBinding" type="tns:GrunnboksutskriftInternService">
 <wsp:PolicyReference URI="#GrunnboksutskriftInternServicePortBinding_MTOM_Policy-GrunnboksutskriftInternServicePortBinding_MTOM_Policy"/>
 <wsp:PolicyReference URI="#Mtom.xml"/>
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="ubekreftetGrunnboksutskriftHtmlForUtkast">
+<operation name="grunnboksutskriftInfo">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -280,7 +233,7 @@
 <soap:fault name="ServiceException" use="literal"/>
 </fault>
 </operation>
-<operation name="ubekreftetHistoriskGrunnboksutskriftHtml">
+<operation name="delAvGrunnboksutskriftHeftelser">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -292,7 +245,7 @@
 <soap:fault name="ServiceException" use="literal"/>
 </fault>
 </operation>
-<operation name="delAvGrunnboksutskriftOverdragelser">
+<operation name="ubekreftetGrunnboksutskriftHtml">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -304,7 +257,7 @@
 <soap:fault name="ServiceException" use="literal"/>
 </fault>
 </operation>
-<operation name="bekreftetHistoriskGrunnboksutskriftPdf">
+<operation name="ubekreftetGrunnboksutskrift">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -316,19 +269,7 @@
 <soap:fault name="ServiceException" use="literal"/>
 </fault>
 </operation>
-<operation name="ubekreftetGrunnboksutskriftForUtkast">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-<fault name="ServiceException">
-<soap:fault name="ServiceException" use="literal"/>
-</fault>
-</operation>
-<operation name="ubekreftetHistoriskGrunnboksutskriftForUtkast">
+<operation name="bekreftetGrunnboksutskriftPdf">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -352,7 +293,7 @@
 <soap:fault name="ServiceException" use="literal"/>
 </fault>
 </operation>
-<operation name="delAvGrunnboksutskriftRegisterenhetsendringer">
+<operation name="delAvGrunnboksutskriftOverdragelser">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -388,7 +329,7 @@
 <soap:fault name="ServiceException" use="literal"/>
 </fault>
 </operation>
-<operation name="ubekreftetHistoriskGrunnboksutskriftHtmlForUtkast">
+<operation name="ubekreftetHistoriskGrunnboksutskriftHtml">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -400,7 +341,7 @@
 <soap:fault name="ServiceException" use="literal"/>
 </fault>
 </operation>
-<operation name="ubekreftetGrunnboksutskriftHtml">
+<operation name="delAvGrunnboksutskriftRegisterenhetsendringer">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -412,43 +353,7 @@
 <soap:fault name="ServiceException" use="literal"/>
 </fault>
 </operation>
-<operation name="bekreftetGrunnboksutskriftPdf">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-<fault name="ServiceException">
-<soap:fault name="ServiceException" use="literal"/>
-</fault>
-</operation>
-<operation name="grunnboksutskriftInfo">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-<fault name="ServiceException">
-<soap:fault name="ServiceException" use="literal"/>
-</fault>
-</operation>
-<operation name="delAvGrunnboksutskriftHeftelser">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-<fault name="ServiceException">
-<soap:fault name="ServiceException" use="literal"/>
-</fault>
-</operation>
-<operation name="ubekreftetGrunnboksutskrift">
+<operation name="bekreftetHistoriskGrunnboksutskriftPdf">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

@@ -55,9 +55,6 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register" schemaLocation="register.xsd"/>
     </xsd:schema>
     <xsd:schema>
-      <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/melding" schemaLocation="melding.xsd"/>
-    </xsd:schema>
-    <xsd:schema>
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" schemaLocation="kodeliste.xsd"/>
     </xsd:schema>
     <xsd:schema>

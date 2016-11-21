@@ -90,6 +90,7 @@
             <xs:enumeration value="UNDER_BEHANDLING"/>
             <xs:enumeration value="UTKAST"/>
             <xs:enumeration value="KLAR_FOR_MOTTAK"/>
+            <xs:enumeration value="KLAR_FOR_AVVISNING"/>
             <xs:enumeration value="MOTTATT"/>
             <xs:enumeration value="AVSLUTTET"/>
             <xs:enumeration value="UKJENT_TEKNISK_FEIL"/>

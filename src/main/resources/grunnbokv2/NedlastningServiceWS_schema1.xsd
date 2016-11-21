@@ -4,6 +4,14 @@
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" schemaLocation="endringslogg.xsd"/>
 
+  <xs:element name="calcObjektkontrollForList" type="tns:calcObjektkontrollForList"/>
+
+  <xs:element name="calcObjektkontrollForListResponse" type="tns:calcObjektkontrollForListResponse"/>
+
+  <xs:element name="calcObjektkontrollForRange" type="tns:calcObjektkontrollForRange"/>
+
+  <xs:element name="calcObjektkontrollForRangeResponse" type="tns:calcObjektkontrollForRangeResponse"/>
+
   <xs:element name="findIdsEtterId" type="tns:findIdsEtterId"/>
 
   <xs:element name="findIdsEtterIdResponse" type="tns:findIdsEtterIdResponse"/>
@@ -11,6 +19,20 @@
   <xs:element name="findObjekterEtterId" type="tns:findObjekterEtterId"/>
 
   <xs:element name="findObjekterEtterIdResponse" type="tns:findObjekterEtterIdResponse"/>
+
+  <xs:complexType name="calcObjektkontrollForList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ids" type="ns1:GrunnbokBubbleObjectIdList"/>
+      <xs:element minOccurs="0" name="domainklasse" type="ns2:Domainklasse"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calcObjektkontrollForListResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns2:Kontroll"/>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="findIdsEtterId">
     <xs:sequence>
@@ -25,6 +47,22 @@
   <xs:complexType name="findIdsEtterIdResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns1:GrunnbokBubbleObjectIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calcObjektkontrollForRange">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fraId" type="ns1:GrunnbokBubbleObjectId"/>
+      <xs:element minOccurs="0" name="tilId" type="ns1:GrunnbokBubbleObjectId"/>
+      <xs:element minOccurs="0" name="domainklasse" type="ns2:Domainklasse"/>
+      <xs:element minOccurs="0" name="filter" type="xs:string"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calcObjektkontrollForRangeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns2:Kontroll"/>
     </xs:sequence>
   </xs:complexType>
 

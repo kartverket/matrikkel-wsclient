@@ -5,7 +5,6 @@
         xmlns:register_registreringns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registrering"
         xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
         xmlns:grunnboksidenterns="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
-        xmlns:meldingns="http://kartverket.no/grunnbok/wsapi/v2/domain/melding"
         xmlns:koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         elementFormDefault="qualified">
@@ -15,7 +14,6 @@
                namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"/>
     <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register"/>
     <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
-    <xs:import schemaLocation="melding.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/melding"/>
 
     <!-- ========================================================= -->
     <!-- register/registrering:                                    -->
@@ -41,7 +39,8 @@
         <xs:complexContent>
             <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
                 <xs:sequence>
-                    <xs:element name="meldingId" type="meldingns:MeldingId"/>
+                    <xs:element name="registreringstidspunkt" type="basistyperns:Timestamp"/>
+                    <xs:element name="rekkefoelgenummer" type="xs:int"/>
                     <xs:element name="utfall" type="register_registreringns:ForeslaattBehandlingsutfall"/>
                     <xs:element name="behandlingsstatus" type="register_registreringns:Behandlingsstatus"/>
                     <xs:element name="avhengerAvIds" type="register_registreringns:ForeloepigRegistreringIdList"/>
@@ -283,6 +282,7 @@
             <xs:enumeration value="VENTER_ENDELIG_NEKT"/>
             <xs:enumeration value="KLAR_FOR_UTFALL_MEN_AVHENGER_AV_MELDING"/>
             <xs:enumeration value="KLAR_FOR_UTFALL"/>
+            <xs:enumeration value="ENDELIG_REGISTRERT"/>
         </xs:restriction>
     </xs:simpleType>
 

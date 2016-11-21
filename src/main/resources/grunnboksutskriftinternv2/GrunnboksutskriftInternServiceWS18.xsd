@@ -1,37 +1,100 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xs:schema xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xs:schema xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling">
 
-<xs:complexType name="GrunnbokObjectWithHistoryId">
+<xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="GrunnboksutskriftInternServiceWS17.xsd"/>
+
+<xs:complexType name="FullmaktsavtaleId">
 <xs:complexContent>
-<xs:extension base="tns:GrunnbokBubbleObjectId">
+<xs:extension base="ns1:GrunnbokBubbleObjectId">
 <xs:sequence/>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="GrunnbokBubbleObjectId">
-<xs:sequence>
-<xs:element name="value" type="xs:string"/>
-</xs:sequence>
+<xs:complexType name="GrunnboksutskriftId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="GrunnbokContext">
-<xs:sequence>
-<xs:element name="systemVersion" type="xs:string"/>
-<xs:element name="clientIdentification" type="xs:string"/>
-<xs:element name="locale" type="xs:string"/>
-<xs:element name="snapshotVersion" type="tns:Timestamp"/>
-</xs:sequence>
+<xs:complexType name="SaksloggId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="Timestamp">
-<xs:sequence>
-<xs:element name="timestamp" type="xs:dateTime"/>
-</xs:sequence>
+<xs:complexType name="SvarbrevId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="GrunnbokBubbleObjectIdList">
-<xs:sequence>
-<xs:element name="item" type="tns:GrunnbokBubbleObjectId" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-</xs:sequence>
+<xs:complexType name="SatsId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RettsstiftelseSaksbehandlingId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RettsstiftelsestypeSaksbehandlingId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SaksloggEntryId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="FakturagrunnlagId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="DokumentSaksbehandlingId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SakId">
+<xs:complexContent>
+<xs:extension base="ns1:GrunnbokObjectWithHistoryId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="RettesakId">
+<xs:complexContent>
+<xs:extension base="tns:SakId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
 </xs:complexType>
 </xs:schema>
