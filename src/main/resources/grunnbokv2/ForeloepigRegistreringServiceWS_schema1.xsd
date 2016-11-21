@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/foreloepigregistrering" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registrering" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/foreloepigregistrering" version="1.0">
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registrering" schemaLocation="register_registrering.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" schemaLocation="register_registerenhet.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" schemaLocation="grunnboksidenter.xsd"/>
+
+  <xs:element name="findAvhengigeForeloepigRegistreringer" type="tns:findAvhengigeForeloepigRegistreringer"/>
+
+  <xs:element name="findAvhengigeForeloepigRegistreringerResponse" type="tns:findAvhengigeForeloepigRegistreringerResponse"/>
+
+  <xs:element name="findIdentRegistreringerForForeloepigRegistreringer" type="tns:findIdentRegistreringerForForeloepigRegistreringer"/>
+
+  <xs:element name="findIdentRegistreringerForForeloepigRegistreringerResponse" type="tns:findIdentRegistreringerForForeloepigRegistreringerResponse"/>
+
+  <xs:element name="findIdentRegistreringerForGrunnbokObjects" type="tns:findIdentRegistreringerForGrunnbokObjects"/>
+
+  <xs:element name="findIdentRegistreringerForGrunnbokObjectsResponse" type="tns:findIdentRegistreringerForGrunnbokObjectsResponse"/>
+
+  <xs:element name="findIdentRegistreringerForIdents" type="tns:findIdentRegistreringerForIdents"/>
+
+  <xs:element name="findIdentRegistreringerForIdentsResponse" type="tns:findIdentRegistreringerForIdentsResponse"/>
+
+  <xs:element name="findRettsstifteRegistreringerSomLeserFra" type="tns:findRettsstifteRegistreringerSomLeserFra"/>
+
+  <xs:element name="findRettsstifteRegistreringerSomLeserFraResponse" type="tns:findRettsstifteRegistreringerSomLeserFraResponse"/>
+
+  <xs:element name="findRettsstifteRegistreringerSomSkriverTil" type="tns:findRettsstifteRegistreringerSomSkriverTil"/>
+
+  <xs:element name="findRettsstifteRegistreringerSomSkriverTilResponse" type="tns:findRettsstifteRegistreringerSomSkriverTilResponse"/>
+
+  <xs:element name="findRettsstiftelseRegistreringer" type="tns:findRettsstiftelseRegistreringer"/>
+
+  <xs:element name="findRettsstiftelseRegistreringerResponse" type="tns:findRettsstiftelseRegistreringerResponse"/>
+
+  <xs:element name="finnesRegistreringPaaRegisterenhet" type="tns:finnesRegistreringPaaRegisterenhet"/>
+
+  <xs:element name="finnesRegistreringPaaRegisterenhetResponse" type="tns:finnesRegistreringPaaRegisterenhetResponse"/>
+
+  <xs:complexType name="findIdentRegistreringerForGrunnbokObjects">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokObjectIds" type="ns1:GrunnbokBubbleObjectIdList"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIdentRegistreringerForGrunnbokObjectsResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="ns2:GrunnbokIdToIdentRegistreringIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstiftelseRegistreringer">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="ids" type="ns2:ForeloepigRegistreringIdList"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstiftelseRegistreringerResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="ns2:ForeloepigRegistreringIdToRettsstiftelseRegistreringIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstifteRegistreringerSomLeserFra">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="ids" type="ns1:GrunnbokBubbleObjectIdList"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstifteRegistreringerSomLeserFraResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="ns2:GrunnbokIdToRettsstiftelseRegistreringIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="finnesRegistreringPaaRegisterenhet">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="registerenhetIds" type="ns3:RegisterenhetIdList"/>
+      <xs:element form="qualified" name="intervallForSjekk" type="xs:int"/>
+      <xs:element form="qualified" minOccurs="0" name="registreringstidspunkt" type="ns1:Timestamp"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="finnesRegistreringPaaRegisterenhetResponse">
+    <xs:sequence>
+      <xs:element form="qualified" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAvhengigeForeloepigRegistreringer">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="ids" type="ns2:ForeloepigRegistreringIdList"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAvhengigeForeloepigRegistreringerResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="ns2:ForeloepigRegistreringIdToForeloepigRegistreringIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIdentRegistreringerForIdents">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="idents" type="ns2:IdentList"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIdentRegistreringerForIdentsResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="ns2:IdentToIdentRegistreringIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIdentRegistreringerForForeloepigRegistreringer">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="ids" type="ns2:ForeloepigRegistreringIdList"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findIdentRegistreringerForForeloepigRegistreringerResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="ns2:ForeloepigRegistreringIdToIdentRegistreringIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstifteRegistreringerSomSkriverTil">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="ids" type="ns1:GrunnbokBubbleObjectIdList"/>
+      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstifteRegistreringerSomSkriverTilResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="return" type="ns2:GrunnbokIdToRettsstiftelseRegistreringIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
