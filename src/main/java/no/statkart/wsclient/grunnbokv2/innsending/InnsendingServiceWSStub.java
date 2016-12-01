@@ -10,6 +10,11 @@ import org.joda.time.LocalDateTime;
 
 import java.util.*;
 
+import static java.util.Collections.singletonList;
+import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.AvvisningsinformasjonBuilder.anAvvisningsinformasjon;
+import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.BegrunnelseBuilder.aBegrunnelse;
+import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.KontrollresultatBuilder.aKontrollresultat;
+
 /**
  * Stub implementation.
  */
@@ -55,6 +60,21 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
          throw new RuntimeException("The stub has no knowledge of any entry linked to innsendingId: "+innsendingId);
       }
       forsendelsesstatus.setBehandlingsutfall(Behandlingsutfall.NEKTET.name());
+      forsendelsesstatus.setBehandlingsinformasjon(anAvvisningsinformasjon()
+            .withKontrollresultater(singletonList(aKontrollresultat()
+                  .withUtfall("NEKTET")
+                  .withNavn("TEST")
+                  .withKodeverdi("9999")
+                  .withDokumentindeks(1)
+                  .withRettsstiftelsesindeks(1)
+                  .withBegrunnelser(singletonList(aBegrunnelse()
+                        .withKodeverdi("9999")
+                        .withTekst("TestAvNektet")
+                        .withUtfall("NEKTET")
+                        .build()
+                  )).build()))
+            .build()
+      );
    }
 
    public static void forsendelseTinglyst(String innsendingId) {
