@@ -10,6 +10,7 @@ import no.kartverket.grunnbok.wsapi.v1.service.servicetyper.MatrikkelenhetIdentT
 import no.statkart.skif.exception.ImplementationException;
 import no.statkart.skif.exception.OperationalException;
 import no.statkart.skif.util.NullHostnameVerifier;
+import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbok.ident.DefaultIdentWS;
 import no.statkart.wsclient.grunnbok.ident.IdentWS;
 
