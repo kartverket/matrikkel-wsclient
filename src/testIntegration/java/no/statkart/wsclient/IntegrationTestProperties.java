@@ -1,4 +1,4 @@
-package no.statkart.wsclient.grunnbok.internutskrift;
+package no.statkart.wsclient;
 
 import no.statkart.skif.config.Configuration;
 import no.statkart.skif.config.PropertiesConfiguration;
@@ -47,5 +47,15 @@ public class IntegrationTestProperties {
 
    public String getIdentServiceServiceUrl() {
       return String.format("%s/grunnbok/wsapi/v1/IdentServiceWS", getGrunnbokServerUrl());
+   }
+
+   public String getLandbruksregisterUser() {
+      return configuration.getString("landbruksregister_brukernavn");
+   }
+   public String getLandbruksregisterPassword() {
+      return configuration.getString("landbruksregister_passord");
+   }
+   public String getLandbruksregisterUrl() {
+      return configuration.getString("landbruksregister_url");
    }
 }

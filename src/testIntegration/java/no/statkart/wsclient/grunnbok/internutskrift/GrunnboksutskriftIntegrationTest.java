@@ -4,6 +4,7 @@ import no.kartverket.grunnbok.wsapi.v1.domain.register.registerenhet.Matrikkelen
 import no.kartverket.grunnbok.wsapi.v1.domain.register.registerenhet.MatrikkelenhetIdent;
 import no.kartverket.grunnbok.wsapi.v1.service.exception.ServiceException;
 import no.statkart.skif.util.NullHostnameVerifier;
+import no.statkart.wsclient.IntegrationTestProperties;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
