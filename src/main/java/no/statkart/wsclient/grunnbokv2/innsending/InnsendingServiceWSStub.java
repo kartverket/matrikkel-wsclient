@@ -9,6 +9,7 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstat
 import org.joda.time.LocalDateTime;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static java.util.Collections.singletonList;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.AvvisningsinformasjonBuilder.anAvvisningsinformasjon;
@@ -21,6 +22,9 @@ import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandli
 public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    private static int nextInnsendingId = 1;
+   private static final String UAVKLART = "1";
+   private static final String TINGLYST = "2";
+   private static final String NEKTET = "3";
    private static Map<String, Forsendelsesstatus> forsendelsesstatusByInnsendingIdMap = new ForsendelsesstatusProvider().createInitState();
 
    @Override
@@ -30,22 +34,15 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    @Override
    public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
-      String forsendelsesreferanse = forsendelse.getForsendelsesreferanse();
       new InnsendingServiceMapper().mapForsendelse(forsendelse);
       Forsendelsesstatus forsendelsesstatus = createForsendelsestatus(forsendelse);
-      forsendelsesstatusByInnsendingIdMap.put(forsendelsesstatus.getInnsendingId(), forsendelsesstatus);
+      forsendelsesstatus.setInnsendingId(createInnsendingIdFromForsendelse(forsendelse));
       return forsendelsesstatus;
    }
 
    @Override
    public Forsendelsesstatus hentStatus(String innsendingId) {
-      Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
-      if (forsendelsesstatus == null) {
-         throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for innsendingId: " + innsendingId);
-      }
-
-      forsendelsesstatus.getTinglysingsinformasjon().getDokumentinformasjon().iterator().next().setDokumentnummer(new Random().nextInt(Integer.MAX_VALUE));
-      return forsendelsesstatus;
+      return hentStatusFraStub(innsendingId);
    }
 
    private static String getNextInnseningsIdAndIncreaseSequence() {
@@ -54,35 +51,22 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
       return innsendingsId;
    }
 
-   public static void forsendelseNektetTinglyst(String innsendingId) {
-      Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
-      if(forsendelsesstatus==null) {
-         throw new RuntimeException("The stub has no knowledge of any entry linked to innsendingId: "+innsendingId);
-      }
-      forsendelsesstatus.setBehandlingsutfall(Behandlingsutfall.NEKTET.name());
-      forsendelsesstatus.setBehandlingsinformasjon(anAvvisningsinformasjon()
-            .withKontrollresultater(singletonList(aKontrollresultat()
-                  .withUtfall("NEKTET")
-                  .withNavn("TEST")
-                  .withKodeverdi("9999")
-                  .withDokumentindeks(1)
-                  .withRettsstiftelsesindeks(1)
-                  .withBegrunnelser(singletonList(aBegrunnelse()
-                        .withKodeverdi("9999")
-                        .withTekst("TestAvNektet")
-                        .withUtfall("NEKTET")
-                        .build()
-                  )).build()))
-            .build()
-      );
-   }
+   public static Forsendelsesstatus hentStatusFraStub(String innsendingId) {
+      if (Pattern.matches("\\d+,\\d+,\\d+,\\d+,\\d+", innsendingId)) {
+         Forsendelsesstatus forsendelsesstatus = hentForsendelsesstatusForInnsendingId(innsendingId);
+         Dokumentinformasjon dokumentinformasjon = forsendelsesstatus.getTinglysingsinformasjon().getDokumentinformasjon().iterator().next();
+         dokumentinformasjon.setDokumentnummer(new Random().nextInt(Integer.MAX_VALUE));
+         dokumentinformasjon.setDokumentaar(new Random().nextInt(Integer.MAX_VALUE));
+         dokumentinformasjon.setEmbetenummer(getNextInnseningsIdAndIncreaseSequence());
+         return forsendelsesstatus;
+      } else {
+         Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
+         if (forsendelsesstatus == null) {
+            throw new RuntimeException("The stub must be provided with a Forsendelsesstatus for innsendingId: " + innsendingId);
+         }
 
-   public static void forsendelseTinglyst(String innsendingId) {
-      Forsendelsesstatus forsendelsesstatus = forsendelsesstatusByInnsendingIdMap.get(innsendingId);
-      if(forsendelsesstatus==null) {
-         throw new RuntimeException("The stub has no knowledge of any entry linked to innsendingId: "+innsendingId);
+         return forsendelsesstatus;
       }
-      forsendelsesstatus.setBehandlingsutfall(Behandlingsutfall.TINGLYST.name());
    }
 
    private static class ForsendelsesstatusProvider {
@@ -99,10 +83,10 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                .withSeksjonsnummer(0);
          Matrikkelenhet enhetINittedal = enhetINittedalBuilder.build();
          SignertGrunnboksutskrift grunnboksutskrift = createGrunnboksutskrift(enhetINittedal);
-         Forsendelsesstatus forsendelsesstatus = createForsendelsestatus(Lists.newArrayList(grunnboksutskrift));
-         forsendelsesstatusByInnsendingIdMap.put("1", forsendelsesstatus);
+         Forsendelsesstatus forsendelsesstatusUavklart = createForsendelsestatus(Lists.newArrayList(grunnboksutskrift));
+         forsendelsesstatusByInnsendingIdMap.put(UAVKLART, forsendelsesstatusUavklart);
 
-         Forsendelsesstatus forsendelsesstatus2 = createForsendelsestatusTinglyst(Lists.newArrayList(createGrunnboksutskrift(
+         Forsendelsesstatus forsendelsestatusTinglyst = createForsendelsestatusTinglyst(Lists.newArrayList(createGrunnboksutskrift(
                MatrikkelenhetBuilder.aMatrikkelenhet()
                      .withKommunenummer("100001201")
                      .withKommunenavn("Nittedal")
@@ -121,8 +105,26 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                      .withSeksjonsnummer(0)
                      .build()
          )), "2");
-         forsendelsesstatusByInnsendingIdMap.put("2", forsendelsesstatus2);
+         forsendelsesstatusByInnsendingIdMap.put(TINGLYST, forsendelsestatusTinglyst);
 
+         Forsendelsesstatus forsendelsesstatusNektet = createForsendelsestatus(Lists.newArrayList(grunnboksutskrift));
+         forsendelsesstatusNektet.setBehandlingsutfall(Behandlingsutfall.NEKTET.name());
+         forsendelsesstatusNektet.setBehandlingsinformasjon(anAvvisningsinformasjon()
+               .withKontrollresultater(singletonList(aKontrollresultat()
+                     .withUtfall("NEKTET")
+                     .withNavn("TEST")
+                     .withKodeverdi("9999")
+                     .withDokumentindeks(1)
+                     .withRettsstiftelsesindeks(1)
+                     .withBegrunnelser(singletonList(aBegrunnelse()
+                           .withKodeverdi("9999")
+                           .withTekst("TestAvNektet")
+                           .withUtfall("NEKTET")
+                           .build()
+                     )).build()))
+               .build()
+         );
+         forsendelsesstatusByInnsendingIdMap.put(NEKTET, forsendelsesstatusNektet);
 
          return forsendelsesstatusByInnsendingIdMap;
       }
@@ -194,11 +196,11 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    }
 
    private static List<SignertGrunnboksutskrift> createGrunnboksutskrifter(Forsendelse forsendelse) {
-      List<SignertGrunnboksutskrift> grunnboksutskrifter = new ArrayList<SignertGrunnboksutskrift>();
-      Collection<Matrikkelenhet> matrikkelenheterIForsendelse = new ArrayList<Matrikkelenhet>();
+      List<SignertGrunnboksutskrift> grunnboksutskrifter = new ArrayList<>();
+      Collection<Matrikkelenhet> matrikkelenheterIForsendelse = new ArrayList<>();
       for (Dokument dokument : forsendelse.getUsignertMelding().getDokumenter()) {
          for (Rettsstiftelse rettsstiftelse : dokument.getRettsstiftelser()) {
-            if(rettsstiftelse.getRettstiftelsestype() == Rettsstiftelsestype.MATRIKKELENHETSENDRING){
+            if (rettsstiftelse.getRettstiftelsestype() == Rettsstiftelsestype.MATRIKKELENHETSENDRING) {
                Matrikkelenhetsendring matrikkelenhetsendring = (Matrikkelenhetsendring) rettsstiftelse;
                matrikkelenheterIForsendelse.addAll(matrikkelenhetsendring.getFra());
                matrikkelenheterIForsendelse.addAll(matrikkelenhetsendring.getTil());
@@ -213,13 +215,40 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    private static SignertGrunnboksutskrift createGrunnboksutskrift(Matrikkelenhet matrikkelenhet) {
       return SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
-               .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
-                     .withMatrikkelenhet(matrikkelenhet)
-                     .build())
-               .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
-                     .withSignertDokument("Dokument1".getBytes())
-                     .build()).build();
+            .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
+                  .withMatrikkelenhet(matrikkelenhet)
+                  .build())
+            .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
+                  .withSignertDokument("Dokument1".getBytes())
+                  .build()).build();
    }
 
+   private static String createInnsendingIdFromForsendelse(Forsendelse forsendelse) {
+      List<Dokument> dokumenter = forsendelse.getUsignertMelding().getDokumenter();
+      List<Rettsstiftelse> rettsstiftelser = dokumenter.get(0).getRettsstiftelser();
+      Rettsstiftelse rettsstiftelse = rettsstiftelser.get(0);
+      if (rettsstiftelse instanceof Matrikkelenhetsendring) {
+         List<Matrikkelenhet> til = ((Matrikkelenhetsendring) rettsstiftelse).getTil();
+         Matrikkelenhet matrikkelenhet = til.get(0);
+         return matrikkelenhet.getKommunenummer() + "," +
+               String.valueOf(matrikkelenhet.getGaardsnummer()) + "," +
+               String.valueOf(matrikkelenhet.getBruksnummer()) + "," +
+               String.valueOf(matrikkelenhet.getFestenummer()) + "," +
+               String.valueOf(matrikkelenhet.getSeksjonsnummer());
+      }
 
+      return null;
+   }
+
+   private static Forsendelsesstatus hentForsendelsesstatusForInnsendingId(String innsendingId) {
+      int bruksnr = Integer.parseInt(innsendingId.split(",")[2]);
+
+      if (bruksnr > 0 && bruksnr <= 150) {
+         return forsendelsesstatusByInnsendingIdMap.get(TINGLYST);
+      } else if (bruksnr <= 250) {
+         return forsendelsesstatusByInnsendingIdMap.get(NEKTET);
+      } else {
+         return forsendelsesstatusByInnsendingIdMap.get(UAVKLART);
+      }
+   }
 }
