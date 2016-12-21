@@ -266,14 +266,6 @@
 </xs:complexContent>
 </xs:complexType>
 
-<xs:complexType name="BrevtypeKodeId">
-<xs:complexContent>
-<xs:extension base="ns1:KodeId">
-<xs:sequence/>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-
 <xs:complexType name="LandkodeKodeId">
 <xs:complexContent>
 <xs:extension base="ns1:KodeId">
