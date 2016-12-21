@@ -70,50 +70,14 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="lock">
-    <part element="tns:lock" name="parameters"/>
-  </message>
-  <message name="lockResponse">
-    <part element="tns:lockResponse" name="parameters"/>
-  </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
-  </message>
-  <message name="getObject">
-    <part element="tns:getObject" name="parameters"/>
-  </message>
-  <message name="getObjectResponse">
-    <part element="tns:getObjectResponse" name="parameters"/>
-  </message>
-  <message name="isLocked">
-    <part element="tns:isLocked" name="parameters"/>
-  </message>
-  <message name="isLockedResponse">
-    <part element="tns:isLockedResponse" name="parameters"/>
-  </message>
-  <message name="unlock">
-    <part element="tns:unlock" name="parameters"/>
-  </message>
-  <message name="unlockResponse">
-    <part element="tns:unlockResponse" name="parameters"/>
-  </message>
-  <message name="getVersions">
-    <part element="tns:getVersions" name="parameters"/>
-  </message>
-  <message name="getVersionsResponse">
-    <part element="tns:getVersionsResponse" name="parameters"/>
-  </message>
-  <message name="getObjects">
-    <part element="tns:getObjects" name="parameters"/>
-  </message>
-  <message name="getObjectsResponse">
-    <part element="tns:getObjectsResponse" name="parameters"/>
-  </message>
   <message name="getObjectsIgnoreMissing">
     <part element="tns:getObjectsIgnoreMissing" name="parameters"/>
   </message>
   <message name="getObjectsIgnoreMissingResponse">
     <part element="tns:getObjectsIgnoreMissingResponse" name="parameters"/>
+  </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
   </message>
   <message name="getVersionsForList">
     <part element="tns:getVersionsForList" name="parameters"/>
@@ -121,37 +85,43 @@
   <message name="getVersionsForListResponse">
     <part element="tns:getVersionsForListResponse" name="parameters"/>
   </message>
+  <message name="getObjects">
+    <part element="tns:getObjects" name="parameters"/>
+  </message>
+  <message name="getObjectsResponse">
+    <part element="tns:getObjectsResponse" name="parameters"/>
+  </message>
+  <message name="getVersions">
+    <part element="tns:getVersions" name="parameters"/>
+  </message>
+  <message name="getVersionsResponse">
+    <part element="tns:getVersionsResponse" name="parameters"/>
+  </message>
+  <message name="lock">
+    <part element="tns:lock" name="parameters"/>
+  </message>
+  <message name="lockResponse">
+    <part element="tns:lockResponse" name="parameters"/>
+  </message>
+  <message name="getObject">
+    <part element="tns:getObject" name="parameters"/>
+  </message>
+  <message name="getObjectResponse">
+    <part element="tns:getObjectResponse" name="parameters"/>
+  </message>
+  <message name="unlock">
+    <part element="tns:unlock" name="parameters"/>
+  </message>
+  <message name="unlockResponse">
+    <part element="tns:unlockResponse" name="parameters"/>
+  </message>
+  <message name="isLocked">
+    <part element="tns:isLocked" name="parameters"/>
+  </message>
+  <message name="isLockedResponse">
+    <part element="tns:isLockedResponse" name="parameters"/>
+  </message>
   <portType name="StoreService">
-    <operation name="lock">
-      <input message="tns:lock" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/lockRequest"/>
-      <output message="tns:lockResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/lockResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/lock/Fault/ServiceException"/>
-    </operation>
-    <operation name="getObject">
-      <input message="tns:getObject" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectRequest"/>
-      <output message="tns:getObjectResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObject/Fault/ServiceException"/>
-    </operation>
-    <operation name="isLocked">
-      <input message="tns:isLocked" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/isLockedRequest"/>
-      <output message="tns:isLockedResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/isLockedResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/isLocked/Fault/ServiceException"/>
-    </operation>
-    <operation name="unlock">
-      <input message="tns:unlock" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/unlockRequest"/>
-      <output message="tns:unlockResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/unlockResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/unlock/Fault/ServiceException"/>
-    </operation>
-    <operation name="getVersions">
-      <input message="tns:getVersions" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsRequest"/>
-      <output message="tns:getVersionsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersions/Fault/ServiceException"/>
-    </operation>
-    <operation name="getObjects">
-      <input message="tns:getObjects" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsRequest"/>
-      <output message="tns:getObjectsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjects/Fault/ServiceException"/>
-    </operation>
     <operation name="getObjectsIgnoreMissing">
       <input message="tns:getObjectsIgnoreMissing" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsIgnoreMissingRequest"/>
       <output message="tns:getObjectsIgnoreMissingResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsIgnoreMissingResponse"/>
@@ -162,9 +132,87 @@
       <output message="tns:getVersionsForListResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsForListResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsForList/Fault/ServiceException"/>
     </operation>
+    <operation name="getObjects">
+      <input message="tns:getObjects" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsRequest"/>
+      <output message="tns:getObjectsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectsResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjects/Fault/ServiceException"/>
+    </operation>
+    <operation name="getVersions">
+      <input message="tns:getVersions" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsRequest"/>
+      <output message="tns:getVersionsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersionsResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getVersions/Fault/ServiceException"/>
+    </operation>
+    <operation name="lock">
+      <input message="tns:lock" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/lockRequest"/>
+      <output message="tns:lockResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/lockResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/lock/Fault/ServiceException"/>
+    </operation>
+    <operation name="getObject">
+      <input message="tns:getObject" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectRequest"/>
+      <output message="tns:getObjectResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObjectResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/getObject/Fault/ServiceException"/>
+    </operation>
+    <operation name="unlock">
+      <input message="tns:unlock" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/unlockRequest"/>
+      <output message="tns:unlockResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/unlockResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/unlock/Fault/ServiceException"/>
+    </operation>
+    <operation name="isLocked">
+      <input message="tns:isLocked" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/isLockedRequest"/>
+      <output message="tns:isLockedResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/isLockedResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/store/StoreService/isLocked/Fault/ServiceException"/>
+    </operation>
   </portType>
   <binding name="StoreServicePortBinding" type="tns:StoreService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getObjectsIgnoreMissing">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getVersionsForList">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getObjects">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getVersions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
     <operation name="lock">
       <soap:operation soapAction=""/>
       <input>
@@ -189,18 +237,6 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="isLocked">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
     <operation name="unlock">
       <soap:operation soapAction=""/>
       <input>
@@ -213,43 +249,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="getVersions">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
-    <operation name="getObjects">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
-    <operation name="getObjectsIgnoreMissing">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
-    <operation name="getVersionsForList">
+    <operation name="isLocked">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

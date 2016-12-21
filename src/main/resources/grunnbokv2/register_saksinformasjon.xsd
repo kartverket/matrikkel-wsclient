@@ -110,7 +110,6 @@
             <xs:enumeration value="TINGLYST"/>
             <xs:enumeration value="NEKTET"/>
             <xs:enumeration value="AVVIST"/>
-            <xs:enumeration value="FORELOEPIG_NEKTET"/>
         </xs:restriction>
     </xs:simpleType>
 

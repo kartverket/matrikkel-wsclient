@@ -70,26 +70,26 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="calcObjektkontrollForList">
-    <part element="tns:calcObjektkontrollForList" name="parameters"/>
-  </message>
-  <message name="calcObjektkontrollForListResponse">
-    <part element="tns:calcObjektkontrollForListResponse" name="parameters"/>
-  </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
-  </message>
   <message name="findIdsEtterId">
     <part element="tns:findIdsEtterId" name="parameters"/>
   </message>
   <message name="findIdsEtterIdResponse">
     <part element="tns:findIdsEtterIdResponse" name="parameters"/>
   </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
+  </message>
   <message name="findObjekterEtterId">
     <part element="tns:findObjekterEtterId" name="parameters"/>
   </message>
   <message name="findObjekterEtterIdResponse">
     <part element="tns:findObjekterEtterIdResponse" name="parameters"/>
+  </message>
+  <message name="calcObjektkontrollForList">
+    <part element="tns:calcObjektkontrollForList" name="parameters"/>
+  </message>
+  <message name="calcObjektkontrollForListResponse">
+    <part element="tns:calcObjektkontrollForListResponse" name="parameters"/>
   </message>
   <message name="calcObjektkontrollForRange">
     <part element="tns:calcObjektkontrollForRange" name="parameters"/>
@@ -98,11 +98,6 @@
     <part element="tns:calcObjektkontrollForRangeResponse" name="parameters"/>
   </message>
   <portType name="NedlastningService">
-    <operation name="calcObjektkontrollForList">
-      <input message="tns:calcObjektkontrollForList" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForListRequest"/>
-      <output message="tns:calcObjektkontrollForListResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForListResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForList/Fault/ServiceException"/>
-    </operation>
     <operation name="findIdsEtterId">
       <input message="tns:findIdsEtterId" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findIdsEtterIdRequest"/>
       <output message="tns:findIdsEtterIdResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findIdsEtterIdResponse"/>
@@ -113,6 +108,11 @@
       <output message="tns:findObjekterEtterIdResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterIdResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterId/Fault/ServiceException"/>
     </operation>
+    <operation name="calcObjektkontrollForList">
+      <input message="tns:calcObjektkontrollForList" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForListRequest"/>
+      <output message="tns:calcObjektkontrollForListResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForListResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForList/Fault/ServiceException"/>
+    </operation>
     <operation name="calcObjektkontrollForRange">
       <input message="tns:calcObjektkontrollForRange" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForRangeRequest"/>
       <output message="tns:calcObjektkontrollForRangeResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForRangeResponse"/>
@@ -121,18 +121,6 @@
   </portType>
   <binding name="NedlastningServicePortBinding" type="tns:NedlastningService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="calcObjektkontrollForList">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
     <operation name="findIdsEtterId">
       <soap:operation soapAction=""/>
       <input>
@@ -146,6 +134,18 @@
       </fault>
     </operation>
     <operation name="findObjekterEtterId">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="calcObjektkontrollForList">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

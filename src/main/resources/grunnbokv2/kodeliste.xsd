@@ -78,8 +78,6 @@
             <xs:extension base="basistyperns:GrunnbokBubbleObject">
                 <xs:sequence>
                     <xs:element name="kodeIdClass" type="xs:string"/>
-                    <xs:element name="navn" type="basistyperns:LocalizedString"/>
-                    <xs:element name="beskrivelse" type="basistyperns:LocalizedString"/>
                     <xs:element name="koderIds" type="kodelistens:KodeIdList"/>
                 </xs:sequence>
             </xs:extension>

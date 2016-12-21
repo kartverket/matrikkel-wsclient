@@ -67,36 +67,36 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="findSistAvsluttedeFoeringsdagFast">
-    <part element="tns:findSistAvsluttedeFoeringsdagFast" name="parameters"/>
-  </message>
-  <message name="findSistAvsluttedeFoeringsdagFastResponse">
-    <part element="tns:findSistAvsluttedeFoeringsdagFastResponse" name="parameters"/>
-  </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
-  </message>
   <message name="findSistAvsluttedeFoeringsdagBorett">
     <part element="tns:findSistAvsluttedeFoeringsdagBorett" name="parameters"/>
   </message>
   <message name="findSistAvsluttedeFoeringsdagBorettResponse">
     <part element="tns:findSistAvsluttedeFoeringsdagBorettResponse" name="parameters"/>
   </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
+  </message>
+  <message name="findSistAvsluttedeFoeringsdagFast">
+    <part element="tns:findSistAvsluttedeFoeringsdagFast" name="parameters"/>
+  </message>
+  <message name="findSistAvsluttedeFoeringsdagFastResponse">
+    <part element="tns:findSistAvsluttedeFoeringsdagFastResponse" name="parameters"/>
+  </message>
   <portType name="FoeringsdagService">
-    <operation name="findSistAvsluttedeFoeringsdagFast">
-      <input message="tns:findSistAvsluttedeFoeringsdagFast" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/foeringsdag/FoeringsdagService/findSistAvsluttedeFoeringsdagFastRequest"/>
-      <output message="tns:findSistAvsluttedeFoeringsdagFastResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/foeringsdag/FoeringsdagService/findSistAvsluttedeFoeringsdagFastResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/foeringsdag/FoeringsdagService/findSistAvsluttedeFoeringsdagFast/Fault/ServiceException"/>
-    </operation>
     <operation name="findSistAvsluttedeFoeringsdagBorett">
       <input message="tns:findSistAvsluttedeFoeringsdagBorett" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/foeringsdag/FoeringsdagService/findSistAvsluttedeFoeringsdagBorettRequest"/>
       <output message="tns:findSistAvsluttedeFoeringsdagBorettResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/foeringsdag/FoeringsdagService/findSistAvsluttedeFoeringsdagBorettResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/foeringsdag/FoeringsdagService/findSistAvsluttedeFoeringsdagBorett/Fault/ServiceException"/>
     </operation>
+    <operation name="findSistAvsluttedeFoeringsdagFast">
+      <input message="tns:findSistAvsluttedeFoeringsdagFast" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/foeringsdag/FoeringsdagService/findSistAvsluttedeFoeringsdagFastRequest"/>
+      <output message="tns:findSistAvsluttedeFoeringsdagFastResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/foeringsdag/FoeringsdagService/findSistAvsluttedeFoeringsdagFastResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/foeringsdag/FoeringsdagService/findSistAvsluttedeFoeringsdagFast/Fault/ServiceException"/>
+    </operation>
   </portType>
   <binding name="FoeringsdagServicePortBinding" type="tns:FoeringsdagService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="findSistAvsluttedeFoeringsdagFast">
+    <operation name="findSistAvsluttedeFoeringsdagBorett">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -108,7 +108,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="findSistAvsluttedeFoeringsdagBorett">
+    <operation name="findSistAvsluttedeFoeringsdagFast">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

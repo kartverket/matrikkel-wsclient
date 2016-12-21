@@ -832,29 +832,6 @@
         </xs:complexContent>
     </xs:complexType>
 
-    <xs:complexType name="BrevtypeKodeId">
-        <xs:complexContent>
-            <xs:extension base="kodelistens:KodeId">
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="BrevtypeKodeIdList">
-        <xs:sequence>
-            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
-                        type="register_koderns:BrevtypeKodeId"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="BrevtypeKode">
-        <xs:complexContent>
-            <xs:extension base="kodelistens:GrunnbokKode">
-                <xs:sequence>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
     <xs:complexType name="AnketypeKodeId">
         <xs:complexContent>
             <xs:extension base="kodelistens:KodeId">

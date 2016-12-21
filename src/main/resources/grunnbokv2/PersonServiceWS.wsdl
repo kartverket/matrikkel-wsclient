@@ -70,11 +70,11 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="findPersoner">
-    <part element="tns:findPersoner" name="parameters"/>
+  <message name="lagNyttPersonloepenummer">
+    <part element="tns:lagNyttPersonloepenummer" name="parameters"/>
   </message>
-  <message name="findPersonerResponse">
-    <part element="tns:findPersonerResponse" name="parameters"/>
+  <message name="lagNyttPersonloepenummerResponse">
+    <part element="tns:lagNyttPersonloepenummerResponse" name="parameters"/>
   </message>
   <message name="ServiceException">
     <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
@@ -85,32 +85,32 @@
   <message name="opprettLoepenummerpersonResponse">
     <part element="tns:opprettLoepenummerpersonResponse" name="parameters"/>
   </message>
-  <message name="lagNyttPersonloepenummer">
-    <part element="tns:lagNyttPersonloepenummer" name="parameters"/>
+  <message name="findPersoner">
+    <part element="tns:findPersoner" name="parameters"/>
   </message>
-  <message name="lagNyttPersonloepenummerResponse">
-    <part element="tns:lagNyttPersonloepenummerResponse" name="parameters"/>
+  <message name="findPersonerResponse">
+    <part element="tns:findPersonerResponse" name="parameters"/>
   </message>
   <portType name="PersonService">
-    <operation name="findPersoner">
-      <input message="tns:findPersoner" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersonerRequest"/>
-      <output message="tns:findPersonerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersonerResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersoner/Fault/ServiceException"/>
+    <operation name="lagNyttPersonloepenummer">
+      <input message="tns:lagNyttPersonloepenummer" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/lagNyttPersonloepenummerRequest"/>
+      <output message="tns:lagNyttPersonloepenummerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/lagNyttPersonloepenummerResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/lagNyttPersonloepenummer/Fault/ServiceException"/>
     </operation>
     <operation name="opprettLoepenummerperson">
       <input message="tns:opprettLoepenummerperson" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/opprettLoepenummerpersonRequest"/>
       <output message="tns:opprettLoepenummerpersonResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/opprettLoepenummerpersonResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/opprettLoepenummerperson/Fault/ServiceException"/>
     </operation>
-    <operation name="lagNyttPersonloepenummer">
-      <input message="tns:lagNyttPersonloepenummer" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/lagNyttPersonloepenummerRequest"/>
-      <output message="tns:lagNyttPersonloepenummerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/lagNyttPersonloepenummerResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/lagNyttPersonloepenummer/Fault/ServiceException"/>
+    <operation name="findPersoner">
+      <input message="tns:findPersoner" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersonerRequest"/>
+      <output message="tns:findPersonerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersonerResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersoner/Fault/ServiceException"/>
     </operation>
   </portType>
   <binding name="PersonServicePortBinding" type="tns:PersonService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="findPersoner">
+    <operation name="lagNyttPersonloepenummer">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -134,7 +134,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="lagNyttPersonloepenummer">
+    <operation name="findPersoner">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

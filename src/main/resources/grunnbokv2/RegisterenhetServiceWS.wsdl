@@ -70,11 +70,11 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="findSeksjonerFor">
-    <part element="tns:findSeksjonerFor" name="parameters"/>
+  <message name="findFestegrunnerFor">
+    <part element="tns:findFestegrunnerFor" name="parameters"/>
   </message>
-  <message name="findSeksjonerForResponse">
-    <part element="tns:findSeksjonerForResponse" name="parameters"/>
+  <message name="findFestegrunnerForResponse">
+    <part element="tns:findFestegrunnerForResponse" name="parameters"/>
   </message>
   <message name="ServiceException">
     <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
@@ -85,17 +85,11 @@
   <message name="findBorettslagsandelerForBorettslagResponse">
     <part element="tns:findBorettslagsandelerForBorettslagResponse" name="parameters"/>
   </message>
-  <message name="findOmnummerertFra">
-    <part element="tns:findOmnummerertFra" name="parameters"/>
+  <message name="findSeksjonerFor">
+    <part element="tns:findSeksjonerFor" name="parameters"/>
   </message>
-  <message name="findOmnummerertFraResponse">
-    <part element="tns:findOmnummerertFraResponse" name="parameters"/>
-  </message>
-  <message name="findFestegrunnerFor">
-    <part element="tns:findFestegrunnerFor" name="parameters"/>
-  </message>
-  <message name="findFestegrunnerForResponse">
-    <part element="tns:findFestegrunnerForResponse" name="parameters"/>
+  <message name="findSeksjonerForResponse">
+    <part element="tns:findSeksjonerForResponse" name="parameters"/>
   </message>
   <message name="findBorettslagsandelerFor">
     <part element="tns:findBorettslagsandelerFor" name="parameters"/>
@@ -103,36 +97,42 @@
   <message name="findBorettslagsandelerForResponse">
     <part element="tns:findBorettslagsandelerForResponse" name="parameters"/>
   </message>
+  <message name="findOmnummerertFra">
+    <part element="tns:findOmnummerertFra" name="parameters"/>
+  </message>
+  <message name="findOmnummerertFraResponse">
+    <part element="tns:findOmnummerertFraResponse" name="parameters"/>
+  </message>
   <portType name="RegisterenhetService">
-    <operation name="findSeksjonerFor">
-      <input message="tns:findSeksjonerFor" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findSeksjonerForRequest"/>
-      <output message="tns:findSeksjonerForResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findSeksjonerForResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findSeksjonerFor/Fault/ServiceException"/>
+    <operation name="findFestegrunnerFor">
+      <input message="tns:findFestegrunnerFor" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findFestegrunnerForRequest"/>
+      <output message="tns:findFestegrunnerForResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findFestegrunnerForResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findFestegrunnerFor/Fault/ServiceException"/>
     </operation>
     <operation name="findBorettslagsandelerForBorettslag">
       <input message="tns:findBorettslagsandelerForBorettslag" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findBorettslagsandelerForBorettslagRequest"/>
       <output message="tns:findBorettslagsandelerForBorettslagResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findBorettslagsandelerForBorettslagResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findBorettslagsandelerForBorettslag/Fault/ServiceException"/>
     </operation>
-    <operation name="findOmnummerertFra">
-      <input message="tns:findOmnummerertFra" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findOmnummerertFraRequest"/>
-      <output message="tns:findOmnummerertFraResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findOmnummerertFraResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findOmnummerertFra/Fault/ServiceException"/>
-    </operation>
-    <operation name="findFestegrunnerFor">
-      <input message="tns:findFestegrunnerFor" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findFestegrunnerForRequest"/>
-      <output message="tns:findFestegrunnerForResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findFestegrunnerForResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findFestegrunnerFor/Fault/ServiceException"/>
+    <operation name="findSeksjonerFor">
+      <input message="tns:findSeksjonerFor" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findSeksjonerForRequest"/>
+      <output message="tns:findSeksjonerForResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findSeksjonerForResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findSeksjonerFor/Fault/ServiceException"/>
     </operation>
     <operation name="findBorettslagsandelerFor">
       <input message="tns:findBorettslagsandelerFor" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findBorettslagsandelerForRequest"/>
       <output message="tns:findBorettslagsandelerForResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findBorettslagsandelerForResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findBorettslagsandelerFor/Fault/ServiceException"/>
     </operation>
+    <operation name="findOmnummerertFra">
+      <input message="tns:findOmnummerertFra" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findOmnummerertFraRequest"/>
+      <output message="tns:findOmnummerertFraResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findOmnummerertFraResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet/RegisterenhetService/findOmnummerertFra/Fault/ServiceException"/>
+    </operation>
   </portType>
   <binding name="RegisterenhetServicePortBinding" type="tns:RegisterenhetService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="findSeksjonerFor">
+    <operation name="findFestegrunnerFor">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -156,19 +156,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="findOmnummerertFra">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
-    <operation name="findFestegrunnerFor">
+    <operation name="findSeksjonerFor">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -181,6 +169,18 @@
       </fault>
     </operation>
     <operation name="findBorettslagsandelerFor">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="findOmnummerertFra">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

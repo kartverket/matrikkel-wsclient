@@ -279,7 +279,6 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="KLAR_FOR_MANUELL_BEHANDLING"/>
             <xs:enumeration value="UNDER_MANUELL_BEHANDLING"/>
-            <xs:enumeration value="VENTER_ENDELIG_NEKT"/>
             <xs:enumeration value="KLAR_FOR_UTFALL_MEN_AVHENGER_AV_MELDING"/>
             <xs:enumeration value="KLAR_FOR_UTFALL"/>
             <xs:enumeration value="ENDELIG_REGISTRERT"/>

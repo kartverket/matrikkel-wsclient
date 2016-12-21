@@ -70,20 +70,14 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="findAndelerRealkobletTilRegisterenheter">
-    <part element="tns:findAndelerRealkobletTilRegisterenheter" name="parameters"/>
-  </message>
-  <message name="findAndelerRealkobletTilRegisterenheterResponse">
-    <part element="tns:findAndelerRealkobletTilRegisterenheterResponse" name="parameters"/>
-  </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
-  </message>
   <message name="findAndelerIRetter">
     <part element="tns:findAndelerIRetter" name="parameters"/>
   </message>
   <message name="findAndelerIRetterResponse">
     <part element="tns:findAndelerIRetterResponse" name="parameters"/>
+  </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
   </message>
   <message name="findAndelerForRettighetshavere">
     <part element="tns:findAndelerForRettighetshavere" name="parameters"/>
@@ -91,12 +85,13 @@
   <message name="findAndelerForRettighetshavereResponse">
     <part element="tns:findAndelerForRettighetshavereResponse" name="parameters"/>
   </message>
+  <message name="findAndelerRealkobletTilRegisterenheter">
+    <part element="tns:findAndelerRealkobletTilRegisterenheter" name="parameters"/>
+  </message>
+  <message name="findAndelerRealkobletTilRegisterenheterResponse">
+    <part element="tns:findAndelerRealkobletTilRegisterenheterResponse" name="parameters"/>
+  </message>
   <portType name="RegisterenhetsrettsandelService">
-    <operation name="findAndelerRealkobletTilRegisterenheter">
-      <input message="tns:findAndelerRealkobletTilRegisterenheter" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerRealkobletTilRegisterenheterRequest"/>
-      <output message="tns:findAndelerRealkobletTilRegisterenheterResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerRealkobletTilRegisterenheterResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerRealkobletTilRegisterenheter/Fault/ServiceException"/>
-    </operation>
     <operation name="findAndelerIRetter">
       <input message="tns:findAndelerIRetter" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerIRetterRequest"/>
       <output message="tns:findAndelerIRetterResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerIRetterResponse"/>
@@ -107,21 +102,14 @@
       <output message="tns:findAndelerForRettighetshavereResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerForRettighetshavereResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerForRettighetshavere/Fault/ServiceException"/>
     </operation>
+    <operation name="findAndelerRealkobletTilRegisterenheter">
+      <input message="tns:findAndelerRealkobletTilRegisterenheter" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerRealkobletTilRegisterenheterRequest"/>
+      <output message="tns:findAndelerRealkobletTilRegisterenheterResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerRealkobletTilRegisterenheterResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrettsandel/RegisterenhetsrettsandelService/findAndelerRealkobletTilRegisterenheter/Fault/ServiceException"/>
+    </operation>
   </portType>
   <binding name="RegisterenhetsrettsandelServicePortBinding" type="tns:RegisterenhetsrettsandelService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="findAndelerRealkobletTilRegisterenheter">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
     <operation name="findAndelerIRetter">
       <soap:operation soapAction=""/>
       <input>
@@ -135,6 +123,18 @@
       </fault>
     </operation>
     <operation name="findAndelerForRettighetshavere">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="findAndelerRealkobletTilRegisterenheter">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

@@ -228,13 +228,13 @@
             <xs:extension base="basistyperns:EntityComponentWithHistory">
                 <xs:sequence>
                     <xs:element name="kommuneId" type="registerns:KommuneId" nillable="true"/>
-                    <xs:element name="adressekode" type="xs:int"/>
-                    <xs:element name="husnummer" type="xs:int"/>
+                    <xs:element name="adressekode" type="xs:int" nillable="true"/>
+                    <xs:element name="husnummer" type="xs:int" nillable="true"/>
                     <xs:element name="bokstav" type="xs:string" nillable="true"/>
-                    <xs:element name="gaardsnummer" type="xs:int"/>
-                    <xs:element name="bruksnummer" type="xs:int"/>
-                    <xs:element name="festenummer" type="xs:int"/>
-                    <xs:element name="undernummer" type="xs:int"/>
+                    <xs:element name="gaardsnummer" type="xs:int" nillable="true"/>
+                    <xs:element name="bruksnummer" type="xs:int" nillable="true"/>
+                    <xs:element name="festenummer" type="xs:int" nillable="true"/>
+                    <xs:element name="undernummer" type="xs:int" nillable="true"/>
                     <xs:element name="bruksenhetsnummer" type="xs:string" nillable="true"/>
                     <xs:element name="postnummeromraadeId" type="registerns:PostnummeromraadeId" nillable="true"/>
                 </xs:sequence>
