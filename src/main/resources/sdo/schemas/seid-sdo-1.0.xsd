@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:XAdES="http://uri.etsi.org/01903/v1.2.2#"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.npt.no/seid/xmlskjema/SDO_v1.0"
+           targetNamespace="http://www.npt.no/seid/xmlskjema/SDO_v1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="http://uri.etsi.org/01903/v1.2.2#" schemaLocation="http://uri.etsi.org/01903/v1.2.2/XAdES.xsd"/>
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="http://www.w3.org/TR/2002/xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+    <xs:element name="SDOList">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+                <xs:element ref="SDO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <!-- Start root element, SDO -->
+    <xs:element name="SDO">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="SEIDSDOVersion" type="xs:string"/>
+                <xs:element ref="SDODataPart"/>
+                <xs:element name="SDOSeal" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:choice>
+                            <xs:element name="SDOSignature" type="SignatureElementType"/>
+                            <xs:element name="SDOTimeStamp">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="TimestampValue" type="XAdES:TimeStampType"/>
+                                        <xs:element name="TSCertificatesAndRevocationData" type="CertificateAndRevocationType" minOccurs="0"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Metadata" type="MetaDataType" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="SignedObject" type="SignedObjectType" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <!-- End root element, SDO -->
+    <!-- Start SDODataPart-->
+    <xs:element name="SDODataPart">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="SignatureElement" type="SignatureElementType" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <!-- end SDODataPart-->
+    <xs:complexType name="SignatureElementType">
+        <xs:choice>
+            <xs:element name="CMSSignatureElement" type="CMSSignatureElementType"/>
+            <xs:element name="CAdESSignatureElement" type="XAdES:EncapsulatedPKIDataType"/>
+            <xs:element name="XAdESSignatureElement" type="XMLSignatureType"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="XMLSignatureType">
+        <xs:sequence>
+            <xs:element name="XAdESSignature" type="XAdESAnyType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CMSSignatureElementType">
+        <xs:sequence>
+            <xs:element name="SDOProfile" type="SDOProfileType"/>
+            <xs:element name="SignaturePolicyIdentifier" type="SignaturePolicyIdentifierType" minOccurs="0"/>
+            <xs:element name="SignersDocumentFormat" type="DataObjectFormatType" minOccurs="0"/>
+            <xs:element name="SignaturePreprosessing" type="SignaturePreprosessingType" minOccurs="0"/>
+            <xs:element name="HashedData" type="XAdES:DigestAlgAndValueType" minOccurs="0"/>
+            <xs:element ref="XAdES:SigningTime" minOccurs="0"/>
+            <xs:element name="CMSSignature" type="XAdES:EncapsulatedPKIDataType"/>
+            <xs:element name="UserCertificateAndRevocationData" type="CertificateAndRevocationType" minOccurs="0"/>
+            <xs:element name="CACertificatesAndRevocationData" type="CertificateAndRevocationType" minOccurs="0"/>
+            <xs:element name="TimeStamp-Basic" type="XAdES:TimeStampType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="TimeStamp-Extended" type="Timestamp-ExtendedType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="TSCertificatesAndRevocationData" type="CertificateAndRevocationType" minOccurs="0"/>
+            <xs:element name="DataValidationCertificate" type="XAdES:CertificateValuesType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="DVCCertificatesAndRevocationData" type="CertificateAndRevocationType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="DataObjectFormatType">
+        <xs:sequence>
+            <xs:element name="Description" type="xs:string" minOccurs="0"/>
+            <xs:element name="ObjectIdentifier" type="XAdES:ObjectIdentifierType" minOccurs="0"/>
+            <xs:element name="MimeType" type="xs:string" minOccurs="0"/>
+            <xs:element name="Encoding" type="xs:anyURI" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Timestamp-ExtendedType">
+        <xs:sequence>
+            <xs:element name="NewHashedData" type="XAdES:DigestAlgAndValueType" minOccurs="0"/>
+            <xs:element name="TimestampValue" type="XAdES:TimeStampType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="SignaturePreprosessingType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Hashed"/>
+            <xs:enumeration value="HashedAndTimeAppended"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="SignaturePolicyIdentifierType">
+        <xs:choice>
+            <xs:element name="SignaturePolicyId" type="SignaturePolicyIdType"/>
+            <xs:element name="SignaturePolicyImplied"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="SignaturePolicyIdType">
+        <xs:sequence>
+            <xs:element name="SigPolicyId" type="XAdES:ObjectIdentifierType"/>
+            <xs:element ref="ds:Transforms" minOccurs="0"/>
+            <xs:element name="SigPolicyHash" type="XAdES:DigestAlgAndValueType" minOccurs="0"/>
+            <xs:element name="SigPolicyQualifiers" type="XAdES:SigPolicyQualifiersListType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CertificateAndRevocationType">
+        <xs:sequence>
+            <xs:element name="CertificateValues" type="XAdES:CertificateValuesType" minOccurs="0"/>
+            <xs:element name="RevocationValues" type="XAdES:RevocationValuesType" minOccurs="0"/>
+            <xs:element name="CRLrefs" type="XAdES:CRLRefsType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MetaDataType">
+        <xs:sequence>
+            <xs:element name="Include" type="XAdES:IncludeType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="ValuePair" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:choice>
+                            <xs:element name="Code" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="CodeListId">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="Organisation" type="xs:string" minOccurs="0"/>
+                                                    <xs:element name="CodeListIdentifier" type="xs:string" minOccurs="0"/>
+                                                    <xs:element name="Version" type="xs:string" minOccurs="0"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="CodeId" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Name" type="xs:string" minOccurs="0"/>
+                        </xs:choice>
+                        <xs:element name="Description" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Value" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SignedObjectType">
+        <xs:choice>
+            <xs:element name="SignersDocument" type="xs:base64Binary" minOccurs="0"/>
+            <xs:element ref="ds:Reference" minOccurs="0"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:simpleType name="SDOProfileType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SEID-SDO-Basic"/>
+            <xs:enumeration value="SEID-SDO-Basic-V"/>
+            <xs:enumeration value="SEID-SDO-Basic-T"/>
+            <xs:enumeration value="SEID-SDO-Basic-TSP"/>
+            <xs:enumeration value="SEID-SDO-Basic-Extended"/>
+            <xs:enumeration value="SEID-SDO-Basic-Archive"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- Start SignatureAnyType -->
+    <xs:complexType name="XAdESAnyType" mixed="true">
+        <xs:sequence>
+            <xs:any namespace="http://uri.etsi.org/01903/v1.2.2#" processContents="lax"/>
+            <xs:any namespace="http://www.w3.org/2000/09/xmldsig#" processContents="lax"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##any"/>
+    </xs:complexType>
+    <!-- End AnyType -->
+</xs:schema>
