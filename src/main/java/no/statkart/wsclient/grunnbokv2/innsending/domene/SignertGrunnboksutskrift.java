@@ -11,6 +11,9 @@ public class SignertGrunnboksutskrift {
    private Registerenhet gjelderFor;
    private SDODokument signertUtskrift;
    private List<String> dokumentreferanser;
+   private byte[] utskrift;
+   private String mimeType;
+
 
    public List<String> getDokumentreferanser() {
       return dokumentreferanser;
@@ -34,5 +37,21 @@ public class SignertGrunnboksutskrift {
 
    public void setSignertUtskrift(SDODokument signertUtskrift) {
       this.signertUtskrift = signertUtskrift;
+   }
+
+   public byte[] getUtskrift() {
+      return utskrift;
+   }
+
+   public void setUtskrift(byte[] utskrift) {
+      this.utskrift = utskrift;
+   }
+
+   public String getMimeType() {
+      return mimeType;
+   }
+
+   public void setMimeType(String mimeType) {
+      this.mimeType = mimeType;
    }
 }

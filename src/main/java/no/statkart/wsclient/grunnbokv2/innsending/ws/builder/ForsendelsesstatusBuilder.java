@@ -1,12 +1,17 @@
 package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
+import com.google.common.io.ByteStreams;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Behandlingsinformasjon;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelsesstatus;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Tinglysingsinformasjon;
+import no.statkart.wsclient.grunnbokv2.innsending.InnsendingServiceWSStub;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDateTime;
 
+import javax.xml.bind.DatatypeConverter;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,14 +23,14 @@ public class ForsendelsesstatusBuilder {
    public static final String DEFAULT_INNSENDING_ID = "1";
    public static final String DEFAULT_FORSENDELSESREFERANSE = "16UNO";
    public static final LocalDateTime DEFAULT_REGISTRERINGS_TIDSPUNKT = new LocalDateTime(2015, DateTimeConstants.OCTOBER, 16, 12, 5, 6, 178);
-   public static final String DEFAULT_BEHANDLINGSUTFALL = "OK";
+   public static final String DEFAULT_BEHANDLINGSUTFALL = "TINGLYST";
    public static final String DEFAULT_SAKS_STATUS = "Prosessert";
    public static final String EMBETENUMMER = "34";
    public static final int DOKUMENTAAR = 2015;
    public static final String DOKUMENTREFERANSE = "Referanse1";
    public static final int RETTSSTIFTELSESNUMMER = 235;
    public static final String RETTSSTIFTELSESREFERANSE = "Xyz";
-   public static final byte[] SIGNERT_DOKUMENT_BYTES = "Signed,sealed,delivered".getBytes();
+   public static final byte[] SIGNERT_DOKUMENT_BYTES = psedudoSDO();
    public static final String KOMMUNENUMMER = "1301";
    public static final String KOMMUNENAVN = "OSLO";
    public static final int GAARDSNUMMER = 1;
@@ -169,5 +174,17 @@ public class ForsendelsesstatusBuilder {
                         .withUtfall(KONTROLL_RESULTAT_UTFALL)
                         .build()))
                   .build());
+   }
+
+   /**
+    * @return Base64 encodet SDO
+    */
+   static byte[] psedudoSDO() {
+      try {
+         final byte[] bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream("sdo/eksempel-SDOv1.0.xml"));
+         return DatatypeConverter.printBase64Binary(bytes).getBytes();
+      } catch (IOException e) {
+         throw Throwables.propagate(e);
+      }
    }
 }

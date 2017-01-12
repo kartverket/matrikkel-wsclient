@@ -1,14 +1,36 @@
 package no.statkart.wsclient.grunnbokv2.innsending;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.*;
+import com.google.common.io.ByteStreams;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokument;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokumentinformasjon;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelse;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus.Behandlingsutfall;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhet;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.Rettsstiftelsestype;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.*;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.SignertGrunnboksutskrift;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.DokumentinformasjonBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.ForsendelsesstatusBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.MatrikkelenhetBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.RegisterenhetBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.RettsstiftelsesinformasjonBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.SDODokumentBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.SignertGrunnboksutskriftBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.TinglysingsinformasjonBuilder;
 import org.joda.time.LocalDateTime;
 
-import java.util.*;
+import javax.xml.bind.DatatypeConverter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import static java.util.Collections.singletonList;
@@ -82,8 +104,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                .withFestenummer(0)
                .withSeksjonsnummer(0);
          Matrikkelenhet enhetINittedal = enhetINittedalBuilder.build();
-         SignertGrunnboksutskrift grunnboksutskrift = createGrunnboksutskrift(enhetINittedal);
-         Forsendelsesstatus forsendelsesstatusUavklart = createForsendelsestatus(Lists.newArrayList(grunnboksutskrift));
+         Forsendelsesstatus forsendelsesstatusUavklart = createForsendelsestatus(Behandlingsutfall.UAVKLART);
          forsendelsesstatusByInnsendingIdMap.put(UAVKLART, forsendelsesstatusUavklart);
 
          Forsendelsesstatus forsendelsestatusTinglyst = createForsendelsestatusTinglyst(Lists.newArrayList(createGrunnboksutskrift(
@@ -107,8 +128,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
          )), "2");
          forsendelsesstatusByInnsendingIdMap.put(TINGLYST, forsendelsestatusTinglyst);
 
-         Forsendelsesstatus forsendelsesstatusNektet = createForsendelsestatus(Lists.newArrayList(grunnboksutskrift));
-         forsendelsesstatusNektet.setBehandlingsutfall(Behandlingsutfall.NEKTET.name());
+         Forsendelsesstatus forsendelsesstatusNektet = createForsendelsestatus(Behandlingsutfall.NEKTET);
          forsendelsesstatusNektet.setBehandlingsinformasjon(anAvvisningsinformasjon()
                .withKontrollresultater(singletonList(aKontrollresultat()
                      .withUtfall("NEKTET")
@@ -162,15 +182,19 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    private static Forsendelsesstatus createForsendelsestatus(Forsendelse forsendelse) {
       List<SignertGrunnboksutskrift> grunnboksutskrifter = createGrunnboksutskrifter(forsendelse);
-      return createForsendelsestatus(grunnboksutskrifter);
+      return createForsendelsestatus(Behandlingsutfall.UAVKLART, grunnboksutskrifter);
    }
 
-   private static Forsendelsesstatus createForsendelsestatus(List<SignertGrunnboksutskrift> grunnboksutskrifter) {
+   private static Forsendelsesstatus createForsendelsestatus(Behandlingsutfall behandlingsutfall) {
+      return createForsendelsestatus(behandlingsutfall, Lists.<SignertGrunnboksutskrift>newArrayList());
+   }
+
+   private static Forsendelsesstatus createForsendelsestatus(Behandlingsutfall behandlingsutfall, List<SignertGrunnboksutskrift> grunnboksutskrifter) {
       return ForsendelsesstatusBuilder.aBehandlingsstatus()
             .withInnsendingId(getNextInnseningsIdAndIncreaseSequence())
             .withForsendelsesreferanse("1")
-            .withRegistreringstidspunkt(new LocalDateTime())
-            .withBehandlingsutfall(Behandlingsutfall.UAVKLART.name())
+            .withRegistreringstidspunkt(LocalDateTime.now())
+            .withBehandlingsutfall(behandlingsutfall.name())
             .withSaksstatus("UNDER_BEHANDLING")
             .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
                   .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
@@ -214,12 +238,20 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    }
 
    private static SignertGrunnboksutskrift createGrunnboksutskrift(Matrikkelenhet matrikkelenhet) {
+      String resourceName = "sdo/eksempel-SDOv1.0.xml";
+      final byte[] bytes;
+      try {
+         bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream(resourceName));
+      } catch (IOException e) {
+         throw Throwables.propagate(e);
+      }
+
       return SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
             .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
                   .withMatrikkelenhet(matrikkelenhet)
                   .build())
             .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
-                  .withSignertDokument("Dokument1".getBytes())
+                  .withSignertDokument(DatatypeConverter.printBase64Binary(bytes).getBytes())
                   .build()).build();
    }
 

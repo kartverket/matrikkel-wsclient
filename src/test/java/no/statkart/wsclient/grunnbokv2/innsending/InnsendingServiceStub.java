@@ -32,7 +32,7 @@ public class InnsendingServiceStub implements InnsendingService {
 
    @Override
    public Forsendelsesstatus hentStatus(String innsendingId) throws ServiceException {
-      return null;
+      return ForsendelsesstatusBuilder.defaultForsendelsesstatus().build();
    }
 
 }

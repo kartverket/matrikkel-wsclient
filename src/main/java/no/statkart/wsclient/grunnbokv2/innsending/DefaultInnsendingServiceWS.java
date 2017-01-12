@@ -7,6 +7,14 @@ import no.statkart.wsclient.HandlerResolverBuilder;
 import no.statkart.wsclient.WebServiceBuilder;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.SignertGrunnboksutskrift;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.Tinglysingsinformasjon;
+import no.statkart.wsclient.sdo.SDODecoder;
+import no.statkart.wsclient.sdo.SDODecoderContext;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Map;
 
 public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
 
@@ -53,6 +61,7 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
          //noinspection UnnecessaryLocalVariable
          final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
                innsendingWebService.sendTilTinglysing(mappedArgs));
+         pakkUtBekreftetGrunnboksutskrift(returnvalue);
          return returnvalue;
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
@@ -65,9 +74,28 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
          //noinspection UnnecessaryLocalVariable
          final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
                innsendingWebService.hentStatus(innsendingId));
+         pakkUtBekreftetGrunnboksutskrift(returnvalue);
          return returnvalue;
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
+      }
+   }
+
+   /**
+    * Ekstraherer bekreftet grunnboksutskrift for visning [MAT-12695]
+    */
+   private void pakkUtBekreftetGrunnboksutskrift(Forsendelsesstatus forsendelsesstatus) {
+      final Tinglysingsinformasjon tinglysingsinformasjon = forsendelsesstatus.getTinglysingsinformasjon();
+      if (tinglysingsinformasjon != null) {
+         final SDODecoderContext context = new SDODecoderContext(true);
+         for (SignertGrunnboksutskrift signertGrunnboksutskrift : tinglysingsinformasjon.getSignerteGrunnboksutskrifter()) {
+            final InputStream inputStream = new ByteArrayInputStream(signertGrunnboksutskrift.getSignertUtskrift().getSignertDokument());
+            final SDODecoder decoder = new SDODecoder(inputStream, context);
+            for (Map.Entry<String, byte[]> entry : decoder.getParsedContent().entrySet()) {
+               signertGrunnboksutskrift.setMimeType(entry.getKey());
+               signertGrunnboksutskrift.setUtskrift(entry.getValue());
+            }
+         }
       }
    }
 

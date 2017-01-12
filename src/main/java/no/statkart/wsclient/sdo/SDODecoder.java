@@ -98,6 +98,9 @@ public class SDODecoder {
       }
    }
 
+   /**
+    * PS: fungerer kun med ett dokument som kan representeres i flere mime typer.
+    */
    public Map<String, byte[]> getParsedContent() {
       return content;
    }
