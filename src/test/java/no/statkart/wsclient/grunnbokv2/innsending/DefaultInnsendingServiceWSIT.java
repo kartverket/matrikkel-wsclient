@@ -8,9 +8,12 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.Dok
 import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.ForsendelseBuilder;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.UsignertMeldingBuilder;
 import no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ThrowableAssert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.xml.sax.SAXParseException;
 
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.WebServiceException;
@@ -50,16 +53,23 @@ public class DefaultInnsendingServiceWSIT {
       assertNotNull(forsendelsesstatus);
    }
 
-   @Test(expectedExceptions = WebServiceException.class)
+   @Test
    public void invalidForsendelse() throws Exception {
-      Dokument dokumentWithoutDokumentReferanse = DokumentBuilder.aDokument().withDokumentreferanse(null).build();
-      ForsendelseBuilder invalidForsendelse = ForsendelseFactory.defaultForsendelse()
+      final Dokument dokumentWithoutDokumentReferanse = DokumentBuilder.aDokument().withDokumentreferanse(null).build();
+      final ForsendelseBuilder invalidForsendelse = ForsendelseFactory.defaultForsendelse()
             .but()
             .withUsignertMelding(UsignertMeldingBuilder.anUsignertMelding()
                   .withDokumenter(Lists.newArrayList(dokumentWithoutDokumentReferanse))
                   .build());
 
-      innsendingService.sendTilTinglysing(invalidForsendelse.build());
+      Assertions.assertThatThrownBy(new ThrowableAssert.ThrowingCallable() {
+         @Override
+         public void call() throws Throwable {
+            innsendingService.sendTilTinglysing(invalidForsendelse.build());
+         }
+      }).isInstanceOf(WebServiceException.class)
+            .hasCauseInstanceOf(SAXParseException.class)
+            .hasMessageContaining("Invalid content was found starting with element 'rettsstiftelser'");
    }
 
 }
