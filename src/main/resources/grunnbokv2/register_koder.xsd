@@ -148,6 +148,28 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <xs:complexType name="ReturtypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ReturtypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:ReturtypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ReturtypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
     <xs:complexType name="SaksinnholdKodeId">
         <xs:complexContent>
             <xs:extension base="kodelistens:KodeId">

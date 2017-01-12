@@ -70,36 +70,36 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="findRetterForEnheterOgTyper">
-    <part element="tns:findRetterForEnheterOgTyper" name="parameters"/>
-  </message>
-  <message name="findRetterForEnheterOgTyperResponse">
-    <part element="tns:findRetterForEnheterOgTyperResponse" name="parameters"/>
-  </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
-  </message>
   <message name="findRetterForEnheter">
     <part element="tns:findRetterForEnheter" name="parameters"/>
   </message>
   <message name="findRetterForEnheterResponse">
     <part element="tns:findRetterForEnheterResponse" name="parameters"/>
   </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
+  </message>
+  <message name="findRetterForEnheterOgTyper">
+    <part element="tns:findRetterForEnheterOgTyper" name="parameters"/>
+  </message>
+  <message name="findRetterForEnheterOgTyperResponse">
+    <part element="tns:findRetterForEnheterOgTyperResponse" name="parameters"/>
+  </message>
   <portType name="RegisterenhetsrettService">
-    <operation name="findRetterForEnheterOgTyper">
-      <input message="tns:findRetterForEnheterOgTyper" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett/RegisterenhetsrettService/findRetterForEnheterOgTyperRequest"/>
-      <output message="tns:findRetterForEnheterOgTyperResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett/RegisterenhetsrettService/findRetterForEnheterOgTyperResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett/RegisterenhetsrettService/findRetterForEnheterOgTyper/Fault/ServiceException"/>
-    </operation>
     <operation name="findRetterForEnheter">
       <input message="tns:findRetterForEnheter" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett/RegisterenhetsrettService/findRetterForEnheterRequest"/>
       <output message="tns:findRetterForEnheterResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett/RegisterenhetsrettService/findRetterForEnheterResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett/RegisterenhetsrettService/findRetterForEnheter/Fault/ServiceException"/>
     </operation>
+    <operation name="findRetterForEnheterOgTyper">
+      <input message="tns:findRetterForEnheterOgTyper" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett/RegisterenhetsrettService/findRetterForEnheterOgTyperRequest"/>
+      <output message="tns:findRetterForEnheterOgTyperResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett/RegisterenhetsrettService/findRetterForEnheterOgTyperResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhetsrett/RegisterenhetsrettService/findRetterForEnheterOgTyper/Fault/ServiceException"/>
+    </operation>
   </portType>
   <binding name="RegisterenhetsrettServicePortBinding" type="tns:RegisterenhetsrettService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="findRetterForEnheterOgTyper">
+    <operation name="findRetterForEnheter">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -111,7 +111,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="findRetterForEnheter">
+    <operation name="findRetterForEnheterOgTyper">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

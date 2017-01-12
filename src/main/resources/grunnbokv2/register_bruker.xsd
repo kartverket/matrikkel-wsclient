@@ -56,6 +56,7 @@
             <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
                 <xs:sequence>
                     <xs:element name="brukernavn" type="xs:string" />
+                    <xs:element name="configStr" type="xs:string" nillable="true"/>
                     <xs:element name="navn" type="xs:string" />
                     <xs:element name="telefon" type="xs:string" nillable="true"/>
                     <xs:element name="emailadresse" type="xs:string" nillable="true"/>

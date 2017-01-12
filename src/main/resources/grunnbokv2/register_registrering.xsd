@@ -43,7 +43,7 @@
                     <xs:element name="rekkefoelgenummer" type="xs:int"/>
                     <xs:element name="utfall" type="register_registreringns:ForeslaattBehandlingsutfall"/>
                     <xs:element name="behandlingsstatus" type="register_registreringns:Behandlingsstatus"/>
-                    <xs:element name="avhengerAvIds" type="register_registreringns:ForeloepigRegistreringIdList"/>
+                    <xs:element name="avhengerAvOpprinneligIds" type="register_registreringns:ForeloepigRegistreringIdList"/>
                     <xs:element name="beregnetEffektId" type="register_registreringns:BeregnetEffektId"/>
                 </xs:sequence>
             </xs:extension>
@@ -281,7 +281,7 @@
             <xs:enumeration value="UNDER_MANUELL_BEHANDLING"/>
             <xs:enumeration value="KLAR_FOR_UTFALL_MEN_AVHENGER_AV_MELDING"/>
             <xs:enumeration value="KLAR_FOR_UTFALL"/>
-            <xs:enumeration value="ENDELIG_REGISTRERT"/>
+            <xs:enumeration value="AVSLUTTET"/>
         </xs:restriction>
     </xs:simpleType>
 

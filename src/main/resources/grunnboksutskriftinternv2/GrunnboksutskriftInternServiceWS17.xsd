@@ -20,6 +20,7 @@
 <xs:element name="clientIdentification" type="xs:string"/>
 <xs:element name="locale" type="xs:string"/>
 <xs:element name="snapshotVersion" type="tns:Timestamp"/>
+<xs:element name="clientTraceInfo" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

@@ -154,6 +154,14 @@
 </xs:complexContent>
 </xs:complexType>
 
+<xs:complexType name="ReturtypeKodeId">
+<xs:complexContent>
+<xs:extension base="ns1:KodeId">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
 <xs:complexType name="BehandlingsnivaaKodeId">
 <xs:complexContent>
 <xs:extension base="ns1:KodeId">

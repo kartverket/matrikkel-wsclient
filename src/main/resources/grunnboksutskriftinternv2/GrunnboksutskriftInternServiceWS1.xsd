@@ -182,19 +182,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="ubekreftetGrunnboksutskriftHtml">
-<xs:sequence>
-<xs:element name="registerenhetId" type="ns1:RegisterenhetId" minOccurs="0"/>
-<xs:element name="grunnbokContext" type="ns2:GrunnbokContext" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="ubekreftetGrunnboksutskriftHtmlResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="grunnboksutskriftInfo">
 <xs:sequence>
 <xs:element name="registerenhetId" type="ns1:RegisterenhetId" minOccurs="0"/>
@@ -203,6 +190,19 @@
 </xs:complexType>
 
 <xs:complexType name="grunnboksutskriftInfoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ubekreftetGrunnboksutskriftHtml">
+<xs:sequence>
+<xs:element name="registerenhetId" type="ns1:RegisterenhetId" minOccurs="0"/>
+<xs:element name="grunnbokContext" type="ns2:GrunnbokContext" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ubekreftetGrunnboksutskriftHtmlResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

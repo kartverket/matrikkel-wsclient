@@ -79,6 +79,12 @@
   <message name="ServiceException">
     <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
   </message>
+  <message name="calcObjektkontrollForList">
+    <part element="tns:calcObjektkontrollForList" name="parameters"/>
+  </message>
+  <message name="calcObjektkontrollForListResponse">
+    <part element="tns:calcObjektkontrollForListResponse" name="parameters"/>
+  </message>
   <message name="findSisteEndringId">
     <part element="tns:findSisteEndringId" name="parameters"/>
   </message>
@@ -91,17 +97,16 @@
   <message name="calcEndringskontrollResponse">
     <part element="tns:calcEndringskontrollResponse" name="parameters"/>
   </message>
-  <message name="calcObjektkontrollForList">
-    <part element="tns:calcObjektkontrollForList" name="parameters"/>
-  </message>
-  <message name="calcObjektkontrollForListResponse">
-    <part element="tns:calcObjektkontrollForListResponse" name="parameters"/>
-  </message>
   <portType name="EndringsloggService">
     <operation name="findEndringer">
       <input message="tns:findEndringer" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/findEndringerRequest"/>
       <output message="tns:findEndringerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/findEndringerResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/findEndringer/Fault/ServiceException"/>
+    </operation>
+    <operation name="calcObjektkontrollForList">
+      <input message="tns:calcObjektkontrollForList" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/calcObjektkontrollForListRequest"/>
+      <output message="tns:calcObjektkontrollForListResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/calcObjektkontrollForListResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/calcObjektkontrollForList/Fault/ServiceException"/>
     </operation>
     <operation name="findSisteEndringId">
       <input message="tns:findSisteEndringId" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/findSisteEndringIdRequest"/>
@@ -112,11 +117,6 @@
       <input message="tns:calcEndringskontroll" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/calcEndringskontrollRequest"/>
       <output message="tns:calcEndringskontrollResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/calcEndringskontrollResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/calcEndringskontroll/Fault/ServiceException"/>
-    </operation>
-    <operation name="calcObjektkontrollForList">
-      <input message="tns:calcObjektkontrollForList" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/calcObjektkontrollForListRequest"/>
-      <output message="tns:calcObjektkontrollForListResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/calcObjektkontrollForListResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg/EndringsloggService/calcObjektkontrollForList/Fault/ServiceException"/>
     </operation>
   </portType>
   <binding name="EndringsloggServicePortBinding" type="tns:EndringsloggService">
@@ -133,6 +133,18 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
+    <operation name="calcObjektkontrollForList">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
     <operation name="findSisteEndringId">
       <soap:operation soapAction=""/>
       <input>
@@ -146,18 +158,6 @@
       </fault>
     </operation>
     <operation name="calcEndringskontroll">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
-    <operation name="calcObjektkontrollForList">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

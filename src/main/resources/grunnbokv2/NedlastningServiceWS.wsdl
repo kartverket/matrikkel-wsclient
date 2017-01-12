@@ -85,17 +85,17 @@
   <message name="findObjekterEtterIdResponse">
     <part element="tns:findObjekterEtterIdResponse" name="parameters"/>
   </message>
-  <message name="calcObjektkontrollForList">
-    <part element="tns:calcObjektkontrollForList" name="parameters"/>
-  </message>
-  <message name="calcObjektkontrollForListResponse">
-    <part element="tns:calcObjektkontrollForListResponse" name="parameters"/>
-  </message>
   <message name="calcObjektkontrollForRange">
     <part element="tns:calcObjektkontrollForRange" name="parameters"/>
   </message>
   <message name="calcObjektkontrollForRangeResponse">
     <part element="tns:calcObjektkontrollForRangeResponse" name="parameters"/>
+  </message>
+  <message name="calcObjektkontrollForList">
+    <part element="tns:calcObjektkontrollForList" name="parameters"/>
+  </message>
+  <message name="calcObjektkontrollForListResponse">
+    <part element="tns:calcObjektkontrollForListResponse" name="parameters"/>
   </message>
   <portType name="NedlastningService">
     <operation name="findIdsEtterId">
@@ -108,15 +108,15 @@
       <output message="tns:findObjekterEtterIdResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterIdResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterId/Fault/ServiceException"/>
     </operation>
-    <operation name="calcObjektkontrollForList">
-      <input message="tns:calcObjektkontrollForList" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForListRequest"/>
-      <output message="tns:calcObjektkontrollForListResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForListResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForList/Fault/ServiceException"/>
-    </operation>
     <operation name="calcObjektkontrollForRange">
       <input message="tns:calcObjektkontrollForRange" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForRangeRequest"/>
       <output message="tns:calcObjektkontrollForRangeResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForRangeResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForRange/Fault/ServiceException"/>
+    </operation>
+    <operation name="calcObjektkontrollForList">
+      <input message="tns:calcObjektkontrollForList" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForListRequest"/>
+      <output message="tns:calcObjektkontrollForListResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForListResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/calcObjektkontrollForList/Fault/ServiceException"/>
     </operation>
   </portType>
   <binding name="NedlastningServicePortBinding" type="tns:NedlastningService">
@@ -145,7 +145,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="calcObjektkontrollForList">
+    <operation name="calcObjektkontrollForRange">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -157,7 +157,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="calcObjektkontrollForRange">
+    <operation name="calcObjektkontrollForList">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
