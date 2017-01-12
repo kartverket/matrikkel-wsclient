@@ -37,8 +37,10 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
    public Forsendelsesstatus valider(Forsendelse forsendelse) {
       try {
          final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs = innsendingServiceMapper.mapForsendelse(forsendelse);
-         return innsendingServiceMapper.mapForsendelsesstatus(
+         //noinspection UnnecessaryLocalVariable
+         final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
                innsendingWebService.valider(mappedArgs));
+         return returnvalue;
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
       }
@@ -48,20 +50,22 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
    public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
       try {
          final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs = innsendingServiceMapper.mapForsendelse(forsendelse);
-         return innsendingServiceMapper.mapForsendelsesstatus(
+         //noinspection UnnecessaryLocalVariable
+         final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
                innsendingWebService.sendTilTinglysing(mappedArgs));
+         return returnvalue;
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
       }
    }
 
    @Override
-   public Forsendelsesstatus hentStatus(String innsendingId) {
+   public Forsendelsesstatus hentStatus(final String innsendingId) {
       try {
-         @SuppressWarnings("UnnecessaryLocalVariable")
-         final String mappedArgs = innsendingId;
-         return innsendingServiceMapper.mapForsendelsesstatus(
-               innsendingWebService.hentStatus(mappedArgs));
+         //noinspection UnnecessaryLocalVariable
+         final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
+               innsendingWebService.hentStatus(innsendingId));
+         return returnvalue;
       } catch( ServiceException e ) {
          throw new RuntimeException(e);
       }
