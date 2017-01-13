@@ -34,6 +34,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import static java.util.Collections.singletonList;
+import static no.statkart.wsclient.grunnbokv2.innsending.DefaultInnsendingServiceWS.pakkUtBekreftetGrunnboksutskrift;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.AvvisningsinformasjonBuilder.anAvvisningsinformasjon;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.BegrunnelseBuilder.aBegrunnelse;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.KontrollresultatBuilder.aKontrollresultat;
@@ -64,7 +65,9 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    @Override
    public Forsendelsesstatus hentStatus(String innsendingId) {
-      return hentStatusFraStub(innsendingId);
+      final Forsendelsesstatus returnvalue = hentStatusFraStub(innsendingId);
+      pakkUtBekreftetGrunnboksutskrift(returnvalue);
+      return returnvalue;
    }
 
    private static String getNextInnseningsIdAndIncreaseSequence() {

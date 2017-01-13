@@ -84,7 +84,7 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
    /**
     * Ekstraherer bekreftet grunnboksutskrift for visning [MAT-12695]
     */
-   private void pakkUtBekreftetGrunnboksutskrift(Forsendelsesstatus forsendelsesstatus) {
+   static void pakkUtBekreftetGrunnboksutskrift(Forsendelsesstatus forsendelsesstatus) {
       final Tinglysingsinformasjon tinglysingsinformasjon = forsendelsesstatus.getTinglysingsinformasjon();
       if (tinglysingsinformasjon != null) {
          final SDODecoderContext context = new SDODecoderContext(true);
