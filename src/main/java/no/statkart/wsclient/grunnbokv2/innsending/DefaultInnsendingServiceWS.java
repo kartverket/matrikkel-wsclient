@@ -87,7 +87,7 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
    static void pakkUtBekreftetGrunnboksutskrift(Forsendelsesstatus forsendelsesstatus) {
       final Tinglysingsinformasjon tinglysingsinformasjon = forsendelsesstatus.getTinglysingsinformasjon();
       if (tinglysingsinformasjon != null) {
-         final SDODecoderContext context = new SDODecoderContext(true);
+         final SDODecoderContext context = new SDODecoderContext(false);
          for (SignertGrunnboksutskrift signertGrunnboksutskrift : tinglysingsinformasjon.getSignerteGrunnboksutskrifter()) {
             final InputStream inputStream = new ByteArrayInputStream(signertGrunnboksutskrift.getSignertUtskrift().getSignertDokument());
             final SDODecoder decoder = new SDODecoder(inputStream, context);

@@ -182,7 +182,7 @@ public class ForsendelsesstatusBuilder {
    static byte[] psedudoSDO() {
       try {
          final byte[] bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream("sdo/eksempel-SDOv1.0.xml"));
-         return DatatypeConverter.printBase64Binary(bytes).getBytes();
+         return bytes;
       } catch (IOException e) {
          throw Throwables.propagate(e);
       }

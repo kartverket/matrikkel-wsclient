@@ -254,7 +254,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                   .withMatrikkelenhet(matrikkelenhet)
                   .build())
             .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
-                  .withSignertDokument(DatatypeConverter.printBase64Binary(bytes).getBytes())
+                  .withSignertDokument(bytes)
                   .build()).build();
    }
 
