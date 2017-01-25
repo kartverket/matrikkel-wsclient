@@ -8,14 +8,22 @@ import no.statkart.wsclient.WebServiceBuilder;
 
 public class DefaultLandbruksregisterWS implements LandbruksregisterWS {
 
+   private static LIBWebServiceBeanService libWebServiceBeanService;
+
    private final LIBWebService landbruksregisterService;
 
    public DefaultLandbruksregisterWS(final String brukernavn, final String passord, final String endpointUrl) {
-      LIBWebServiceBeanService libWebServiceBeanService = new LIBWebServiceBeanService();
-      libWebServiceBeanService.setHandlerResolver(HandlerResolverBuilder.builder()
-            .enableLogging()
-            .enableWSSecurity(brukernavn, passord)
-            .build());
+      if (libWebServiceBeanService == null) {
+         synchronized (this) {
+            if(libWebServiceBeanService == null) {
+               libWebServiceBeanService = new LIBWebServiceBeanService();
+               libWebServiceBeanService.setHandlerResolver(HandlerResolverBuilder.builder()
+                     .enableLogging()
+                     .enableWSSecurity(brukernavn, passord)
+                     .build());
+            }
+         }
+      }
 
       int timeoutMillis = 5000;
       landbruksregisterService = WebServiceBuilder.builder(libWebServiceBeanService.getLIBWebServiceBeanPort(), LIBWebService.class)

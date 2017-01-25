@@ -17,10 +17,21 @@ import javax.net.ssl.HostnameVerifier;
 
 public class DefaultIdentWS implements IdentWS {
 
+   private static IdentServiceWS identServiceWS;
+
    private final IdentService identService;
 
    public DefaultIdentWS(String brukernavn, String passord, String endpointUrl) {
-      identService = WebServiceBuilder.builderv2(new IdentServiceWS().getIdentServicePort(), IdentService.class)
+      if(identServiceWS == null) {
+         synchronized (this) {
+            if(identServiceWS == null) {
+               identServiceWS = new IdentServiceWS();
+            }
+         }
+      }
+
+
+      identService = WebServiceBuilder.builderv2(identServiceWS.getIdentServicePort(), IdentService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

@@ -17,10 +17,21 @@ import javax.net.ssl.HostnameVerifier;
  */
 public class DefaultEndringsloggWS implements EndringsloggWS {
 
+   private static EndringsloggServiceWS endringsloggServiceWS;
+
    private final EndringsloggService endringsloggService;
 
    public DefaultEndringsloggWS(final String brukernavn, final String passord, final String endpointUrl) {
-      endringsloggService = WebServiceBuilder.builderv2(new EndringsloggServiceWS().getEndringsloggServicePort(), EndringsloggService.class)
+
+      if(endringsloggServiceWS == null) {
+         synchronized (this) {
+            if(endringsloggServiceWS == null) {
+               endringsloggServiceWS = new EndringsloggServiceWS();
+            }
+         }
+      }
+
+      endringsloggService = WebServiceBuilder.builderv2(endringsloggServiceWS.getEndringsloggServicePort(), EndringsloggService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
