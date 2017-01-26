@@ -278,7 +278,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    private static Forsendelsesstatus hentForsendelsesstatusForInnsendingId(String innsendingId) {
       int bruksnr = Integer.parseInt(innsendingId.split(",")[2]);
 
-      if (bruksnr > 0 && bruksnr <= 150) {
+      if (bruksnr > 0 && bruksnr <= 185) {
          return forsendelsesstatusByInnsendingIdMap.get(TINGLYST);
       } else if (bruksnr <= 250) {
          return forsendelsesstatusByInnsendingIdMap.get(NEKTET);
