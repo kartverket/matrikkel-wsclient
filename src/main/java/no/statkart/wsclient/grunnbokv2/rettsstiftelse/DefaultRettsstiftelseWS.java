@@ -17,10 +17,20 @@ import javax.net.ssl.HostnameVerifier;
 
 public class DefaultRettsstiftelseWS implements RettsstiftelseWS {
 
+   private static RettsstiftelseServiceWS rettsstiftelseServiceWS;
+
    private final RettsstiftelseService rettsstiftelseService;
 
    public DefaultRettsstiftelseWS(String brukernavn, String passord, String endpointUrl) {
-      rettsstiftelseService = WebServiceBuilder.builderv2(new RettsstiftelseServiceWS().getRettsstiftelseServicePort(), RettsstiftelseService.class)
+      if (rettsstiftelseServiceWS == null) {
+         synchronized (this) {
+            if (rettsstiftelseServiceWS == null) {
+               rettsstiftelseServiceWS = new RettsstiftelseServiceWS();
+            }
+         }
+      }
+
+      rettsstiftelseService = WebServiceBuilder.builderv2(rettsstiftelseServiceWS.getRettsstiftelseServicePort(), RettsstiftelseService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

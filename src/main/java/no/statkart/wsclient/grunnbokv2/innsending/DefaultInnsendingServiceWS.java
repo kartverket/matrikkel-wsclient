@@ -17,14 +17,21 @@ import java.io.InputStream;
 import java.util.Map;
 
 public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
+   private static no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS webServiceClient;
 
    private final InnsendingService innsendingWebService;
    private final InnsendingServiceMapper innsendingServiceMapper = new InnsendingServiceMapper();
 
    public DefaultInnsendingServiceWS(String brukernavn, String passord, String endpointUrl, boolean enableSchemaValidation) {
-      no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS webServiceClient = new no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS();
-      webServiceClient.setHandlerResolver(HandlerResolverBuilder.builder()
-            .enableLogging().build());
+      if(webServiceClient == null){
+         synchronized (this) {
+            if(webServiceClient == null){
+               webServiceClient = new no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS();
+               webServiceClient.setHandlerResolver(HandlerResolverBuilder.builder()
+                     .enableLogging().build());
+            }
+         }
+      }
 
       InnsendingService innsendingServicePort = enableSchemaValidation
             ? webServiceClient.getInnsendingServicePort(new SchemaValidationFeature())

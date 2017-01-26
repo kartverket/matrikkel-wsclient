@@ -14,10 +14,20 @@ import javax.net.ssl.HostnameVerifier;
  */
 public class DefaultGrunnboksutskriftInternWS implements GrunnboksutskriftInternWS {
 
+   private static GrunnboksutskriftInternServiceWS grunnboksutskriftInternServiceWS;
+
    private final GrunnboksutskriftInternService service;
 
    public DefaultGrunnboksutskriftInternWS(String brukernavn, String passord, String endpointUrl) {
-      service = WebServiceBuilder.builderv2(new GrunnboksutskriftInternServiceWS().getGrunnboksutskriftInternServicePort(), GrunnboksutskriftInternService.class)
+      if(grunnboksutskriftInternServiceWS == null){
+         synchronized (this) {
+            if(grunnboksutskriftInternServiceWS == null){
+               grunnboksutskriftInternServiceWS = new GrunnboksutskriftInternServiceWS();
+            }
+         }
+      }
+
+      service = WebServiceBuilder.builderv2(grunnboksutskriftInternServiceWS.getGrunnboksutskriftInternServicePort(), GrunnboksutskriftInternService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

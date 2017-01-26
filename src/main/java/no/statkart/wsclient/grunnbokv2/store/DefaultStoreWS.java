@@ -11,10 +11,20 @@ import javax.net.ssl.HostnameVerifier;
 
 public class DefaultStoreWS implements StoreWS {
 
+   private static StoreServiceWS storeServiceWS;
+
    private final StoreService storeService;
 
    public DefaultStoreWS(final String brukernavn, final String passord, final String endpointUrl) {
-      storeService = WebServiceBuilder.builderv2(new StoreServiceWS().getStoreServicePort(), StoreService.class)
+      if (storeServiceWS == null) {
+         synchronized (this) {
+            if (storeServiceWS == null) {
+               storeServiceWS = new StoreServiceWS();
+            }
+         }
+      }
+
+      storeService = WebServiceBuilder.builderv2(storeServiceWS.getStoreServicePort(), StoreService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

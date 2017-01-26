@@ -15,10 +15,20 @@ import javax.net.ssl.HostnameVerifier;
  */
 public class DefaultRegisterenhetsrettWS implements RegisterenhetsrettWS {
 
+   private static RegisterenhetsrettServiceWS registerenhetsrettServiceWS;
+
    private final RegisterenhetsrettService registerenhetsrettService;
 
    public DefaultRegisterenhetsrettWS(String brukernavn, String passord, String endpointUrl) {
-      registerenhetsrettService = WebServiceBuilder.builderv2(new RegisterenhetsrettServiceWS().getRegisterenhetsrettServicePort(), RegisterenhetsrettService.class)
+      if (registerenhetsrettServiceWS == null) {
+         synchronized (this) {
+            if (registerenhetsrettServiceWS == null) {
+               registerenhetsrettServiceWS = new RegisterenhetsrettServiceWS();
+            }
+         }
+      }
+
+      registerenhetsrettService = WebServiceBuilder.builderv2(registerenhetsrettServiceWS.getRegisterenhetsrettServicePort(), RegisterenhetsrettService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)

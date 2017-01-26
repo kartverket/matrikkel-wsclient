@@ -17,11 +17,21 @@ import javax.net.ssl.HostnameVerifier;
  */
 public class DefaultRegisterenhetsrettsandelWS implements RegisterenhetsrettsandelWS {
 
+   private static RegisterenhetsrettsandelServiceWS registerenhetsrettsandelServiceWS;
+
    private final RegisterenhetsrettsandelService registerenhetsrettsandelService;
 
    public DefaultRegisterenhetsrettsandelWS(String brukernavn, String passord, String endpointUrl) {
+      if (registerenhetsrettsandelServiceWS == null) {
+         synchronized (this) {
+            if (registerenhetsrettsandelServiceWS == null) {
+               registerenhetsrettsandelServiceWS = new RegisterenhetsrettsandelServiceWS();
+            }
+         }
+      }
+
       registerenhetsrettsandelService = WebServiceBuilder.builderv2(
-            new RegisterenhetsrettsandelServiceWS().getRegisterenhetsrettsandelServicePort(), RegisterenhetsrettsandelService.class)
+            registerenhetsrettsandelServiceWS.getRegisterenhetsrettsandelServicePort(), RegisterenhetsrettsandelService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
