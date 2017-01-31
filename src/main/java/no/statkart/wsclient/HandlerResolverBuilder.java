@@ -19,6 +19,8 @@ public class HandlerResolverBuilder {
    private String passord;
    private boolean enableWSSecurity;
 
+   List<Handler> handlerChain;
+
    public static HandlerResolverBuilder builder() {
       return new HandlerResolverBuilder();
    }
@@ -36,20 +38,23 @@ public class HandlerResolverBuilder {
    }
 
    public HandlerResolver build() {
+      buildHandlers();
       return new HandlerResolver() {
          @Override
          public List<Handler> getHandlerChain(PortInfo portInfo) {
-            List<Handler> handlerChain = new ArrayList<Handler>();
-            if( enableLogging ) {
-               handlerChain.add(new LoggingHandler());
-            }
-            if( enableWSSecurity ) {
-               handlerChain.add(new WSSecurityUsernameTokenHandler(brukernavn, passord));
-            }
             return handlerChain;
          }
       };
    }
 
+   private void buildHandlers() {
+      handlerChain = new ArrayList<>();
+      if( enableLogging ) {
+         handlerChain.add(new LoggingHandler());
+      }
+      if( enableWSSecurity ) {
+         handlerChain.add(new WSSecurityUsernameTokenHandler(brukernavn, passord));
+      }
+   }
 
 }
