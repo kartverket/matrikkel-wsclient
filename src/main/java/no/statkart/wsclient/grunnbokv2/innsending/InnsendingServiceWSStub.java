@@ -4,16 +4,9 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.ByteStreams;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokument;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokumentinformasjon;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelse;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.*;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus.Behandlingsutfall;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhet;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.Rettsstiftelsestype;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.SignertGrunnboksutskrift;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.DokumentinformasjonBuilder;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.ForsendelsesstatusBuilder;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.MatrikkelenhetBuilder;
@@ -26,11 +19,7 @@ import org.joda.time.LocalDateTime;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import static java.util.Collections.singletonList;
@@ -48,11 +37,22 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    private static final String UAVKLART = "1";
    private static final String TINGLYST = "2";
    private static final String NEKTET = "3";
+   private static final String AVVIST = "4";
    private static Map<String, Forsendelsesstatus> forsendelsesstatusByInnsendingIdMap = new ForsendelsesstatusProvider().createInitState();
 
    @Override
    public Forsendelsesstatus valider(Forsendelse forsendelse) {
-      throw new UnsupportedOperationException("Koster penger!");
+      return ForsendelsesstatusBuilder
+            .aBehandlingsstatus()
+            .withAvvisningsinformasjon(
+                  anAvvisningsinformasjon()
+                        .withKontrollresultater(Collections.singletonList(
+                              aKontrollresultat().withDokumentindeks(1)
+                                                 .withRettsstiftelsesindeks(1)
+                                                 .withUtfall("GODKJENT")
+                                                 .build()))
+                        .build())
+            .build();
    }
 
    @Override
@@ -148,6 +148,24 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                .build()
          );
          forsendelsesstatusByInnsendingIdMap.put(NEKTET, forsendelsesstatusNektet);
+
+         Forsendelsesstatus forsendelsesstatusAvvist = createForsendelsestatus(Behandlingsutfall.AVVIST);
+         forsendelsesstatusNektet.setBehandlingsinformasjon(anAvvisningsinformasjon()
+               .withKontrollresultater(singletonList(aKontrollresultat()
+                     .withUtfall("IKKE_GODKJENT")
+                     .withNavn("TEST")
+                     .withKodeverdi("9999")
+                     .withDokumentindeks(1)
+                     .withRettsstiftelsesindeks(1)
+                     .withBegrunnelser(singletonList(aBegrunnelse()
+                           .withKodeverdi("9999")
+                           .withTekst("TestAvAvvist")
+                           .withUtfall("IKKE_GODKJENT")
+                           .build()
+                     )).build()))
+               .build()
+         );
+         forsendelsesstatusByInnsendingIdMap.put(AVVIST, forsendelsesstatusAvvist);
 
          return forsendelsesstatusByInnsendingIdMap;
       }
@@ -278,10 +296,12 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    private static Forsendelsesstatus hentForsendelsesstatusForInnsendingId(String innsendingId) {
       int bruksnr = Integer.parseInt(innsendingId.split(",")[2]);
 
-      if (bruksnr > 0 && bruksnr <= 185) {
+      if (bruksnr > 0 && bruksnr < 200) {
          return forsendelsesstatusByInnsendingIdMap.get(TINGLYST);
-      } else if (bruksnr <= 250) {
+      } else if (bruksnr < 300) {
          return forsendelsesstatusByInnsendingIdMap.get(NEKTET);
+      } else if (bruksnr < 400) {
+         return forsendelsesstatusByInnsendingIdMap.get(AVVIST);
       } else {
          return forsendelsesstatusByInnsendingIdMap.get(UAVKLART);
       }
