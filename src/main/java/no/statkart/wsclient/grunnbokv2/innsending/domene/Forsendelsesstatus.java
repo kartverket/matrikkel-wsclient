@@ -18,6 +18,7 @@ public class Forsendelsesstatus {
    private LocalDateTime registreringstidspunkt;
    private String behandlingsutfall;
    private String saksstatus;
+   private Long saksnummer;
    private Tinglysingsinformasjon tinglysingsinformasjon;
    private Behandlingsinformasjon behandlingsinformasjon;
 
@@ -117,6 +118,14 @@ public class Forsendelsesstatus {
 
    public void setSaksstatus(String saksstatus) {
       this.saksstatus = saksstatus;
+   }
+
+   public Long getSaksnummer() {
+      return saksnummer;
+   }
+
+   public void setSaksnummer(Long saksnummer) {
+      this.saksnummer = saksnummer;
    }
 
    public Tinglysingsinformasjon getTinglysingsinformasjon() {
