@@ -142,6 +142,24 @@ task wsImportInnsendingService(dependsOn: createGeneratedDir) {
   }
 }
 
+task wsImportValideringService(dependsOn: createGeneratedDir) {
+  def sourceWsdl = file('src/main/resources/innsending/ValideringServiceWS.wsdl')
+  def jaxbBindingsFile = file('src/main/resources/bindings.xml')
+  inputs.file sourceWsdl
+  outputs.dir generatedSrcDir
+
+  doLast {
+    ant.taskdef(name: 'wsimport', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImport.asPath)
+    ant.wsimport(keep: true,
+            destDir: sourceSets.main.output.classesDir,
+            sourcedestdir: generatedSrcDir,
+            wsdl: sourceWsdl,
+            wsdlLocation: '/innsending/ValideringServiceWS.wsdl',
+            binding: jaxbBindingsFile,
+            xnocompile: true)
+  }
+}
+
 task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
   def sourceWsdl = file('src/main/resources/landbruksregisteret/landbruksregisteret.wsdl')
   inputs.file sourceWsdl
@@ -311,6 +329,7 @@ ext.mergeServiceExceptionInDifferentPackagesv2 = {
 }
 
 compileJava.dependsOn(wsImportInnsendingService)
+compileJava.dependsOn(wsImportValideringService)
 compileJava.dependsOn(wsImportLandbruksregister)
 compileJava.dependsOn(wsImportGrunnboksutskriftInternv2)
 compileJava.dependsOn(wsImportGrunnbok)

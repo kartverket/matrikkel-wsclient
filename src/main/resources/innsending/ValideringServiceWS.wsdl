@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/validering"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             name="ValideringServiceWS"
+             targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/validering"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xsi:schemaLocation="http://kartverket.no/grunnbok/wsapi/v2/service/validering valideringParameters.xsd">
+
+    <types>
+        <xs:schema>
+            <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/validering" schemaLocation="valideringParameters.xsd"/>
+        </xs:schema>
+    </types>
+
+    <message name="validerRequest">
+        <part name="parameters" element="tns:valider"/>
+    </message>
+    <message name="validerResponse">
+        <part name="parameters" element="tns:validerResponse"/>
+    </message>
+
+    <message name="serviceException">
+        <part name="fault" element="tns:serviceException"/>
+    </message>
+    
+    <portType name="ValideringService">
+        <operation name="valider">
+            <input message="tns:validerRequest"/>
+            <output message="tns:validerResponse"/>
+            <fault message="tns:serviceException" name="ServiceException"/>
+        </operation>
+    </portType>
+
+    <binding name="ValideringServicePortBinding" type="tns:ValideringService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="valider">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="ValideringServiceWS">
+        <port binding="tns:ValideringServicePortBinding" name="ValideringServicePort">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+        </port>
+    </service>
+</definitions>

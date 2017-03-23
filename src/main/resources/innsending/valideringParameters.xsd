@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:inn="http://kartverket.no/grunnbok/wsapi/v2/domain/innsending"
-           xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/innsending"
+           xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/validering"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            elementFormDefault="qualified"
            version="1.0"
-           targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/innsending">
+           targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/validering">
 
 
     <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/innsending"
                schemaLocation="schema/innsending.xsd"/>
 
-    <xs:element name="sendTilTinglysing" type="tns:ForsendelseElementType"/>
-    <xs:element name="sendTilTinglysingResponse" type="tns:BehandlingsstatusElementType"/>
-
     <xs:element name="valider" type="tns:ForsendelseElementType"/>
     <xs:element name="validerResponse" type="tns:BehandlingsstatusElementType"/>
 
-    <xs:element name="hentStatus" type="tns:InnsendingIdElementType"/>
-    <xs:element name="hentStatusResponse" type="tns:BehandlingsstatusElementType"/>
-
-    <xs:element name="serviceException" nillable="true" type="tns:InnsendingServiceFaultInfo"/>
+    <xs:element name="serviceException" nillable="true" type="tns:ValideringServiceFaultInfo"/>
 
     <!--
     Deklarasjon av elementtyper som gjør at vi kan henvise til typer i innsending.xsd
@@ -33,30 +27,15 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="InnsendingIdElementType">
-        <xs:sequence>
-            <xs:element ref="inn:innsendingId"/>
-        </xs:sequence>
-    </xs:complexType>
-
     <xs:complexType name="BehandlingsstatusElementType">
         <xs:sequence>
             <xs:element ref="inn:forsendelsesstatus"/>
         </xs:sequence>
     </xs:complexType>
 
-    <!--
-    Vi har ingen eksterne referanser til denne (enda).
-    -->
-
-    <xs:complexType name="DokumentElementType">
-        <xs:sequence>
-            <xs:element ref="inn:dokument"/>
-        </xs:sequence>
-    </xs:complexType>
 
 
-    <xs:complexType name="InnsendingServiceFaultInfo">
+    <xs:complexType name="ValideringServiceFaultInfo">
         <xs:sequence>
             <xs:element name="feiltype" type="xs:string"/>
             <xs:element name="feilbeskrivelse" type="xs:string"/>

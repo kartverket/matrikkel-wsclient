@@ -32,7 +32,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
    public static final String WS_PACKAGE_NAME = "no.kartverket.grunnbok.wsapi.v2.domain.innsending";
    public static final String DOMAIN_PACKAGE_NAME = "no.statkart.wsclient.grunnbokv2.innsending.domene";
 
-   InnsendingServiceMapper() {
+   public InnsendingServiceMapper() {
       super(Mapping.class);
       MappingResolver mappingResolver = new MappingResolver();
       mappingResolver.addPackageMapping(WS_PACKAGE_NAME, DOMAIN_PACKAGE_NAME);
@@ -66,11 +66,11 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
       addMapper(new DokumentreferanseListMapper());
    }
 
-   Forsendelse mapForsendelse(no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelse domainForsendelse) {
+   public Forsendelse mapForsendelse(no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelse domainForsendelse) {
       return getMapping().d2w(domainForsendelse, Forsendelse.class);
    }
 
-   Forsendelsesstatus mapForsendelsesstatus(no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelsesstatus wsForsendelsesstatus) {
+   public Forsendelsesstatus mapForsendelsesstatus(no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelsesstatus wsForsendelsesstatus) {
       return getMapping().w2d(wsForsendelsesstatus, Forsendelsesstatus.class);
    }
 

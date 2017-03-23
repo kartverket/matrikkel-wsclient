@@ -34,6 +34,7 @@
             <xs:element name="behandlingsutfall" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <!-- representerer sak.behandlingsutfall-->
             <xs:element name="saksstatus" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="saksnummer" type="xs:long" minOccurs="0" maxOccurs="1"/>
             <xs:element name="tinglysingsinformasjon" type="inn:Tinglysingsinformasjon" minOccurs="0" maxOccurs="1"/>
             <xs:element name="behandlingsinformasjon" type="inn:Behandlingsinformasjon" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
