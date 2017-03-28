@@ -77,7 +77,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    }
 
    public static Forsendelsesstatus hentStatusFraStub(String innsendingId) {
-      if (Pattern.matches("\\d+,\\d+,\\d+,\\d+,\\d+", innsendingId)) {
+      if (Pattern.matches("\\d+,\\d+,\\d+,\\d+,\\d+,(.*[Ff]orretning\\[(\\d+)\\])?", innsendingId)) {
          Forsendelsesstatus forsendelsesstatus = hentForsendelsesstatusForInnsendingId(innsendingId);
          Dokumentinformasjon dokumentinformasjon = forsendelsesstatus.getTinglysingsinformasjon().getDokumentinformasjon().iterator().next();
          dokumentinformasjon.setDokumentnummer(new Random().nextInt(Integer.MAX_VALUE));
@@ -278,7 +278,8 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
    private static String createInnsendingIdFromForsendelse(Forsendelse forsendelse) {
       List<Dokument> dokumenter = forsendelse.getUsignertMelding().getDokumenter();
-      List<Rettsstiftelse> rettsstiftelser = dokumenter.get(0).getRettsstiftelser();
+      Dokument dokument = dokumenter.get(0);
+      List<Rettsstiftelse> rettsstiftelser = dokument.getRettsstiftelser();
       Rettsstiftelse rettsstiftelse = rettsstiftelser.get(0);
       if (rettsstiftelse instanceof Matrikkelenhetsendring) {
          List<Matrikkelenhet> til = ((Matrikkelenhetsendring) rettsstiftelse).getTil();
@@ -287,7 +288,8 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                String.valueOf(matrikkelenhet.getGaardsnummer()) + "," +
                String.valueOf(matrikkelenhet.getBruksnummer()) + "," +
                String.valueOf(matrikkelenhet.getFestenummer()) + "," +
-               String.valueOf(matrikkelenhet.getSeksjonsnummer());
+               String.valueOf(matrikkelenhet.getSeksjonsnummer()+ "," +
+               dokument.getDokumentreferanse());
       }
 
       return null;
