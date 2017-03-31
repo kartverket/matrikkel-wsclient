@@ -77,7 +77,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    }
 
    public static Forsendelsesstatus hentStatusFraStub(String innsendingId) {
-      if (Pattern.matches("\\d+,\\d+,\\d+,\\d+,\\d+,(.*[Ff]orretning\\[(\\d+)\\])?", innsendingId)) {
+      if (Pattern.matches("\\d+,\\d+,\\d+,\\d+,\\d+(,Forretning\\[(\\d+)\\])?", innsendingId)) {
          Forsendelsesstatus forsendelsesstatus = hentForsendelsesstatusForInnsendingId(innsendingId);
          Dokumentinformasjon dokumentinformasjon = forsendelsesstatus.getTinglysingsinformasjon().getDokumentinformasjon().iterator().next();
          dokumentinformasjon.setDokumentnummer(new Random().nextInt(Integer.MAX_VALUE));
