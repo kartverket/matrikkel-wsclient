@@ -42,11 +42,11 @@ public class IntegrationTestProperties {
    }
 
    public String getGrunnbokGrunnboksutskriftInternServiceUrl() {
-      return String.format("%s/grunnbok/wsapi/v1/GrunnboksutskriftInternServiceWS", getGrunnbokServerUrl());
+      return String.format("%s/grunnbok/wsapi/v2/GrunnboksutskriftInternServiceWS", getGrunnbokServerUrl());
    }
 
    public String getIdentServiceServiceUrl() {
-      return String.format("%s/grunnbok/wsapi/v1/IdentServiceWS", getGrunnbokServerUrl());
+      return String.format("%s/grunnbok/wsapi/v2/IdentServiceWS", getGrunnbokServerUrl());
    }
 
    public String getLandbruksregisterUser() {

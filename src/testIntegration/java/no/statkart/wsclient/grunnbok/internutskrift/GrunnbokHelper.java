@@ -1,18 +1,17 @@
 package no.statkart.wsclient.grunnbok.internutskrift;
 
-import no.kartverket.grunnbok.wsapi.v1.domain.basistyper.GrunnbokContext;
-import no.kartverket.grunnbok.wsapi.v1.domain.basistyper.Timestamp;
-import no.kartverket.grunnbok.wsapi.v1.domain.register.registerenhet.MatrikkelenhetId;
-import no.kartverket.grunnbok.wsapi.v1.domain.register.registerenhet.MatrikkelenhetIdent;
-import no.kartverket.grunnbok.wsapi.v1.domain.register.registerenhet.MatrikkelenhetIdentList;
-import no.kartverket.grunnbok.wsapi.v1.service.exception.ServiceException;
-import no.kartverket.grunnbok.wsapi.v1.service.servicetyper.MatrikkelenhetIdentTilMatrikkelenhetIdMap;
+import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
+import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.Timestamp;
+import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdent;
+import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdentList;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.MatrikkelenhetId;
+import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
+import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.MatrikkelenhetIdentTilMatrikkelenhetIdMap;
 import no.statkart.skif.exception.ImplementationException;
 import no.statkart.skif.exception.OperationalException;
-import no.statkart.skif.util.NullHostnameVerifier;
 import no.statkart.wsclient.IntegrationTestProperties;
-import no.statkart.wsclient.grunnbok.ident.DefaultIdentWS;
-import no.statkart.wsclient.grunnbok.ident.IdentWS;
+import no.statkart.wsclient.grunnbokv2.ident.DefaultIdentWS;
+import no.statkart.wsclient.grunnbokv2.ident.IdentWS;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -45,7 +44,7 @@ public class GrunnbokHelper {
 
    public GrunnbokContext context() {
       GrunnbokContext context = new GrunnbokContext();
-      context.setApiVersion(config.getGrunnbokApiVersion());
+      context.setSystemVersion(config.getGrunnbokApiVersion());
       context.setClientIdentification(config.getClientIdentification());
       context.setLocale("nb_NO");
       context.setSnapshotVersion(CURRENT());
@@ -82,7 +81,7 @@ public class GrunnbokHelper {
       final String grunnbokPassword = config.getGrunnbokPassword();
 
       if (identService == null) {
-         identService = new DefaultIdentWS(grunnbokUser, grunnbokPassword, config.getIdentServiceServiceUrl(), new NullHostnameVerifier());
+         identService = new DefaultIdentWS(grunnbokUser, grunnbokPassword, config.getIdentServiceServiceUrl());
       }
 
    }

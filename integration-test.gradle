@@ -31,6 +31,8 @@ configurations {
 //Create the task that runs the integration tests found from the
 //configured source directory and uses the correct classpath.
 task testIntegration(type: Test) {
+    group = 'verification'
+    description = 'Runs the integration tests.'
     testClassesDir = sourceSets.testIntegration.output.classesDir
     classpath = sourceSets.testIntegration.runtimeClasspath
     outputs.upToDateWhen { false /*false ensures integration tests are run every time you invoke this task */}
