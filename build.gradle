@@ -132,12 +132,9 @@ task wsImportInnsendingService(dependsOn: createGeneratedDir) {
             wsdl: sourceWsdl,
             wsdlLocation: '/innsending/InnsendingServiceWS.wsdl',
             binding: jaxbBindingsFile,
-            xnocompile: true) {
+            xnocompile: true,
+            encoding: 'UTF-8') {
       xjcarg(value: "-no-header")
-    }
-    copy {
-      from wsGenSrc
-      into generatedMainJavaDir
     }
   }
 }
@@ -158,12 +155,9 @@ task wsImportValideringService(dependsOn: createGeneratedDir) {
             wsdl: sourceWsdl,
             wsdlLocation: '/validering/ValideringServiceWS.wsdl',
             binding: jaxbBindingsFile,
-            xnocompile: true) {
+            xnocompile: true,
+            encoding: 'UTF-8') {
       xjcarg(value: "-no-header")
-    }
-    copy {
-      from wsGenSrc
-      into generatedMainJavaDir
     }
   }
 }
@@ -182,14 +176,11 @@ task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/landbruksregisteret/landbruksregisteret.wsdl',
-            xnocompile: true) {
+            xnocompile: true,
+            encoding: 'UTF-8') {
       xjcarg(value: "-Xequals")
       xjcarg(value: "-XhashCode")
       xjcarg(value: "-no-header")
-    }
-    copy {
-      from wsGenSrc
-      into generatedMainJavaDir
     }
   }
 }
@@ -209,17 +200,12 @@ task wsImportGrunnbok(dependsOn: createGeneratedDir) {
               sourcedestdir: wsGenSrc,
               wsdl: file.file,
               wsdlLocation: '/grunnbok/' + file.getRelativePath(),
-              xnocompile: true) {
+              xnocompile: true,
+              encoding: 'UTF-8') {
         xjcarg(value: "-Xequals")
         xjcarg(value: "-XhashCode")
-        xjcarg(value: "-no-header")
       }
     }
-    copy {
-      from wsGenSrc
-      into generatedMainJavaDir
-    }
-    mergeServiceExceptionInDifferentPackages()
   }
 
 }
@@ -239,15 +225,11 @@ task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
               sourcedestdir: wsGenSrc,
               wsdl: file.file,
               wsdlLocation: '/grunnboksutskriftinternv2/' + file.getRelativePath(),
-              xnocompile: true) {
+              xnocompile: true,
+              encoding: 'UTF-8') {
         xjcarg(value: "-Xequals")
         xjcarg(value: "-XhashCode")
-        xjcarg(value: "-no-header")
       }
-    }
-    copy {
-      from wsGenSrc
-      into generatedMainJavaDir
     }
   }
 }
@@ -267,16 +249,32 @@ task wsImportGrunnbokv2(dependsOn: createGeneratedDir) {
               sourcedestdir: wsGenSrc,
               wsdl: file.file,
               wsdlLocation: '/grunnbokv2/' + file.getRelativePath(),
-              xnocompile: true) {
+              xnocompile: true,
+              encoding: 'UTF-8') {
         xjcarg(value: "-Xequals")
         xjcarg(value: "-XhashCode")
-        xjcarg(value: "-no-header")
       }
     }
-    copy {
-      from wsGenSrc
-      into generatedMainJavaDir
+  }
+}
+
+task wsImport {
+  def wsGenSrcs = file("${buildDir}/wsimport/")
+  inputs.dir wsGenSrcs
+  outputs.dir generatedMainJavaDir
+
+  tasks.findAll { it.name.matches("^wsImport\\p{javaJavaIdentifierPart}+") }
+       .each    { dependsOn it }
+
+  doLast {
+    wsGenSrcs.eachDir { wsGenSrc ->
+      copy {
+        from wsGenSrc
+        into generatedMainJavaDir
+        duplicatesStrategy DuplicatesStrategy.WARN
+      }
     }
+    mergeServiceExceptionInDifferentPackages()
     mergeServiceExceptionInDifferentPackagesv2()
   }
 }
@@ -310,16 +308,16 @@ ext.mergeServiceExceptionInDifferentPackages = {
 
   //kjører regexp replace på package statement for flyttet fil
   relocatedFile = new File(replacePath.getPath(), 'ServiceException.java')
-  relocatedFile.text = relocatedFile.text.replaceFirst(/(?ms)package[^;]+/, "package " + packageString)
+  relocatedFile.setText(relocatedFile.getText('UTF-8').replaceFirst(/(?ms)package[^;]+/, "package " + packageString), 'UTF-8')
 
   def javaFiles = fileTree(dir: destination, includes: ['**/v1/**/*.java'])
   //legger til import statements for de andre java filene
   javaFiles.files.each { File file ->
     logger.info("adding exception import statement in ${file}")
-    file.text = file.text.replaceFirst('import ', "import ${packageString}.*;\nimport ")
+    file.setText(file.getText('UTF-8').replaceFirst('import ', "import ${packageString}.*;\nimport "), 'UTF-8')
   }
 
-  ant.replaceregexp {
+  ant.replaceregexp(encoding: 'UTF-8') {
     regexp(pattern: /url = new URL\(([^"]+)"\."\), "(.*)"\);/)
     substitution(expression: ('url = \\1"/\\2"); if (url == null) throw new MalformedURLException("Not found");'))
     fileset(dir: destination, erroronmissingdir: true) {
@@ -337,7 +335,7 @@ ext.mergeServiceExceptionInDifferentPackagesv2 = {
     replacePath.mkdirs()
   }
 
-  def exceptionFiles = fileTree(dir: destination, includes: ['**/v2/**/*Exception.java'], excludes: ['**/exception/*'])
+  def exceptionFiles = fileTree(dir: destination, includes: ['**/v2/**/*Exception.java'], excludes: ['**/exception/*', '**/validering/*', '**/innsending/*'])
   def File relocatedFile
   logger.info("replacePath ${replacePath}")
   //flytter alle exceptions til felles katalog
@@ -350,17 +348,17 @@ ext.mergeServiceExceptionInDifferentPackagesv2 = {
 
   //kjÃ¸rer regexp replace pÃ¥ package statement for flyttet fil
   relocatedFile = new File(replacePath.getPath(), 'ServiceException.java')
-  relocatedFile.text = relocatedFile.text.replaceFirst(/(?ms)package[^;]+/, "package " + packageString)
+  relocatedFile.setText(relocatedFile.getText('UTF-8').replaceFirst(/(?ms)package[^;]+/, "package " + packageString), 'UTF-8')
 
   def javaFiles = fileTree(dir: destination, includes: ['**/v2/**/*.java'])
 //  def javaFiles = fileTree(dir: destination, includes: ['/no/kartverket/grunnbok/wsapi/v2/**/*.java'])
   //legger til import statements for de andre java filene
   javaFiles.files.each { File file ->
     logger.info("adding exception import statement in ${file}")
-    file.text = file.text.replaceFirst('import ', "import ${packageString}.*;\nimport ")
+    file.setText(file.getText('UTF-8').replaceFirst('import ', "import ${packageString}.*;\nimport "), 'UTF-8')
   }
 
-  ant.replaceregexp {
+  ant.replaceregexp(encoding: 'UTF-8') {
     regexp(pattern: /url = new URL\(([^"]+)"\."\), "(.*)"\);/)
     substitution(expression: ('url = \\1"/\\2"); if (url == null) throw new MalformedURLException("Not found");'))
     fileset(dir: destination, erroronmissingdir: true) {
@@ -369,12 +367,7 @@ ext.mergeServiceExceptionInDifferentPackagesv2 = {
   }
 }
 
-compileJava.dependsOn(wsImportInnsendingService)
-compileJava.dependsOn(wsImportValideringService)
-compileJava.dependsOn(wsImportLandbruksregister)
-compileJava.dependsOn(wsImportGrunnboksutskriftInternv2)
-compileJava.dependsOn(wsImportGrunnbok)
-compileJava.dependsOn(wsImportGrunnbokv2)
+compileJava.dependsOn(wsImport)
 
 allprojects {
   tasks.withType(JavaCompile) {
