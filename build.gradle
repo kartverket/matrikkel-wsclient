@@ -151,7 +151,7 @@ task wsImportValideringService(dependsOn: createGeneratedDir) {
             destDir: sourceSets.main.output.classesDir,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
-            wsdlLocation: '/validering/ValideringServiceWS.wsdl',
+            wsdlLocation: '/innsending/ValideringServiceWS.wsdl',
             binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
@@ -263,7 +263,6 @@ task wsImport {
           .each    {
     dependsOn it;
     assert it.outputs.files.size() == 1
-    assert it.outputs.files.singleFile.isDirectory()
     inputs.dir it.outputs.files.singleFile
   }
 
