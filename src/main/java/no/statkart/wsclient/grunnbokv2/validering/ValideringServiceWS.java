@@ -14,7 +14,7 @@ public interface ValideringServiceWS {
 
       public static ValideringServiceWS get(InnsendingServiceWSProvider.InitRequirements initReqs) {
          ValideringServiceWS valideringService;
-         if (!initReqs.inProductionMode() && initReqs.doReturnStub()) {
+         if (!initReqs.inProductionDeployment() && initReqs.doReturnStub()) {
             valideringService = new MockValideringServiceWS();
          } else {
             valideringService = new DefaultValideringServiceWS(
@@ -23,7 +23,7 @@ public interface ValideringServiceWS {
          logger.debug("Returned {} as {} implementation, {}in production mode",
                valideringService.getClass().getSimpleName(),
                ValideringServiceWS.class.getSimpleName(),
-               initReqs.inProductionMode() ? "" : "not ");
+               initReqs.inProductionDeployment() ? "" : "not ");
          return valideringService;
       }
    }
