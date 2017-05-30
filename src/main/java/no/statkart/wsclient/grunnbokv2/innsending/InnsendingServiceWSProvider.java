@@ -14,8 +14,10 @@ public final class InnsendingServiceWSProvider {
 
       boolean inProductionMode();
 
+      boolean inProductionDeployment();
+
       /**
-       * Only relevant if inProductionMode returns false
+       * Only relevant if inProductionDeployment returns false
        *
        * @return true if a stubbed version is wanted
        */
@@ -29,7 +31,7 @@ public final class InnsendingServiceWSProvider {
    }
 
    public static InnsendingServiceWS getInnsendingServiceImplementation(InitRequirements initRequirements) {
-      if (initRequirements.inProductionMode()) {
+      if (initRequirements.inProductionDeployment()) {
          logger.info("In production mode: Returning default implementation " + DefaultInnsendingServiceWS.class);
          return new DefaultInnsendingServiceWS(initRequirements.getBruker(), initRequirements.getPassord(), initRequirements.getEndpointUrl());
       } else {
