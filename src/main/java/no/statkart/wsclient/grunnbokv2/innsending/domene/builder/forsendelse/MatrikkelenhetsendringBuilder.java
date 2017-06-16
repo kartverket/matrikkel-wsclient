@@ -47,6 +47,23 @@ public class MatrikkelenhetsendringBuilder {
       return matrikkelenhetsendringBuilder;
    }
 
+   public static MatrikkelenhetsendringBuilder aOpprettFestegrunn() {
+      MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
+      matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OPPRETT_FESTEGRUNN);
+      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
+      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("FR_RFE").withNavn("REGISTRERING AV FESTENR.").build());
+      return matrikkelenhetsendringBuilder;
+   }
+
+
+   public static MatrikkelenhetsendringBuilder aOmnummererMatrikkelenhet() {
+      MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
+      matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OMNUMMERER_MATRIKKELENHETER);
+      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
+      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("OM_OMN").withNavn("OMNUMMERERING").build());
+      return matrikkelenhetsendringBuilder;
+   }
+
    public MatrikkelenhetsendringBuilder withFra(List<Matrikkelenhet> fra) {
       this.fra = fra;
       return this;

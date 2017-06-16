@@ -436,6 +436,7 @@
                 <xs:element name="anmerkningPaaPerson" type="inn:AnmerkningPaaPerson"/>
                 <xs:element name="fradeling" type="inn:Matrikkelenhetsendring"/>
                 <xs:element name="sammenslaaingAvMatrikkelenheter" type="inn:Matrikkelenhetsendring"/>
+                <xs:element name="omnummereringAvMatrikkelenheter" type="inn:Matrikkelenhetsendring"/>
                 <xs:element name="festenummerGittBruksnummer" type="inn:Matrikkelenhetsendring"/>
                 <xs:element name="prioritetsbestemmelseForDokumentnummer"
                             type="inn:PrioritetsbestemmelseForDokumentnummer"/>
