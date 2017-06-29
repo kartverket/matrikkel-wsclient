@@ -14,9 +14,9 @@ import java.util.Map;
  */
 @SuppressWarnings("unchecked")
 public final class WebServiceBuilder<T> {
-   private static final int TIMEOUT_MILLIS = 30000;
+   private static final int TIMEOUT_MILLIS = 30_000; //30 sekunder
    private static final int DEFAULT_RETRIES = 2; //så 2 retries betyr at det er totalt 3 forsøk på kallet
-   private static final int SLEEPTIME_MILLIS = 60000;//Ventetid mellom hvert kall til tjenesten, ved flere forsøk.
+   private static final int SLEEPTIME_MILLIS = 60_000; //1 minutt - Ventetid mellom hvert kall til tjenesten, ved flere forsøk.
 
    private int timeout;
    private int retries;
