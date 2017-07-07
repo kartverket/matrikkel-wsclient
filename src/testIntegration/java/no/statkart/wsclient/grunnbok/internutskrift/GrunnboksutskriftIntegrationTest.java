@@ -1,11 +1,14 @@
 package no.statkart.wsclient.grunnbok.internutskrift;
 
+import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdent;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.MatrikkelenhetId;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.RegisterenhetId;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.statkart.skif.util.NullHostnameVerifier;
 import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbokv2.internutskrift.DefaultGrunnboksutskriftInternWS;
+import no.statkart.wsclient.grunnbokv2.internutskrift.GrunnboksutskriftInternWS;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -59,7 +62,7 @@ public class GrunnboksutskriftIntegrationTest {
    }
 
    /**
-    * @see GrunnboksutskriftInternWS#delAvGrunnboksutskriftPengeheftelser
+    * @see GrunnboksutskriftInternWS#delAvGrunnboksutskriftHeftelser
     */
    @Test
    public void delAvGrunnboksutskriftPengeheftelser() throws ServiceException {
@@ -174,7 +177,7 @@ public class GrunnboksutskriftIntegrationTest {
    }
 
    /**
-    * @see GrunnboksutskriftInternWS#delAvGrunnboksutskriftTidligerePengeheftelser
+    * @see GrunnboksutskriftInternWS#delAvGrunnboksutskriftTidligereHeftelser
     */
    @Test
    public void delAvGrunnboksutskriftTidligerePengeheftelser() throws ServiceException {

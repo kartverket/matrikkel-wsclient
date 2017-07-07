@@ -1,6 +1,5 @@
 package no.statkart.wsclient.landbruksregister;
 
-import no.kartverket.grunnbok.wsapi.v1.service.exception.ServiceException;
 import no.slf.lib.server.ws.WsEiendomDTO;
 import no.statkart.wsclient.IntegrationTestProperties;
 import org.assertj.core.api.Assertions;
@@ -49,7 +48,7 @@ public class LandbruksregisterIntegrationTest {
 
 
    @BeforeTest
-   public void setUp() throws ServiceException {
+   public void setUp() {
       final IntegrationTestProperties config = new IntegrationTestProperties();
       final String uername = config.getLandbruksregisterUser();
       final String password = config.getLandbruksregisterPassword();
@@ -63,7 +62,7 @@ public class LandbruksregisterIntegrationTest {
    }
 
    @AfterTest
-   public void teardown() throws ServiceException {
+   public void teardown() {
       landbruksregister = null;
    }
 

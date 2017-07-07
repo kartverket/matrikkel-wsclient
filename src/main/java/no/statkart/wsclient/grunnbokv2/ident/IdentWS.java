@@ -1,6 +1,5 @@
 package no.statkart.wsclient.grunnbokv2.ident;
 
-import no.kartverket.grunnbok.wsapi.v1.service.ident.ValidationException_Exception;
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.BorettslagsandelIdentList;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.KommuneIdentList;
@@ -22,6 +21,6 @@ public interface IdentWS {
 
    //TODO: Denne brukes kun fra test, hvorfor behøver vi den?
    KommuneIdentTilKommuneIdMap findKommuneIdsForIdents(KommuneIdentList idents, GrunnbokContext grunnbokContext)
-         throws ServiceException, ValidationException_Exception;
+         throws ServiceException;
 
 }

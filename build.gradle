@@ -180,31 +180,6 @@ task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
   }
 }
 
-task wsImportGrunnbok(dependsOn: createGeneratedDir) {
-  def sourceWsdlDir = file('src/main/resources/grunnbok')
-  def wsGenSrc = file("${buildDir}/wsimport/grunnbok")
-  inputs.dir sourceWsdlDir
-  outputs.dir wsGenSrc
-
-  doLast {
-    ant.taskdef(name: 'wsimportGrunnbok', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImportWithXJCBinding.asPath)
-    wsGenSrc.mkdirs()
-    fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
-      ant.wsimportGrunnbok(keep: true,
-              destdir: sourceSets.main.output.classesDir,
-              sourcedestdir: wsGenSrc,
-              wsdl: file.file,
-              wsdlLocation: '/grunnbok/' + file.getRelativePath(),
-              xnocompile: true,
-              encoding: 'UTF-8') {
-        xjcarg(value: "-Xequals")
-        xjcarg(value: "-XhashCode")
-      }
-    }
-    mergeServiceExceptionInDifferentPackages(file("${buildDir}/wsimport/grunnbok"), 'no.kartverket.grunnbok.wsapi.v1', 'service.exception')
-  }
-}
-
 task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
   def sourceWsdlDir = file('src/main/resources/grunnboksutskriftinternv2')
   def wsGenSrc = file("${buildDir}/wsimport/grunnboksutskriftinternv2")
