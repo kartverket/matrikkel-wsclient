@@ -46,7 +46,7 @@ class RettsstiftelseListMapper implements TypeMapper<RettsstiftelseList, List<no
             } else if (typeMatrikkelenhetsendring == OPPRETT_FESTEGRUNN) {
                jaxbElement = objectFactory.createRettsstiftelseListFradeling(matrikkelenhetsendringWsObject);
             } else if (typeMatrikkelenhetsendring == OMNUMMERER_MATRIKKELENHETER) {
-               jaxbElement = objectFactory.createRettsstiftelseListFradeling(matrikkelenhetsendringWsObject);
+               jaxbElement = objectFactory.createRettsstiftelseListOmnummereringAvMatrikkelenheter(matrikkelenhetsendringWsObject);
             }
          }
 
