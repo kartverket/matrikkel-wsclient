@@ -8,7 +8,6 @@ import no.statkart.skif.exception.ImplementationException;
 import no.statkart.wsclient.sdo.parsers.SDOParser;
 import no.statkart.wsclient.sdo.parsers.SeidSDOv1_0Parser;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,8 +90,7 @@ public class SDODecoder {
 
    public static String decode(byte[] content, String targetEncoding) {
       try {
-//         return new String(java.util.Base64.getDecoder().decode(content), targetEncoding); //Java 8
-         return new String(DatatypeConverter.parseBase64Binary(new String(content)), targetEncoding); //krever jaxb på classpath - todo: bruk java 8 implementasjon
+         return new String(java.util.Base64.getDecoder().decode(content), targetEncoding); //Java 8
       } catch (IOException e) {
          throw Throwables.propagate(e);
       }
