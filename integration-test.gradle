@@ -33,7 +33,7 @@ configurations {
 task testIntegration(type: Test) {
     group = 'verification'
     description = 'Runs the integration tests.'
-    testClassesDir = sourceSets.testIntegration.output.classesDir
+    testClassesDirs = sourceSets.testIntegration.output.classesDirs
     classpath = sourceSets.testIntegration.runtimeClasspath
     outputs.upToDateWhen { false /*false ensures integration tests are run every time you invoke this task */}
 
