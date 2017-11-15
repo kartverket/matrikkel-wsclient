@@ -104,15 +104,17 @@ publishing {
 }
 
 //noinspection GroovyAssignabilityCheck
-task createGeneratedDir(dependsOn: processResources) << {
-  def classesDir = sourceSets.main.output.classesDir
-  def destDir = generatedMainJavaDir
+task createGeneratedDir(dependsOn: processResources) {
+  doLast {
+    def classesDir = sourceSets.main.output.classesDir
+    def destDir = generatedMainJavaDir
 
-  if(!classesDir.exists()) {
-    classesDir.mkdirs()
-  }
-  if( !destDir.exists() ) {
-    destDir.mkdirs()
+    if (!classesDir.exists()) {
+      classesDir.mkdirs()
+    }
+    if (!destDir.exists()) {
+      destDir.mkdirs()
+    }
   }
 }
 
