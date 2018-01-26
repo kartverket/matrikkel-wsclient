@@ -54,7 +54,7 @@ public class GrunnbokHelper {
    private static Timestamp CURRENT() {
       try {
          XMLGregorianCalendar date = DatatypeFactory.newInstance()
-               .newXMLGregorianCalendar(9999, 1, 1, 0, 0, 0, 0, 1);
+               .newXMLGregorianCalendar(9999, 1, 1, 0, 0, 0, 0, 60);
          Timestamp value = new Timestamp();
          value.setTimestamp(date);
          return value;
