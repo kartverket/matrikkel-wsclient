@@ -1,0 +1,34 @@
+// Gradle init.script for publisering til nexus
+// Eksempel-bruk:
+//
+//    set MAVEN_PUBLISH=https://username:password@nexus.statkart.no/repository/releases
+//    gradlew publish --init-script config/gradle/scripts/mavenPublish.gradle
+
+rootProject {
+    if (name != 'buildSrc') {
+        allprojects { Project project ->
+            plugins.withType(MavenPublishPlugin) {
+                project.publishing {
+                    repositories {
+                        String mavenUpload = System.getenv('MAVEN_PUBLISH')
+                        maven {
+                            if (mavenUpload) {
+                                String creds = mavenUpload.split('@|//').getAt(1)
+                                url mavenUpload.replace(creds.concat('@'), '') //url kommer i konsoll - ikke ha credentials der
+                                credentials {
+                                    username creds.split(':').getAt(0) ?: ""
+                                    password creds.split(':').getAt(1) ?: ""
+                                }
+                            } else {
+                                logger.error("ERROR: Maven publish not defined. Set missing env variable {}", 'MAVEN_PUBLISH')
+                            }
+                            logger.info("Configured maven publish of {} to {} with credentials {}", project.path, url, credentials)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
