@@ -70,9 +70,7 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            echo 'always send mattermost feed'
-            echo notificationMessage(currentBuild, currentBuild.resultIsWorseOrEqualTo('UNSTABLE') ? changelistOnUnstable(currentBuild) : '')
-            mattermostSend([channel: 'jenkins-feed', message: notificationMessage(currentBuild, currentBuild.resultIsWorseOrEqualTo('UNSTABLE') ? changelistOnUnstable(currentBuild) : '')])
+            notifyBuildFeed(currentBuild, currentBuild.resultIsWorseOrEqualTo('UNSTABLE') ? "\nChanges: ${env.CHANGES_SINCE_LAST_SUCCESS}" : '')
         }
 
         changed {
@@ -128,10 +126,22 @@ static def gradleOptions(params, env) {
 }
 
 
-static def notificationMessage(currentBuild, extra1 = '') {
-    "${currentBuild.description} ${currentBuild.displayName} ${currentBuild.result} (${currentBuild.absoluteUrl}) ${(extra1 == null) ? '' : '\n' + extra1}"
+static def notifyBuildFeed(currentBuild, extra1 = '') {
+    def message = "${currentBuild.absoluteUrl} ${currentBuild.result}"
+    if (extra1 != '') {
+        message += '\n' + extra1
+    }
+    def color = '#439FE0'
+    if ('FAILURE' == currentBuild.result) {
+        color = 'danger'
+    }
+    if ('UNSTABLE' == currentBuild.result) {
+        color = 'waning'
+    }
+    if ('SUCCESS' == currentBuild.result) {
+        color = 'good'
+    }
+
+    mattermostSend([channel: 'jenkins-feed', message: message, color: color])
 }
 
-static String changelistOnUnstable(env) {
-    return "\nChanges: ${env.CHANGES_SINCE_LAST_SUCCESS}"
-}

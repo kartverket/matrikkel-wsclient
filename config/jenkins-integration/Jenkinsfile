@@ -71,7 +71,7 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            mattermostSend([channel: 'jenkins-feed', message: notificationMessage(env)])
+            notifyBuildFeed(currentBuild)
         }
 
         changed {
@@ -126,6 +126,21 @@ static def gradleOptions(params, env) {
     ].join(' ')
 }
 
-static def notificationMessage(env, extra1 = '') {
-    "${env.JOB_NAME}#${env.BUILD_NUMBER} ${env.BUILD_STATUS} (${env.BUILD_URL}) ${(extra1 == null) ? '' : '\n' + extra1}"
+static def notifyBuildFeed(currentBuild, extra1 = '') {
+    def message = "${currentBuild.absoluteUrl} ${currentBuild.result}"
+    if (extra1 != '') {
+        message += '\n' + extra1
+    }
+    def color = '#439FE0'
+    if ('FAILURE' == currentBuild.result) {
+        color = 'danger'
+    }
+    if ('UNSTABLE' == currentBuild.result) {
+        color = 'waning'
+    }
+    if ('SUCCESS' == currentBuild.result) {
+        color = 'good'
+    }
+
+    mattermostSend([channel: 'jenkins-feed', message: message, color: color])
 }
