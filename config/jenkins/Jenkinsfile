@@ -70,7 +70,7 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            mattermostSend([channel: 'jenkins-feed', message: notificationMessage(env, changelistOnUnstable(env))])
+            mattermostSend([channel: 'jenkins-feed', message: notificationMessage(currentBuild, currentBuild.resultIsWorseOrEqualTo('UNSTABLE') ? changelistOnUnstable(currentBuild) : '')])
         }
 
         changed {
@@ -126,13 +126,10 @@ static def gradleOptions(params, env) {
 }
 
 
-static def notificationMessage(env, extra1 = '') {
-    "${env.JOB_NAME}#${env.BUILD_NUMBER} ${env.BUILD_STATUS} (${env.BUILD_URL}) ${(extra1 == null) ? '' : '\n' + extra1}"
+static def notificationMessage(currentBuild, extra1 = '') {
+    "${currentBuild.description} ${currentBuild.displayName} ${currentBuild.result} (${currentBuild.absoluteUrl}) ${(extra1 == null) ? '' : '\n' + extra1}"
 }
 
 static String changelistOnUnstable(env) {
-    if ('FAILURE'.equals(env.BUILD_STATUS) || 'UNSTABLE'.equals(env.BUILD_STATUS)) {
-        return "\nChanges: ${env.CHANGES_SINCE_LAST_SUCCESS}"
-    }
-    return null
+    return "\nChanges: ${env.CHANGES_SINCE_LAST_SUCCESS}"
 }

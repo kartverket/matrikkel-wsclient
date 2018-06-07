@@ -22,3 +22,5 @@ gradle.afterProject { project ->
     }
 }
 
+slett meg!
+
