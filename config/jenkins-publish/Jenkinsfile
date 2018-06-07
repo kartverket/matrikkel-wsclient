@@ -22,6 +22,10 @@ pipeline { //declarative pipeline syntax
         jdk 'Java 8 Latest' //spesifisert java versjon for bygging av release
     }
 
+    parameters {
+        string(name: 'SUFFIX', defaultValue: '.0', description: 'Subversjon for bygg.')
+    }
+
     environment {
         GRADLE_OPTS = "-Xmx1g"
 
@@ -73,13 +77,13 @@ pipeline { //declarative pipeline syntax
 
 static def gradleOptions(params, env) {
     return [
-            "-Dsuffix=", // offisiell versjon for publisering (tomt suffix)
+            "-Dsuffix=${params.SUFFIX}", // offisiell versjon for publisering
             '-Dorg.gradle.daemon=false',
             '--stacktrace'
     ].join(' ')
 }
 
-static def notifyBuildFeed(currentBuild, extra1 = '') {
+def notifyBuildFeed(currentBuild, extra1 = '') {
     def message = "${currentBuild.absoluteUrl} ${currentBuild.result}"
     if (extra1 != '') {
         message += '\n' + extra1

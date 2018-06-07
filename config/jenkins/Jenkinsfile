@@ -27,7 +27,7 @@ pipeline { //declarative pipeline syntax
         GRADLE_OPTS = "-Xmx1g"
 
         //for publisering til sentralt maven repo bindes opp via jenkins credential (secret text)
-        MAVEN_PUBLISH = credentials('MAVEN_DEPLOY_SNAPSHOTS')
+        MAVEN_PUBLISH = credentials('MAVEN_DEPLOY_RELEASE_CANDIDATE')
     }
 
     stages {
@@ -119,14 +119,14 @@ Build : $BUILD_URL <br>
 
 static def gradleOptions(params, env) {
     return [
-            "-Dsuffix=-build${env.BUILD_NUMBER}-SNAPSHOT", //versjon for publisering
+            "-Dsuffix=-rc-${env.BUILD_NUMBER}", //versjon for publisering
             '-Dorg.gradle.daemon=false',
             '--stacktrace'
     ].join(' ')
 }
 
 
-static def notifyBuildFeed(currentBuild, extra1 = '') {
+def notifyBuildFeed(currentBuild, extra1 = '') {
     def message = "${currentBuild.absoluteUrl} ${currentBuild.result}"
     if (extra1 != '') {
         message += '\n' + extra1

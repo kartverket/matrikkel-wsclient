@@ -16,7 +16,7 @@ Dersom en har en tidligere versjon så fungerer antakeligvis ikke kjøring av in
 
 # Versjonering og branching
 Denne modulen har single branch oppsett og deployer versjoner fra trunk (master).
-Test-versjoner publiseres automatisk med versjonsnummer etterfulgt av `-buildX`; f.eks. `2-build3` 
+Test-versjoner publiseres automatisk med versjonsnummer etterfulgt av `-rc-X`; f.eks. `2.0-rc-3` 
 
 
 # Publisering

@@ -30,9 +30,6 @@ pipeline { //declarative pipeline syntax
 
     environment {
         GRADLE_OPTS = "-Xmx1g"
-
-        //for publisering til sentralt maven repo bindes opp via jenkins credential (secret text)
-        MAVEN_PUBLISH = credentials('MAVEN_DEPLOY_SNAPSHOTS')
     }
 
     stages {
@@ -126,7 +123,7 @@ static def gradleOptions(params, env) {
     ].join(' ')
 }
 
-static def notifyBuildFeed(currentBuild, extra1 = '') {
+def notifyBuildFeed(currentBuild, extra1 = '') {
     def message = "${currentBuild.absoluteUrl} ${currentBuild.result}"
     if (extra1 != '') {
         message += '\n' + extra1
