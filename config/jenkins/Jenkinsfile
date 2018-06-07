@@ -71,6 +71,7 @@ pipeline { //declarative pipeline syntax
     post {
         always {
             echo 'always send mattermost feed'
+            echo notificationMessage(currentBuild, currentBuild.resultIsWorseOrEqualTo('UNSTABLE') ? changelistOnUnstable(currentBuild) : '')
             mattermostSend([channel: 'jenkins-feed', message: notificationMessage(currentBuild, currentBuild.resultIsWorseOrEqualTo('UNSTABLE') ? changelistOnUnstable(currentBuild) : '')])
         }
 
