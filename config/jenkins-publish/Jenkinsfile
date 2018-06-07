@@ -70,20 +70,8 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            mattermostSend([channel: 'jenkins-matrikkel'])
-        }
-
-        changed {
-            echo 'build status changed'
-        }
-        failure {
-            echo 'build status is failed'
-        }
-        success {
-            echo 'build status is success'
-        }
-        unstable {
-            echo 'build status is unstable'
+            def extra = ""
+            mattermostSend([channel: 'jenkins-matrikkel', message: "${env.JOB_NAME}#${env.BUILD_NUMBER} ${env.BUILD_STATUS} (${env.BUILD_URL}) ${extra}"])
         }
     }
 

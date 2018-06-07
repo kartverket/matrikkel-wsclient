@@ -77,7 +77,12 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            mattermostSend([channel: 'jenkins-matrikkel'])
+            def extra = ""
+            if ('FAILURE'.equals(currentBuild.currentResult) || 'UNSTABLE'.equals(currentBuild.currentResult)) {
+                extra += "\nChanges: ${env.CHANGES_SINCE_LAST_SUCCESS}"
+            }
+
+            mattermostSend([channel: 'jenkins-matrikkel', message: "${env.JOB_NAME}#${env.BUILD_NUMBER} ${env.BUILD_STATUS} (${env.BUILD_URL}) ${extra}"])
         }
 
         changed {
@@ -118,15 +123,6 @@ Build : $BUILD_URL <br>
 ''',
                     recipientProviders: [[$class: 'FirstFailingBuildSuspectsRecipientProvider'], [$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
 
-        }
-        failure {
-            echo 'build status is failed'
-        }
-        success {
-            echo 'build status is success'
-        }
-        unstable {
-            echo 'build status is unstable'
         }
     }
 
