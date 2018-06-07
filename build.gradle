@@ -40,7 +40,7 @@ test {
 repositories {
   maven {
     name = 'public'
-    url project.ext.properties.get('MAVEN_REPO', 'https://nexus.statkart.no/repository/public/')
+    url MAVEN_REPO
   }
 }
 

@@ -1,5 +1,12 @@
 rootProject.name = 'matrikkel-wsclient'
 
+
+gradle.beforeProject { project ->
+    if (!project.hasProperty('MAVEN_REPO')) {
+        project.ext.set('MAVEN_REPO', 'https://nexus.statkart.no/repository/public/')
+    }
+}
+
 /**
  * Vedlikehold av wrapper via kommando. Feks:
  * gradle wrapper --gradle-version 2.12
