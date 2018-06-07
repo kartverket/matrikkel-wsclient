@@ -7,8 +7,6 @@
  For jenkins pipeline documentation https://jenkins.io/doc/book/pipeline/
  TIP: Import DSL into your IntelliJ from http://jenkins.statkart.no:8021/jenkins/pipeline-syntax/gdsl
 
- Branch navn delegeres av Multibranch Pipeline som variabel BRANCH_NAME
-
  Polling skjer via oppsett av multibranch-jobb og defineres derfor ikke her i denne filen.
 
  Multibranch oppsett sjekker ut kodebasen automatisk. Denne havner som i roten til hvert workspace (som default).
@@ -21,17 +19,12 @@ pipeline { //declarative pipeline syntax
         label ""
     }
 
-    parameters {
-        string(name: 'BRANCH_NAME', defaultValue: "${env.BRANCH_NAME ?: 'trunk'}", description: 'Branch for kildekode.')
-    }
-
     tools {
         jdk 'Java 8 Latest' //spesifisert java versjon for bygging av release
     }
 
     environment {
         GRADLE_OPTS = "-Xmx1g"
-        BRANCH_NAME = "${params.BRANCH_NAME}"
 
         //for publisering til sentralt maven repo bindes opp via jenkins credential (secret text)
         MAVEN_PUBLISH = credentials('MAVEN_DEPLOY_SNAPSHOTS')
@@ -77,7 +70,7 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            mattermostSend([channel: 'jenkins-matrikkel', message: "${env.JOB_NAME}#${env.BUILD_NUMBER} ${env.BUILD_STATUS} (${env.BUILD_URL}) ${changelistOnUnstable(currentBuild, env)}"])
+            mattermostSend([channel: 'jenkins-feed', message: notificationMessage(env, changelistOnUnstable(env))])
         }
 
         changed {
@@ -133,8 +126,12 @@ static def gradleOptions(params, env) {
 }
 
 
-static String changelistOnUnstable(currentBuild, env) {
-    if ('FAILURE'.equals(currentBuild.currentResult) || 'UNSTABLE'.equals(currentBuild.currentResult)) {
+static def notificationMessage(env, extra1 = '') {
+    "${env.JOB_NAME}#${env.BUILD_NUMBER} ${env.BUILD_STATUS} (${env.BUILD_URL}) ${(extra1 == null) ? '' : '\n' + extra1}"
+}
+
+static String changelistOnUnstable(env) {
+    if ('FAILURE'.equals(env.BUILD_STATUS) || 'UNSTABLE'.equals(env.BUILD_STATUS)) {
         return "\nChanges: ${env.CHANGES_SINCE_LAST_SUCCESS}"
     }
     return null

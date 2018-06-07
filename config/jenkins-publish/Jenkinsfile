@@ -8,8 +8,6 @@
  For jenkins pipeline documentation https://jenkins.io/doc/book/pipeline/
  TIP: Import DSL into your IntelliJ from http://jenkins.statkart.no:8021/jenkins/pipeline-syntax/gdsl
 
- Branch navn delegeres av Multibranch Pipeline som variabel BRANCH_NAME
-
  Multibranch oppsett sjekker ut kodebasen automatisk. Denne havner som i roten til hvert workspace (som default).
 */
 
@@ -20,17 +18,12 @@ pipeline { //declarative pipeline syntax
         label ""
     }
 
-    parameters {
-        string(name: 'BRANCH_NAME', defaultValue: "${env.BRANCH_NAME ?: 'trunk'}", description: 'Branch for kildekode.')
-    }
-
     tools {
         jdk 'Java 8 Latest' //spesifisert java versjon for bygging av release
     }
 
     environment {
         GRADLE_OPTS = "-Xmx1g"
-        BRANCH_NAME = "${params.BRANCH_NAME}"
 
         //for publisering til sentralt maven repo bindes opp via jenkins credential (secret text)
         MAVEN_PUBLISH = credentials('MAVEN_DEPLOY_RELEASES')
@@ -70,8 +63,7 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            def extra = ""
-            mattermostSend([channel: 'jenkins-matrikkel', message: "${env.JOB_NAME}#${env.BUILD_NUMBER} ${env.BUILD_STATUS} (${env.BUILD_URL}) ${extra}"])
+            mattermostSend([channel: 'jenkins-feed', message: notificationMessage(env)])
         }
     }
 
@@ -81,10 +73,12 @@ pipeline { //declarative pipeline syntax
 
 static def gradleOptions(params, env) {
     return [
-            "-Dsuffix=-build${env.BUILD_NUMBER}-SNAPSHOT", //versjon for publisering
+            "-Dsuffix=", // offisiell versjon for publisering (tomt suffix)
             '-Dorg.gradle.daemon=false',
             '--stacktrace'
     ].join(' ')
 }
 
-
+static def notificationMessage(env, extra1 = '') {
+    "${env.JOB_NAME}#${env.BUILD_NUMBER} ${env.BUILD_STATUS} (${env.BUILD_URL}) ${(extra1 == null) ? '' : '\n' + extra1}"
+}
