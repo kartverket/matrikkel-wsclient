@@ -1,5 +1,7 @@
 #!groovy
 
+@Library('common@matrikkel') _
+
 /*
  Multibranch Pipeline for Continuous integration (CI) prosess i Jenkins.
  Hver branch har denne innsjekket på fast plassering: config/jenkins-integration/Jenkinsfile
@@ -35,12 +37,12 @@ pipeline { //declarative pipeline syntax
     stages {
         stage('Prepare') {
             steps {
-                bat "gradlew clean assemble --refresh-dependencies --profile ${gradleOptions(params, env)}"
+                bat "gradlew clean assemble --refresh-dependencies --profile ${gradleOptions(this)}"
             }
         }
         stage('Integration test') {
             steps {
-                bat "gradlew testIntegration -DignoreFailures=true ${gradleOptions(params, env)}"
+                bat "gradlew testIntegration -DignoreFailures=true ${gradleOptions(this)}"
                 junit '**/test-results/testIntegration/*.xml'
                 //                            step([$class: 'Publisher', reportFilenamePattern: '**/build/reports/tests/testng-results.xml'])
             }
@@ -68,76 +70,21 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            notifyBuildFeed(currentBuild)
+            pushBuildFeed()
         }
 
         changed {
             echo 'build status changed'
-
-            //for mulig substituert innhold se https://github.com/jenkinsci/email-ext-plugin/tree/master/src/main/java/hudson/plugins/emailext/plugins/content
-            emailext to: 'lislei@kartverket.no',
-                    subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!',
-                    replyTo: 'noreply@kartverket.no',
-                    mimeType: 'text/html',
-                    body: '''
-<html>
-<body>
-You are receiving this email because <a href="$BUILD_URL">Build $BUILD_NUMBER $BUILD_CAUSE has been set to: $BUILD_STATUS</a>
-
-<br>
-<br>
-<b>Test Results :</b><ul>
-<li>Failed : ${TEST_COUNTS,var="fail"} / ${TEST_COUNTS}</li>
-<li>Skipped: ${TEST_COUNTS,var="skip"} / ${TEST_COUNTS}</li>
-<li>Passed : ${TEST_COUNTS,var="pass"} / ${TEST_COUNTS}</li>
-</ul>
-<pre>${FAILED_TESTS,showStack=false,maxTests=8}</pre>
-
-<br>
-<br>
-<b>Changes since last success:</b> <br>
-<pre>${CHANGES_SINCE_LAST_SUCCESS}</pre>
-
-<br>
-<br>
-Build : $BUILD_URL <br>
-
-</body>
-</html>
-
-
-''',
-                    recipientProviders: [[$class: 'FirstFailingBuildSuspectsRecipientProvider'], [$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']]
-
+            emailBuildDetails('lislei@kartverket.no')
         }
     }
-
 
 }
 
 
-static def gradleOptions(params, env) {
+static def gradleOptions(script) {
     return [
             '-Dorg.gradle.daemon=false',
             '--stacktrace'
     ].join(' ')
-}
-
-def notifyBuildFeed(currentBuild, extra1 = '') {
-    def message = "${currentBuild.absoluteUrl} ${currentBuild.result}"
-    if (extra1 != '') {
-        message += '\n' + extra1
-    }
-    def color = '#439FE0'
-    if ('FAILURE' == currentBuild.result) {
-        color = 'danger'
-    }
-    if ('UNSTABLE' == currentBuild.result) {
-        color = 'waning'
-    }
-    if ('SUCCESS' == currentBuild.result) {
-        color = 'good'
-    }
-
-    mattermostSend([channel: 'jenkins-feed', message: message, color: color])
 }

@@ -1,5 +1,7 @@
 #!groovy
 
+@Library('common@matrikkel') _
+
 /*
  Pipeline for Continuous integration (CI) prosess i Jenkins.
  Dette bygget trigges manuelt og skal ikke trigges fra SCM.
@@ -36,12 +38,12 @@ pipeline { //declarative pipeline syntax
     stages {
         stage('Prepare') {
             steps {
-                bat "gradlew clean assemble --refresh-dependencies --profile ${gradleOptions(params, env)}"
+                bat "gradlew clean assemble --refresh-dependencies --profile ${gradleOptions(this)}"
             }
         }
         stage('Publish') {
             steps {
-                bat "gradlew publish ${gradleOptions(params, env)} --init-script config/gradle/scripts/mavenPublish.gradle"
+                bat "gradlew publish ${gradleOptions(this)} --init-script config/gradle/scripts/mavenPublish.gradle"
             }
         }
 
@@ -67,7 +69,7 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            notifyBuildFeed(currentBuild)
+            pushBuildFeed()
         }
     }
 
@@ -75,29 +77,10 @@ pipeline { //declarative pipeline syntax
 }
 
 
-static def gradleOptions(params, env) {
+static def gradleOptions(script) {
     return [
-            "-Dsuffix=${params.SUFFIX}", // offisiell versjon for publisering
+            "-Dsuffix=${script.params.SUFFIX}", // offisiell versjon for publisering
             '-Dorg.gradle.daemon=false',
             '--stacktrace'
     ].join(' ')
-}
-
-def notifyBuildFeed(currentBuild, extra1 = '') {
-    def message = "${currentBuild.absoluteUrl} ${currentBuild.result}"
-    if (extra1 != '') {
-        message += '\n' + extra1
-    }
-    def color = '#439FE0'
-    if ('FAILURE' == currentBuild.result) {
-        color = 'danger'
-    }
-    if ('UNSTABLE' == currentBuild.result) {
-        color = 'waning'
-    }
-    if ('SUCCESS' == currentBuild.result) {
-        color = 'good'
-    }
-
-    mattermostSend([channel: 'jenkins-feed', message: message, color: color])
 }
