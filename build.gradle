@@ -22,7 +22,7 @@ def generatedMainJavaDir = file("${generatedSrcDir}/main/java")
 sourceSets {
   main {
     java {
-      srcDirs 'src/main/java', generatedMainJavaDir
+      srcDirs generatedMainJavaDir
     }
   }
 }
@@ -98,18 +98,9 @@ publishing {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
 task createGeneratedDir(dependsOn: processResources) {
   doLast {
-    def classesDir = sourceSets.main.output.classesDir
-    def destDir = generatedMainJavaDir
-
-    if (!classesDir.exists()) {
-      classesDir.mkdirs()
-    }
-    if (!destDir.exists()) {
-      destDir.mkdirs()
-    }
+    generatedMainJavaDir.mkdirs()
   }
 }
 
@@ -124,7 +115,6 @@ task wsImportInnsendingService(dependsOn: createGeneratedDir) {
     ant.taskdef(name: 'wsimportInnsendingService', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImport.asPath)
     wsGenSrc.mkdirs()
     ant.wsimportInnsendingService(keep: true,
-            destDir: sourceSets.main.output.classesDir,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/innsending/InnsendingServiceWS.wsdl',
@@ -145,7 +135,6 @@ task wsImportValideringService(dependsOn: createGeneratedDir) {
     ant.taskdef(name: 'wsimportValideringService', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImport.asPath)
     wsGenSrc.mkdirs()
     ant.wsimportValideringService(keep: true,
-            destDir: sourceSets.main.output.classesDir,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/innsending/ValideringServiceWS.wsdl',
@@ -165,7 +154,6 @@ task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
     ant.taskdef(name: 'wsimportLandbruksregister', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImportWithXJCBinding.asPath)
     wsGenSrc.mkdirs()
     ant.wsimportLandbruksregister(keep: true,
-            destdir: sourceSets.main.output.classesDir,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/landbruksregisteret/landbruksregisteret.wsdl',
@@ -188,7 +176,6 @@ task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
     fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
       wsGenSrc.mkdirs()
       ant.wsImportGrunnboksutskriftInternv2(keep: true,
-              destdir: sourceSets.main.output.classesDir,
               sourcedestdir: wsGenSrc,
               wsdl: file.file,
               wsdlLocation: '/grunnboksutskriftinternv2/' + file.getRelativePath(),
@@ -213,7 +200,6 @@ task wsImportGrunnbokv2(dependsOn: createGeneratedDir) {
     wsGenSrc.mkdirs()
     fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
       ant.wsImportGrunnbokv2(keep: true,
-              destdir: sourceSets.main.output.classesDir,
               sourcedestdir: wsGenSrc,
               wsdl: file.file,
               wsdlLocation: '/grunnbokv2/' + file.getRelativePath(),
@@ -250,10 +236,8 @@ task wsImport {
   }
 }
 
-clean.doFirst {
-  if (generatedSrcDir.exists()) {
-    delete generatedSrcDir
-  }
+clean {
+  delete generatedSrcDir
 }
 
 // Konfigurasjon for å samle "samme" Exception med ulikt pakkenavn
