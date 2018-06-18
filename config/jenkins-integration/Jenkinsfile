@@ -43,8 +43,11 @@ pipeline { //declarative pipeline syntax
         stage('Integration test') {
             steps {
                 bat "gradlew testIntegration -DignoreFailures=true ${gradleOptions(this)}"
-                junit '**/test-results/testIntegration/*.xml'
-                //                            step([$class: 'Publisher', reportFilenamePattern: '**/build/reports/tests/testng-results.xml'])
+            }
+            post {
+                always {
+                    junit '**/test-results/testIntegration/*.xml'
+                }
             }
         }
 
