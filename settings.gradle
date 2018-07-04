@@ -16,7 +16,7 @@ gradle.afterProject { project ->
         doFirst {
             // Company wide download service
             distributionUrl = uri("http://devbin.statkart.no:8070/gradle/dists/gradle-${gradleVersion}-all.zip")
-            jarFile = gradle.rootProject.file('config/gradle/wrapper/gradle-wrapper.jar')
+            jarFile = gradle.rootProject.file('gradle/wrapper/gradle-wrapper.jar')
             scriptFile = gradle.rootProject.file('gradlew')
         }
     }
