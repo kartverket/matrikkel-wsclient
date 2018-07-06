@@ -1,4 +1,4 @@
-apply plugin: 'java'
+apply plugin: 'java-library'
 
 
 /* ********************************************************************************************************************
@@ -24,8 +24,7 @@ sourceSets {
 //Configures the compile and runtime configurations for our integration tests
 //and includes the dependencies of the test task.
 configurations {
-    testIntegrationCompile.extendsFrom testCompile
-    testIntegrationRuntime.extendsFrom testRuntime
+    testIntegrationImplementation.extendsFrom testImplementation
 }
 
 //Create the task that runs the integration tests found from the
