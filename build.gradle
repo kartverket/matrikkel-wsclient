@@ -78,7 +78,7 @@ dependencies {
   }
 
   testImplementation 'org.testng:testng:6.14.2'
-  testImplementation 'org.assertj:assertj-core:3.10' /* assertJ 3.x for java 8 */
+  testImplementation 'org.assertj:assertj-core:3.10.0' /* assertJ 3.x for java 8 */
 
   testRuntimeOnly 'org.slf4j:slf4j-simple:'+slf4jVersion
 }
