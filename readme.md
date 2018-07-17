@@ -1,6 +1,7 @@
 ### no.statkart.wsclient:matrikkel-wsclient
 
 Web service integrasjoner mot eksterne systemer.
+Disse er kompilert med Sun/Oracle sin JAXWS/HTTP Stack og krever ```com.sun.xml.ws:jaxws-rt``` på classpath (må legges til for tester - weblogic provider disse).
 
 # Integrasjonstest
 Denne testen verifiserer at implementert kontrakt for web service fungerer mot eksterne systemer.

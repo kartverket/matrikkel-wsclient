@@ -53,34 +53,34 @@ configurations {
 
 dependencies {
   def jaxb2Version = '0.9.3'
-  def slf4jVersion = '1.7.12'
+  def slf4jVersion = '1.7.25'
   def jaxwsVersion = '2.2.10'
+  def skifVersion = 'trunk-build900'
 
-  wsImport 'com.sun.xml.ws:jaxws-tools:'+jaxwsVersion
+  wsImport 'com.sun.xml.ws:jaxws-tools:2.3.0.2'
 
-  wsImportWithXJCBinding 'com.sun.xml.bind:jaxb-xjc:'+jaxwsVersion
+  wsImportWithXJCBinding 'com.sun.xml.bind:jaxb-xjc:2.2.11'
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:'+jaxb2Version
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics:'+jaxb2Version
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-tools:'+jaxb2Version
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-commons-lang:2.3'
   wsImportWithXJCBinding 'org.slf4j:slf4j-simple:'+slf4jVersion
 
-  implementation 'com.sun.xml.ws:jaxws-rt:'+jaxwsVersion
+  implementation 'com.sun.xml.ws:jaxws-rt:'+jaxwsVersion //bruker Sun/Oracle JAXWS Stack
 
-  api 'no.statkart.skif:skif-service-common:2.7-build23'
-  api 'joda-time:joda-time:2.8.2'
-  implementation 'com.google.guava:guava:19.0'
+  api 'no.statkart.skif:skif-service-common:'+skifVersion
+  api 'joda-time:joda-time:2.10'
+  implementation 'com.google.guava:guava:22.0'
   implementation 'org.slf4j:slf4j-api:'+slf4jVersion
   api ('org.jvnet.jaxb2_commons:jaxb2-basics-runtime:'+jaxb2Version) {
-    exclude module: 'jaxb-runtime'
+    exclude module: 'jaxb-runtime' //disse er ekskludert da man ønker å bruke weblogic sine providede biblioteker på runtime
     exclude module: 'jaxb-api'
   }
 
-  testImplementation 'org.testng:testng:6.9.8'
-  testImplementation 'org.assertj:assertj-core:3.8.0' /* assertJ 3.x for java 8 */
+  testImplementation 'org.testng:testng:6.14.2'
+  testImplementation 'org.assertj:assertj-core:3.10' /* assertJ 3.x for java 8 */
 
   testRuntimeOnly 'org.slf4j:slf4j-simple:'+slf4jVersion
-  testRuntimeOnly 'org.apache.cxf:cxf-rt-transports-http-jetty:3.1.3'
 }
 
 task sourceJar(type: Jar) {
@@ -93,6 +93,10 @@ publishing {
     mavenJava(MavenPublication) {
       from components.java
       artifact sourceJar
+
+      pom.withXml {
+        asNode().dependencies.dependency.findAll { it.groupId.text() == 'com.sun.xml.ws' }.each { it.appendNode('optional', 'true'); it.scope[0].value = 'provided' } //optional avhengighet for jaxws implementasjon da denne ligger som provided i appserver (weblogic)
+      }
     }
   }
 }
