@@ -118,7 +118,7 @@
                 <xs:sequence>
                     <xs:element name="dokumentavgiftsgrunnlag" type="register_rettsstiftelsens:Beloep" nillable="true"/>
                     <xs:element name="dokumentavgift" type="register_rettsstiftelsens:Beloep" nillable="true"/>
-                    <xs:element name="dokumentavgiftsaarsakId" type="register_koderns:DokumentavgiftsaarsakKodeId"/>
+                    <xs:element name="dokumentavgiftsaarsakId" type="register_koderns:DokumentavgiftsaarsakKodeId" nillable="true"/>
                     <xs:element name="harDokumentavgift" type="xs:boolean" nillable="true"/>
                 </xs:sequence>
             </xs:extension>

@@ -71,6 +71,7 @@
                     <xs:element name="midlertidigSaksbehandlingsenhetId" type="register_koderns:SaksbehandlingsenhetKodeId" nillable="true"/>
                     <xs:element name="brukerTilgangsgrupper" type="register_brukerns:BrukerTilgangsgruppeList" />
                     <xs:element name="roller" type="register_brukerns:RolleList" />
+                    <xs:element name="brukerLogEntries" type="register_brukerns:BrukerLogEntryList"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -122,6 +123,27 @@
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Brukerlogentry -->
+
+    <xs:complexType name="BrukerLogEntry">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="brukernavn" type="xs:string" />
+                    <xs:element name="adminbruker" type="xs:string" />
+                    <xs:element name="fra" type="xs:string" nillable="true"/>
+                    <xs:element name="til" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BrukerLogEntryList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="register_brukerns:BrukerLogEntry"/>
+        </xs:sequence>
     </xs:complexType>
 
     <!-- Brukertilgangsgruppe -->

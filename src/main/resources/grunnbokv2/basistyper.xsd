@@ -51,6 +51,12 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="ByteList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="xs:byte"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="LongList">
         <xs:sequence>
             <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="xs:long"/>

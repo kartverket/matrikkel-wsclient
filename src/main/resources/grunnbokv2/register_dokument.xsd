@@ -35,6 +35,12 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="DokumentList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_dokumentns:Dokument"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="DokumentIdInverseRelation">
         <xs:complexContent>
             <xs:extension base="basistyperns:InverseRelation">

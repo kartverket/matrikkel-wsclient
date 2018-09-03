@@ -60,8 +60,16 @@
                     <xs:element name="saksnummer" type="xs:long"/>
                     <xs:element name="mottaksdato" type="basistyperns:LocalDate"/>
                     <xs:element name="foelgebrevsdato" type="basistyperns:LocalDate"/>
-                    <xs:element name="saksstatus" type="register_saksinfons:Saksstatus"/>
-                    <xs:element name="behandlingsutfall" type="register_saksinfons:Behandlingsutfall"/>
+                    <xs:element name="saksstatus">
+                        <xs:simpleType>
+                            <xs:restriction base="register_saksinfons:Saksstatus"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="behandlingsutfall">
+                        <xs:simpleType>
+                            <xs:restriction base="register_saksinfons:Behandlingsutfall"/>
+                        </xs:simpleType>
+                    </xs:element>
                     <xs:element name="innsender" type="register_saksinfons:Saksperson" nillable="true"/>
                     <xs:element name="fakturamottaker" type="register_saksinfons:Saksperson" nillable="true"/>
                     <xs:element name="mottaker" type="register_saksinfons:Saksperson" nillable="true"/>
@@ -99,7 +107,11 @@
 
     <xs:complexType name="SaksstatusList">
         <xs:sequence>
-            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_saksinfons:Saksstatus"/>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item">
+                <xs:simpleType>
+                    <xs:restriction base="register_saksinfons:Saksstatus"/>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
@@ -115,7 +127,11 @@
 
     <xs:complexType name="BehandlingsutfallList">
         <xs:sequence>
-            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_saksinfons:Behandlingsutfall"/>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item">
+                <xs:simpleType>
+                    <xs:restriction base="register_saksinfons:Behandlingsutfall"/>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 

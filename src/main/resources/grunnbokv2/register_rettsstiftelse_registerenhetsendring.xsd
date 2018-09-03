@@ -300,4 +300,54 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvEierseksjonssameierId">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetsendringns:RegisterenhetsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="SammenslaaingAvEierseksjonssameierIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_registerenhetsendringns:SammenslaaingAvEierseksjonssameierId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvEierseksjonssameierIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="register_registerenhetsendringns:SammenslaaingAvEierseksjonssameierId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvEierseksjonssameierIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true"
+                                type="register_registerenhetsendringns:SammenslaaingAvEierseksjonssameierIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvEierseksjonssameier">
+        <xs:complexContent>
+            <xs:extension base="register_registerenhetsendringns:Registerenhetsendring">
+                <xs:sequence>
+                    <xs:element name="fraIds" type="register_registerenhetns:MatrikkelenhetIdList"/>
+                    <xs:element name="tilIds" type="register_registerenhetns:MatrikkelenhetIdList"/>
+                    <xs:element name="utgaatteIds" type="register_registerenhetns:SeksjonssameieandelIdList"/>
+                    <xs:element name="nyeIds" type="register_registerenhetns:SeksjonssameieandelIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
 </xs:schema>

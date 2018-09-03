@@ -251,7 +251,7 @@
                 <xs:sequence>
                     <xs:element name="borettslagId" type="registerns:BorettslagId"/>
                     <xs:element name="andelsnummer" type="xs:int"/>
-                    <xs:element name="adresseId" type="register_adressens:AdresseId"/>
+                    <xs:element name="adresseId" type="register_adressens:AdresseId" nillable="true"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

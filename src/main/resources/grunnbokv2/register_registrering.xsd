@@ -6,6 +6,8 @@
         xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
         xmlns:grunnboksidenterns="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
         xmlns:koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+        xmlns:register_saksinfons="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"
+        xmlns:personns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         elementFormDefault="qualified">
 
@@ -13,7 +15,12 @@
     <xs:import schemaLocation="grunnboksidenter.xsd"
                namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"/>
     <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register"/>
-    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+    <xs:import schemaLocation="register_koder.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+    <xs:import schemaLocation="register_saksinformasjon.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"/>
+    <xs:import schemaLocation="register_person.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
 
     <!-- ========================================================= -->
     <!-- register/registrering:                                    -->
@@ -43,8 +50,11 @@
                     <xs:element name="rekkefoelgenummer" type="xs:int"/>
                     <xs:element name="utfall" type="register_registreringns:ForeslaattBehandlingsutfall"/>
                     <xs:element name="behandlingsstatus" type="register_registreringns:Behandlingsstatus"/>
-                    <xs:element name="avhengerAvOpprinneligIds" type="register_registreringns:ForeloepigRegistreringIdList"/>
+                    <xs:element name="avhengerAvOpprinneligIds"
+                                type="register_registreringns:ForeloepigRegistreringIdList"/>
                     <xs:element name="beregnetEffektId" type="register_registreringns:BeregnetEffektId"/>
+                    <xs:element name="saksinformasjonId" type="register_saksinfons:SaksinformasjonId"/>
+                    <xs:element name="oppdatererIds" type="basistyperns:GrunnbokBubbleObjectIdList"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -64,6 +74,27 @@
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="key" type="register_registreringns:ForeloepigRegistreringId"/>
+                        <xs:element name="value" type="register_registreringns:ForeloepigRegistreringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnbokBubbleObjectIdToForeloepigRegistreringIdsMap">
+        <!--<xs:annotation>-->
+        <!--<xs:appinfo>-->
+        <!--<IsDictionary-->
+        <!--xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-->
+        <!--true-->
+        <!--</IsDictionary>-->
+        <!--</xs:appinfo>-->
+        <!--</xs:annotation>-->
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="basistyperns:GrunnbokBubbleObjectId"/>
                         <xs:element name="value" type="register_registreringns:ForeloepigRegistreringIdList"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -250,6 +281,19 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="PersonIdToRettsstiftelseRegistreringIdsMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="personns:PersonId"/>
+                        <xs:element name="value" type="register_registreringns:RettsstiftelseRegistreringIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="ForeloepigRegistreringIdToRettsstiftelseRegistreringIdsMap">
         <xs:sequence>
             <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
@@ -287,8 +331,11 @@
 
     <xs:complexType name="BehandlingsstatusList">
         <xs:sequence>
-            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
-                        type="register_registreringns:Behandlingsstatus"/>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item">
+                <xs:simpleType>
+                    <xs:restriction base="register_registreringns:Behandlingsstatus"/>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 

@@ -4,14 +4,6 @@
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
 
-  <xs:element name="calcEndringskontroll" type="tns:calcEndringskontroll"/>
-
-  <xs:element name="calcEndringskontrollResponse" type="tns:calcEndringskontrollResponse"/>
-
-  <xs:element name="calcObjektkontrollForList" type="tns:calcObjektkontrollForList"/>
-
-  <xs:element name="calcObjektkontrollForListResponse" type="tns:calcObjektkontrollForListResponse"/>
-
   <xs:element name="findEndringer" type="tns:findEndringer"/>
 
   <xs:element name="findEndringerResponse" type="tns:findEndringerResponse"/>
@@ -19,22 +11,6 @@
   <xs:element name="findSisteEndringId" type="tns:findSisteEndringId"/>
 
   <xs:element name="findSisteEndringIdResponse" type="tns:findSisteEndringIdResponse"/>
-
-  <xs:complexType name="calcEndringskontroll">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="id" type="ns1:EndringId"/>
-      <xs:element minOccurs="0" name="domainklasse" type="ns1:Domainklasse"/>
-      <xs:element minOccurs="0" name="filter" type="xs:string"/>
-      <xs:element name="maksAntall" type="xs:int"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="calcEndringskontrollResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns1:Kontroll"/>
-    </xs:sequence>
-  </xs:complexType>
 
   <xs:complexType name="findEndringer">
     <xs:sequence>
@@ -62,20 +38,6 @@
   <xs:complexType name="findSisteEndringIdResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns1:EndringId"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="calcObjektkontrollForList">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ids" type="ns2:GrunnbokBubbleObjectIdList"/>
-      <xs:element minOccurs="0" name="domainklasse" type="ns1:Domainklasse"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="calcObjektkontrollForListResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns1:Kontroll"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

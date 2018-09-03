@@ -415,27 +415,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="ServituttIdListTransfer">
-        <xs:sequence>
-            <xs:element name="servituttIds" type="register_heftelsens:ServituttIdList"/>
-            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="AnnenRettighetIdListTransfer">
-        <xs:sequence>
-            <xs:element name="annenRettighetIds" type="register_heftelsens:AnnenRettighetIdList"/>
-            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="VilkaarIFestekontraktIdListTransfer">
-        <xs:sequence>
-            <xs:element name="vilkaarIFestekontraktIds" type="register_heftelsens:VilkaarIFestekontraktIdList"/>
-            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
-        </xs:sequence>
-    </xs:complexType>
-
     <xs:complexType name="OverdragelseAvRegisterenhetsrettIdListTransfer">
         <xs:sequence>
             <xs:element name="overdragelseIds" type="register_overdragelsens:OverdragelseAvRegisterenhetsrettIdList"/>
@@ -917,6 +896,77 @@
                     <xs:sequence>
                         <xs:element name="key" nillable="true" type="register_saksinfons:SaksinformasjonId"/>
                         <xs:element name="value" type="register_dokumentns:DokumentIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--  InformasjonServiceWSI -->
+
+    <xs:complexType name="HeftelseInformasjonTransfer">
+        <xs:sequence>
+            <xs:element name="result" type="register_heftelsens:HeftelseIdList"/>
+            <xs:element name="beregnedeObjekterIds" type="basistyperns:GrunnbokBubbleObjectIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OverdragelseAvRegisterenhetsrettInformasjonTransfer">
+        <xs:sequence>
+            <xs:element name="result" type="register_overdragelsens:OverdragelseAvRegisterenhetsrettIdList"/>
+            <xs:element name="beregnedeObjekterIds" type="basistyperns:GrunnbokBubbleObjectIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsendringInformasjonTransfer">
+        <xs:sequence>
+            <xs:element name="result" type="register_registerenhetsendringns:RegisterenhetsendringIdList"/>
+            <xs:element name="beregnedeObjekterIds" type="basistyperns:GrunnbokBubbleObjectIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelserInformasjonTransfer">
+        <xs:sequence>
+            <xs:element name="result" type="register_rettsstiftelsens:RettsstiftelseIdList"/>
+            <xs:element name="beregnedeObjekterIds" type="basistyperns:GrunnbokBubbleObjectIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseInformasjonTransfer">
+        <xs:sequence>
+            <xs:element name="result" type="register_rettsstiftelsens:RettsstiftelseId"/>
+            <xs:element name="beregnedeObjekterIds" type="basistyperns:GrunnbokBubbleObjectIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelerInformasjonTransfer">
+        <xs:sequence>
+            <xs:element name="result" type="register_registerenhetns:BorettslagsandelIdList"/>
+            <xs:element name="beregnedeObjekterIds" type="basistyperns:GrunnbokBubbleObjectIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- SakspersonService -->
+    <xs:complexType name="PersonIdentStringToStringMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="xs:string"/>
+                        <xs:element name="value" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>

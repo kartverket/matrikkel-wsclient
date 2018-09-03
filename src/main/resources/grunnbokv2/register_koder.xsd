@@ -226,7 +226,7 @@
         <xs:complexContent>
             <xs:extension base="kodelistens:GrunnbokKode">
                 <xs:sequence>
-                    <xs:element name="gyldigTilDato" type="basistyperns:LocalDate"/>
+                    <xs:element name="gyldigTilDato" type="basistyperns:LocalDate" nillable="true"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -993,6 +993,46 @@
     </xs:complexType>
 
     <xs:complexType name="AarsakTilRettingKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- FullmaktstypeKode -->
+
+    <xs:complexType name="FullmaktstypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FullmaktstypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:FullmaktstypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FullmaktstypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- FullmaktsrolleKode -->
+
+    <xs:complexType name="FullmaktsrolleKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FullmaktsrolleKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:FullmaktsrolleKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FullmaktsrolleKode">
         <xs:complexContent>
             <xs:extension base="kodelistens:GrunnbokKode"/>
         </xs:complexContent>

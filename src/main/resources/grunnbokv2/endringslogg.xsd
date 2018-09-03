@@ -34,7 +34,6 @@
             <xs:enumeration value="Seksjonssameieandel"/>
             <xs:enumeration value="Registerenhetsrett"/>
             <xs:enumeration value="Postnummeromraade"/>
-            <xs:enumeration value="Foeringsdag"/>
             <xs:enumeration value="Overfoering"/>
             <xs:enumeration value="Saksinformasjon"/>
             <xs:enumeration value="ForeloepigRegistrering"/>
@@ -42,13 +41,6 @@
             <xs:enumeration value="GrunnbokDbKode"/>
         </xs:restriction>
     </xs:simpleType>
-
-    <xs:complexType name="Kontroll">
-        <xs:sequence>
-            <xs:element name="antall" type="xs:long"/>
-            <xs:element name="idChecksum" type="xs:long"/>
-        </xs:sequence>
-    </xs:complexType>
 
     <xs:simpleType name="Endringstype">
         <xs:restriction base="xs:string">
@@ -63,7 +55,7 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="Aldri"/>
             <xs:enumeration value="Alltid"/>
-            <xs:enumeration value="VedSlutt"/>
+            <!--xs:enumeration value="VedSlutt"/-->
         </xs:restriction>
     </xs:simpleType>
 
