@@ -15,6 +15,7 @@ idea.project {
   vcs = 'Perforce'
 }
 
+//La til en kommentar MAT-14358
 
 def generatedSrcDir = file("${projectDir}/gen")
 def generatedMainJavaDir = file("${generatedSrcDir}/main/java")
