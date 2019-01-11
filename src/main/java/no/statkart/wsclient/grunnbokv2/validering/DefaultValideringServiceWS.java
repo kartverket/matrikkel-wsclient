@@ -32,10 +32,12 @@ public class DefaultValideringServiceWS implements ValideringServiceWS {
                                                 ? webServiceClient.getValideringServicePort(new SchemaValidationFeature())
                                                 : webServiceClient.getValideringServicePort();
 
+      int timeoutMillis = 150000;
       valideringWebService = WebServiceBuilder.builderv2(valideringServicePort, ValideringService.class)
                                               .withBruker(brukernavn)
                                               .withPassord(passord)
                                               .withEndpointUrl(endpointUrl)
+                                              .withTimeout(timeoutMillis)
                                               .build();
    }
 

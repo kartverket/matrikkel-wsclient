@@ -37,10 +37,12 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
             ? webServiceClient.getInnsendingServicePort(new SchemaValidationFeature())
             : webServiceClient.getInnsendingServicePort();
 
+      int timeoutMillis = 150000;
       innsendingWebService = WebServiceBuilder.builderv2(innsendingServicePort, InnsendingService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
+            .withTimeout(timeoutMillis)
             .build();
    }
 
