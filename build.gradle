@@ -17,6 +17,9 @@ idea.project {
 
 def generatedSrcDir = file("${projectDir}/gen")
 def generatedMainJavaDir = file("${generatedSrcDir}/main/java")
+def jaxbBindingsFileJodaTime = file('src/main/resources/bindings.xml')
+def jaxbBindingsFileJavaDateAndTime = file('src/main/resources/bindings_java_date_time_api.xml') 
+def WS_IMPORT_QUAL_NAME = 'com.sun.tools.ws.ant.WsImport'
 
 sourceSets {
   main {
@@ -78,10 +81,12 @@ dependencies {
 
   testImplementation 'org.testng:testng:6.14.2'
   testImplementation 'org.assertj:assertj-core:3.10.0' /* assertJ 3.x for java 8 */
-
+  testImplementation 'org.mockito:mockito-core:2.25.1'
+  
   testRuntimeOnly 'org.slf4j:slf4j-simple:'+slf4jVersion
 }
 
+//noinspection GroovyAssignabilityCheck
 task sourceJar(type: Jar) {
   from sourceSets.main.allJava
   classifier 'sources'
@@ -100,52 +105,75 @@ publishing {
   }
 }
 
+//noinspection GroovyAssignabilityCheck
 task createGeneratedDir(dependsOn: processResources) {
   doLast {
     generatedMainJavaDir.mkdirs()
   }
 }
 
+//noinspection GroovyAssignabilityCheck
 task wsImportInnsendingService(dependsOn: createGeneratedDir) {
   def sourceWsdl = file('src/main/resources/innsending/InnsendingServiceWS.wsdl')
-  def jaxbBindingsFile = file('src/main/resources/bindings.xml')
   def wsGenSrc = file("${buildDir}/wsimport/innsending")
   inputs.file sourceWsdl
   outputs.dir wsGenSrc
 
   doLast {
-    ant.taskdef(name: 'wsimportInnsendingService', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImport.asPath)
+    ant.taskdef(name: 'wsimportInnsendingService', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
     wsGenSrc.mkdirs()
     ant.wsimportInnsendingService(keep: true,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/innsending/InnsendingServiceWS.wsdl',
-            binding: jaxbBindingsFile,
+            binding: jaxbBindingsFileJodaTime,
             xnocompile: true,
             encoding: 'UTF-8')
   }
 }
 
+//noinspection GroovyAssignabilityCheck
 task wsImportValideringService(dependsOn: createGeneratedDir) {
   def sourceWsdl = file('src/main/resources/innsending/ValideringServiceWS.wsdl')
-  def jaxbBindingsFile = file('src/main/resources/bindings.xml')
   def wsGenSrc = file("${buildDir}/wsimport/validering")
   inputs.file sourceWsdl
   outputs.dir wsGenSrc
 
   doLast {
-    ant.taskdef(name: 'wsimportValideringService', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImport.asPath)
+    ant.taskdef(name: 'wsimportValideringService', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
     wsGenSrc.mkdirs()
     ant.wsimportValideringService(keep: true,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/innsending/ValideringServiceWS.wsdl',
-            binding: jaxbBindingsFile,
+            binding: jaxbBindingsFileJodaTime,
             xnocompile: true,
             encoding: 'UTF-8')
   }
 }
 
+//noinspection GroovyAssignabilityCheck
+task wsImportStedsnavnService(dependsOn: createGeneratedDir) {
+  def wsdlLocation = '/stedsnavn/adressenavn.wsdl'
+  def sourceWsdl = file('src/main/resources' + wsdlLocation)
+  def wsGenSrc = file("${buildDir}/wsimport/stedsnavn")
+  inputs.file sourceWsdl
+  outputs.dir wsGenSrc
+
+  doLast {
+    ant.taskdef(name: 'wsImportStedsnavnService', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+    wsGenSrc.mkdirs()
+    ant.wsImportStedsnavnService(keep: true,
+            sourcedestdir: wsGenSrc,
+            wsdl: sourceWsdl,
+            wsdlLocation: wsdlLocation,
+            binding: jaxbBindingsFileJavaDateAndTime,
+            xnocompile: true,
+            encoding: 'UTF-8')
+  }
+}
+
+//noinspection GroovyAssignabilityCheck
 task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
   def sourceWsdl = file('src/main/resources/landbruksregisteret/landbruksregisteret.wsdl')
   def wsGenSrc = file("${buildDir}/wsimport/landbruksregisteret")
@@ -153,7 +181,7 @@ task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
   outputs.dir wsGenSrc
 
   doLast {
-    ant.taskdef(name: 'wsimportLandbruksregister', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImportWithXJCBinding.asPath)
+    ant.taskdef(name: 'wsimportLandbruksregister', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImportWithXJCBinding.asPath)
     wsGenSrc.mkdirs()
     ant.wsimportLandbruksregister(keep: true,
             sourcedestdir: wsGenSrc,
@@ -167,6 +195,7 @@ task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
   }
 }
 
+//noinspection GroovyAssignabilityCheck
 task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
   def sourceWsdlDir = file('src/main/resources/grunnboksutskriftinternv2')
   def wsGenSrc = file("${buildDir}/wsimport/grunnboksutskriftinternv2")
@@ -174,9 +203,10 @@ task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
   outputs.dir wsGenSrc
 
   doLast {
-    ant.taskdef(name: 'wsImportGrunnboksutskriftInternv2', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImportWithXJCBinding.asPath)
+    ant.taskdef(name: 'wsImportGrunnboksutskriftInternv2', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImportWithXJCBinding.asPath)
     fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
       wsGenSrc.mkdirs()
+      //noinspection GroovyAssignabilityCheck
       ant.wsImportGrunnboksutskriftInternv2(keep: true,
               sourcedestdir: wsGenSrc,
               wsdl: file.file,
@@ -191,6 +221,7 @@ task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
   }
 }
 
+//noinspection GroovyAssignabilityCheck
 task wsImportGrunnbokv2(dependsOn: createGeneratedDir) {
   def sourceWsdlDir = file('src/main/resources/grunnbokv2')
   def wsGenSrc = file("${buildDir}/wsimport/grunnbokv2")
@@ -198,9 +229,10 @@ task wsImportGrunnbokv2(dependsOn: createGeneratedDir) {
   outputs.dir wsGenSrc
 
   doLast {
-    ant.taskdef(name: 'wsImportGrunnbokv2', classname: 'com.sun.tools.ws.ant.WsImport', classpath: configurations.wsImportWithXJCBinding.asPath)
+    ant.taskdef(name: 'wsImportGrunnbokv2', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImportWithXJCBinding.asPath)
     wsGenSrc.mkdirs()
     fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
+      //noinspection GroovyAssignabilityCheck
       ant.wsImportGrunnbokv2(keep: true,
               sourcedestdir: wsGenSrc,
               wsdl: file.file,
@@ -215,13 +247,14 @@ task wsImportGrunnbokv2(dependsOn: createGeneratedDir) {
   }
 }
 
+//noinspection GroovyAssignabilityCheck
 task wsImport {
   outputs.dir generatedMainJavaDir
 
   def wsImportTasks = tasks
           .findAll { it.name.matches("^wsImport\\p{javaJavaIdentifierPart}+") }
           .each    {
-    dependsOn it;
+    dependsOn it
     assert it.outputs.files.size() == 1
     inputs.dir it.outputs.files.singleFile
   }
@@ -252,7 +285,7 @@ ext.mergeServiceExceptionInDifferentPackages = { File destination, String packag
   }
 
   def exceptionFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*Exception.java'], excludes: ['**/exception/*'])
-  def File relocatedFile
+  File relocatedFile
   logger.info("replacePath ${replacePath}")
   //flytter alle exceptions til felles katalog
   exceptionFiles.files.each { File file ->
@@ -299,7 +332,7 @@ jar.manifest {
 
             //misc build info
             'Build-By'     : System.getProperty('user.name'),
-            'Build-Machine': java.net.InetAddress.localHost.hostName,
+            'Build-Machine': InetAddress.localHost.hostName,
             'Build-Repo': MAVEN_REPO,
             'Build-Gradle': gradle.gradleVersion,
             'Build-JDK': System.getProperty("java.version"),

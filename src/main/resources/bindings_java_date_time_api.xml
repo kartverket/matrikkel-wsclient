@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings version="2.0"
+               xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+
+    <jaxb:globalBindings>
+
+        <jaxb:javaType name="java.time.LocalDateTime" xmlType="xs:dateTime"
+                       parseMethod="java.time.LocalDateTime.parse"
+                       printMethod="java.lang.String.valueOf"/>
+
+        <jaxb:javaType name="java.time.LocalDate" xmlType="xs:date"
+                       parseMethod="java.time.LocalDate.parse"
+                       printMethod="java.lang.String.valueOf"/>
+
+        <jaxb:javaType name="java.time.LocalTime" xmlType="xs:time"
+                       parseMethod="java.time.LocalTime.parse"
+                       printMethod="java.lang.String.valueOf"/>
+
+    </jaxb:globalBindings>
+
+</jaxb:bindings>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://stedsnavn.statkart.no/matrikkelinndata/v1/adressenavn/"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        targetNamespace="http://stedsnavn.statkart.no/matrikkelinndata/v1/adressenavn/"
+        name="AdressenavnInndataWS">
+    <types>
+        <xs:schema targetNamespace="http://stedsnavn.statkart.no/matrikkelinndata/v1/adressenavn/"
+                   elementFormDefault="qualified">
+            <xs:element name="sendNyVegTilStedsnavn" type="tns:sendNyVegTilStedsnavn"/>
+            <xs:element name="sendNyVegTilStedsnavnResponse" type="tns:sendNyVegTilStedsnavnResponse"/>
+            <xs:complexType name="sendNyVegTilStedsnavn">
+                <xs:sequence>
+                    <xs:element name="vegId" type="xs:long"/>
+                    <xs:element name="kommunenummer" type="xs:token"/>
+                    <xs:element name="ost" type="xs:double"/>
+                    <xs:element name="nord" type="xs:double"/>
+                    <xs:element name="koordinatsystem" type="xs:token"/>
+                    <xs:element name="adressekode" type="xs:int"/>
+                    <xs:element name="adressenavn" type="xs:string"/>
+                    <xs:element name="kortnavn" type="xs:string"/>
+                    <xs:element name="vedtaksdato" type="xs:date"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="sendNyVegTilStedsnavnResponse">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:element name="sendEndretVegTilStedsnavn" type="tns:sendEndretVegTilStedsnavn"/>
+            <xs:element name="sendEndretVegTilStedsnavnResponse" type="tns:sendEndretVegTilStedsnavnResponse"/>
+            <xs:complexType name="sendEndretVegTilStedsnavn">
+                <xs:sequence>
+                    <xs:element name="vegId" type="xs:long"/>
+                    <xs:element name="kommunenummer" type="xs:token"/>
+                    <xs:element name="ost" type="xs:double"/>
+                    <xs:element name="nord" type="xs:double"/>
+                    <xs:element name="koordinatsystem" type="xs:token"/>
+                    <xs:element name="adressekode" type="xs:int"/>
+                    <xs:element name="adressenavn" type="xs:string"/>
+                    <xs:element name="kortnavn" type="xs:string"/>
+                    <xs:element name="vedtaksdato" type="xs:date"/>
+                    <xs:element name="aarsakTilEndring" type="tns:AarsakTilEndringFraMatrikkelenKode"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="sendEndretVegTilStedsnavnResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:simpleType name="AarsakTilEndringFraMatrikkelenKode">
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="VedtakINyNavnesak"/>
+                    <xs:enumeration value="VedtakIKlagesak"/>
+                    <xs:enumeration value="VedtakGjortAvKlagenemnda"/>
+                    <xs:enumeration value="RettelseAvFeilfoering"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:element name="sendSlettetVegTilStedsnavn" type="tns:sendSlettetVegTilStedsnavn"/>
+            <xs:element name="sendSlettetVegTilStedsnavnResponse" type="tns:sendSlettetVegTilStedsnavnResponse"/>
+            <xs:complexType name="sendSlettetVegTilStedsnavn">
+                <xs:sequence>
+                    <xs:element name="vegId" type="xs:long"/>
+                    <xs:element name="kommunenummer" type="xs:token"/>
+                    <xs:element name="adressekode" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="sendSlettetVegTilStedsnavnResponse">
+                <xs:sequence/>
+            </xs:complexType>
+
+            <xs:element name="ApplicationException" type="tns:ApplicationFaultInfo"/>
+            <xs:element name="SystemException" type="tns:SystemFaultInfo"/>
+            <xs:complexType name="ApplicationFaultInfo"/>
+            <xs:complexType name="SystemFaultInfo">
+                <xs:sequence>
+                    <xs:element name="errorId" type="xs:token"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </types>
+
+    <message name="ApplicationException">
+        <part element="tns:ApplicationException" name="fault"/>
+    </message>
+    <message name="SystemException">
+        <part element="tns:SystemException" name="fault"/>
+    </message>
+    <message name="sendNyVegTilStedsnavn">
+        <part name="parameters" element="tns:sendNyVegTilStedsnavn"/>
+    </message>
+    <message name="sendNyVegTilStedsnavnResponse">
+        <part name="parameters" element="tns:sendNyVegTilStedsnavnResponse"/>
+    </message>
+    <message name="sendEndretVegTilStedsnavn">
+        <part name="parameters" element="tns:sendEndretVegTilStedsnavn"/>
+    </message>
+    <message name="sendEndretVegTilStedsnavnResponse">
+        <part name="parameters" element="tns:sendEndretVegTilStedsnavnResponse"/>
+    </message>
+    <message name="sendSlettetVegTilStedsnavn">
+        <part name="parameters" element="tns:sendSlettetVegTilStedsnavn"/>
+    </message>
+    <message name="sendSlettetVegTilStedsnavnResponse">
+        <part name="parameters" element="tns:sendSlettetVegTilStedsnavnResponse"/>
+    </message>
+    <portType name="AdressenavnInndata">
+        <operation name="sendNyVegTilStedsnavn">
+            <input message="tns:sendNyVegTilStedsnavn"/>
+            <output message="tns:sendNyVegTilStedsnavnResponse"/>
+            <fault name="ApplicationException" message="tns:ApplicationException"/>
+            <fault name="SystemException" message="tns:SystemException"/>
+        </operation>
+        <operation name="sendEndretVegTilStedsnavn">
+            <input message="tns:sendEndretVegTilStedsnavn"/>
+            <output message="tns:sendEndretVegTilStedsnavnResponse"/>
+            <fault name="ApplicationException" message="tns:ApplicationException"/>
+            <fault name="SystemException" message="tns:SystemException"/>
+        </operation>
+        <operation name="sendSlettetVegTilStedsnavn">
+            <input message="tns:sendSlettetVegTilStedsnavn"/>
+            <output message="tns:sendSlettetVegTilStedsnavnResponse"/>
+            <fault name="ApplicationException" message="tns:ApplicationException"/>
+            <fault name="SystemException" message="tns:SystemException"/>
+        </operation>
+    </portType>
+    <binding name="AdressenavnInndataBinding" type="tns:AdressenavnInndata">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="sendNyVegTilStedsnavn">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="ApplicationException">
+                <soap:fault name="ApplicationException" use="literal"/>
+            </fault>
+            <fault name="SystemException">
+                <soap:fault name="SystemException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="sendEndretVegTilStedsnavn">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="ApplicationException">
+                <soap:fault name="ApplicationException" use="literal"/>
+            </fault>
+            <fault name="SystemException">
+                <soap:fault name="SystemException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="sendSlettetVegTilStedsnavn">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="ApplicationException">
+                <soap:fault name="ApplicationException" use="literal"/>
+            </fault>
+            <fault name="SystemException">
+                <soap:fault name="SystemException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="AdressenavnInndataWS">
+        <port name="AdressenavnInndata" binding="tns:AdressenavnInndataBinding">
+            <soap:address location="REPLACE_WITH_ACTUAL_URL"/>
+        </port>
+    </service>
+</definitions>
