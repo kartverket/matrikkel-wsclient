@@ -1,6 +1,5 @@
 package no.statkart.wsclient.sdo.parser;
 
-import com.google.common.base.Throwables;
 import no.statkart.wsclient.sdo.SDODecoder;
 import no.statkart.wsclient.sdo.SDODecoderContext;
 import org.assertj.core.api.Assertions;
@@ -57,7 +56,7 @@ public class SDOParserTest {
             System.out.println(" åpner fil...");
             Desktop.getDesktop().open(tempFile.toFile());
          } catch (IOException e) {
-            Throwables.propagate(e);
+            throw new RuntimeException(e);
          }
       }
 

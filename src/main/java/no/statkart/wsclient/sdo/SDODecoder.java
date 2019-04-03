@@ -1,7 +1,6 @@
 package no.statkart.wsclient.sdo;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Throwables;
 import com.google.common.io.ByteSource;
 import com.google.common.io.ByteStreams;
 import no.statkart.skif.exception.ImplementationException;
@@ -41,7 +40,7 @@ public class SDODecoder {
       try {
          processContent();
       } catch (IOException e) {
-         Throwables.propagate(e);
+         throw new RuntimeException(e);
       }
    }
 
@@ -62,7 +61,7 @@ public class SDODecoder {
 
    private void parseXML(ByteSource source) throws Exception {
       for (Class<? extends SDOParser> parserClazz : PARSERS) {
-         final SDOParser sdoParser = parserClazz.newInstance();
+         final SDOParser sdoParser = parserClazz.getDeclaredConstructor().newInstance();
          if (sdoParser.parse(source)) {
             content.put(sdoParser.getMimeType(), sdoParser.getUtskrift());
             return;
@@ -92,7 +91,7 @@ public class SDODecoder {
       try {
          return new String(java.util.Base64.getDecoder().decode(content), targetEncoding); //Java 8
       } catch (IOException e) {
-         throw Throwables.propagate(e);
+         throw new RuntimeException(e);
       }
    }
 

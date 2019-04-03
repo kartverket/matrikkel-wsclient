@@ -1,4 +1,4 @@
-package no.statkart.wsclient.stedsnavn;
+package no.statkart.wsclient.stedsnavn.adressenavn;
 
 import org.testng.annotations.Test;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 
-import static no.statkart.wsclient.stedsnavn.AarsakTilEndringFraMatrikkelen.RETTELSE_AV_FEILFOERING;
+import static no.statkart.wsclient.stedsnavn.adressenavn.AarsakTilEndringFraMatrikkelen.RETTELSE_AV_FEILFOERING;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

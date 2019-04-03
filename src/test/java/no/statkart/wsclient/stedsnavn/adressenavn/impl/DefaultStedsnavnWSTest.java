@@ -1,9 +1,9 @@
-package no.statkart.wsclient.stedsnavn.impl;
+package no.statkart.wsclient.stedsnavn.adressenavn.impl;
 
 import no.statkart.stedsnavn.matrikkelinndata.v1.adressenavn.AarsakTilEndringFraMatrikkelenKode;
 import no.statkart.stedsnavn.matrikkelinndata.v1.adressenavn.AdressenavnInndata;
-import no.statkart.wsclient.stedsnavn.EndretVegRequest;
-import no.statkart.wsclient.stedsnavn.StedsnavnWS;
+import no.statkart.wsclient.stedsnavn.adressenavn.EndretVegRequest;
+import no.statkart.wsclient.stedsnavn.adressenavn.StedsnavnWS;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 
-import static no.statkart.wsclient.stedsnavn.AarsakTilEndringFraMatrikkelen.RETTELSE_AV_FEILFOERING;
+import static no.statkart.wsclient.stedsnavn.adressenavn.AarsakTilEndringFraMatrikkelen.RETTELSE_AV_FEILFOERING;
 
 @Test
 public class DefaultStedsnavnWSTest {

@@ -1,6 +1,5 @@
 package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
 
-import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Behandlingsinformasjon;
@@ -10,7 +9,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.InnsendingServiceWSStub;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDateTime;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -184,7 +182,7 @@ public class ForsendelsesstatusBuilder {
          final byte[] bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream("sdo/eksempel-SDOv1.0.xml"));
          return bytes;
       } catch (IOException e) {
-         throw Throwables.propagate(e);
+         throw new RuntimeException(e);
       }
    }
 }

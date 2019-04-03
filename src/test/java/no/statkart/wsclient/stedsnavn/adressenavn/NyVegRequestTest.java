@@ -1,4 +1,4 @@
-package no.statkart.wsclient.stedsnavn;
+package no.statkart.wsclient.stedsnavn.adressenavn;
 
 import org.testng.annotations.Test;
 

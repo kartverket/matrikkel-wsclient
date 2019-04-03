@@ -1,8 +1,8 @@
-package no.statkart.wsclient.stedsnavn.impl;
+package no.statkart.wsclient.stedsnavn.adressenavn.impl;
 
 import no.statkart.stedsnavn.matrikkelinndata.v1.adressenavn.*;
 import no.statkart.wsclient.WebServiceBuilder;
-import no.statkart.wsclient.stedsnavn.*;
+import no.statkart.wsclient.stedsnavn.adressenavn.*;
 
 @SuppressWarnings("unused")
 public class DefaultStedsnavnWS implements StedsnavnWS {

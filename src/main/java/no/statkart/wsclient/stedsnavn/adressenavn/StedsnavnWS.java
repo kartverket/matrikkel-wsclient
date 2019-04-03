@@ -1,4 +1,4 @@
-package no.statkart.wsclient.stedsnavn;
+package no.statkart.wsclient.stedsnavn.adressenavn;
 
 @SuppressWarnings("unused")
 public interface StedsnavnWS {

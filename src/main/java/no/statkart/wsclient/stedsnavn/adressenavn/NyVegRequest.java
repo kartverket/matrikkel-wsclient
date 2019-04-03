@@ -1,18 +1,64 @@
-package no.statkart.wsclient.stedsnavn;
+package no.statkart.wsclient.stedsnavn.adressenavn;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class EndretVegRequest extends NyVegRequest {
+public class NyVegRequest {
 
-   private AarsakTilEndringFraMatrikkelen aarsakTilEndring;
+   LocalDateTime tidsstempel;
+   long vegId;
+   String kommunenummer;
+   Double ost;
+   Double nord;
+   String koordinatsystem;
+   int adressekode;
+   String adressenavn;
+   String kortnavn;
+   LocalDate vedtaksdato;
 
-   private EndretVegRequest() {
+   NyVegRequest() {
    }
 
-   public AarsakTilEndringFraMatrikkelen getAarsakTilEndring() {
-      return aarsakTilEndring;
+   public LocalDateTime getTidsstempel() {
+      return tidsstempel;
    }
+
+   public long getVegId() {
+      return vegId;
+   }
+
+   public String getKommunenummer() {
+      return kommunenummer;
+   }
+
+   public Double getOst() {
+      return ost;
+   }
+
+   public Double getNord() {
+      return nord;
+   }
+
+   public String getKoordinatsystem() {
+      return koordinatsystem;
+   }
+
+   public int getAdressekode() {
+      return adressekode;
+   }
+
+   public String getAdressenavn() {
+      return adressenavn;
+   }
+
+   public String getKortnavn() {
+      return kortnavn;
+   }
+
+   public LocalDate getVedtaksdato() {
+      return vedtaksdato;
+   }
+
 
    @SuppressWarnings({"unused", "WeakerAccess"})
    public static class Builder {
@@ -27,7 +73,6 @@ public class EndretVegRequest extends NyVegRequest {
       private String adressenavn;
       private String kortnavn;
       private LocalDate vedtaksdato;
-      private AarsakTilEndringFraMatrikkelen aarsakTilEndring;
 
       private Builder() {
       }
@@ -86,26 +131,20 @@ public class EndretVegRequest extends NyVegRequest {
          return this;
       }
 
-      public Builder aarsakTilEndring(AarsakTilEndringFraMatrikkelen aarsakTilEndring) {
-         this.aarsakTilEndring = aarsakTilEndring;
-         return this;
-      }
+      public NyVegRequest build() {
+         NyVegRequest nyVegRequest = new NyVegRequest();
+         nyVegRequest.tidsstempel = tidsstempel;
+         nyVegRequest.vegId = vegId;
+         nyVegRequest.kommunenummer = kommunenummer;
+         nyVegRequest.ost = ost;
+         nyVegRequest.nord = nord;
+         nyVegRequest.koordinatsystem = koordinatsystem;
+         nyVegRequest.adressekode = adressekode;
+         nyVegRequest.adressenavn = adressenavn;
+         nyVegRequest.kortnavn = kortnavn;
+         nyVegRequest.vedtaksdato = vedtaksdato;
 
-      public EndretVegRequest build() {
-         EndretVegRequest request = new EndretVegRequest();
-         request.tidsstempel = tidsstempel;
-         request.vegId = vegId;
-         request.kommunenummer = kommunenummer;
-         request.ost = ost;
-         request.nord = nord;
-         request.koordinatsystem = koordinatsystem;
-         request.adressekode = adressekode;
-         request.adressenavn = adressenavn;
-         request.kortnavn = kortnavn;
-         request.vedtaksdato = vedtaksdato;
-         request.aarsakTilEndring = aarsakTilEndring;
-
-         return request;
+         return nyVegRequest;
       }
    }
 

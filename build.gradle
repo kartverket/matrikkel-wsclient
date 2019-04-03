@@ -9,17 +9,12 @@ apply from: file('integration-test.gradle')
 
 sourceCompatibility = '1.8'
 
-idea.project {
-  jdkName = '1.8'
-  languageLevel = '1.8'
-  vcs = 'Perforce'
-}
-
 def generatedSrcDir = file("${projectDir}/gen")
 def generatedMainJavaDir = file("${generatedSrcDir}/main/java")
 def jaxbBindingsFileJodaTime = file('src/main/resources/bindings.xml')
 def jaxbBindingsFileJavaDateAndTime = file('src/main/resources/bindings_java_date_time_api.xml') 
 def WS_IMPORT_QUAL_NAME = 'com.sun.tools.ws.ant.WsImport'
+def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn")
 
 sourceSets {
   main {
@@ -55,7 +50,7 @@ configurations {
 
 dependencies {
   def jaxb2Version = '0.9.3'
-  def slf4jVersion = '1.7.25'
+  def slf4jVersion = '1.7.26'
   def jaxwsVersion = '2.2.10'
   def skifVersion = 'trunk-build900'
 
@@ -71,16 +66,16 @@ dependencies {
   implementation 'com.sun.xml.ws:jaxws-rt:'+jaxwsVersion //bruker Sun/Oracle JAXWS Stack
 
   api 'no.statkart.skif:skif-service-common:'+skifVersion
-  api 'joda-time:joda-time:2.10'
-  implementation 'com.google.guava:guava:22.0'
+  api 'joda-time:joda-time:2.10.1'
+  implementation 'com.google.guava:guava:27.1-jre'
   implementation 'org.slf4j:slf4j-api:'+slf4jVersion
   api ('org.jvnet.jaxb2_commons:jaxb2-basics-runtime:'+jaxb2Version) {
     exclude module: 'jaxb-runtime' //disse er ekskludert da man ønker å bruke weblogic sine providede biblioteker på runtime
     exclude module: 'jaxb-api'
   }
 
-  testImplementation 'org.testng:testng:6.14.2'
-  testImplementation 'org.assertj:assertj-core:3.10.0' /* assertJ 3.x for java 8 */
+  testImplementation 'org.testng:testng:6.14.3'
+  testImplementation 'org.assertj:assertj-core:3.12.2' /* assertJ 3.x for java 8 */
   testImplementation 'org.mockito:mockito-core:2.25.1'
   
   testRuntimeOnly 'org.slf4j:slf4j-simple:'+slf4jVersion
@@ -153,20 +148,61 @@ task wsImportValideringService(dependsOn: createGeneratedDir) {
 }
 
 //noinspection GroovyAssignabilityCheck
-task wsImportStedsnavnService(dependsOn: createGeneratedDir) {
-  def wsdlLocation = '/stedsnavn/adressenavn.wsdl'
-  def sourceWsdl = file('src/main/resources' + wsdlLocation)
-  def wsGenSrc = file("${buildDir}/wsimport/stedsnavn")
+task wsImportStedsnavnAdressenavnInndataService(dependsOn: createGeneratedDir) {
+  def sourceWsdl = file('src/main/resources/stedsnavn/adressenavn/adressenavn.wsdl')
   inputs.file sourceWsdl
-  outputs.dir wsGenSrc
+  outputs.dir wsGenSrcForStedsnavn 
 
   doLast {
-    ant.taskdef(name: 'wsImportStedsnavnService', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
-    wsGenSrc.mkdirs()
-    ant.wsImportStedsnavnService(keep: true,
-            sourcedestdir: wsGenSrc,
+    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+    ant.someTaskName(keep: true,
+            sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
-            wsdlLocation: wsdlLocation,
+            wsdlLocation: '/stedsnavn/adressenavn/adressenavn.wsdl',
+            binding: jaxbBindingsFileJavaDateAndTime,
+            xnocompile: true,
+            encoding: 'UTF-8')
+  }
+}
+
+//noinspection GroovyAssignabilityCheck
+task unpackStedsnavnZip(type: Sync) {
+  from {
+    zipTree('src/main/resources/stedsnavn/stedsnavn-wsdls-1.8.0.0.zip')
+  }
+  into "${buildDir}/stedsnavn"
+}
+
+//noinspection GroovyAssignabilityCheck
+task wsImportStedsnavnStoreService(dependsOn: [createGeneratedDir, unpackStedsnavnZip] ) {
+  def sourceWsdl = file("${buildDir}/stedsnavn/StoreServiceWS.wsdl")
+  inputs.file sourceWsdl
+  outputs.dir wsGenSrcForStedsnavn
+
+  doLast {
+    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+    ant.someTaskName(keep: true,
+            sourcedestdir: wsGenSrcForStedsnavn,
+            wsdl: sourceWsdl,
+            wsdlLocation: '../build/stedsnavn/StoreServiceWS.wsdl',
+            binding: jaxbBindingsFileJavaDateAndTime,
+            xnocompile: true,
+            encoding: 'UTF-8')
+  }
+}
+
+//noinspection GroovyAssignabilityCheck
+task wsImportStedsnavnEndringsloggService(dependsOn: [createGeneratedDir, unpackStedsnavnZip] ) {
+  def sourceWsdl = file("${buildDir}/stedsnavn/EndringsloggServiceWS.wsdl")
+  inputs.file sourceWsdl
+  outputs.dir wsGenSrcForStedsnavn
+
+  doLast {
+    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+    ant.someTaskName(keep: true,
+            sourcedestdir: wsGenSrcForStedsnavn,
+            wsdl: sourceWsdl,
+            wsdlLocation: '../build/stedsnavn/EndringsloggServiceWS.wsdl',
             binding: jaxbBindingsFileJavaDateAndTime,
             xnocompile: true,
             encoding: 'UTF-8')

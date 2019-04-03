@@ -1,23 +1,14 @@
 package no.statkart.wsclient.grunnbokv2.innsending;
 
-import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.ByteStreams;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.*;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus.Behandlingsutfall;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.Rettsstiftelsestype;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.DokumentinformasjonBuilder;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.ForsendelsesstatusBuilder;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.MatrikkelenhetBuilder;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.RegisterenhetBuilder;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.RettsstiftelsesinformasjonBuilder;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.SDODokumentBuilder;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.SignertGrunnboksutskriftBuilder;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.TinglysingsinformasjonBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.*;
 import org.joda.time.LocalDateTime;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -264,7 +255,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
       try {
          bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream(resourceName));
       } catch (IOException e) {
-         throw Throwables.propagate(e);
+         throw new RuntimeException(e);
       }
 
       return SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
