@@ -3,6 +3,7 @@ package no.statkart.wsclient.stedsnavn;
 import org.testng.annotations.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,6 +13,7 @@ public class NyVegRequestTest {
 
    public void nyReq() {
       NyVegRequest request = NyVegRequest.Builder.builder()
+            .tidsstempel(LocalDateTime.of(2019, Month.APRIL, 4, 16, 33, 28, 200))
             .vegId(2L)
             .adressekode(2)
             .adressenavn("Navn")

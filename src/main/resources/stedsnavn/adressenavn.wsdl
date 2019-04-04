@@ -13,15 +13,16 @@
             <xs:element name="sendNyVegTilStedsnavnResponse" type="tns:sendNyVegTilStedsnavnResponse"/>
             <xs:complexType name="sendNyVegTilStedsnavn">
                 <xs:sequence>
+                    <xs:element name="tidsstempel" type="xs:dateTime"/>
                     <xs:element name="vegId" type="xs:long"/>
                     <xs:element name="kommunenummer" type="xs:token"/>
-                    <xs:element name="ost" type="xs:double"/>
-                    <xs:element name="nord" type="xs:double"/>
+                    <xs:element name="ost" type="xs:double" minOccurs="0"/>
+                    <xs:element name="nord" type="xs:double" minOccurs="0"/>
                     <xs:element name="koordinatsystem" type="xs:token"/>
                     <xs:element name="adressekode" type="xs:int"/>
                     <xs:element name="adressenavn" type="xs:string"/>
-                    <xs:element name="kortnavn" type="xs:string"/>
-                    <xs:element name="vedtaksdato" type="xs:date"/>
+                    <xs:element name="kortnavn" type="xs:string" minOccurs="0"/>
+                    <xs:element name="vedtaksdato" type="xs:date" minOccurs="0"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="sendNyVegTilStedsnavnResponse">
@@ -32,15 +33,16 @@
             <xs:element name="sendEndretVegTilStedsnavnResponse" type="tns:sendEndretVegTilStedsnavnResponse"/>
             <xs:complexType name="sendEndretVegTilStedsnavn">
                 <xs:sequence>
+                    <xs:element name="tidsstempel" type="xs:dateTime"/>
                     <xs:element name="vegId" type="xs:long"/>
                     <xs:element name="kommunenummer" type="xs:token"/>
-                    <xs:element name="ost" type="xs:double"/>
-                    <xs:element name="nord" type="xs:double"/>
+                    <xs:element name="ost" type="xs:double" minOccurs="0"/>
+                    <xs:element name="nord" type="xs:double" minOccurs="0"/>
                     <xs:element name="koordinatsystem" type="xs:token"/>
                     <xs:element name="adressekode" type="xs:int"/>
                     <xs:element name="adressenavn" type="xs:string"/>
-                    <xs:element name="kortnavn" type="xs:string"/>
-                    <xs:element name="vedtaksdato" type="xs:date"/>
+                    <xs:element name="kortnavn" type="xs:string" minOccurs="0"/>
+                    <xs:element name="vedtaksdato" type="xs:date" minOccurs="0"/>
                     <xs:element name="aarsakTilEndring" type="tns:AarsakTilEndringFraMatrikkelenKode"/>
                 </xs:sequence>
             </xs:complexType>
@@ -49,6 +51,7 @@
             </xs:complexType>
             <xs:simpleType name="AarsakTilEndringFraMatrikkelenKode">
                 <xs:restriction base="xs:token">
+                    <xs:enumeration value="IkkeOppgitt"/>
                     <xs:enumeration value="VedtakINyNavnesak"/>
                     <xs:enumeration value="VedtakIKlagesak"/>
                     <xs:enumeration value="VedtakGjortAvKlagenemnda"/>
@@ -60,6 +63,7 @@
             <xs:element name="sendSlettetVegTilStedsnavnResponse" type="tns:sendSlettetVegTilStedsnavnResponse"/>
             <xs:complexType name="sendSlettetVegTilStedsnavn">
                 <xs:sequence>
+                    <xs:element name="tidsstempel" type="xs:dateTime"/>
                     <xs:element name="vegId" type="xs:long"/>
                     <xs:element name="kommunenummer" type="xs:token"/>
                     <xs:element name="adressekode" type="xs:int"/>

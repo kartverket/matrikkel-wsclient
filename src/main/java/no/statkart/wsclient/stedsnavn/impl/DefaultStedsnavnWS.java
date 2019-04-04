@@ -33,53 +33,40 @@ public class DefaultStedsnavnWS implements StedsnavnWS {
    }
 
    @Override
-   public void sendNyVegTilStedsnavn(NyVegRequest nyVegRequest) {
+   public void sendNyVegTilStedsnavn(NyVegRequest request) {
       try {
-         webservice.sendNyVegTilStedsnavn(nyVegRequest.getVegId(), nyVegRequest.getKommunenummer(), nyVegRequest.getOst(), nyVegRequest.getNord(),
-               nyVegRequest.getKoordinatsystem(), nyVegRequest.getAdressekode(), nyVegRequest.getAdressenavn(), nyVegRequest.getKortnavn(), nyVegRequest.getVedtaksdato());
+         webservice.sendNyVegTilStedsnavn(request.getTidsstempel(), request.getVegId(), request.getKommunenummer(), request.getOst(), request.getNord(),
+               request.getKoordinatsystem(), request.getAdressekode(), request.getAdressenavn(), request.getKortnavn(), request.getVedtaksdato());
       } catch (ApplicationException | SystemException e) {
          throw new RuntimeException(e);
       }
    }
 
    @Override
-   public void sendEndretVegTilStedsnavn(EndretVegRequest endretVegRequest) {
+   public void sendEndretVegTilStedsnavn(EndretVegRequest request) {
       try {
-         webservice.sendEndretVegTilStedsnavn(endretVegRequest.getVegId(), endretVegRequest.getKommunenummer(), endretVegRequest.getOst(),
-               endretVegRequest.getNord(), endretVegRequest.getKoordinatsystem(), endretVegRequest.getAdressekode(), endretVegRequest.getAdressenavn(), endretVegRequest.getKortnavn(),
-               endretVegRequest.getVedtaksdato(), mapAarsakTilEndring(endretVegRequest.getAarsakTilEndring()));
+         webservice.sendEndretVegTilStedsnavn(request.getTidsstempel(), request.getVegId(), request.getKommunenummer(), request.getOst(),
+               request.getNord(), request.getKoordinatsystem(), request.getAdressekode(), request.getAdressenavn(), request.getKortnavn(),
+               request.getVedtaksdato(), mapAarsakTilEndring(request.getAarsakTilEndring()));
       } catch (ApplicationException | SystemException e) {
          throw new RuntimeException(e);
       }
    }
 
    @Override
-   public void sendSlettetVegTilStedsnavn(SlettetVegRequest slettetVegRequest) {
+   public void sendSlettetVegTilStedsnavn(SlettetVegRequest request) {
       try {
-         webservice.sendSlettetVegTilStedsnavn(slettetVegRequest.getVegId(), slettetVegRequest.getKommunenummer(), slettetVegRequest.getAdressekode());
+         webservice.sendSlettetVegTilStedsnavn(request.getTidsstempel(), request.getVegId(), request.getKommunenummer(), request.getAdressekode());
       } catch (ApplicationException | SystemException e) {
          throw new RuntimeException(e);
       }
    }
 
    private AarsakTilEndringFraMatrikkelenKode mapAarsakTilEndring(AarsakTilEndringFraMatrikkelen aarsakTilEndring) {
-      AarsakTilEndringFraMatrikkelenKode wsKode;
-      switch (aarsakTilEndring) {
-         case RETTELSE_AV_FEILFOERING:
-            wsKode = AarsakTilEndringFraMatrikkelenKode.RETTELSE_AV_FEILFOERING;
-            break;
-         case VEDTAK_GJORT_AV_KLAGENEMNDA:
-            wsKode = AarsakTilEndringFraMatrikkelenKode.VEDTAK_GJORT_AV_KLAGENEMNDA;
-            break;
-         case VEDTAK_I_KLAGESAK:
-            wsKode = AarsakTilEndringFraMatrikkelenKode.VEDTAK_I_KLAGESAK;
-            break;
-         case VEDTAK_I_NY_NAVNESAK:
-            wsKode = AarsakTilEndringFraMatrikkelenKode.VEDTAK_I_NY_NAVNESAK;
-            break;
-         default:
-            throw new RuntimeException(String.format("Kodeverdi som ikke er lagt inn støtte for: %s", aarsakTilEndring.getKodeverdi()));
+      try {
+         return AarsakTilEndringFraMatrikkelenKode.fromValue(aarsakTilEndring.getKodeverdi());
+      } catch (IllegalArgumentException ie) {
+         throw new RuntimeException(String.format("Mismatch domene/ws-objekt for kodeverdi: %s", aarsakTilEndring.getKodeverdi()), ie);
       }
-      return wsKode;
    }
 }

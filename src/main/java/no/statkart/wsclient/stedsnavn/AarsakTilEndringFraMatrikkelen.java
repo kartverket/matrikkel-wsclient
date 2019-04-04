@@ -2,6 +2,7 @@ package no.statkart.wsclient.stedsnavn;
 
 public enum AarsakTilEndringFraMatrikkelen {
 
+   IKKE_OPPGITT("IkkeOppgitt"),
    VEDTAK_I_NY_NAVNESAK("VedtakINyNavnesak"),
    VEDTAK_I_KLAGESAK("VedtakIKlagesak"),
    VEDTAK_GJORT_AV_KLAGENEMNDA("VedtakGjortAvKlagenemnda"),

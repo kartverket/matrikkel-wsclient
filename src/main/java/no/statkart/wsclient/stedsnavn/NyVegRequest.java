@@ -1,13 +1,15 @@
 package no.statkart.wsclient.stedsnavn;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class NyVegRequest {
 
+   LocalDateTime tidsstempel;
    long vegId;
    String kommunenummer;
-   double ost;
-   double nord;
+   Double ost;
+   Double nord;
    String koordinatsystem;
    int adressekode;
    String adressenavn;
@@ -15,6 +17,10 @@ public class NyVegRequest {
    LocalDate vedtaksdato;
 
    NyVegRequest() {
+   }
+
+   public LocalDateTime getTidsstempel() {
+      return tidsstempel;
    }
 
    public long getVegId() {
@@ -25,11 +31,11 @@ public class NyVegRequest {
       return kommunenummer;
    }
 
-   public double getOst() {
+   public Double getOst() {
       return ost;
    }
 
-   public double getNord() {
+   public Double getNord() {
       return nord;
    }
 
@@ -57,10 +63,11 @@ public class NyVegRequest {
    @SuppressWarnings({"unused", "WeakerAccess"})
    public static class Builder {
 
+      private LocalDateTime tidsstempel;
       private long vegId;
       private String kommunenummer;
-      private double ost;
-      private double nord;
+      private Double ost;
+      private Double nord;
       private String koordinatsystem;
       private int adressekode;
       private String adressenavn;
@@ -74,6 +81,11 @@ public class NyVegRequest {
          return new Builder();
       }
 
+      public Builder tidsstempel(LocalDateTime tidsstempel) {
+         this.tidsstempel = tidsstempel;
+         return this;
+      }
+
       public Builder vegId(Long vegId) {
          this.vegId = vegId;
          return this;
@@ -84,12 +96,12 @@ public class NyVegRequest {
          return this;
       }
 
-      public Builder ost(double ost) {
+      public Builder ost(Double ost) {
          this.ost = ost;
          return this;
       }
 
-      public Builder nord(double nord) {
+      public Builder nord(Double nord) {
          this.nord = nord;
          return this;
       }
@@ -121,6 +133,7 @@ public class NyVegRequest {
 
       public NyVegRequest build() {
          NyVegRequest nyVegRequest = new NyVegRequest();
+         nyVegRequest.tidsstempel = tidsstempel;
          nyVegRequest.vegId = vegId;
          nyVegRequest.kommunenummer = kommunenummer;
          nyVegRequest.ost = ost;

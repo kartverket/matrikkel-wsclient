@@ -1,6 +1,7 @@
 package no.statkart.wsclient.stedsnavn;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class EndretVegRequest extends NyVegRequest {
 
@@ -13,13 +14,14 @@ public class EndretVegRequest extends NyVegRequest {
       return aarsakTilEndring;
    }
 
-   @SuppressWarnings({"unused"})
+   @SuppressWarnings({"unused", "WeakerAccess"})
    public static class Builder {
 
+      private LocalDateTime tidsstempel;
       private long vegId;
       private String kommunenummer;
-      private double ost;
-      private double nord;
+      private Double ost;
+      private Double nord;
       private String koordinatsystem;
       private int adressekode;
       private String adressenavn;
@@ -34,6 +36,11 @@ public class EndretVegRequest extends NyVegRequest {
          return new Builder();
       }
 
+      public Builder tidsstempel(LocalDateTime tidsstempel) {
+         this.tidsstempel = tidsstempel;
+         return this;
+      }
+
       public Builder vegId(Long vegId) {
          this.vegId = vegId;
          return this;
@@ -44,12 +51,12 @@ public class EndretVegRequest extends NyVegRequest {
          return this;
       }
 
-      public Builder ost(double ost) {
+      public Builder ost(Double ost) {
          this.ost = ost;
          return this;
       }
 
-      public Builder nord(double nord) {
+      public Builder nord(Double nord) {
          this.nord = nord;
          return this;
       }
@@ -86,6 +93,7 @@ public class EndretVegRequest extends NyVegRequest {
 
       public EndretVegRequest build() {
          EndretVegRequest request = new EndretVegRequest();
+         request.tidsstempel = tidsstempel;
          request.vegId = vegId;
          request.kommunenummer = kommunenummer;
          request.ost = ost;

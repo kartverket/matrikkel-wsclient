@@ -1,11 +1,18 @@
 package no.statkart.wsclient.stedsnavn;
 
+import java.time.LocalDateTime;
+
 public class SlettetVegRequest {
+   private LocalDateTime tidsstempel;
    private long vegId;
    private String kommunenummer;
    private int adressekode;
 
    private SlettetVegRequest() {
+   }
+
+   public LocalDateTime getTidsstempel() {
+      return tidsstempel;
    }
 
    public long getVegId() {
@@ -23,6 +30,7 @@ public class SlettetVegRequest {
    @SuppressWarnings("unused")
    public static class Builder {
 
+      private LocalDateTime tidsstempel;
       private long vegId;
       private String kommunenummer;
       private int adressekode;
@@ -32,6 +40,11 @@ public class SlettetVegRequest {
 
       public static Builder builder() {
          return new Builder();
+      }
+
+      public Builder tidsstempel(LocalDateTime tidsstempel) {
+         this.tidsstempel = tidsstempel;
+         return this;
       }
 
       public Builder vegId(Long vegId) {
@@ -51,6 +64,7 @@ public class SlettetVegRequest {
 
       public SlettetVegRequest build() {
          SlettetVegRequest request = new SlettetVegRequest();
+         request.tidsstempel = tidsstempel;
          request.vegId = vegId;
          request.kommunenummer = kommunenummer;
          request.adressekode = adressekode;
