@@ -9,6 +9,9 @@ import java.time.Month;
 import static no.statkart.wsclient.stedsnavn.AarsakTilEndringFraMatrikkelen.RETTELSE_AV_FEILFOERING;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test
+ */
 @Test
 public class EndretVegRequestTest {
 
