@@ -3,7 +3,7 @@ package no.statkart.wsclient.stedsnavn.adressenavn.impl;
 import no.statkart.stedsnavn.matrikkelinndata.v1.adressenavn.AarsakTilEndringFraMatrikkelenKode;
 import no.statkart.stedsnavn.matrikkelinndata.v1.adressenavn.AdressenavnInndata;
 import no.statkart.wsclient.stedsnavn.adressenavn.EndretVegRequest;
-import no.statkart.wsclient.stedsnavn.adressenavn.StedsnavnWS;
+import no.statkart.wsclient.stedsnavn.adressenavn.StedsnavnAdressenavnService;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
@@ -17,22 +17,22 @@ import java.time.Month;
 import static no.statkart.wsclient.stedsnavn.adressenavn.AarsakTilEndringFraMatrikkelen.RETTELSE_AV_FEILFOERING;
 
 @Test
-public class DefaultStedsnavnWSTest {
+public class DefaultStedsnavnAdressenavnServiceTest {
 
    @Spy
    private AdressenavnInndata webservice;
-   private StedsnavnWS stedsnavnWS;
+   private StedsnavnAdressenavnService stedsnavnAdressenavnService;
 
    @BeforeMethod
    public void before() {
       MockitoAnnotations.initMocks(this);
-      stedsnavnWS = new DefaultStedsnavnWS(webservice);
+      stedsnavnAdressenavnService = new DefaultStedsnavnAdressenavnService(webservice);
    }
 
    public void sendEndretVeg() throws Exception {
       LocalDate vedtaksdato = LocalDate.of(2019, Month.APRIL, 2);
       LocalDateTime tidsstempel = LocalDateTime.of(2019, Month.APRIL, 4, 16, 33, 28, 200);
-      stedsnavnWS.sendEndretVegTilStedsnavn(EndretVegRequest.Builder.builder()
+      stedsnavnAdressenavnService.sendEndretVegTilStedsnavn(EndretVegRequest.Builder.builder()
             .tidsstempel(tidsstempel)
             .vegId(1L)
             .adressekode(2)

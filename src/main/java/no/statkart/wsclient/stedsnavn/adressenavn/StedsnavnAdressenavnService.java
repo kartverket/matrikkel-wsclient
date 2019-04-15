@@ -1,7 +1,7 @@
 package no.statkart.wsclient.stedsnavn.adressenavn;
 
 @SuppressWarnings("unused")
-public interface StedsnavnWS {
+public interface StedsnavnAdressenavnService {
 
    void sendNyVegTilStedsnavn(NyVegRequest nyVegRequest);
 

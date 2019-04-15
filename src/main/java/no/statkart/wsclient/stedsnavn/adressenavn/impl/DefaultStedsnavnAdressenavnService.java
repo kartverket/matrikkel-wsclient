@@ -5,12 +5,12 @@ import no.statkart.wsclient.WebServiceBuilder;
 import no.statkart.wsclient.stedsnavn.adressenavn.*;
 
 @SuppressWarnings("unused")
-public class DefaultStedsnavnWS implements StedsnavnWS {
+public class DefaultStedsnavnAdressenavnService implements StedsnavnAdressenavnService {
 
    private static AdressenavnInndataWS webserviceClient;
    private final AdressenavnInndata webservice;
 
-   public DefaultStedsnavnWS(final String brukernavn, final String passord, final String endpointUrl) {
+   public DefaultStedsnavnAdressenavnService(final String brukernavn, final String passord, final String endpointUrl) {
       if (webserviceClient == null) {
          synchronized (this) {
             if (webserviceClient == null) {
@@ -28,7 +28,7 @@ public class DefaultStedsnavnWS implements StedsnavnWS {
    }
 
    //For test
-   DefaultStedsnavnWS(AdressenavnInndata webservice) {
+   DefaultStedsnavnAdressenavnService(AdressenavnInndata webservice) {
       this.webservice = webservice;
    }
 
