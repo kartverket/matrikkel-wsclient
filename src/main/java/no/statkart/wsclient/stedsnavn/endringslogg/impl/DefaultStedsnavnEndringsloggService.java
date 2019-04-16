@@ -5,12 +5,14 @@ import no.statkart.stedsnavn.ssr.wsapi.v1.service.endringslogg.EndringsloggServi
 import no.statkart.stedsnavn.ssr.wsapi.v1.service.endringslogg.EndringsloggServiceWS;
 import no.statkart.stedsnavn.ssr.wsapi.v1.service.endringslogg.ServiceException;
 import no.statkart.wsclient.WebServiceBuilder;
+import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
+import no.statkart.wsclient.stedsnavn.StedsnavnContext;
 import no.statkart.wsclient.stedsnavn.endringslogg.*;
+import no.statkart.wsclient.stedsnavn.map.Mapper;
 
 import java.util.List;
 
-import static no.statkart.wsclient.stedsnavn.endringslogg.StedsnavnBobleId.EndringId;
-import static no.statkart.wsclient.stedsnavn.endringslogg.impl.Mapper.mapEndringerRespons;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.EndringId;
 
 public class DefaultStedsnavnEndringsloggService implements StedsnavnEndringsloggService {
 
@@ -64,7 +66,7 @@ public class DefaultStedsnavnEndringsloggService implements StedsnavnEndringslog
    public EndringerRespons findEndringer(EndringId id, Domainklasse domainklasse, String filter, ReturnerBobler returnerBobler, int maksAntall, StedsnavnContext stedsnavnContext) {
       try {
          Endringer endringer = webservice.findEndringer(Mapper.toWsEndringId(id), Mapper.toWsDomainklasse(domainklasse), filter, Mapper.toWsReturnerBobler(returnerBobler), maksAntall, Mapper.toWsCtx(stedsnavnContext));
-         return mapEndringerRespons(endringer);
+         return Mapper.mapEndringerRespons(endringer);
       } catch (ServiceException e) {
          throw new RuntimeException(e);
       }

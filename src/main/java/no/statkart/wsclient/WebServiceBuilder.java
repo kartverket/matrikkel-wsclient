@@ -35,7 +35,7 @@ public final class WebServiceBuilder<T> {
    }
 
    public static <T> WebServiceBuilder<T> builder(T unproxiedService, Class<T> clazzOfWebService) {
-      WebServiceBuilder<T> builder = new WebServiceBuilder<T>(unproxiedService, clazzOfWebService);
+      WebServiceBuilder<T> builder = new WebServiceBuilder<>(unproxiedService, clazzOfWebService);
       return builder
             .defaultTimeout()
             .defaultRetries()
@@ -44,7 +44,7 @@ public final class WebServiceBuilder<T> {
    }
 
    public static <T> WebServiceBuilder<T> builderv2(T unproxiedService, Class<T> clazzOfWebService) {
-      WebServiceBuilder<T> builder = new WebServiceBuilder<T>(unproxiedService, clazzOfWebService);
+      WebServiceBuilder<T> builder = new WebServiceBuilder<>(unproxiedService, clazzOfWebService);
       return builder
             .defaultTimeout()
             .defaultRetries()
@@ -56,7 +56,7 @@ public final class WebServiceBuilder<T> {
       return this;
    }
 
-   public WebServiceBuilder<T> defaultTimeout() {
+   private WebServiceBuilder<T> defaultTimeout() {
       this.timeout = TIMEOUT_MILLIS;
       return this;
    }
@@ -66,7 +66,7 @@ public final class WebServiceBuilder<T> {
       return this;
    }
 
-   public WebServiceBuilder<T> defaultRetries() {
+   private WebServiceBuilder<T> defaultRetries() {
       this.retries = DEFAULT_RETRIES;
       return this;
    }
@@ -91,7 +91,7 @@ public final class WebServiceBuilder<T> {
       return this;
    }
 
-   public WebServiceBuilder<T> defaultHostnameVerifier() {
+   private WebServiceBuilder<T> defaultHostnameVerifier() {
       this.hostnameVerifier = new NullHostnameVerifier();
       return this;
    }

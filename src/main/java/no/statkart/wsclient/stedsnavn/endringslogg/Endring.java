@@ -1,5 +1,8 @@
 package no.statkart.wsclient.stedsnavn.endringslogg;
 
+import no.statkart.wsclient.stedsnavn.StedsnavnBoble;
+import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
+
 import java.time.LocalDateTime;
 
 public class Endring extends StedsnavnBoble {

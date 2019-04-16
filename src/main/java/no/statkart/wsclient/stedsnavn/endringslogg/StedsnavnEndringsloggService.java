@@ -1,8 +1,11 @@
 package no.statkart.wsclient.stedsnavn.endringslogg;
 
+import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
+import no.statkart.wsclient.stedsnavn.StedsnavnContext;
+
 import java.util.List;
 
-import static no.statkart.wsclient.stedsnavn.endringslogg.StedsnavnBobleId.EndringId;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.EndringId;
 
 public interface StedsnavnEndringsloggService {
 

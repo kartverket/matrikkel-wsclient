@@ -1,5 +1,8 @@
 package no.statkart.wsclient.stedsnavn.endringslogg;
 
+import no.statkart.wsclient.stedsnavn.StedsnavnBoble;
+import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
+
 import java.util.List;
 import java.util.Objects;
 
