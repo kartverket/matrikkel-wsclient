@@ -39,7 +39,8 @@ public abstract class StedsnavnBobleId {
       STED_STATUS,
       STED_TILLEGG,
       VEDTAK,
-      VEDTAKS_MYND
+      VEDTAKS_MYND,
+      STEDSNAVN_KODELISTE
    }
 
    public StedsnavnBobleId(String value, TypeId typeId) {
@@ -239,6 +240,12 @@ public abstract class StedsnavnBobleId {
    public static class VedtaksmyndighetKodeId extends StedsnavnBobleId {
       public VedtaksmyndighetKodeId(String value) {
          super(value, VEDTAKS_MYND);
+      }
+   }
+
+   public static class StedsnavnKodelisteId extends StedsnavnBobleId {
+      public StedsnavnKodelisteId(String value) {
+         super(value, STEDSNAVN_KODELISTE);
       }
    }
 }

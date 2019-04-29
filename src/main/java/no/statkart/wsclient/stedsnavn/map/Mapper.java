@@ -11,6 +11,7 @@ import no.statkart.stedsnavn.ssr.wsapi.v1.domain.dokumentasjon.offentligbruk.Kla
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.dokumentasjon.offentligbruk.VedtakId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.endringslogg.EndringList;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.endringslogg.Endringer;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.kodeliste.StedsnavnKodelisteId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.koder.LandKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.koder.SpraakKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.koder.VedtaksmyndighetKodeId;
@@ -42,6 +43,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.*;
+import static no.statkart.wsclient.stedsnavn.map.KodeMapper.mapKode;
 import static no.statkart.wsclient.stedsnavn.map.SkrivemaateMapper.mapSkrivemaate;
 import static no.statkart.wsclient.stedsnavn.map.StedMapper.mapSted;
 import static no.statkart.wsclient.stedsnavn.map.StedsnavnMapper.mapStedsnavn;
@@ -81,6 +83,7 @@ public class Mapper {
             .put(STED_TILLEGG, StedTilleggsopplysningstypeKodeId.class)
             .put(VEDTAK, VedtakId.class)
             .put(VEDTAKS_MYND, VedtaksmyndighetKodeId.class)
+            .put(STEDSNAVN_KODELISTE, StedsnavnKodelisteId.class)
             .build();
 
     public static EndringerRespons mapEndringerRespons(Endringer endringer) {
@@ -162,6 +165,8 @@ public class Mapper {
             return mapStedsnavn((no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.Stedsnavn) stedsnavnBubbleObject);
         } else if (stedsnavnBubbleObject instanceof no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.Skrivemaate) {
             return mapSkrivemaate((no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.Skrivemaate) stedsnavnBubbleObject);
+        } else if (stedsnavnBubbleObject instanceof no.statkart.stedsnavn.ssr.wsapi.v1.domain.kodeliste.Kode) {
+            return mapKode((no.statkart.stedsnavn.ssr.wsapi.v1.domain.kodeliste.Kode) stedsnavnBubbleObject);
         } else {
             logger.info("Ikke definert mapping for objekt av type: {}", stedsnavnBubbleObject.getClass());
             return null;
@@ -250,6 +255,8 @@ public class Mapper {
             bobleId = new StedsnavnBobleId.VedtakId(value);
         } else if (wsBubbleId instanceof VedtaksmyndighetKodeId) {
             bobleId = new StedsnavnBobleId.VedtaksmyndighetKodeId(value);
+        } else if (wsBubbleId instanceof StedsnavnKodelisteId) {
+            bobleId = new StedsnavnBobleId.StedsnavnKodelisteId(value);
         } else {
             throw new RuntimeException(String.format("Ikke mapping for: %s", wsBubbleId.getClass()));
         }
