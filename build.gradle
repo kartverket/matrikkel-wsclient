@@ -210,6 +210,42 @@ task wsImportStedsnavnEndringsloggService(dependsOn: [createGeneratedDir, unpack
 }
 
 //noinspection GroovyAssignabilityCheck
+task wsImportStedsnavnService(dependsOn: [createGeneratedDir, unpackStedsnavnZip] ) {
+  def sourceWsdl = file("${buildDir}/stedsnavn/StedsnavnServiceWS.wsdl")
+  inputs.file sourceWsdl
+  outputs.dir wsGenSrcForStedsnavn
+
+  doLast {
+    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+    ant.someTaskName(keep: true,
+            sourcedestdir: wsGenSrcForStedsnavn,
+            wsdl: sourceWsdl,
+            wsdlLocation: '../build/stedsnavn/StedsnavnServiceWS.wsdl',
+            binding: jaxbBindingsFileJavaDateAndTime,
+            xnocompile: true,
+            encoding: 'UTF-8')
+  }
+}
+
+//noinspection GroovyAssignabilityCheck
+task wsImportSkrivemaateService(dependsOn: [createGeneratedDir, unpackStedsnavnZip] ) {
+  def sourceWsdl = file("${buildDir}/stedsnavn/SkrivemaateServiceWS.wsdl")
+  inputs.file sourceWsdl
+  outputs.dir wsGenSrcForStedsnavn
+
+  doLast {
+    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+    ant.someTaskName(keep: true,
+            sourcedestdir: wsGenSrcForStedsnavn,
+            wsdl: sourceWsdl,
+            wsdlLocation: '../build/stedsnavn/SkrivemaateServiceWS.wsdl',
+            binding: jaxbBindingsFileJavaDateAndTime,
+            xnocompile: true,
+            encoding: 'UTF-8')
+  }
+}
+
+//noinspection GroovyAssignabilityCheck
 task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
   def sourceWsdl = file('src/main/resources/landbruksregisteret/landbruksregisteret.wsdl')
   def wsGenSrc = file("${buildDir}/wsimport/landbruksregisteret")
