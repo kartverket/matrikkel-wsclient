@@ -23,7 +23,6 @@ public class DefaultStedsnavnAdressenavnService implements StedsnavnAdressenavnS
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
-            .doCreateProxy()
             .build();
    }
 

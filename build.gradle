@@ -11,8 +11,7 @@ sourceCompatibility = '1.8'
 
 def generatedSrcDir = file("${projectDir}/gen")
 def generatedMainJavaDir = file("${generatedSrcDir}/main/java")
-def jaxbBindingsFileJodaTime = file('src/main/resources/bindings.xml')
-def jaxbBindingsFileJavaDateAndTime = file('src/main/resources/bindings_java_date_time_api.xml') 
+def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
 def WS_IMPORT_QUAL_NAME = 'com.sun.tools.ws.ant.WsImport'
 def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn")
 
@@ -121,7 +120,7 @@ task wsImportInnsendingService(dependsOn: createGeneratedDir) {
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/innsending/InnsendingServiceWS.wsdl',
-            binding: jaxbBindingsFileJodaTime,
+            binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
   }
@@ -141,7 +140,7 @@ task wsImportValideringService(dependsOn: createGeneratedDir) {
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/innsending/ValideringServiceWS.wsdl',
-            binding: jaxbBindingsFileJodaTime,
+            binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
   }
@@ -159,7 +158,7 @@ task wsImportStedsnavnAdressenavnInndataService(dependsOn: createGeneratedDir) {
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '/stedsnavn/adressenavn/adressenavn.wsdl',
-            binding: jaxbBindingsFileJavaDateAndTime,
+            binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
   }
@@ -185,7 +184,7 @@ task wsImportStedsnavnStoreService(dependsOn: [createGeneratedDir, unpackStedsna
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '../build/stedsnavn/StoreServiceWS.wsdl',
-            binding: jaxbBindingsFileJavaDateAndTime,
+            binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
   }
@@ -203,7 +202,7 @@ task wsImportStedsnavnEndringsloggService(dependsOn: [createGeneratedDir, unpack
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '../build/stedsnavn/EndringsloggServiceWS.wsdl',
-            binding: jaxbBindingsFileJavaDateAndTime,
+            binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
   }
@@ -221,7 +220,7 @@ task wsImportStedsnavnService(dependsOn: [createGeneratedDir, unpackStedsnavnZip
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '../build/stedsnavn/StedsnavnServiceWS.wsdl',
-            binding: jaxbBindingsFileJavaDateAndTime,
+            binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
   }
@@ -239,7 +238,7 @@ task wsImportSkrivemaateService(dependsOn: [createGeneratedDir, unpackStedsnavnZ
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '../build/stedsnavn/SkrivemaateServiceWS.wsdl',
-            binding: jaxbBindingsFileJavaDateAndTime,
+            binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
   }

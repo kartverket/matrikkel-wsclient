@@ -12,6 +12,7 @@ import org.joda.time.LocalDateTime;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  *
@@ -108,7 +109,7 @@ public class ForsendelsesstatusBuilder {
       forsendelsesstatus.setBehandlingsinformasjon(behandlingsinformasjon);
       forsendelsesstatus.setInnsendingId(innsendingId);
       forsendelsesstatus.setForsendelsesreferanse(forsendelsesreferanse);
-      forsendelsesstatus.setRegistreringstidspunkt(registreringstidspunkt);
+      forsendelsesstatus.setRegistreringstidspunkt(java.time.LocalDateTime.ofInstant(registreringstidspunkt.toDate().toInstant(), TimeZone.getDefault().toZoneId()));
       forsendelsesstatus.setBehandlingsutfall(behandlingsutfall);
       forsendelsesstatus.setSaksstatus(saksstatus);
       forsendelsesstatus.setTinglysingsinformasjon(tinglysingsinformasjon);
