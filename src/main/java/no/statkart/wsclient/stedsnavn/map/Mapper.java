@@ -89,8 +89,7 @@ public class Mapper {
     public static EndringerRespons mapEndringerRespons(Endringer endringer) {
         EndringerRespons respons = new EndringerRespons(
                 toDomainEndringer(endringer.getEndringList()),
-                toDomainEndringId(endringer.getSisteEndringIdProsessert()),
-                toDomainObjects(endringer.getObjects()));
+                toDomainEndringId(endringer.getSisteEndringIdProsessert()));
         respons.setAlleEndringerFunnet(endringer.isAlleEndringerFunnet());
 
         return respons;
@@ -99,14 +98,13 @@ public class Mapper {
     public static no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnContext toWsCtx(StedsnavnContext stedsnavnContext) {
         no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnContext wsStedsnavnContext = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnContext();
 
-        wsStedsnavnContext.setClientIdentification(stedsnavnContext.getClientIdentification());
+        wsStedsnavnContext.setSystemVersion("2.6");
+        wsStedsnavnContext.setClientIdentification("1");
         wsStedsnavnContext.setLocale(stedsnavnContext.getLocale());
 
         Timestamp snapshotVersion = new Timestamp();
-        snapshotVersion.setTimestamp(stedsnavnContext.getSnapshotVersion());
+        snapshotVersion.setTimestamp(DateHjelper.xmlGregorianCalendarForCurrentSnapshotVersion());
         wsStedsnavnContext.setSnapshotVersion(snapshotVersion);
-
-        wsStedsnavnContext.setSystemVersion(stedsnavnContext.getSystemVersion());
 
         return wsStedsnavnContext;
     }
@@ -132,13 +130,6 @@ public class Mapper {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static Kontroll toDomainKontroll(no.statkart.stedsnavn.ssr.wsapi.v1.domain.endringslogg.Kontroll wsKontroll) {
-        Kontroll kontroll = new Kontroll();
-        kontroll.setAntall(wsKontroll.getAntall());
-        kontroll.setIdChecksum(wsKontroll.getIdChecksum());
-        return kontroll;
     }
 
     public static no.statkart.stedsnavn.ssr.wsapi.v1.domain.endringslogg.EndringId toWsEndringId(StedsnavnBobleId.EndringId id) {
@@ -173,22 +164,25 @@ public class Mapper {
         }
     }
 
-    static void setFellesFelterForHistoriskBoble(StedsnavnBubbleObjectWithHistory wsObject, StedsnavnBobleMedHistorie domeneObjekt) {
-        domeneObjekt.setOppdateringsdato(wsObject.getOppdateringsdato().getTimestamp());
-        domeneObjekt.setOppdatertAv(wsObject.getOppdatertAv());
-        domeneObjekt.setSluttdato(wsObject.getSluttdato().getTimestamp());
-        domeneObjekt.setAvsluttetAv(wsObject.getAvsluttetAv());
+    static void setFellesFelterForHistoriskBoble(StedsnavnBubbleObjectWithHistory wsObject, StedsnavnBobleMedHistorie domeneBoble) {
+        setHistoriskeFelter(domeneBoble, wsObject.getOppdateringsdato(), wsObject.getOppdatertAv(), wsObject.getSluttdato(), wsObject.getAvsluttetAv());
     }
 
     static void setFellesFelterForHistoriskKomponent(no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnEntityComponentWithHistory ws, StedsnavnEntityComponentWithHistory domeneKomponent) {
-        domeneKomponent.setOppdateringsdato(ws.getOppdateringsdato().getTimestamp());
-        domeneKomponent.setOppdatertAv(ws.getOppdatertAv());
-        domeneKomponent.setSluttdato(ws.getSluttdato().getTimestamp());
-        domeneKomponent.setAvsluttetAv(ws.getAvsluttetAv());
+        setHistoriskeFelter(domeneKomponent, ws.getOppdateringsdato(), ws.getOppdatertAv(), ws.getSluttdato(), ws.getAvsluttetAv());
+    }
+
+    private static void setHistoriskeFelter(KanSetteHistoriskeFelter domeneType, Timestamp oppdateringsdato, String oppdatertAv, Timestamp sluttdato, String avsluttetAv) {
+        domeneType.setOppdateringsdato(DateHjelper.dateTimeFromXMLGregorianCalendar(oppdateringsdato.getTimestamp()));
+        domeneType.setOppdatertAv(oppdatertAv);
+        if(sluttdato !=null) {
+            domeneType.setSluttdato(DateHjelper.dateTimeFromXMLGregorianCalendar(sluttdato.getTimestamp()));
+        }
+        domeneType.setAvsluttetAv(avsluttetAv);
     }
 
     static LocalDateTime regDato(no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnEntityComponentWithHistory ws) {
-        return ws.getRegistreringsdato().getTimestamp();
+        return DateHjelper.dateTimeFromXMLGregorianCalendar(ws.getRegistreringsdato().getTimestamp());
     }
 
     static StedsnavnBobleId toDomainBobleId(StedsnavnBubbleObjectId wsBubbleId) {
@@ -277,7 +271,7 @@ public class Mapper {
         Timestamp endringstidspunkt = wsEndring.getEndringstidspunkt();
         no.statkart.stedsnavn.ssr.wsapi.v1.domain.endringslogg.Endringstype endringstype = wsEndring.getEndringstype();
 
-        return new Endring(toDomainEndringId(wsEndringId), endringstidspunkt.getTimestamp(), Endringstype.fromValue(endringstype.value()), toDomainBobleId(endretBubbleId));
+        return new Endring(toDomainEndringId(wsEndringId), DateHjelper.dateTimeFromXMLGregorianCalendar(endringstidspunkt.getTimestamp()), Endringstype.fromValue(endringstype.value()), toDomainBobleId(endretBubbleId));
     }
 
     private static StedsnavnBobleId.EndringId toDomainEndringId(no.statkart.stedsnavn.ssr.wsapi.v1.domain.endringslogg.EndringId id) {

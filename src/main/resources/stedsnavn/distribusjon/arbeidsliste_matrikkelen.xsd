@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/arbeidsliste/matrikkelen"
+        xmlns:basistyperns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:kommunens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"
+        xmlns:arbeidslistens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/arbeidsliste/matrikkelen"
+        xmlns:arbeidsliste_koderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/arbeidsliste/matrikkelen/koder"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+    <xs:import schemaLocation="kommune.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"/>
+    <xs:import schemaLocation="arbeidsliste_matrikkelen_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/arbeidsliste/matrikkelen/koder"/>
+
+    <xs:complexType name="AdressenavnarbeidId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AdressenavnarbeidIdList">
+        <xs:sequence>
+            <xs:element name="item" type="arbeidslistens:AdressenavnarbeidId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Adressenavnarbeid" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="tidsstempel" type="basistyperns:Timestamp"/>
+                    <xs:element name="vegId" type="xs:long"/>
+                    <xs:element name="kommuneId" type="kommunens:KommuneId"/>
+                    <xs:element name="adressekode" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyttAdressenavnId">
+        <xs:complexContent>
+            <xs:extension base="arbeidslistens:AdressenavnarbeidId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyttAdressenavn">
+        <xs:complexContent>
+            <xs:extension base="arbeidslistens:Adressenavnarbeid">
+                <xs:sequence>
+                    <xs:element name="koordinat" type="basistyperns:Coordinate"/>
+                    <xs:element name="koordinatsystem" type="xs:string"/>
+                    <xs:element name="adressenavn" type="xs:string"/>
+                    <xs:element name="kortnavn" type="xs:string"/>
+                    <xs:element name="vedtaksdato" type="basistyperns:LocalDate"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EndretAdressenavnId">
+        <xs:complexContent>
+            <xs:extension base="arbeidslistens:AdressenavnarbeidId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EndretAdressenavn">
+        <xs:complexContent>
+            <xs:extension base="arbeidslistens:Adressenavnarbeid">
+                <xs:sequence>
+                    <xs:element name="koordinat" type="basistyperns:Coordinate"/>
+                    <xs:element name="koordinatsystem" type="xs:string"/>
+                    <xs:element name="adressenavn" type="xs:string"/>
+                    <xs:element name="kortnavn" type="xs:string"/>
+                    <xs:element name="vedtaksdato" type="basistyperns:LocalDate"/>
+                    <xs:element name="matrikkelEndringAarsakId" type="arbeidsliste_koderns:AarsakTilEndringFraMatrikkelenKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SlettetAdressenavnId">
+        <xs:complexContent>
+            <xs:extension base="arbeidslistens:AdressenavnarbeidId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SlettetAdressenavn">
+        <xs:complexContent>
+            <xs:extension base="arbeidslistens:Adressenavnarbeid"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate"
+        xmlns:basistyperns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:stedsnavnns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn"
+        xmlns:skrivemaatens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate"
+        xmlns:skrivemaatekoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate/koder"
+        xmlns:dokumentasjonns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+    <xs:import schemaLocation="stedsnavn.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn"/>
+    <xs:import schemaLocation="skrivemaate_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate/koder"/>
+    <xs:import schemaLocation="dokumentasjon.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"/>
+
+    <xs:complexType name="SkrivemaateId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SkrivemaateIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="skrivemaatens:SkrivemaateId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Skrivemaate">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="skrivemaatenummer" type="xs:int"/>
+                    <xs:element name="stedsnavnId" type="stedsnavnns:StedsnavnId"/>
+                    <xs:element name="normertFraId" type="skrivemaatens:SkrivemaateId"/>
+                    <xs:element name="rekkefoelgeId" type="skrivemaatekoderns:RekkefoelgeKodeId"/>
+                    <xs:element name="kasuser" type="skrivemaatens:KasusForSkrivemaateList"/>
+                    <xs:element name="kortnavn" type="xs:string" nillable="true"/>
+                    <xs:element name="skrivemaatestatusHistorikker" type="skrivemaatens:SkrivemaatestatusHistorikkList"/>
+                    <xs:element name="interneMerknader" type="skrivemaatens:SkrivemaateInternMerknadList"/>
+                    <xs:element name="dokumentasjon" type="dokumentasjonns:DokumentasjonList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SkrivemaateIdent">
+        <xs:sequence>
+            <xs:element name="stedsnummer" type="xs:long"/>
+            <xs:element name="stedsnavnnummer" type="xs:int"/>
+            <xs:element name="skrivemaatenummer" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="KasusForSkrivemaate">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="kasusTilKjernenavnId" type="skrivemaatekoderns:KasustypeKodeId"/>
+                    <xs:element name="kjernenavn" type="xs:string"/>
+                    <xs:element name="variasjonstillegg" type="xs:string" minOccurs="0"/>
+                    <xs:element name="funksjonstillegg" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KasusForSkrivemaateList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="skrivemaatens:KasusForSkrivemaate"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="SkrivemaatestatusHistorikk">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="fraDato" type="basistyperns:LocalDate"/>
+                    <xs:element name="skrivemaatestatusId" type="skrivemaatekoderns:SkrivemaatestatusKodeId"/>
+                    <xs:element name="prioritertSkrivemaate" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SkrivemaatestatusHistorikkList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="skrivemaatens:SkrivemaatestatusHistorikk"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SkrivemaateInternMerknad">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="tekst" type="xs:string"/>
+                    <xs:element name="merknadstypeId" type="skrivemaatekoderns:SkrivemaateMerknadstypeKodeId"/>
+                    <xs:element name="fellesarkiv" type="basistyperns:StringList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SkrivemaateInternMerknadList">
+        <xs:sequence>
+            <xs:element name="item" type="skrivemaatens:SkrivemaateInternMerknad" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

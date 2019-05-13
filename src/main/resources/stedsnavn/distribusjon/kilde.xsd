@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/kilde"
+        xmlns:domenens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:dokumentasjonns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"
+        xmlns:dokumentasjonkoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/koder"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+    <xs:import schemaLocation="dokumentasjon.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"/>
+    <xs:import schemaLocation="dokumentasjon_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/koder"/>
+
+    <xs:complexType name="AnnenKartforekomst">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="posisjon" type="xs:string" nillable="true"/>
+                    <xs:element name="kartproduktId" type="dokumentasjonns:KartproduktId"/>
+                    <xs:element name="interneMerknader" type="dokumentasjonns:KartforekomstInternMerknadList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="Kildedokument">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="dokumentdato" type="domenens:LocalDate"/>
+                    <xs:element name="beskrivelse" type="xs:string"/>
+                    <xs:element name="dokumenttypeId" type="dokumentasjonkoderns:DokumenttypeKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="KildeBokreferanse">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="bokId" type="dokumentasjonns:BokId"/>
+                    <xs:element name="side" type="xs:string" minOccurs="0"/>
+                    <xs:element name="referansetekst" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="LokaleInnsamlinger">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="kildedato" type="domenens:LocalDate"/>
+                    <xs:element name="innsamler" type="xs:string"/>
+                    <xs:element name="beskrivelse" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="Opplysning">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="kildedato" type="domenens:LocalDate"/>
+                    <xs:element name="informant" type="xs:string"/>
+                    <xs:element name="tekst" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

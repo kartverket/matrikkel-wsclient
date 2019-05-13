@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"
+        xmlns:koderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"
+        xmlns:kodens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"
+        xmlns:skrivemaatekodens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate/koder"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="kodeliste.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"/>
+    <xs:import schemaLocation="skrivemaate_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate/koder"/>
+
+
+    <xs:complexType name="LandKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LandKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="SpraakKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SpraakKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="koderns:SpraakKodeId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SpraakKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode">
+                <xs:sequence>
+                    <xs:element name="kasusIds" type="skrivemaatekodens:KasustypeKodeIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="VedtaksmyndighetKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VedtaksmyndighetKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="koderns:VedtaksmyndighetKodeId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VedtaksmyndighetKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="OmraadeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmraadeKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="koderns:OmraadeKodeId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OmraadeKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

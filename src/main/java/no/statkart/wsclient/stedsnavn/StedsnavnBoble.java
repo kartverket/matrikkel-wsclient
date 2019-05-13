@@ -11,4 +11,8 @@ public class StedsnavnBoble {
    public StedsnavnBobleId getId() {
       return id;
    }
+
+   public long getIdAsLong() {
+      return Long.valueOf(getId().getValue());
+   }
 }

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/bruker"
+        xmlns:basistyperns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:brukerns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/bruker"
+        xmlns:kommunens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+    <xs:import schemaLocation="kommune.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"/>
+
+    <xs:complexType name="BrukerId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BrukerIdList">
+        <xs:sequence>
+            <xs:element name="item" type="brukerns:BrukerId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Bruker">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="brukernavn" type="xs:string"/>
+                    <xs:element name="fornavn" type="xs:string"/>
+                    <xs:element name="etternavn" type="xs:string"/>
+                    <xs:element name="epost" type="xs:string"/>
+                    <xs:element name="telefon" type="xs:string"/>
+                    <xs:element name="merknad" type="xs:string"/>
+                    <xs:element name="registreringsspraak" type="xs:string"/>
+                    <xs:element name="registreringskoordinatsystem" type="xs:string"/>
+                    <xs:element name="registrertAv" type="xs:string"/>
+                    <xs:element name="adgangSlettet" type="basistyperns:Timestamp"/>
+                    <xs:element name="adgangSlettetAv" type="xs:string"/>
+                    <xs:element name="harKurs" type="xs:boolean"/>
+                    <xs:element name="kursdato" type="basistyperns:LocalDate"/>
+                    <xs:element name="rettigheter" type="brukerns:BrukerrettighetList"/>
+                    <xs:element name="dataForWMS" type="brukerns:DataForWMSList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DataForWMS">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="url" type="xs:anyURI"/>
+                    <xs:element name="aktiv" type="xs:boolean"/>
+                    <xs:element name="aktiveLagNavn" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DataForWMSList">
+        <xs:sequence>
+            <xs:element name="item" type="brukerns:DataForWMS" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Rettighetsomraade">
+        <xs:sequence>
+            <xs:element name="landsdekkende" type="xs:boolean"/>
+            <xs:element name="kommunerIds" type="kommunens:KommuneIdList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Brukerrettighet" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="registrertAv" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Innsyn">
+        <xs:complexContent>
+            <xs:extension base="brukerns:Brukerrettighet"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KartverketSaksbehandler">
+        <xs:complexContent>
+            <xs:extension base="brukerns:Brukerrettighet"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Administrator">
+        <xs:complexContent>
+            <xs:extension base="brukerns:Brukerrettighet"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Test">
+        <xs:complexContent>
+            <xs:extension base="brukerns:Brukerrettighet"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Historikk">
+        <xs:complexContent>
+            <xs:extension base="brukerns:Brukerrettighet"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="InndataFraMatrikkelen">
+        <xs:complexContent>
+            <xs:extension base="brukerns:Brukerrettighet">
+                <xs:sequence>
+                    <xs:element name="rettighetsomraade" type="brukerns:Rettighetsomraade"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Matrikkelen">
+        <xs:complexContent>
+            <xs:extension base="brukerns:Brukerrettighet"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BrukerrettighetList">
+        <xs:sequence>
+            <xs:element name="item" type="brukerns:Brukerrettighet" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Brukeraktiveringsdata">
+        <xs:sequence>
+            <xs:element name="stengingstidspunkt" type="basistyperns:Timestamp"/>
+            <xs:element name="dager" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

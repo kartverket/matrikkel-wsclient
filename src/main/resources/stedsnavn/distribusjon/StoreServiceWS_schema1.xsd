@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain" xmlns:tns="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/store" elementFormDefault="qualified" targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/store" version="1.0">
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain" schemaLocation="basistyper.xsd"/>
+
+  <xs:element name="getObject" type="tns:getObject"/>
+
+  <xs:element name="getObjectResponse" type="tns:getObjectResponse"/>
+
+  <xs:element name="getObjects" type="tns:getObjects"/>
+
+  <xs:element name="getObjectsIgnoreMissing" type="tns:getObjectsIgnoreMissing"/>
+
+  <xs:element name="getObjectsIgnoreMissingResponse" type="tns:getObjectsIgnoreMissingResponse"/>
+
+  <xs:element name="getObjectsResponse" type="tns:getObjectsResponse"/>
+
+  <xs:element name="getVersions" type="tns:getVersions"/>
+
+  <xs:element name="getVersionsForList" type="tns:getVersionsForList"/>
+
+  <xs:element name="getVersionsForListResponse" type="tns:getVersionsForListResponse"/>
+
+  <xs:element name="getVersionsResponse" type="tns:getVersionsResponse"/>
+
+  <xs:element name="isLocked" type="tns:isLocked"/>
+
+  <xs:element name="isLockedResponse" type="tns:isLockedResponse"/>
+
+  <xs:element name="lock" type="tns:lock"/>
+
+  <xs:element name="lockForList" type="tns:lockForList"/>
+
+  <xs:element name="lockForListResponse" type="tns:lockForListResponse"/>
+
+  <xs:element name="lockResponse" type="tns:lockResponse"/>
+
+  <xs:element name="unlock" type="tns:unlock"/>
+
+  <xs:element name="unlockForList" type="tns:unlockForList"/>
+
+  <xs:element name="unlockForListResponse" type="tns:unlockForListResponse"/>
+
+  <xs:element name="unlockResponse" type="tns:unlockResponse"/>
+
+  <xs:complexType name="getObjectsIgnoreMissing">
+    <xs:sequence>
+      <xs:element name="ids" type="ns1:StedsnavnBubbleObjectIdList"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getObjectsIgnoreMissingResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:StedsnavnBubbleObjectList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="lock">
+    <xs:sequence>
+      <xs:element name="id" nillable="true" type="ns1:StedsnavnBubbleObjectId"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="lockResponse">
+    <xs:sequence>
+      <xs:element name="return" nillable="true" type="ns1:StedsnavnBubbleObject"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getVersions">
+    <xs:sequence>
+      <xs:element name="id" type="ns1:StedsnavnBubbleObjectId"/>
+      <xs:element name="start" type="ns1:Timestamp"/>
+      <xs:element name="end" type="ns1:Timestamp"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getVersionsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:SnapshotVersionTilStedsnavnBubbleObjectIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="lockForList">
+    <xs:sequence>
+      <xs:element name="ids" type="ns1:StedsnavnBubbleObjectIdList"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="lockForListResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:StedsnavnBubbleObjectList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getVersionsForList">
+    <xs:sequence>
+      <xs:element name="ids" type="ns1:StedsnavnBubbleObjectIdList"/>
+      <xs:element name="start" type="ns1:Timestamp"/>
+      <xs:element name="end" type="ns1:Timestamp"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getVersionsForListResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:StedsnavnBubbleObjectIdTilSnapshotBubbleIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getObjects">
+    <xs:sequence>
+      <xs:element name="ids" type="ns1:StedsnavnBubbleObjectIdList"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getObjectsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:StedsnavnBubbleObjectList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getObject">
+    <xs:sequence>
+      <xs:element name="id" nillable="true" type="ns1:StedsnavnBubbleObjectId"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getObjectResponse">
+    <xs:sequence>
+      <xs:element name="return" nillable="true" type="ns1:StedsnavnBubbleObject"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="unlock">
+    <xs:sequence>
+      <xs:element name="id" nillable="true" type="ns1:StedsnavnBubbleObjectId"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="unlockResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="unlockForList">
+    <xs:sequence>
+      <xs:element name="ids" type="ns1:StedsnavnBubbleObjectIdList"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="unlockForListResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="isLocked">
+    <xs:sequence>
+      <xs:element name="id" nillable="true" type="ns1:StedsnavnBubbleObjectId"/>
+      <xs:element name="stedsnavnContext" type="ns1:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="isLockedResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

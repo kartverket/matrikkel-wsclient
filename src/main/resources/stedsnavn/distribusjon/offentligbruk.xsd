@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/offentligbruk"
+        xmlns:domenens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:kodens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"
+        xmlns:stedsnavnns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn"
+        xmlns:skrivemaatens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate"
+        xmlns:dokumentasjonns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"
+        xmlns:dokumentasjonkoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/koder"
+        xmlns:offentligbrukns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/offentligbruk"
+        xmlns:kommunens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+    <xs:import schemaLocation="koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"/>
+    <xs:import schemaLocation="kommune.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"/>
+    <xs:import schemaLocation="stedsnavn.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn"/>
+    <xs:import schemaLocation="skrivemaate.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate"/>
+    <xs:import schemaLocation="dokumentasjon.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"/>
+    <xs:import schemaLocation="dokumentasjon_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/koder"/>
+
+    <xs:complexType name="Kartforekomst">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="posisjon" type="xs:string" nillable="true"/>
+                    <xs:element name="kartproduktId" type="dokumentasjonns:KartproduktId"/>
+                    <xs:element name="interneMerknader" type="dokumentasjonns:KartforekomstInternMerknadList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="OffentligDokument">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="dokumentdato" type="domenens:LocalDate"/>
+                    <xs:element name="beskrivelse" type="xs:string"/>
+                    <xs:element name="dokumenttypeId" type="dokumentasjonkoderns:DokumenttypeKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="OffentligBokreferanse">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="bokId" type="dokumentasjonns:BokId"/>
+                    <xs:element name="side" type="xs:string" minOccurs="0"/>
+                    <xs:element name="referansetekst" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="DokumentertSamlevedtak">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="delAvSamlevedtakId" type="offentligbrukns:DelAvSamlevedtakId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentertVedtak">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="vedtakId" type="offentligbrukns:VedtakId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentertKlage">
+        <xs:complexContent>
+            <xs:extension base="dokumentasjonns:Dokumentasjon">
+                <xs:sequence>
+                    <xs:element name="klageId" type="offentligbrukns:KlageId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="KlageId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KlageIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="offentligbrukns:KlageId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Klage">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="vedtakId" type="offentligbrukns:VedtakId" minOccurs="0"/>
+                    <xs:element name="aar" type="xs:int" minOccurs="0"/>
+                    <xs:element name="saksnummer" type="xs:int" minOccurs="0"/>
+                    <xs:element name="klagedato" type="domenens:LocalDate"/>
+                    <xs:element name="arkivreferanse" type="xs:string" minOccurs="0"/>
+                    <xs:element name="kortBeskrivelse" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="DelAvSamlevedtakId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelAvSamlevedtakIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="offentligbrukns:DelAvSamlevedtakId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelAvSamlevedtak">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="samlevedtakId" type="offentligbrukns:SamlevedtakId"/>
+                    <xs:element name="arkivloepenummer" type="xs:int"/>
+                    <xs:element name="stedsnavnId" type="stedsnavnns:StedsnavnId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SamlevedtakId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SamlevedtakIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="offentligbrukns:SamlevedtakId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Samlevedtak">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="aar" type="xs:int"/>
+                    <xs:element name="saksnummer" type="xs:int"/>
+                    <xs:element name="vedtaksdato" type="domenens:LocalDate"/>
+                    <xs:element name="kortBeskrivelse" type="xs:string" minOccurs="0"/>
+                    <xs:element name="arkivreferanse" type="xs:string" minOccurs="0"/>
+                    <xs:element name="utgaatt" type="xs:boolean"/>
+                    <xs:element name="grunnlagId" type="offentligbrukns:VedtakId"/>
+                    <xs:element name="unntak" type="skrivemaatens:SkrivemaateIdList"/>
+                    <xs:element name="vedtaksomraadeId" type="offentligbrukns:VedtaksomraadeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VedtaksomraadeId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Vedtaksomraade">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="polygon" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="VedtakId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VedtakIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="offentligbrukns:VedtakId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Vedtak">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="navnesakId" type="offentligbrukns:NavnesakId"/>
+                    <xs:element name="arkivloepenummer" type="xs:int"/>
+                    <xs:element name="vedtaksdato" type="domenens:LocalDate"/>
+                    <xs:element name="gyldig" type="xs:boolean"/>
+                    <xs:element name="vedtattAv" type="offentligbrukns:UtoevendeMyndighet" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="UtoevendeMyndighet" abstract="true">
+        <xs:sequence/>
+    </xs:complexType>
+
+    <xs:complexType name="UtoevendeMyndighetKommune">
+        <xs:complexContent>
+            <xs:extension base="offentligbrukns:UtoevendeMyndighet">
+                <xs:sequence>
+                    <xs:element name="kommuneId" type="kommunens:KommuneId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="UtoevendeMyndighetFylke">
+        <xs:complexContent>
+            <xs:extension base="offentligbrukns:UtoevendeMyndighet">
+                <xs:sequence>
+                    <xs:element name="fylkeId" type="kommunens:FylkeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NavnesakId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NavnesakIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="offentligbrukns:NavnesakId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Navnesak">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="aar" type="xs:int"/>
+                    <xs:element name="saksnummer" type="xs:int"/>
+                    <xs:element name="arkivreferanse" type="xs:string" minOccurs="0"/>
+                    <xs:element name="kortBeskrivelse" type="xs:string" minOccurs="0"/>
+                    <xs:element name="vedtaksmyndighetId" type="kodens:VedtaksmyndighetKodeId"/>
+                    <xs:element name="omraadeId" type="kodens:OmraadeKodeId"/>
+                    <xs:element name="navnesakReist" type="domenens:LocalDate"/>
+                    <xs:element name="reistFraId" type="offentligbrukns:KlageId" minOccurs="0"/>
+                    <xs:element name="opprettholdendeVedtakId" type="offentligbrukns:VedtakId" minOccurs="0"/>
+                    <xs:element name="logg" type="xs:string" minOccurs="0"/>
+                    <xs:element name="stedsnavnIds" type="stedsnavnns:StedsnavnIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

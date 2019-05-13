@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/servicetyper"
+        xmlns:servicetyperns="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/servicetyper"
+        xmlns:basistyperns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:kommunens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"
+        xmlns:kodelistens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"
+        xmlns:koderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"
+        xmlns:stedns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted"
+        xmlns:stedkoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted/koder"
+        xmlns:stedsnavnns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn"
+        xmlns:stedsnavnkoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn/koder"
+        xmlns:skrivemaatens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate"
+        xmlns:skrivemaatekoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate/koder"
+        xmlns:dokumentasjonns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"
+        xmlns:dokumentasjonkoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/koder"
+        xmlns:offentligbrukns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/offentligbruk"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+    <xs:import schemaLocation="kommune.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"/>
+    <xs:import schemaLocation="kodeliste.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"/>
+    <xs:import schemaLocation="koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"/>
+    <xs:import schemaLocation="sted.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted"/>
+    <xs:import schemaLocation="sted_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted/koder"/>
+    <xs:import schemaLocation="stedsnavn.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn"/>
+    <xs:import schemaLocation="stedsnavn_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn/koder"/>
+    <xs:import schemaLocation="skrivemaate.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate"/>
+    <xs:import schemaLocation="skrivemaate_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/skrivemaate/koder"/>
+    <xs:import schemaLocation="dokumentasjon.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"/>
+    <xs:import schemaLocation="dokumentasjon_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/koder"/>
+    <xs:import schemaLocation="offentligbruk.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/offentligbruk"/>
+
+    <xs:complexType name="StedsnavnIdTilIntegerMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="stedsnavnns:StedsnavnId"/>
+                        <xs:element name="value" type="xs:int" nillable="true"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IntegerTilStedsnavnIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="xs:int"/>
+                        <xs:element name="value" type="stedsnavnns:StedsnavnId" nillable="true"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="KommuneIdTilStedIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="kommunens:KommuneId"/>
+                        <xs:element name="value" type="stedns:StedIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedIdTilStedsnavnIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="stedns:StedId"/>
+                        <xs:element name="value" type="stedsnavnns:StedsnavnIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedsnavnIdTilStedsnavnIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="stedsnavnns:StedsnavnId"/>
+                        <xs:element name="value" type="stedsnavnns:StedsnavnId" nillable="true"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnIdTilStedsnavnIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="stedsnavnns:StedsnavnId"/>
+                        <xs:element name="value" type="stedsnavnns:StedsnavnIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnIdentTilStedsnavnIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="stedsnavnns:StedsnavnIdent"/>
+                        <xs:element name="value" type="stedsnavnns:StedsnavnId" nillable="true"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedsnavnIdTilSkrivemaateIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="stedsnavnns:StedsnavnId"/>
+                        <xs:element name="value" type="skrivemaatens:SkrivemaateIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="SkrivemaateIdTilSkrivemaateIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="skrivemaatens:SkrivemaateId"/>
+                        <xs:element name="value" type="skrivemaatens:SkrivemaateId" nillable="true"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="VedtakIdTilSkrivemaateIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="offentligbrukns:VedtakId"/>
+                        <xs:element name="value" type="skrivemaatens:SkrivemaateIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="NavnesakIdTilSkrivemaateIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="offentligbrukns:NavnesakId"/>
+                        <xs:element name="value" type="skrivemaatens:SkrivemaateIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedsnavnIdTilNavnesakIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="stedsnavnns:StedsnavnId"/>
+                        <xs:element name="value" type="offentligbrukns:NavnesakIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="NavnesakIdTilVedtakIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="offentligbrukns:NavnesakId"/>
+                        <xs:element name="value" type="offentligbrukns:VedtakIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="VedtakIdTilKlageIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="offentligbrukns:VedtakId"/>
+                        <xs:element name="value" type="offentligbrukns:KlageIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="VedtakIdTilSamlevedtakIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="offentligbrukns:VedtakId"/>
+                        <xs:element name="value" type="offentligbrukns:SamlevedtakIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="SamlevedtakIdTilDelAvSamlevedtakIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="offentligbrukns:SamlevedtakId"/>
+                        <xs:element name="value" type="offentligbrukns:DelAvSamlevedtakIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="KlageIdTilSkrivemaateIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="offentligbrukns:KlageId"/>
+                        <xs:element name="value" type="skrivemaatens:SkrivemaateIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="DelAvSamlevedtakIdTilSkrivemaateIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="offentligbrukns:DelAvSamlevedtakId"/>
+                        <xs:element name="value" type="skrivemaatens:SkrivemaateIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnIdTilDelAvSamlevedtakIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="stedsnavnns:StedsnavnId"/>
+                        <xs:element name="value" type="offentligbrukns:DelAvSamlevedtakIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="KodelisteTransfer">
+        <xs:sequence>
+            <xs:element name="kodelisterIds" type="kodelistens:StedsnavnKodelisteIdList"/>
+            <xs:element name="bubbleObjects" type="basistyperns:StedsnavnBubbleObjectList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedFeature">
+        <xs:sequence>
+            <xs:element name="geometri" type="xs:string"/>
+            <xs:element name="stedId" type="stedns:StedId"/>
+            <xs:element name="tekst" type="xs:string"/>
+            <xs:element name="prioritet" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedFeatureList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="servicetyperns:StedFeature"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedSoek">
+        <xs:sequence>
+            <xs:element name="registrertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="registrertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="stedsnummer" type="xs:long" minOccurs="0"/>
+            <xs:element name="stedsnavn" type="xs:string" minOccurs="0"/>
+            <xs:element name="avansertSoek" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Dersom dette feltet ikke er fylt inn, så anses det som false.
+                        @since 1.5
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="navneobjekttyperIds" type="stedkoderns:NavneobjekttypeKodeIdList" minOccurs="0"/>
+            <xs:element name="stedstatuserIds" type="stedkoderns:StedstatusKodeIdList" minOccurs="0"/>
+            <xs:element name="landId" type="koderns:LandKodeId" minOccurs="0"/>
+            <xs:element name="kommunerIds" type="kommunens:KommuneIdList" minOccurs="0"/>
+            <xs:element name="spraakprioriteringerIds" type="stedkoderns:SpraakprioriteringKodeIdList" minOccurs="0"/>
+            <xs:element name="vedtaksmyndigheterIds" type="koderns:VedtaksmyndighetKodeIdList" minOccurs="0"/>
+            <xs:element name="tilleggsopplysningstyperIds" type="stedkoderns:StedTilleggsopplysningstypeKodeIdList" minOccurs="0"/>
+            <xs:element name="tilleggsopplysningtekst" type="xs:string" minOccurs="0"/>
+            <xs:element name="merknadstyperIds" type="stedkoderns:StedMerknadstypeKodeIdList" minOccurs="0"/>
+            <xs:element name="merknadstekst" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedTreff">
+        <xs:sequence>
+            <xs:element name="stedId" type="stedns:StedId"/>
+            <xs:element name="ident" type="stedns:StedIdent"/>
+            <xs:element name="stedsnavn" type="xs:string" minOccurs="0"/>
+            <xs:element name="navneobjekttypeId" type="stedkoderns:NavneobjekttypeKodeId"/>
+            <xs:element name="stedstatusId" type="stedkoderns:StedstatusKodeId"/>
+            <xs:element name="kommunerIds" type="kommunens:KommuneIdList"/>
+            <xs:element name="landId" type="koderns:LandKodeId"/>
+            <xs:element name="spraakprioriteringId" type="stedkoderns:SpraakprioriteringKodeId"/>
+            <xs:element name="sortering" type="stedns:Sortering"/>
+            <xs:element name="antallTilleggsopplysninger" type="xs:int"/>
+            <xs:element name="antallInterneMerknader" type="xs:int"/>
+            <xs:element name="geometri" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedTreffList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:StedTreff" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedsnavnSoek">
+        <xs:sequence>
+            <xs:element name="registrertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="registrertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="stedsnummer" type="xs:long" minOccurs="0"/>
+            <xs:element name="stedsnavnnummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="stedsnavn" type="xs:string" minOccurs="0"/>
+            <xs:element name="avansertSoek" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Dersom dette feltet ikke er fylt inn, så anses det som false.
+                        @since 1.5
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="navneobjekttyperIds" type="stedkoderns:NavneobjekttypeKodeIdList" minOccurs="0"/>
+            <xs:element name="vedtaksmyndigheterIds" type="koderns:VedtaksmyndighetKodeIdList" minOccurs="0"/>
+            <xs:element name="landId" type="koderns:LandKodeId" minOccurs="0"/>
+            <xs:element name="kommunerIds" type="kommunens:KommuneIdList" minOccurs="0"/>
+            <xs:element name="spraakIds" type="koderns:SpraakKodeIdList" minOccurs="0"/>
+            <xs:element name="navnesakstatuserIds" type="stedsnavnkoderns:NavnesakstatusKodeIdList" minOccurs="0"/>
+            <xs:element name="navnestatuserIds" type="stedsnavnkoderns:NavnestatusKodeIdList" minOccurs="0"/>
+            <xs:element name="harPrimaerfunksjon" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="tilleggsopplysningstyperIds" type="stedsnavnkoderns:StedsnavnTilleggsopplysningstypeKodeIdList" minOccurs="0"/>
+            <xs:element name="tilleggsopplysningtekst" type="xs:string" minOccurs="0"/>
+            <xs:element name="merknadstyperIds" type="stedsnavnkoderns:StedsnavnMerknadstypeKodeIdList" minOccurs="0"/>
+            <xs:element name="merknadstekst" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnTreff">
+        <xs:sequence>
+            <xs:element name="stedId" type="stedns:StedId"/>
+            <xs:element name="stedsnavnId" type="stedsnavnns:StedsnavnId"/>
+            <xs:element name="visningsnavnForSted" type="xs:string" minOccurs="0"/>
+            <xs:element name="ident" type="stedsnavnns:StedsnavnIdent"/>
+            <xs:element name="stedsnavn" type="xs:string" minOccurs="0"/>
+            <xs:element name="stedsnavnSkrivemaatestatusIds" type="skrivemaatekoderns:SkrivemaatestatusKodeIdList" minOccurs="0"/>
+            <xs:element name="antallSkrivemaater" type="xs:int"/>
+            <xs:element name="spraakId" type="koderns:SpraakKodeId"/>
+            <xs:element name="harPrimaerfunksjon" type="xs:boolean"/>
+            <xs:element name="navnestatusId" type="stedsnavnkoderns:NavnestatusKodeId"/>
+            <xs:element name="navneobjekttypeId" type="stedkoderns:NavneobjekttypeKodeId"/>
+            <xs:element name="navnesakstatusId" type="stedsnavnkoderns:NavnesakstatusKodeId"/>
+            <xs:element name="skrivemaatestatusId" type="skrivemaatekoderns:SkrivemaatestatusKodeId"/>
+            <xs:element name="skrivemaatestatusdato" type="basistyperns:LocalDate"/>
+            <xs:element name="kommunerIds" type="kommunens:KommuneIdList"/>
+            <xs:element name="antallTilleggsopplysninger" type="xs:int"/>
+            <xs:element name="antallInterneMerknader" type="xs:int"/>
+            <xs:element name="geometri" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnTreffList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:StedsnavnTreff" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="SkrivemaateSoek">
+        <xs:sequence>
+            <xs:element name="registrertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="registrertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="stedsnummer" type="xs:long" minOccurs="0"/>
+            <xs:element name="stedsnavnnummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="skrivemaatenummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="stedsnavn" type="xs:string" minOccurs="0"/>
+            <xs:element name="avansertSoek" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Dersom dette feltet ikke er fylt inn, så anses det som false.
+                        @since 1.5
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="skrivemaatestatuserIds" type="skrivemaatekoderns:SkrivemaatestatusKodeIdList" minOccurs="0"/>
+            <xs:element name="prioritert" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="skrivemaatestatusdatoEtter" type="basistyperns:LocalDate" minOccurs="0"/>
+            <xs:element name="skrivemaatestatusdatoFoer" type="basistyperns:LocalDate" minOccurs="0"/>
+            <xs:element name="navneobjekttyperIds" type="stedkoderns:NavneobjekttypeKodeIdList" minOccurs="0"/>
+            <xs:element name="vedtaksmyndigheterIds" type="koderns:VedtaksmyndighetKodeIdList" minOccurs="0"/>
+            <xs:element name="landId" type="koderns:LandKodeId" minOccurs="0"/>
+            <xs:element name="kommunerIds" type="kommunens:KommuneIdList" minOccurs="0"/>
+            <xs:element name="spraakIds" type="koderns:SpraakKodeIdList" minOccurs="0"/>
+            <xs:element name="navnesakstatuserIds" type="stedsnavnkoderns:NavnesakstatusKodeIdList" minOccurs="0"/>
+            <xs:element name="dokumentasjonsdatoEtter" type="basistyperns:LocalDate" minOccurs="0"/>
+            <xs:element name="dokumentasjonsdatoFoer" type="basistyperns:LocalDate" minOccurs="0"/>
+            <xs:element name="bokSoek" type="servicetyperns:BokSoek" minOccurs="0"/>
+            <xs:element name="offentligKartforekomstSoek" type="servicetyperns:KartforekomstSoek" minOccurs="0"/>
+            <xs:element name="opplysningSoek" type="servicetyperns:OpplysningSoek" minOccurs="0"/>
+            <xs:element name="lokaleInnsamlingerSoek" type="servicetyperns:LokaleInnsamlingerSoek" minOccurs="0"/>
+            <xs:element name="annenKartforekomstSoek" type="servicetyperns:KartforekomstSoek" minOccurs="0"/>
+            <xs:element name="vedtakSoek" type="servicetyperns:DokumentertVedtakSoek" minOccurs="0"/>
+            <xs:element name="samlevedtakSoek" type="servicetyperns:DokumentertSamlevedtakSoek" minOccurs="0"/>
+            <xs:element name="klageSoek" type="servicetyperns:DokumentertKlageSoek" minOccurs="0"/>
+            <xs:element name="dokumentSoek" type="servicetyperns:DokumentSoek" minOccurs="0"/>
+            <xs:element name="merknadstyperIds" type="skrivemaatekoderns:SkrivemaateMerknadstypeKodeIdList" minOccurs="0"/>
+            <xs:element name="merknadstekst" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BokSoek">
+        <xs:sequence>
+            <xs:element name="tittel" type="xs:string" minOccurs="0"/>
+            <xs:element name="utgave" type="xs:string" minOccurs="0"/>
+            <xs:element name="utgiver" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KartforekomstSoek">
+        <xs:sequence>
+            <xs:element name="produktId" type="dokumentasjonkoderns:KarttypeKodeId" minOccurs="0"/>
+            <xs:element name="kartblad" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OpplysningSoek">
+        <xs:sequence>
+            <xs:element name="informant" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LokaleInnsamlingerSoek">
+        <xs:sequence>
+            <xs:element name="innsamler" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentertVedtakSoek">
+        <xs:sequence>
+            <xs:element name="aar" type="xs:int" minOccurs="0"/>
+            <xs:element name="saksnummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="arkivloepenummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="arkivreferanse" type="xs:string" minOccurs="0"/>
+            <xs:element name="beskrivelse" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentertSamlevedtakSoek">
+        <xs:sequence>
+            <xs:element name="aar" type="xs:int" minOccurs="0"/>
+            <xs:element name="saksnummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="arkivloepenummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="arkivreferanse" type="xs:string" minOccurs="0"/>
+            <xs:element name="beskrivelse" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentertKlageSoek">
+        <xs:sequence>
+            <xs:element name="aar" type="xs:int" minOccurs="0"/>
+            <xs:element name="saksnummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="arkivreferanse" type="xs:string" minOccurs="0"/>
+            <xs:element name="beskrivelse" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentSoek">
+        <xs:sequence>
+            <xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="dokumentasjonkoderns:DokumenttypeKodeId"/>
+                        <xs:element name="value" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SkrivemaateTreff">
+        <xs:sequence>
+            <xs:element name="stedId" type="stedns:StedId"/>
+            <xs:element name="stedsnavnId" type="stedsnavnns:StedsnavnId"/>
+            <xs:element name="skrivemaateId" type="skrivemaatens:SkrivemaateId"/>
+            <xs:element name="visningsnavnForSted" type="xs:string" minOccurs="0"/>
+            <xs:element name="ident" type="skrivemaatens:SkrivemaateIdent"/>
+            <xs:element name="skrivemaate" type="xs:string"/>
+            <xs:element name="skrivemaatestatusId" type="skrivemaatekoderns:SkrivemaatestatusKodeId"/>
+            <xs:element name="skrivemaatestatusdato" type="basistyperns:LocalDate"/>
+            <xs:element name="prioritert" type="xs:boolean"/>
+            <xs:element name="spraakId" type="koderns:SpraakKodeId"/>
+            <xs:element name="kasustypeId" type="skrivemaatekoderns:KasustypeKodeId"/>
+            <xs:element name="navneobjekttypeId" type="stedkoderns:NavneobjekttypeKodeId"/>
+            <xs:element name="navnesakstatusId" type="stedsnavnkoderns:NavnesakstatusKodeId"/>
+            <xs:element name="vedtaksmyndighetId" type="koderns:VedtaksmyndighetKodeId"/>
+            <xs:element name="kommunerIds" type="kommunens:KommuneIdList"/>
+            <xs:element name="registreringsdato" type="basistyperns:Timestamp"/>
+            <xs:element name="oppdateringsdato" type="basistyperns:Timestamp"/>
+            <xs:element name="antallInterneMerknader" type="xs:int"/>
+            <xs:element name="geometri" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SkrivemaateTreffList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:SkrivemaateTreff" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavnesakSoek">
+        <xs:sequence>
+            <xs:element name="registrertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="registrertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="aar" type="xs:int" minOccurs="0"/>
+            <xs:element name="saksnummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="klagesak" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="avsluttet" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="beskrivelse" type="xs:string" minOccurs="0"/>
+            <xs:element name="vedtaksmyndighetId" type="koderns:VedtaksmyndighetKodeId" minOccurs="0"/>
+            <xs:element name="omraadeId" type="koderns:OmraadeKodeId" minOccurs="0"/>
+            <xs:element name="arkivreferanse" type="xs:string" minOccurs="0"/>
+            <xs:element name="stedsnavn" type="xs:string" minOccurs="0"/>
+            <xs:element name="kommunerIds" type="kommunens:KommuneIdList" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavnesakTreff">
+        <xs:sequence>
+            <xs:element name="navnesakId" type="offentligbrukns:NavnesakId"/>
+            <xs:element name="aar" type="xs:int"/>
+            <xs:element name="saksnummer" type="xs:int"/>
+            <xs:element name="klagesak" type="xs:boolean"/>
+            <xs:element name="avsluttet" type="xs:boolean"/>
+            <xs:element name="beskrivelse" type="xs:string"/>
+            <xs:element name="vedtaksmyndighetId" type="koderns:VedtaksmyndighetKodeId"/>
+            <xs:element name="omraadeId" type="koderns:OmraadeKodeId"/>
+            <xs:element name="arkivreferanse" type="xs:string"/>
+            <xs:element name="stedsnavn" type="basistyperns:StringList"/>
+            <xs:element name="registreringsdato" type="basistyperns:Timestamp"/>
+            <xs:element name="oppdateringsdato" type="basistyperns:Timestamp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavnesakTreffList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:NavnesakTreff" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VedtakSoek">
+        <xs:sequence>
+            <xs:element name="aar" type="xs:int" minOccurs="0"/>
+            <xs:element name="saksnummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="arkivloepenummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="vedtattEtter" type="basistyperns:LocalDate" minOccurs="0"/>
+            <xs:element name="vedtattFoer" type="basistyperns:LocalDate" minOccurs="0"/>
+            <xs:element name="skrivemaate" type="xs:string" minOccurs="0"/>
+            <xs:element name="vedtaksmyndighetId" type="koderns:VedtaksmyndighetKodeId" minOccurs="0"/>
+            <xs:element name="omraadeId" type="koderns:OmraadeKodeId" minOccurs="0"/>
+            <xs:element name="kommunerIds" type="kommunens:KommuneIdList" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VedtakTreff">
+        <xs:sequence>
+            <xs:element name="vedtakId" type="offentligbrukns:VedtakId"/>
+            <xs:element name="aar" type="xs:int"/>
+            <xs:element name="saksnummer" type="xs:int"/>
+            <xs:element name="arkivloepenummer" type="xs:int"/>
+            <xs:element name="vedtaksdato" type="basistyperns:LocalDate"/>
+            <xs:element name="skrivemaater" type="xs:string"/>
+            <xs:element name="vedtaksmyndighetId" type="koderns:VedtaksmyndighetKodeId"/>
+            <xs:element name="omraadeId" type="koderns:OmraadeKodeId"/>
+            <xs:element name="vedtattAv" type="offentligbrukns:UtoevendeMyndighet" nillable="true"/>
+            <xs:element name="registreringsdato" type="basistyperns:Timestamp"/>
+            <xs:element name="oppdateringsdato" type="basistyperns:Timestamp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VedtakTreffList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:VedtakTreff" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="BokTreff">
+        <xs:sequence>
+            <xs:element name="id" type="dokumentasjonns:BokId"/>
+            <xs:element name="tittel" type="xs:string"/>
+            <xs:element name="isbn" type="xs:string"/>
+            <xs:element name="utgave" type="xs:string"/>
+            <xs:element name="forfatter" type="xs:string"/>
+            <xs:element name="utgiver" type="xs:string"/>
+            <xs:element name="utgivelsesaar" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BokTreffList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:BokTreff" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KartproduktTreff">
+        <xs:sequence>
+            <xs:element name="id" type="dokumentasjonns:KartproduktId"/>
+            <xs:element name="kartblad" type="xs:string"/>
+            <xs:element name="produktkodeId" type="dokumentasjonkoderns:KarttypeKodeId"/>
+            <xs:element name="utgivelsesaar" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KartproduktTreffList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:KartproduktTreff" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="KlageTreff">
+        <xs:sequence>
+            <xs:element name="klageId" type="offentligbrukns:KlageId"/>
+            <xs:element name="stedsnavn" type="xs:string"/>
+            <xs:element name="stedsnavnId" type="stedsnavnns:StedsnavnId" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        @since 1.3.0
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="vedtaksmyndighetId" type="koderns:VedtaksmyndighetKodeId" minOccurs="0"/>
+            <xs:element name="klagedato" type="basistyperns:LocalDate" minOccurs="0"/>
+            <xs:element name="kortBeskrivelse" type="xs:string"/>
+            <xs:element name="omraadeId" type="koderns:OmraadeKodeId" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KlageTreffList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:KlageTreff" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SamlevedtakSoek">
+        <xs:sequence>
+            <xs:element name="registrertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="registrertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertEtter" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertFoer" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="aar" type="xs:int" minOccurs="0"/>
+            <xs:element name="saksnummer" type="xs:int" minOccurs="0"/>
+            <xs:element name="beskrivelse" type="xs:string" minOccurs="0"/>
+            <xs:element name="arkivreferanse" type="xs:string" minOccurs="0"/>
+            <xs:element name="stedsnavn" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SamlevedtakTreff">
+        <xs:sequence>
+            <xs:element name="samlevedtakId" type="offentligbrukns:SamlevedtakId"/>
+            <xs:element name="aar" type="xs:int"/>
+            <xs:element name="saksnummer" type="xs:int"/>
+            <xs:element name="beskrivelse" type="xs:string"/>
+            <xs:element name="arkivreferanse" type="xs:string"/>
+            <xs:element name="stedsnavn" type="basistyperns:StringList"/>
+            <xs:element name="registreringsdato" type="basistyperns:Timestamp"/>
+            <xs:element name="oppdateringsdato" type="basistyperns:Timestamp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SamlevedtakTreffList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:SamlevedtakTreff" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="SkrivemaateForNormering">
+        <xs:sequence>
+            <xs:element name="id" type="skrivemaatens:SkrivemaateId"/>
+            <xs:element name="ident" type="skrivemaatens:SkrivemaateIdent"/>
+            <xs:element name="fullnavn" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SkrivemaateForNormeringList">
+        <xs:sequence>
+            <xs:element name="item" type="servicetyperns:SkrivemaateForNormering" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

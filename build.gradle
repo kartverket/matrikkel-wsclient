@@ -165,16 +165,8 @@ task wsImportStedsnavnAdressenavnInndataService(dependsOn: createGeneratedDir) {
 }
 
 //noinspection GroovyAssignabilityCheck
-task unpackStedsnavnZip(type: Sync) {
-  from {
-    zipTree('src/main/resources/stedsnavn/stedsnavn-wsdls-1.8.0.0.zip')
-  }
-  into "${buildDir}/stedsnavn"
-}
-
-//noinspection GroovyAssignabilityCheck
-task wsImportStedsnavnStoreService(dependsOn: [createGeneratedDir, unpackStedsnavnZip] ) {
-  def sourceWsdl = file("${buildDir}/stedsnavn/StoreServiceWS.wsdl")
+task wsImportStedsnavnStoreService(dependsOn: createGeneratedDir ) {
+  def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/StoreServiceWS.wsdl')
   inputs.file sourceWsdl
   outputs.dir wsGenSrcForStedsnavn
 
@@ -183,16 +175,15 @@ task wsImportStedsnavnStoreService(dependsOn: [createGeneratedDir, unpackStedsna
     ant.someTaskName(keep: true,
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
-            wsdlLocation: '../build/stedsnavn/StoreServiceWS.wsdl',
-            binding: jaxbBindingsFile,
+            wsdlLocation: '/stedsnavn/distribusjon/StoreServiceWS.wsdl',
             xnocompile: true,
             encoding: 'UTF-8')
   }
 }
 
 //noinspection GroovyAssignabilityCheck
-task wsImportStedsnavnEndringsloggService(dependsOn: [createGeneratedDir, unpackStedsnavnZip] ) {
-  def sourceWsdl = file("${buildDir}/stedsnavn/EndringsloggServiceWS.wsdl")
+task wsImportStedsnavnEndringsloggService(dependsOn: createGeneratedDir ) {
+  def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/EndringsloggServiceWS.wsdl')
   inputs.file sourceWsdl
   outputs.dir wsGenSrcForStedsnavn
 
@@ -201,16 +192,15 @@ task wsImportStedsnavnEndringsloggService(dependsOn: [createGeneratedDir, unpack
     ant.someTaskName(keep: true,
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
-            wsdlLocation: '../build/stedsnavn/EndringsloggServiceWS.wsdl',
-            binding: jaxbBindingsFile,
+            wsdlLocation: '/stedsnavn/distribusjon/EndringsloggServiceWS.wsdl',
             xnocompile: true,
             encoding: 'UTF-8')
   }
 }
 
 //noinspection GroovyAssignabilityCheck
-task wsImportStedsnavnService(dependsOn: [createGeneratedDir, unpackStedsnavnZip] ) {
-  def sourceWsdl = file("${buildDir}/stedsnavn/StedsnavnServiceWS.wsdl")
+task wsImportStedsnavnService(dependsOn: createGeneratedDir ) {
+  def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/StedsnavnServiceWS.wsdl')
   inputs.file sourceWsdl
   outputs.dir wsGenSrcForStedsnavn
 
@@ -219,16 +209,15 @@ task wsImportStedsnavnService(dependsOn: [createGeneratedDir, unpackStedsnavnZip
     ant.someTaskName(keep: true,
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
-            wsdlLocation: '../build/stedsnavn/StedsnavnServiceWS.wsdl',
-            binding: jaxbBindingsFile,
+            wsdlLocation: '/stedsnavn/distribusjon/StedsnavnServiceWS.wsdl',
             xnocompile: true,
             encoding: 'UTF-8')
   }
 }
 
 //noinspection GroovyAssignabilityCheck
-task wsImportSkrivemaateService(dependsOn: [createGeneratedDir, unpackStedsnavnZip] ) {
-  def sourceWsdl = file("${buildDir}/stedsnavn/SkrivemaateServiceWS.wsdl")
+task wsImportSkrivemaateService(dependsOn: createGeneratedDir ) {
+  def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/SkrivemaateServiceWS.wsdl')
   inputs.file sourceWsdl
   outputs.dir wsGenSrcForStedsnavn
 
@@ -237,8 +226,7 @@ task wsImportSkrivemaateService(dependsOn: [createGeneratedDir, unpackStedsnavnZ
     ant.someTaskName(keep: true,
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
-            wsdlLocation: '../build/stedsnavn/SkrivemaateServiceWS.wsdl',
-            binding: jaxbBindingsFile,
+            wsdlLocation: '/stedsnavn/distribusjon/SkrivemaateServiceWS.wsdl',
             xnocompile: true,
             encoding: 'UTF-8')
   }

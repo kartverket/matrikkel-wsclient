@@ -7,26 +7,34 @@ import java.time.LocalDateTime;
 
 public class Endring extends StedsnavnBoble {
 
-   private LocalDateTime endringstidspunkt;
-   private Endringstype endringstype;
-   private StedsnavnBobleId endretBubbleId;
+    private LocalDateTime endringstidspunkt;
+    private Endringstype endringstype;
+    private StedsnavnBobleId endretBubbleId;
 
-   public Endring(StedsnavnBobleId id, LocalDateTime endringstidspunkt, Endringstype endringstype, StedsnavnBobleId endretBubbleId) {
-      super(id);
-      this.endringstidspunkt = endringstidspunkt;
-      this.endringstype = endringstype;
-      this.endretBubbleId = endretBubbleId;
-   }
+    public Endring(StedsnavnBobleId id, LocalDateTime endringstidspunkt, Endringstype endringstype, StedsnavnBobleId endretBubbleId) {
+        super(id);
+        this.endringstidspunkt = endringstidspunkt;
+        this.endringstype = endringstype;
+        this.endretBubbleId = endretBubbleId;
+    }
 
-   public LocalDateTime getEndringstidspunkt() {
-      return endringstidspunkt;
-   }
+    public long getEndringIdAsLong() {
+        return Long.valueOf(getId().getValue());
+    }
 
-   public Endringstype getEndringstype() {
-      return endringstype;
-   }
+    public long getEndretBubbleIdAsLong() {
+        return Long.valueOf(getEndretBubbleId().getValue());
+    }
 
-   public StedsnavnBobleId getEndretBubbleId() {
-      return endretBubbleId;
-   }
+    public LocalDateTime getEndringstidspunkt() {
+        return endringstidspunkt;
+    }
+
+    public Endringstype getEndringstype() {
+        return endringstype;
+    }
+
+    public StedsnavnBobleId getEndretBubbleId() {
+        return endretBubbleId;
+    }
 }

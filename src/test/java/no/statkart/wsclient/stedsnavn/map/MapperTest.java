@@ -47,6 +47,7 @@ import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.StedsnavnTilleg
 import no.statkart.wsclient.stedsnavn.Matrikkelreferanse;
 import no.statkart.wsclient.stedsnavn.NavneobjekttypeHistorikk;
 import no.statkart.wsclient.stedsnavn.Sortering;
+import no.statkart.wsclient.stedsnavn.SpraakprioriteringKode;
 import no.statkart.wsclient.stedsnavn.Sted;
 import no.statkart.wsclient.stedsnavn.StedTilleggsopplysning;
 import no.statkart.wsclient.stedsnavn.Stedsnavn;
@@ -73,21 +74,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Test
 public class MapperTest {
 
-    private static final LocalDateTime NOW = LocalDateTime.of(2019, Month.APRIL, 10, 12, 9, 18, 500);
+    private static final LocalDateTime NOW = LocalDateTime.of(2019, Month.APRIL, 10, 12, 9, 18, 510_000_000);
     private static final LocalDate TODAY = LocalDate.of(2019, Month.APRIL, 23);
     private static final String AVSLUTTET_AV = "Jens";
     private static final String OPPDATERT_AV = "ulf";
     private static final String ID = "123597";
 
     public void toWsCtx() {
-        LocalDateTime snapshotVersion = LocalDateTime.of(2019, Month.APRIL, 12, 14, 58, 3, 18);
-        no.statkart.wsclient.stedsnavn.StedsnavnContext stedsnavnContext = new no.statkart.wsclient.stedsnavn.StedsnavnContext("3.14", "Identif", "no", snapshotVersion);
+        no.statkart.wsclient.stedsnavn.StedsnavnContext stedsnavnContext = new no.statkart.wsclient.stedsnavn.StedsnavnContext("no");
         StedsnavnContext wsCtx = Mapper.toWsCtx(stedsnavnContext);
 
-        assertThat(wsCtx.getSystemVersion()).isEqualTo("3.14");
-        assertThat(wsCtx.getClientIdentification()).isEqualTo("Identif");
+        assertThat(wsCtx.getSystemVersion()).isEqualTo("2.6");
+        assertThat(wsCtx.getClientIdentification()).isEqualTo("1");
         assertThat(wsCtx.getLocale()).isEqualTo("no");
-        assertThat(wsCtx.getSnapshotVersion().getTimestamp()).isEqualTo(snapshotVersion);
+        assertThat(wsCtx.getSnapshotVersion().getTimestamp().toString()).isEqualTo("9999-01-01T00:00:00.000+01:00");
     }
 
     public void toWsBobleIds() {
@@ -188,16 +188,6 @@ public class MapperTest {
 
         endringer.setAlleEndringerFunnet(true);
 
-        StedsnavnBubbleObjectList objectList = new StedsnavnBubbleObjectList();
-        //1. Sted
-        List<StedsnavnBubbleObject> wsBubbleObjects = objectList.getItem();
-        wsBubbleObjects.add(createWsSted());
-        //2. Stedsnavn
-        wsBubbleObjects.add(createWsStedsnavn());
-        //3. Skrivemate
-        wsBubbleObjects.add(createWsSkrivemaate());
-        endringer.setObjects(objectList);
-
         EndringerRespons endringerRespons = Mapper.mapEndringerRespons(endringer);
 
         StedsnavnBobleId.EndringId domainEndringId = new StedsnavnBobleId.EndringId("123");
@@ -220,8 +210,19 @@ public class MapperTest {
         assertThat(domainEndring.getEndringstype()).isEqualTo(Endringstype.OPPDATERING);
 
         assertThat(endringerRespons.isAlleEndringerFunnet()).isTrue();
+    }
 
-        List<StedsnavnBoble> bobler = endringerRespons.getObjects();
+    public void toDomainObjects() {
+        StedsnavnBubbleObjectList objectList = new StedsnavnBubbleObjectList();
+        //1. Sted
+        List<StedsnavnBubbleObject> wsBubbleObjects = objectList.getItem();
+        wsBubbleObjects.add(createWsSted());
+        //2. Stedsnavn
+        wsBubbleObjects.add(createWsStedsnavn());
+        //3. Skrivemate
+        wsBubbleObjects.add(createWsSkrivemaate());
+
+        List<StedsnavnBoble> bobler = Mapper.toDomainObjects(objectList);
         assertThat(bobler.size()).isEqualTo(3);
 
         Sted sted = assertBobleAvType(bobler, 0, Sted.class);
@@ -234,9 +235,84 @@ public class MapperTest {
         assertSkrivemaate(skrivemaate);
     }
 
-    public void toDomainObject() {
+    public void toDomainObject_StedstatusKode() {
         no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.StedstatusKode wsKode = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.StedstatusKode();
         StedstatusKodeId id = new StedstatusKodeId();
+        setFelterForWsKode(wsKode, id);
+
+        StedsnavnBoble domeneKode = Mapper.toDomainObject(wsKode);
+        assertKodeType(domeneKode, StedstatusKode.class);
+    }
+
+    public void toDomainObject_NavnestatusKode() {
+        no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.NavnestatusKode wsKode = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.NavnestatusKode();
+        NavnestatusKodeId id = new NavnestatusKodeId();
+        setFelterForWsKode(wsKode, id);
+
+        StedsnavnBoble domeneKode = Mapper.toDomainObject(wsKode);
+
+        assertKodeType(domeneKode, NavnestatusKode.class);
+    }
+
+    public void toDomainObject_SpraakprioriteringKode() {
+        no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.SpraakprioriteringKode wsKode = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.SpraakprioriteringKode();
+        SpraakprioriteringKodeId id = new SpraakprioriteringKodeId();
+        setFelterForWsKode(wsKode, id);
+
+        StedsnavnBoble domeneKode = Mapper.toDomainObject(wsKode);
+
+        assertKodeType(domeneKode, SpraakprioriteringKode.class);
+    }
+
+    public void toDomainObject_SpraakKode() {
+        no.statkart.stedsnavn.ssr.wsapi.v1.domain.koder.SpraakKode wsKode = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.koder.SpraakKode();
+        SpraakKodeId id = new SpraakKodeId();
+        setFelterForWsKode(wsKode, id);
+
+        StedsnavnBoble domeneKode = Mapper.toDomainObject(wsKode);
+
+        assertKodeType(domeneKode, SpraakKode.class);
+    }
+
+    public void toDomainObject_SkrivemaatestatusKode() {
+        no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.SkrivemaatestatusKode wsKode = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.SkrivemaatestatusKode();
+        SkrivemaatestatusKodeId id = new SkrivemaatestatusKodeId();
+        setFelterForWsKode(wsKode, id);
+
+        StedsnavnBoble domeneKode = Mapper.toDomainObject(wsKode);
+
+        assertKodeType(domeneKode, SkrivemaatestatusKode.class);
+    }
+
+    public void toDomainObject_RekkefoelgeKode() {
+        no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.RekkefoelgeKode wsKode = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.RekkefoelgeKode();
+        RekkefoelgeKodeId id = new RekkefoelgeKodeId();
+        setFelterForWsKode(wsKode, id);
+        StedsnavnBoble domeneKode = Mapper.toDomainObject(wsKode);
+        assertKodeType(domeneKode, RekkefoelgeKode.class);
+    }
+
+    public void toDomainObject_KasustypeKode() {
+        no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.KasustypeKode wsKode = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.KasustypeKode();
+        KasustypeKodeId id = new KasustypeKodeId();
+        setFelterForWsKode(wsKode, id);
+        StedsnavnBoble domeneKode = Mapper.toDomainObject(wsKode);
+        assertKodeType(domeneKode, KasustypeKode.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends Kode> void assertKodeType(StedsnavnBoble domeneKode, Class<T> kodeClazz) {
+        assertThat(domeneKode).isNotNull();
+        assertThat(domeneKode).isInstanceOf(kodeClazz);
+        T kode = (T) domeneKode;
+        assertThat(kode.getOppdateringsdato()).isEqualTo(NOW);
+        assertThat(kode.getOppdatertAv()).isEqualTo(OPPDATERT_AV);
+        assertThat(kode.getGyldigTil()).isEqualTo(NOW);
+        assertThat(kode.getKodelisteId().getValue()).isEqualTo("2");
+        assertThat(kode.getNavn().getKeyAndValues()).isEqualTo(ImmutableMap.of("key", "value"));
+    }
+
+    private void setFelterForWsKode(no.statkart.stedsnavn.ssr.wsapi.v1.domain.kodeliste.Kode wsKode, no.statkart.stedsnavn.ssr.wsapi.v1.domain.kodeliste.KodeId id) {
         id.setValue("1");
         wsKode.setId(id);
         wsKode.setOppdateringsdato(timestamp());
@@ -252,17 +328,6 @@ public class MapperTest {
         entry.setValue("value");
         localizedString.getEntry().add(entry);
         wsKode.setNavn(localizedString);
-
-        StedsnavnBoble domeneKode = Mapper.toDomainObject(wsKode);
-
-        assertThat(domeneKode).isNotNull();
-        assertThat(domeneKode).isInstanceOf(StedstatusKode.class);
-        StedstatusKode kode = (StedstatusKode) domeneKode;
-        assertThat(kode.getOppdateringsdato()).isEqualTo(NOW);
-        assertThat(kode.getOppdatertAv()).isEqualTo(OPPDATERT_AV);
-        assertThat(kode.getGyldigTil()).isEqualTo(NOW);
-        assertThat(kode.getKodelisteId().getValue()).isEqualTo("2");
-        assertThat(kode.getNavn().getKeyAndValues()).isEqualTo(ImmutableMap.of("key", "value"));
     }
 
     private void assertSkrivemaate(Skrivemaate skrivemaate) {
@@ -795,7 +860,7 @@ public class MapperTest {
 
     private no.statkart.stedsnavn.ssr.wsapi.v1.domain.LocalDate localDate() {
         no.statkart.stedsnavn.ssr.wsapi.v1.domain.LocalDate localDate = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.LocalDate();
-        localDate.setDate(TODAY);
+        localDate.setDate(DateHjelper.fromLocalDate(TODAY));
         return localDate;
     }
 
@@ -818,7 +883,7 @@ public class MapperTest {
 
     private Timestamp timestamp() {
         Timestamp timestamp = new Timestamp();
-        timestamp.setTimestamp(NOW);
+        timestamp.setTimestamp(DateHjelper.fromLocalDateTime(NOW));
         return timestamp;
     }
 

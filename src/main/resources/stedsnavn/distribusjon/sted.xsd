@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted"
+        xmlns:domenens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:koderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"
+        xmlns:stedkoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted/koder"
+        xmlns:stedns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted"
+        xmlns:posisjonns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/posisjon"
+        xmlns:kommunens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+    <xs:import schemaLocation="koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"/>
+    <xs:import schemaLocation="sted_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted/koder"/>
+    <xs:import schemaLocation="kommune.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"/>
+    <xs:import schemaLocation="posisjon.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/posisjon"/>
+
+    <xs:complexType name="StedId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="stedns:StedId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Sted">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="stedsnummer" type="xs:long"/>
+                    <xs:element name="kommunerIds" type="kommunens:KommuneIdList"/>
+                    <xs:element name="landId" type="koderns:LandKodeId"/>
+                    <xs:element name="navneobjekttypeHistorikker" type="stedns:NavneobjekttypeHistorikkList"/>
+                    <xs:element name="stedstatusHistorikker" type="stedns:StedstatusHistorikkList"/>
+                    <xs:element name="vedtaksmyndighetHistorikker" type="stedns:VedtaksmyndighetHistorikkList"/>
+                    <xs:element name="posisjonId" type="posisjonns:PosisjonId"/>
+                    <xs:element name="spraakprioriteringId" type="stedkoderns:SpraakprioriteringKodeId" minOccurs="0"/>
+                    <xs:element name="sortering" type="stedns:Sortering"/>
+                    <xs:element name="hoeyesteStedsnavnnummer" type="xs:int"/>
+                    <xs:element name="tilleggsopplysninger" type="stedns:StedTilleggsopplysningList"/>
+                    <xs:element name="interneMerknader" type="stedns:StedInternMerknadList"/>
+                    <xs:element name="matrikkelreferanse" type="stedns:Matrikkelreferanse" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedIdent">
+        <xs:sequence>
+            <xs:element name="stedsnummer" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjekttypeHistorikkList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="stedns:NavneobjekttypeHistorikk"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjekttypeHistorikk">
+        <xs:sequence>
+            <xs:element name="fraDato" type="domenens:LocalDate"/>
+            <xs:element name="navneobjekttypeKodeId" type="stedkoderns:NavneobjekttypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedstatusHistorikkList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="stedns:StedstatusHistorikk"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedstatusHistorikk">
+        <xs:sequence>
+            <xs:element name="fraDato" type="domenens:LocalDate"/>
+            <xs:element name="stedstatusId" type="stedkoderns:StedstatusKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VedtaksmyndighetHistorikkList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="stedns:VedtaksmyndighetHistorikk"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VedtaksmyndighetHistorikk">
+        <xs:sequence>
+            <xs:element name="fraDato" type="domenens:LocalDate"/>
+            <xs:element name="vedtaksmyndighetId" type="koderns:VedtaksmyndighetKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Sortering">
+        <xs:sequence>
+            <xs:element name="sortering1KodeId" type="stedkoderns:Sortering1KodeId"/>
+            <xs:element name="sortering2KodeId" type="stedkoderns:Sortering2KodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedInternMerknad">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="tekst" type="xs:string"/>
+                    <xs:element name="merknadstypeId" type="stedkoderns:StedMerknadstypeKodeId"/>
+                    <xs:element name="fellesarkiv" type="domenens:StringList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedInternMerknadList">
+        <xs:sequence>
+            <xs:element name="item" type="stedns:StedInternMerknad" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedTilleggsopplysning">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="tekst" type="xs:string"/>
+                    <xs:element name="eksterneOpplysninger" type="domenens:UrlList"/>
+                    <xs:element name="tilleggsopplysningstypeId" type="stedkoderns:StedTilleggsopplysningstypeKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedTilleggsopplysningList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="stedns:StedTilleggsopplysning"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Matrikkelreferanse" abstract="true">
+        <xs:sequence>
+            <xs:element name="matrikkelId" type="xs:long"/>
+            <xs:element name="oppdateringsdato" type="domenens:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertAv" type="xs:string" minOccurs="0"/>
+            <xs:element name="sluttdato" type="domenens:Timestamp" minOccurs="0"/>
+            <xs:element name="avsluttetAv" type="xs:string" minOccurs="0"/>
+            <xs:element name="registreringsdato" type="domenens:Timestamp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Matrikkelenhetreferanse">
+        <xs:complexContent>
+            <xs:extension base="stedns:Matrikkelreferanse">
+                <xs:sequence>
+                    <xs:element name="kommunenummer" type="xs:string"/>
+                    <xs:element name="gaardsnummer" type="xs:int"/>
+                    <xs:element name="bruksnummer" type="xs:int"/>
+                    <xs:element name="festenummer" type="xs:int"/>
+                    <xs:element name="seksjonsnummer" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Vegreferanse">
+        <xs:complexContent>
+            <xs:extension base="stedns:Matrikkelreferanse">
+                <xs:sequence>
+                    <xs:element name="kommunenummer" type="xs:string"/>
+                    <xs:element name="adressekode" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

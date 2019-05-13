@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"
+        xmlns:basistyperns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:kodens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+
+    <xs:complexType name="KodeId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="kodens:KodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="Kode">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObject">
+                <xs:sequence>
+                    <xs:element name="oppdateringsdato" type="basistyperns:Timestamp" minOccurs="0"/>
+                    <xs:element name="oppdatertAv" type="xs:string" minOccurs="0"/>
+                    <xs:element name="gyldigTil" type="basistyperns:Timestamp" minOccurs="0"/>
+                    <xs:element name="kodelisteId" type="kodens:StedsnavnKodelisteId"/>
+                    <xs:element name="kodeverdi" type="xs:string"/>
+                    <xs:element name="navn" type="basistyperns:LocalizedString"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KodeList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="kodens:Kode"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedsnavnKodelisteId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnKodelisteIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="kodens:StedsnavnKodelisteId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedsnavnKodeliste">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObject">
+                <xs:sequence>
+                    <xs:element name="kodeTypeNavn" type="xs:string"/>
+                    <xs:element name="kodeIdClass" type="xs:string"/>
+                    <xs:element name="koderIds" type="kodens:KodeIdList"/>
+                    <xs:element name="editerbar" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnKodelisteList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="kodens:StedsnavnKodeliste"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

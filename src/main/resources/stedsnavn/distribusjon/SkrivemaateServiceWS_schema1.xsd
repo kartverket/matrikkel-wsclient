@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/offentligbruk" xmlns:ns2="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain" xmlns:ns3="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/servicetyper" xmlns:ns4="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn" xmlns:tns="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/skrivemaate" elementFormDefault="qualified" targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/skrivemaate" version="1.0">
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/offentligbruk" schemaLocation="offentligbruk.xsd"/>
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/servicetyper" schemaLocation="servicetyper.xsd"/>
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn" schemaLocation="stedsnavn.xsd"/>
+
+  <xs:element name="findSkrivemaaterForDelAvSamlevedtakList" type="tns:findSkrivemaaterForDelAvSamlevedtakList"/>
+
+  <xs:element name="findSkrivemaaterForDelAvSamlevedtakListResponse" type="tns:findSkrivemaaterForDelAvSamlevedtakListResponse"/>
+
+  <xs:element name="findSkrivemaaterForKlager" type="tns:findSkrivemaaterForKlager"/>
+
+  <xs:element name="findSkrivemaaterForKlagerResponse" type="tns:findSkrivemaaterForKlagerResponse"/>
+
+  <xs:element name="findSkrivemaaterForNavnesaker" type="tns:findSkrivemaaterForNavnesaker"/>
+
+  <xs:element name="findSkrivemaaterForNavnesakerResponse" type="tns:findSkrivemaaterForNavnesakerResponse"/>
+
+  <xs:element name="findSkrivemaaterForStedsnavnList" type="tns:findSkrivemaaterForStedsnavnList"/>
+
+  <xs:element name="findSkrivemaaterForStedsnavnListResponse" type="tns:findSkrivemaaterForStedsnavnListResponse"/>
+
+  <xs:element name="findSkrivemaaterForVedtakList" type="tns:findSkrivemaaterForVedtakList"/>
+
+  <xs:element name="findSkrivemaaterForVedtakListResponse" type="tns:findSkrivemaaterForVedtakListResponse"/>
+
+  <xs:complexType name="findSkrivemaaterForKlager">
+    <xs:sequence>
+      <xs:element name="klageIds" type="ns1:KlageIdList"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSkrivemaaterForKlagerResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns3:KlageIdTilSkrivemaateIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSkrivemaaterForNavnesaker">
+    <xs:sequence>
+      <xs:element name="navnesakIds" type="ns1:NavnesakIdList"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSkrivemaaterForNavnesakerResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns3:NavnesakIdTilSkrivemaateIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSkrivemaaterForStedsnavnList">
+    <xs:sequence>
+      <xs:element name="stedsnavnIds" type="ns4:StedsnavnIdList"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSkrivemaaterForStedsnavnListResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns3:StedsnavnIdTilSkrivemaateIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSkrivemaaterForVedtakList">
+    <xs:sequence>
+      <xs:element name="vedtakIds" type="ns1:VedtakIdList"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSkrivemaaterForVedtakListResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns3:VedtakIdTilSkrivemaateIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSkrivemaaterForDelAvSamlevedtakList">
+    <xs:sequence>
+      <xs:element name="delAvSamlevedtakIds" type="ns1:DelAvSamlevedtakIdList"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSkrivemaaterForDelAvSamlevedtakListResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns3:DelAvSamlevedtakIdTilSkrivemaateIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

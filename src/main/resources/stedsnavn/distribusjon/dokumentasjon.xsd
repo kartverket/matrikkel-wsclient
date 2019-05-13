@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"
+        xmlns:domenens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:dokumentasjonns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon"
+        xmlns:dokumentasjonkoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/koder"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+    <xs:import schemaLocation="dokumentasjon_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/dokumentasjon/koder"/>
+
+    <xs:complexType name="DokumentasjonList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="dokumentasjonns:Dokumentasjon"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Dokumentasjon" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnEntityComponentWithHistory"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="KartproduktId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KartproduktIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="dokumentasjonns:KartproduktId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Kartprodukt">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="produktkodeId" type="dokumentasjonkoderns:KarttypeKodeId"/>
+                    <xs:element name="utgivelsesaar" type="xs:int" minOccurs="0"/>
+                    <xs:element name="kartblad" type="xs:string" minOccurs="0"/>
+                    <xs:element name="skann" type="xs:anyURI" minOccurs="0"/>
+                    <xs:element name="utgiverId" type="dokumentasjonkoderns:KartutgiverKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="BokId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BokIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="dokumentasjonns:BokId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Bok">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="isbn" type="xs:string" minOccurs="0"/>
+                    <xs:element name="tittel" type="xs:string"/>
+                    <xs:element name="utgave" type="xs:string" minOccurs="0"/>
+                    <xs:element name="forfatter" type="xs:string" minOccurs="0"/>
+                    <xs:element name="utgiver" type="xs:string" minOccurs="0"/>
+                    <xs:element name="utgivelsesaar" type="xs:int"/>
+                    <xs:element name="offentligBruk" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="KartforekomstInternMerknad">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="tekst" type="xs:string"/>
+                    <xs:element name="merknadstypeId" type="dokumentasjonkoderns:KartforekomstMerknadstypeKodeId"/>
+                    <xs:element name="fellesarkiv" type="domenens:StringList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KartforekomstInternMerknadList">
+        <xs:sequence>
+            <xs:element name="item" type="dokumentasjonns:KartforekomstInternMerknad" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

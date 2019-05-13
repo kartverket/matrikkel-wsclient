@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn"
+        xmlns:domenens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:koderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"
+        xmlns:stedns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted"
+        xmlns:stedsnavnns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn"
+        xmlns:stedsnavnkoderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn/koder"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+    <xs:import schemaLocation="koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"/>
+    <xs:import schemaLocation="sted.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted"/>
+    <xs:import schemaLocation="stedsnavn_koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn/koder"/>
+
+    <xs:complexType name="StedsnavnId">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="stedsnavnns:StedsnavnId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Stedsnavn">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="stedsnavnnummer" type="xs:int"/>
+                    <xs:element name="stedId" type="stedns:StedId"/>
+                    <xs:element name="navnestatusHistorikker" type="stedsnavnns:NavnestatusHistorikkList"/>
+                    <xs:element name="navnesakstatusHistorikker" type="stedsnavnns:NavnesakstatusHistorikkList"/>
+                    <xs:element name="primaerfunksjonId" type="stedsnavnns:StedsnavnId" minOccurs="0"/>
+                    <xs:element name="gruppetilhoerighetId" type="stedsnavnns:StedsnavnId" minOccurs="0"/>
+                    <xs:element name="eksonym" type="xs:boolean"/>
+                    <xs:element name="spraakId" type="koderns:SpraakKodeId"/>
+                    <xs:element name="opphavsspraakId" type="koderns:SpraakKodeId" minOccurs="0"/>
+                    <xs:element name="hoeyesteSkrivemaatenummer" type="xs:int"/>
+                    <xs:element name="tilleggsopplysninger" type="stedsnavnns:StedsnavnTilleggsopplysningList"/>
+                    <xs:element name="interneMerknader" type="stedsnavnns:StedsnavnInternMerknadList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnIdent">
+        <xs:sequence>
+            <xs:element name="stedsnummer" type="xs:long"/>
+            <xs:element name="stedsnavnnummer" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnIdentList">
+        <xs:sequence>
+            <xs:element name="item" type="stedsnavnns:StedsnavnIdent" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavnestatusHistorikk">
+        <xs:sequence>
+            <xs:element name="fraDato" type="domenens:LocalDate"/>
+            <xs:element name="navnestatusId" type="stedsnavnkoderns:NavnestatusKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavnestatusHistorikkList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="stedsnavnns:NavnestatusHistorikk"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavnesakstatusHistorikk">
+        <xs:sequence>
+            <xs:element name="fraDato" type="domenens:LocalDate"/>
+            <xs:element name="navnesakstatusId" type="stedsnavnkoderns:NavnesakstatusKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavnesakstatusHistorikkList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="stedsnavnns:NavnesakstatusHistorikk"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnInternMerknad">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="tekst" type="xs:string"/>
+                    <xs:element name="merknadstypeId" type="stedsnavnkoderns:StedsnavnMerknadstypeKodeId"/>
+                    <xs:element name="fellesarkiv" type="domenens:StringList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnInternMerknadList">
+        <xs:sequence>
+            <xs:element name="item" type="stedsnavnns:StedsnavnInternMerknad" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnTilleggsopplysning">
+        <xs:complexContent>
+            <xs:extension base="domenens:StedsnavnEntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="tekst" type="xs:string"/>
+                    <xs:element name="eksterneOpplysninger" type="domenens:UrlList"/>
+                    <xs:element name="tilleggsopplysningstypeId" type="stedsnavnkoderns:StedsnavnTilleggsopplysningstypeKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnTilleggsopplysningList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="stedsnavnns:StedsnavnTilleggsopplysning"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

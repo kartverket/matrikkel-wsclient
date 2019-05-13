@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted/koder"
+        xmlns:kodens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"
+        xmlns:koderns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"
+        xmlns:stedkodens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted/koder"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="kodeliste.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"/>
+    <xs:import schemaLocation="koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"/>
+
+    <xs:complexType name="NavneobjekttypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjekttypeKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="stedkodens:NavneobjekttypeKodeId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjekttypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode">
+                <xs:sequence>
+                    <xs:element name="gammelKodeverdi" type="xs:int" minOccurs="0"/>
+                    <xs:element name="standardSortering1Id" type="stedkodens:Sortering1KodeId"/>
+                    <xs:element name="standardSortering2Id" type="stedkodens:Sortering2KodeId"/>
+                    <xs:element name="navneobjektgruppeId" type="stedkodens:NavneobjektgruppeKodeId"/>
+                    <xs:element name="geometrityper" type="stedkodens:GeometritypeList"/>
+                    <xs:element name="vedtaksmyndighetIds" type="koderns:VedtaksmyndighetKodeIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjektgruppeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjektgruppeKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="stedkodens:NavneobjektgruppeKodeId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjektgruppeKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode">
+                <xs:sequence>
+                    <xs:element name="navneobjekthovedgruppeId" type="stedkodens:NavneobjekthovedgruppeKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjekthovedgruppeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjekthovedgruppeKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="stedkodens:NavneobjekthovedgruppeKodeId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="NavneobjekthovedgruppeKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GeometritypeList">
+        <xs:sequence>
+            <xs:element name="item" type="stedkodens:Geometritype" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="Geometritype">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Punkt"/>
+            <xs:enumeration value="Kurve"/>
+            <xs:enumeration value="Polygon"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="StedstatusKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedstatusKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="stedkodens:StedstatusKodeId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedstatusKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SpraakprioriteringKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SpraakprioriteringKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="stedkodens:SpraakprioriteringKodeId" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SpraakprioriteringKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode">
+                <xs:sequence>
+                    <xs:element name="forvaltningsomraadeId" type="stedkodens:ForvaltningsomraadeKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ForvaltningsomraadeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ForvaltningsomraadeKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="stedkodens:ForvaltningsomraadeKodeId" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ForvaltningsomraadeKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Sortering1KodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Sortering1Kode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Sortering2KodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Sortering2Kode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedMerknadstypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedMerknadstypeKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="stedkodens:StedMerknadstypeKodeId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedMerknadstypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedTilleggsopplysningstypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedTilleggsopplysningstypeKodeIdList">
+        <xs:sequence>
+            <xs:element name="item" type="stedkodens:StedTilleggsopplysningstypeKodeId" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedTilleggsopplysningstypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

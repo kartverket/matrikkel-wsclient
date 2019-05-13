@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:basistyperns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="koder.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/koder"/>
+
+    <xs:complexType name="Timestamp">
+        <xs:sequence>
+            <xs:element name="timestamp" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LocalDate">
+        <xs:sequence>
+            <xs:element name="date" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="IntegerList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StringList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="StedsnavnBubbleObjectId" abstract="true">
+        <xs:sequence>
+            <xs:element name="value" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnBubbleObjectIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="basistyperns:StedsnavnBubbleObjectId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnBubbleObject" abstract="true">
+        <xs:sequence>
+            <xs:element name="id" type="basistyperns:StedsnavnBubbleObjectId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnBubbleObjectList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="basistyperns:StedsnavnBubbleObject"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="SnapshotVersionTilStedsnavnBubbleObjectIdMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="basistyperns:Timestamp"/>
+                        <xs:element name="value" type="basistyperns:StedsnavnBubbleObjectId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnBubbleObjectIdTilSnapshotBubbleIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="basistyperns:StedsnavnBubbleObjectId"/>
+                        <xs:element name="value" type="basistyperns:SnapshotVersionTilStedsnavnBubbleObjectIdMap"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+    <xs:complexType name="StedsnavnBubbleObjectWithHistoryId" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnBubbleWithHistoryIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="basistyperns:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StedsnavnBubbleObjectWithHistory" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObject">
+                <xs:sequence>
+                    <xs:element name="oppdateringsdato" type="basistyperns:Timestamp" minOccurs="0"/>
+                    <xs:element name="oppdatertAv" type="xs:string" minOccurs="0"/>
+                    <xs:element name="sluttdato" type="basistyperns:Timestamp" minOccurs="0"/>
+                    <xs:element name="avsluttetAv" type="xs:string" minOccurs="0"/>
+                    <xs:element name="registreringsdato" type="basistyperns:Timestamp"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedsnavnEntityComponentWithHistory">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" nillable="true"/>
+            <xs:element name="oppdateringsdato" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="oppdatertAv" type="xs:string" minOccurs="0"/>
+            <xs:element name="sluttdato" type="basistyperns:Timestamp" minOccurs="0"/>
+            <xs:element name="avsluttetAv" type="xs:string" minOccurs="0"/>
+            <xs:element name="registreringsdato" type="basistyperns:Timestamp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UrlList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="xs:anyURI"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="LocalizedString">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="xs:string"/>
+                        <xs:element name="value" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="StedsnavnContext">
+        <xs:sequence>
+            <xs:element name="systemVersion" type="xs:string"/>
+            <xs:element name="clientIdentification" type="xs:string"/>
+            <xs:element name="locale" type="xs:string"/>
+            <xs:element name="snapshotVersion" type="basistyperns:Timestamp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="Coordinate">
+        <xs:sequence>
+            <xs:element name="x" type="xs:double"/>
+            <xs:element name="y" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

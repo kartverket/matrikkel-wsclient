@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/endringslogg" xmlns:ns2="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain" xmlns:tns="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/endringslogg" elementFormDefault="qualified" targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/endringslogg" version="1.0">
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/endringslogg" schemaLocation="endringslogg.xsd"/>
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain" schemaLocation="basistyper.xsd"/>
+
+  <xs:element name="calcEndringskontroll" type="tns:calcEndringskontroll"/>
+
+  <xs:element name="calcEndringskontrollResponse" type="tns:calcEndringskontrollResponse"/>
+
+  <xs:element name="calcObjektkontrollForList" type="tns:calcObjektkontrollForList"/>
+
+  <xs:element name="calcObjektkontrollForListResponse" type="tns:calcObjektkontrollForListResponse"/>
+
+  <xs:element name="findEndringer" type="tns:findEndringer"/>
+
+  <xs:element name="findEndringerResponse" type="tns:findEndringerResponse"/>
+
+  <xs:element name="findSisteEndringId" type="tns:findSisteEndringId"/>
+
+  <xs:element name="findSisteEndringIdResponse" type="tns:findSisteEndringIdResponse"/>
+
+  <xs:complexType name="calcEndringskontroll">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="ns1:EndringId"/>
+      <xs:element name="domainklasse" type="ns1:Domainklasse"/>
+      <xs:element minOccurs="0" name="filter" type="xs:string"/>
+      <xs:element name="maksAntall" type="xs:int"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calcEndringskontrollResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:Kontroll"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calcObjektkontrollForList">
+    <xs:sequence>
+      <xs:element name="ids" type="ns2:StedsnavnBubbleObjectIdList"/>
+      <xs:element name="domainklasse" type="ns1:Domainklasse"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calcObjektkontrollForListResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:Kontroll"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSisteEndringId">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSisteEndringIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:EndringId"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findEndringer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="ns1:EndringId"/>
+      <xs:element name="domainklasse" type="ns1:Domainklasse"/>
+      <xs:element minOccurs="0" name="filter" type="xs:string"/>
+      <xs:element minOccurs="0" name="returnerBobler" type="ns1:ReturnerBobler"/>
+      <xs:element name="maksAntall" type="xs:int"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findEndringerResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:Endringer"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

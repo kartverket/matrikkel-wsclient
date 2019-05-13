@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/arbeidsliste/matrikkelen/koder"
+        xmlns:kodens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="kodeliste.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kodeliste"/>
+
+    <xs:complexType name="AarsakTilEndringFraMatrikkelenKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodens:KodeId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AarsakTilEndringFraMatrikkelenKode">
+        <xs:complexContent>
+            <xs:extension base="kodens:Kode"/>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

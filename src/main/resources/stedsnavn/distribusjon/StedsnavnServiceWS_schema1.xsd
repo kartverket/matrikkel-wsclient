@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn" xmlns:ns2="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain" xmlns:ns3="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/servicetyper" xmlns:ns4="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted" xmlns:tns="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/stedsnavn" elementFormDefault="qualified" targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/stedsnavn" version="1.0">
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/stedsnavn" schemaLocation="stedsnavn.xsd"/>
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/service/servicetyper" schemaLocation="servicetyper.xsd"/>
+
+  <xs:import namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/sted" schemaLocation="sted.xsd"/>
+
+  <xs:element name="findSekundaerfunksjoner" type="tns:findSekundaerfunksjoner"/>
+
+  <xs:element name="findSekundaerfunksjonerResponse" type="tns:findSekundaerfunksjonerResponse"/>
+
+  <xs:element name="findStedsnavnForSteder" type="tns:findStedsnavnForSteder"/>
+
+  <xs:element name="findStedsnavnForStederResponse" type="tns:findStedsnavnForStederResponse"/>
+
+  <xs:element name="findStedsnavnIdsForIdents" type="tns:findStedsnavnIdsForIdents"/>
+
+  <xs:element name="findStedsnavnIdsForIdentsResponse" type="tns:findStedsnavnIdsForIdentsResponse"/>
+
+  <xs:complexType name="findStedsnavnIdsForIdents">
+    <xs:sequence>
+      <xs:element name="stedsnavnIdents" type="ns1:StedsnavnIdentList"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findStedsnavnIdsForIdentsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns3:StedsnavnIdentTilStedsnavnIdMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSekundaerfunksjoner">
+    <xs:sequence>
+      <xs:element name="stedsnavnIds" type="ns1:StedsnavnIdList"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findSekundaerfunksjonerResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns3:StedsnavnIdTilStedsnavnIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findStedsnavnForSteder">
+    <xs:sequence>
+      <xs:element name="stedIds" type="ns4:StedIdList"/>
+      <xs:element name="stedsnavnContext" type="ns2:StedsnavnContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findStedsnavnForStederResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns3:StedIdTilStedsnavnIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

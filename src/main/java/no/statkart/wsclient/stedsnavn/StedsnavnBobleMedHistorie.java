@@ -2,7 +2,7 @@ package no.statkart.wsclient.stedsnavn;
 
 import java.time.LocalDateTime;
 
-public class StedsnavnBobleMedHistorie extends StedsnavnBoble {
+public class StedsnavnBobleMedHistorie extends StedsnavnBoble implements KanSetteHistoriskeFelter {
 
    private LocalDateTime oppdateringsdato;
    private String oppdatertAv;

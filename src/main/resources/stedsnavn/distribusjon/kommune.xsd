@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+      version="1.0"
+      targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"
+      xmlns:basistyperns="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+      xmlns:kommunens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain/kommune"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+
+    <xs:complexType name="FylkeId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FylkeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="kommunens:FylkeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Fylke">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="fylkesnummer" type="xs:string"/>
+                    <xs:element name="fylkesnavn" type="xs:string"/>
+                    <xs:element name="gyldigTil" type="basistyperns:Timestamp" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="KommuneId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectWithHistoryId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KommuneIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="kommunens:KommuneId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Kommune">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:StedsnavnBubbleObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="kommunenummer" type="xs:string"/>
+                    <xs:element name="kommunenavn" type="xs:string"/>
+                    <xs:element name="fylkeId" type="kommunens:FylkeId"/>
+                    <xs:element name="gyldigTil" type="basistyperns:Timestamp" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FylkeIdTilKommuneIdsMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="kommunens:FylkeId"/>
+                        <xs:element name="value" type="kommunens:KommuneIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

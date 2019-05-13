@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        version="1.0"
+        elementFormDefault="qualified"
+        targetNamespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/exception"
+        xmlns="http://stedsnavn.statkart.no/ssr/wsapi/v1/exception"
+        xmlns:basetypens="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        >
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://stedsnavn.statkart.no/ssr/wsapi/v1/domain"/>
+
+    <!-- .NET fix -->
+    <!-- Elements definition must be hand written and introduced here in order for .NET datacontract generating to work... -->
+    <xs:element name="ServiceException" nillable="true" type="ServiceFaultInfo"/>
+    <!-- .NET end -->
+
+
+    <xs:complexType name="ServiceFaultInfo">
+        <xs:sequence>
+            <xs:element name="category" type="xs:string"/>
+            <xs:element name="stackTraceText" type="xs:string"/>
+            <xs:element name="exceptionDetail" type="ExceptionDetail"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ExceptionDetail">
+        <xs:sequence>
+            <xs:element name="className" type="xs:string"/>
+            <xs:element name="message" type="xs:string" />
+            <xs:element name="cause" type="ExceptionDetail" nillable="true"/>
+            <xs:element name="stackTraceElements" type="StackTraceElementList" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StackTraceElementList">
+        <xs:sequence>
+            <xs:element name="item" type="StackTraceElement" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="StackTraceElement">
+        <xs:sequence>
+            <xs:element name="declaringClass" type="xs:string"/>
+            <xs:element name="methodName" type="xs:string"/>
+            <xs:element name="fileName" type="xs:string" nillable="true"/>
+            <xs:element name="lineNumber" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AttemptDeleteFaultInfo">
+        <xs:complexContent>
+            <xs:extension base="ServiceFaultInfo">
+                <xs:sequence>
+                    <xs:element name="bubbleId" type="basetypens:StedsnavnBubbleObjectId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LockedFaultInfo">
+        <xs:complexContent>
+            <xs:extension base="ServiceFaultInfo">
+                <xs:sequence>
+                    <xs:element name="locksNotAquired" type="LockNotAquiredList"/>
+                    <xs:element name="owner" type="xs:string"/>
+                    <xs:element name="exceptionTime" type="basetypens:Timestamp"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LockNotAquired">
+        <xs:sequence>
+            <xs:element name="lockKey">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="discriminator" type="xs:string"/>
+                        <xs:element name="keyValue" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="owner" type="xs:string"/>
+            <xs:element name="expires" type="basetypens:Timestamp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="LockNotAquiredList">
+        <xs:sequence>
+            <xs:element name="item" type="LockNotAquired" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ObjectsNotFoundFaultInfo">
+        <xs:complexContent>
+            <xs:extension base="ServiceFaultInfo">
+                <xs:sequence>
+                    <xs:element name="idsNotFound" type="basetypens:StedsnavnBubbleObjectIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>
