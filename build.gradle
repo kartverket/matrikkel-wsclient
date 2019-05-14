@@ -51,7 +51,7 @@ dependencies {
   def jaxb2Version = '0.9.3'
   def slf4jVersion = '1.7.26'
   def jaxwsVersion = '2.2.10'
-  def skifVersion = 'trunk-build900'
+  def skifVersion = '2.10-build10'
 
   wsImport 'com.sun.xml.ws:jaxws-tools:2.3.0.2'
 
