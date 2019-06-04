@@ -3,6 +3,7 @@ package no.statkart.wsclient.stedsnavn.map;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.Timestamp;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.kommune.KommuneIdList;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.*;
+import no.statkart.wsclient.DateHjelper;
 import no.statkart.wsclient.stedsnavn.Matrikkelenhetreferanse;
 import no.statkart.wsclient.stedsnavn.Matrikkelreferanse;
 import no.statkart.wsclient.stedsnavn.NavneobjekttypeHistorikk;
@@ -29,12 +30,18 @@ class StedMapper {
 
         sted.setStedsnummer(wsSted.getStedsnummer());
         sted.setKommunerIds(toDomeneKommuner(wsSted.getKommunerIds()));
-        sted.setLandId(new StedsnavnBobleId.LandKodeId(wsSted.getLandId().getValue()));
+        if (wsSted.getLandId() != null) {
+            sted.setLandId(new StedsnavnBobleId.LandKodeId(wsSted.getLandId().getValue()));
+        }
         sted.setNavneobjekttypeHistorikker(toDomeneNavneObjekttypeHistorikk(wsSted.getNavneobjekttypeHistorikker()));
         sted.setStedstatusHistorikker(toDomeneStedstatusHistorikk(wsSted.getStedstatusHistorikker()));
         sted.setVedtaksmyndighetHistorikker(toDomeneVedtaksmyndighetHistorikk(wsSted.getVedtaksmyndighetHistorikker()));
-        sted.setPosisjonId(new StedsnavnBobleId.PosisjonId(wsSted.getPosisjonId().getValue()));
-        sted.setSpraakprioriteringId(new StedsnavnBobleId.SpraakprioriteringKodeId(wsSted.getSpraakprioriteringId().getValue()));
+        if (wsSted.getPosisjonId() != null) {
+            sted.setPosisjonId(new StedsnavnBobleId.PosisjonId(wsSted.getPosisjonId().getValue()));
+        }
+        if (wsSted.getSpraakprioriteringId() != null) {
+            sted.setSpraakprioriteringId(new StedsnavnBobleId.SpraakprioriteringKodeId(wsSted.getSpraakprioriteringId().getValue()));
+        }
         sted.setSortering(toDomeneSortering(wsSted.getSortering()));
         sted.setHoeyesteStedsnavnnummer(wsSted.getHoeyesteStedsnavnnummer());
         sted.setTilleggsopplysninger(toDomeneTilleggsopplysninger(wsSted.getTilleggsopplysninger()));
@@ -115,19 +122,22 @@ class StedMapper {
 
     private static List<VedtaksmyndighetHistorikk> toDomeneVedtaksmyndighetHistorikk(VedtaksmyndighetHistorikkList vedtaksmyndighetHistorikker) {
         return vedtaksmyndighetHistorikker.getItem().stream()
-                .map(ws -> new VedtaksmyndighetHistorikk(DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()), new StedsnavnBobleId.VedtaksmyndighetKodeId(ws.getVedtaksmyndighetId().getValue())))
+                .map(ws -> new VedtaksmyndighetHistorikk(ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
+                      new StedsnavnBobleId.VedtaksmyndighetKodeId(ws.getVedtaksmyndighetId().getValue())))
                 .collect(toList());
     }
 
     private static List<StedstatusHistorikk> toDomeneStedstatusHistorikk(StedstatusHistorikkList stedstatusHistorikker) {
         return stedstatusHistorikker.getItem().stream()
-                .map(ws -> new StedstatusHistorikk(DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()), new StedsnavnBobleId.StedstatusKodeId(ws.getStedstatusId().getValue())))
+                .map(ws -> new StedstatusHistorikk(ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
+                      new StedsnavnBobleId.StedstatusKodeId(ws.getStedstatusId().getValue())))
                 .collect(toList());
     }
 
     private static List<NavneobjekttypeHistorikk> toDomeneNavneObjekttypeHistorikk(NavneobjekttypeHistorikkList navneobjekttypeHistorikker) {
         return navneobjekttypeHistorikker.getItem().stream()
-                .map(ws -> new NavneobjekttypeHistorikk(DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()), new StedsnavnBobleId.NavneobjekttypeKodeId(ws.getNavneobjekttypeKodeId().getValue())))
+                .map(ws -> new NavneobjekttypeHistorikk(ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
+                      new StedsnavnBobleId.NavneobjekttypeKodeId(ws.getNavneobjekttypeKodeId().getValue())))
                 .collect(toList());
     }
 

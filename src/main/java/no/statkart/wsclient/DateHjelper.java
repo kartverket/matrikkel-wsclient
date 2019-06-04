@@ -1,4 +1,4 @@
-package no.statkart.wsclient.stedsnavn;
+package no.statkart.wsclient;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 public class DateHjelper {
 
     public static XMLGregorianCalendar fromLocalDate(LocalDate localDate) {
+        if (localDate == null) return null;
+
         try {
             return DatatypeFactory.newInstance().newXMLGregorianCalendar(localDate.toString());
         } catch (DatatypeConfigurationException e) {
@@ -17,6 +19,8 @@ public class DateHjelper {
     }
 
     public static XMLGregorianCalendar fromLocalDateTime(LocalDateTime localDateTime) {
+        if (localDateTime == null) return null;
+
         try {
             return DatatypeFactory.newInstance().newXMLGregorianCalendar(localDateTime.toString());
         } catch (DatatypeConfigurationException e) {
@@ -25,10 +29,14 @@ public class DateHjelper {
     }
 
     public static LocalDateTime dateTimeFromXMLGregorianCalendar(XMLGregorianCalendar timestamp) {
+        if (timestamp == null) return null;
+
         return timestamp.toGregorianCalendar().toZonedDateTime().toLocalDateTime();
     }
 
     public static LocalDate dateFromXMLGregorianCalendar(XMLGregorianCalendar timestamp) {
+        if (timestamp == null) return null;
+
         return timestamp.toGregorianCalendar().toZonedDateTime().toLocalDate();
     }
 

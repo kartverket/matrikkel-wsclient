@@ -1,5 +1,6 @@
 package no.statkart.wsclient.stedsnavn.map;
 
+import no.statkart.wsclient.DateHjelper;
 import no.statkart.wsclient.stedsnavn.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,6 @@ class KodeMapper {
             RekkefoelgeKode rekkefoelgeKode = new RekkefoelgeKode(new StedsnavnBobleId.RekkefoelgeKodeId(wsKode.getId().getValue()), kodelisteId(wsKode), wsKode.getKodeverdi(), toLocalizedString(wsKode.getNavn()));
             setKodeFelter(wsKode, rekkefoelgeKode);
             return rekkefoelgeKode;
-            //no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.KasustypeKode
         } else if (kode instanceof no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.KasustypeKode) {
             no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.KasustypeKode wsKode = (no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.KasustypeKode) kode;
             KasustypeKode rekkefoelgeKode = new KasustypeKode(new StedsnavnBobleId.KasustypeKodeId(wsKode.getId().getValue()), kodelisteId(wsKode), wsKode.getKodeverdi(), toLocalizedString(wsKode.getNavn()));
@@ -55,8 +55,12 @@ class KodeMapper {
     }
 
     private static void setKodeFelter(no.statkart.stedsnavn.ssr.wsapi.v1.domain.kodeliste.Kode wsKode, Kode domeneKode) {
-        domeneKode.setGyldigTil(DateHjelper.dateTimeFromXMLGregorianCalendar(wsKode.getGyldigTil().getTimestamp()));
-        domeneKode.setOppdateringsdato(DateHjelper.dateTimeFromXMLGregorianCalendar(wsKode.getOppdateringsdato().getTimestamp()));
+        if (wsKode.getGyldigTil() != null) {
+            domeneKode.setGyldigTil(DateHjelper.dateTimeFromXMLGregorianCalendar(wsKode.getGyldigTil().getTimestamp()));
+        }
+        if (wsKode.getOppdateringsdato() != null) {
+            domeneKode.setOppdateringsdato(DateHjelper.dateTimeFromXMLGregorianCalendar(wsKode.getOppdateringsdato().getTimestamp()));
+        }
         domeneKode.setOppdatertAv(wsKode.getOppdatertAv());
     }
 

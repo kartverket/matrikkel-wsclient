@@ -29,6 +29,7 @@ import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.NavnesakstatusK
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.NavnestatusKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.StedsnavnMerknadstypeKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.StedsnavnTilleggsopplysningstypeKodeId;
+import no.statkart.wsclient.DateHjelper;
 import no.statkart.wsclient.stedsnavn.StedsnavnContext;
 import no.statkart.wsclient.stedsnavn.StedsnavnEntityComponentWithHistory;
 import no.statkart.wsclient.stedsnavn.*;
@@ -98,7 +99,7 @@ public class Mapper {
     public static no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnContext toWsCtx(StedsnavnContext stedsnavnContext) {
         no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnContext wsStedsnavnContext = new no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnContext();
 
-        wsStedsnavnContext.setSystemVersion("2.6");
+        wsStedsnavnContext.setSystemVersion("1.8");
         wsStedsnavnContext.setClientIdentification("1");
         wsStedsnavnContext.setLocale(stedsnavnContext.getLocale());
 

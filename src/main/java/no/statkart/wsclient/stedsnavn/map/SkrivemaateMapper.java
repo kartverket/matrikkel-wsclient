@@ -3,6 +3,7 @@ package no.statkart.wsclient.stedsnavn.map;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.KasusForSkrivemaateList;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.SkrivemaateInternMerknadList;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.SkrivemaatestatusHistorikkList;
+import no.statkart.wsclient.DateHjelper;
 import no.statkart.wsclient.stedsnavn.*;
 
 import java.util.List;
@@ -20,8 +21,12 @@ class SkrivemaateMapper {
 
         skrivemaate.setSkrivemaatenummer(wsSkrivemaate.getSkrivemaatenummer());
         skrivemaate.setStedsnavnId(new StedsnavnBobleId.StedsnavnId(wsSkrivemaate.getStedsnavnId().getValue()));
-        skrivemaate.setNormertFraId(new StedsnavnBobleId.SkrivemaateId(wsSkrivemaate.getNormertFraId().getValue()));
-        skrivemaate.setRekkefoelgeId(new StedsnavnBobleId.RekkefoelgeKodeId(wsSkrivemaate.getRekkefoelgeId().getValue()));
+        if (wsSkrivemaate.getNormertFraId() != null) {
+           skrivemaate.setNormertFraId(new StedsnavnBobleId.SkrivemaateId(wsSkrivemaate.getNormertFraId().getValue()));
+        }
+        if (wsSkrivemaate.getRekkefoelgeId() != null) {
+           skrivemaate.setRekkefoelgeId(new StedsnavnBobleId.RekkefoelgeKodeId(wsSkrivemaate.getRekkefoelgeId().getValue()));
+        }
         skrivemaate.setKasuser(toDomeneKasuser(wsSkrivemaate.getKasuser()));
         skrivemaate.setKortnavn(wsSkrivemaate.getKortnavn());
         skrivemaate.setSkrivemaatestatusHistorikker(toDomeneStatusHistorikker(wsSkrivemaate.getSkrivemaatestatusHistorikker()));
@@ -48,7 +53,7 @@ class SkrivemaateMapper {
                     SkrivemaatestatusHistorikk domene = new SkrivemaatestatusHistorikk(
                             ws.getId(),
                             regDato(ws),
-                            DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()),
+                            ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
                             new StedsnavnBobleId.SkrivemaatestatusKodeId(ws.getSkrivemaatestatusId().getValue()));
                     setFellesFelterForHistoriskKomponent(ws, domene);
                     domene.setPrioritertSkrivemaate(ws.isPrioritertSkrivemaate());

@@ -44,6 +44,7 @@ import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.NavnesakstatusK
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.NavnestatusKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.StedsnavnMerknadstypeKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.StedsnavnTilleggsopplysningstypeKodeId;
+import no.statkart.wsclient.DateHjelper;
 import no.statkart.wsclient.stedsnavn.Matrikkelreferanse;
 import no.statkart.wsclient.stedsnavn.NavneobjekttypeHistorikk;
 import no.statkart.wsclient.stedsnavn.Sortering;

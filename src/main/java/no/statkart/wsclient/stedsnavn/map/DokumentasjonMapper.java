@@ -4,7 +4,7 @@ import no.statkart.stedsnavn.ssr.wsapi.v1.domain.dokumentasjon.DokumentasjonList
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.dokumentasjon.KartforekomstInternMerknadList;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.dokumentasjon.kilde.*;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.dokumentasjon.offentligbruk.*;
-import no.statkart.wsclient.stedsnavn.DateHjelper;
+import no.statkart.wsclient.DateHjelper;
 import no.statkart.wsclient.stedsnavn.Dokumentasjon;
 import no.statkart.wsclient.stedsnavn.KartforekomstInternMerknad;
 import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
@@ -33,7 +33,7 @@ class DokumentasjonMapper {
                         OffentligDokument offentligDokument = (OffentligDokument) wsDokumentasjon;
                         domain = new Dokumentasjon.OffentligDokument(offentligDokument.getId(),
                                 regDato(offentligDokument),
-                                DateHjelper.dateFromXMLGregorianCalendar(offentligDokument.getDokumentdato().getDate()),
+                                offentligDokument.getDokumentdato() != null ? DateHjelper.dateFromXMLGregorianCalendar(offentligDokument.getDokumentdato().getDate()) : null,
                                 offentligDokument.getBeskrivelse(),
                                 new StedsnavnBobleId.DokumenttypeKodeId(offentligDokument.getDokumenttypeId().getValue()));
                     } else if (wsDokumentasjon instanceof OffentligBokreferanse) {
@@ -57,7 +57,9 @@ class DokumentasjonMapper {
                                 toDomeneKartforekomstInternMerknader(ws.getInterneMerknader()));
                     } else if (wsDokumentasjon instanceof Kildedokument) {
                         Kildedokument ws = (Kildedokument) wsDokumentasjon;
-                        domain = new Dokumentasjon.Kildedokument(ws.getId(), regDato(ws), DateHjelper.dateFromXMLGregorianCalendar(ws.getDokumentdato().getDate()), ws.getBeskrivelse(), new StedsnavnBobleId.DokumenttypeKodeId(ws.getDokumenttypeId().getValue()));
+                        domain = new Dokumentasjon.Kildedokument(ws.getId(), regDato(ws),
+                              ws.getDokumentdato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getDokumentdato().getDate()) : null,
+                              ws.getBeskrivelse(), new StedsnavnBobleId.DokumenttypeKodeId(ws.getDokumenttypeId().getValue()));
                     } else if (wsDokumentasjon instanceof KildeBokreferanse) {
                         KildeBokreferanse ws = (KildeBokreferanse) wsDokumentasjon;
                         Dokumentasjon.KildeBokreferanse kildeBokreferanse = new Dokumentasjon.KildeBokreferanse(ws.getId(), regDato(ws), new StedsnavnBobleId.BokId(ws.getBokId().getValue()));
@@ -66,12 +68,16 @@ class DokumentasjonMapper {
                         domain = kildeBokreferanse;
                     } else if (wsDokumentasjon instanceof LokaleInnsamlinger) {
                         LokaleInnsamlinger ws = (LokaleInnsamlinger) wsDokumentasjon;
-                        Dokumentasjon.LokaleInnsamlinger lokaleInnsamlinger = new Dokumentasjon.LokaleInnsamlinger(ws.getId(), regDato(ws), DateHjelper.dateFromXMLGregorianCalendar(ws.getKildedato().getDate()), ws.getInnsamler());
+                        Dokumentasjon.LokaleInnsamlinger lokaleInnsamlinger = new Dokumentasjon.LokaleInnsamlinger(ws.getId(), regDato(ws),
+                              ws.getKildedato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getKildedato().getDate()) : null,
+                              ws.getInnsamler());
                         lokaleInnsamlinger.setBeskrivelse(ws.getBeskrivelse());
                         domain = lokaleInnsamlinger;
                     } else if (wsDokumentasjon instanceof Opplysning) {
                         Opplysning ws = (Opplysning) wsDokumentasjon;
-                        domain = new Dokumentasjon.Opplysning(ws.getId(), regDato(ws), DateHjelper.dateFromXMLGregorianCalendar(ws.getKildedato().getDate()), ws.getInformant(), ws.getTekst());
+                        domain = new Dokumentasjon.Opplysning(ws.getId(), regDato(ws),
+                              ws.getKildedato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getKildedato().getDate()) : null,
+                              ws.getInformant(), ws.getTekst());
                     } else {
                         throw new RuntimeException(String.format("Ingen mapping for %s", wsDokumentasjon.getClass()));
                     }
