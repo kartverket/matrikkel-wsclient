@@ -85,7 +85,7 @@ public class MapperTest {
         no.statkart.wsclient.stedsnavn.StedsnavnContext stedsnavnContext = new no.statkart.wsclient.stedsnavn.StedsnavnContext("no");
         StedsnavnContext wsCtx = Mapper.toWsCtx(stedsnavnContext);
 
-        assertThat(wsCtx.getSystemVersion()).isEqualTo("2.6");
+        assertThat(wsCtx.getSystemVersion()).isEqualTo("1.8");
         assertThat(wsCtx.getClientIdentification()).isEqualTo("1");
         assertThat(wsCtx.getLocale()).isEqualTo("no");
         assertThat(wsCtx.getSnapshotVersion().getTimestamp().toString()).isEqualTo("9999-01-01T00:00:00.000+01:00");
