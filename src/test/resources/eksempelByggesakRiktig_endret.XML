@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Byggesak xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://rep.geointegrasjon.no/Matrikkel/foering/v1">
+    <systemId xsi:nil="true"/>
+    <tittel>Rammesøknad for enebolig i Byggestedgate 1</tittel>
+    <saksnummer>
+        <saksaar>2018</saksaar>
+        <sakssekvensnummer>123456</sakssekvensnummer>
+    </saksnummer>
+    <kategori>
+        <kode>str1234</kode>
+    </kategori>
+    <tiltakstype xsi:nil="true"/>
+    <vedtak>
+        <beskrivelse>Vedtak om rammetillatelse</beskrivelse>
+        <vedtaksdato>2018-05-08T13:12:33.8225105+02:00</vedtaksdato>
+        <status>
+            <kode>1</kode>
+            <beskrivelse>Godkjent</beskrivelse>
+        </status>
+        <dispensasjoner xsi:nil="true"/>
+    </vedtak>
+    <matrikkelopplysninger>
+        <eiendomsidentifikasjon>
+            <matrikkelnummer>
+                <kommunenummer>9999</kommunenummer>
+                <gaardsnummer>1</gaardsnummer>
+                <bruksnummer>2</bruksnummer>
+                <festenummer xsi:nil="true"/>
+                <seksjonsnummer xsi:nil="true"/>
+            </matrikkelnummer>
+        </eiendomsidentifikasjon>
+        <adresse>
+            <adresse>
+                <adressekode>1001</adressekode>
+                <adressenavn>Byggestedgate</adressenavn>
+                <adressenummer>1</adressenummer>
+                <adressebokstav xsi:nil="true"/>
+                <seksjonsnummer xsi:nil="true"/>
+            </adresse>
+        </adresse>
+        <bygning>
+            <bygning>
+                <bygningsnummer xsi:nil="true"/>
+                <naeringsgruppe xsi:nil="true"/>
+                <bygningstype>
+                    <kode>111</kode>
+                    <beskrivelse>Enebolig</beskrivelse>
+                </bygningstype>
+                <bebygdAreal>110.5</bebygdAreal>
+                <bruksenheter xsi:nil="true"/>
+                <etasjer xsi:nil="true"/>
+                <avlop xsi:nil="true"/>
+                <energiforsyning xsi:nil="true"/>
+                <vannforsyning xsi:nil="true"/>
+                <endring>Eksisterende</endring>
+            </bygning>
+        </bygning>
+    </matrikkelopplysninger>
+    <adresse>Byggestedgate 1</adresse>
+    <referanseAndreSaker xsi:nil="true"/>
+    <referanseKlagesaker xsi:nil="true"/>
+    <registrertDato>0001-01-01T00:00:00</registrertDato>
+    <saksbehandler xsi:nil="true"/>
+    <posisjon xsi:nil="true"/>
+</Byggesak>

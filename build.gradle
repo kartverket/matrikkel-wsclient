@@ -4,6 +4,7 @@ version = projectVersion + System.getProperty('suffix', '-SNAPSHOT')
 apply plugin: 'java-library'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
+apply plugin: 'sktools-xjc-plugin'
 
 apply from: file('integration-test.gradle')
 
@@ -15,11 +16,31 @@ def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml'
 def WS_IMPORT_QUAL_NAME = 'com.sun.tools.ws.ant.WsImport'
 def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn")
 
+buildscript {
+
+    repositories {
+        maven {
+            name = 'public'
+            url MAVEN_REPO
+        }
+    }
+
+    dependencies {
+        classpath 'no.statkart.sktools.gradle:gradle-plugins:1.5-build125'
+    }
+}
+
 sourceSets {
   main {
     java {
       srcDirs generatedMainJavaDir
     }
+      xjc {
+          schema {
+              srcDir 'src/main/resources/ebyggesakmatrikkelfoering'
+              genOutputPath = generatedMainJavaDir
+          }
+      }
   }
 }
 
@@ -401,3 +422,4 @@ jar.manifest {
             'Implementation-Version': project.version,
     ])
 }
+

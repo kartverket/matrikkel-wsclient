@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.geointegrasjon.no/Felles/Kodeliste/xml.schema/2012.01.31"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://rep.geointegrasjon.no/Felles/Kodeliste/xml.schema/2012.01.31"
+            elementFormDefault="qualified" version="2012.01.31 - GeoIntegrasjon v1.1.0">
+	<xs:element name="KodeListe" type="tns:KodeListe"/>
+	<xs:complexType name="KodeListe">
+		<xs:sequence>
+			<xs:element name="liste" type="tns:Kode" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Kode" type="tns:Kode"/>
+	<xs:complexType name="Kode">
+		<xs:sequence>
+			<xs:element name="kodeverdi" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="kodebeskrivelse" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="erGyldig" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
