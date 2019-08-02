@@ -1,6 +1,7 @@
 package no.statkart.wsclient.ebyggesakmatrikkelfoering;
 
 
+import no.statkart.skif.exception.ImplementationException;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -27,7 +28,6 @@ public class ByggesakXMLValidator {
    static {
       try {
          jaxbContext = JAXBContext.newInstance("no.geointegrasjon.rep.matrikkel.foering.v1");
-//         jaxbContext = JAXBContext.newInstance(ByggesakType.class);
          unmarshaller = jaxbContext.createUnmarshaller();
          SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
          schema =
@@ -47,7 +47,10 @@ public class ByggesakXMLValidator {
       InputStream inputStream = byggesakXML.openStream();
 
       try {
-         schema.newValidator().validate(new StreamSource(inputStream));
+         if(schema != null)
+            schema.newValidator().validate(new StreamSource(inputStream));
+         else
+            throw new ImplementationException("Schema finnes ikke.");
       } catch (SAXParseException e) {
          BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
          StringBuilder sb = new StringBuilder();
