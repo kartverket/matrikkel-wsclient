@@ -129,12 +129,15 @@ public class DefaultStedsnavnEndringsloggService implements StedsnavnEndringslog
     @Override
     public EndringerRespons findEndringerForSted(EndringId id, int maksAntall, StedsnavnContext stedsnavnContext) {
         try {
-            Endringer endringer = endringsloggWebservice.findEndringer(Mapper.toWsEndringId(id), Mapper.toWsDomainklasse(Domainklasse.STED), "", Mapper.toWsReturnerBobler(ReturnerBobler.ALDRI), maksAntall, Mapper.toWsCtx(stedsnavnContext));
+            Endringer endringer = endringsloggWebservice.findEndringer(Mapper.toWsEndringId(id),
+                  Mapper.toWsDomainklasse(Domainklasse.STEDSNAVN_BUBBLE_OBJECT), "",
+                  Mapper.toWsReturnerBobler(ReturnerBobler.ALDRI), maksAntall, Mapper.toWsCtx(stedsnavnContext));
 
             EndringList relevantEndringList = new EndringList();
             relevantEndringList.getItem().addAll(endringer.getEndringList().getItem().stream()
-                    .filter(wsEndring -> Endringstype.erNyopprettingEllerOppdatering(wsEndring.getEndringstype().value()))
-                    .collect(Collectors.toList()));
+                  .filter(wsEndring -> Mapper.bobleErStedStedsnavnEllerSkrivemaate(wsEndring.getEndretBubbleId()))
+                  .filter(wsEndring -> Endringstype.erNyopprettingEllerOppdatering(wsEndring.getEndringstype().value()))
+                  .collect(Collectors.toList()));
             endringer.setEndringList(relevantEndringList);
 
             return Mapper.mapEndringerRespons(endringer);

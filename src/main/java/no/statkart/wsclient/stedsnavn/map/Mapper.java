@@ -186,6 +186,10 @@ public class Mapper {
         return DateHjelper.dateTimeFromXMLGregorianCalendar(ws.getRegistreringsdato().getTimestamp());
     }
 
+    public static boolean bobleErStedStedsnavnEllerSkrivemaate(StedsnavnBubbleObjectId wsBubbleId) {
+        return wsBubbleId instanceof SkrivemaateId || wsBubbleId instanceof StedsnavnId || wsBubbleId instanceof StedId;
+    }
+
     static StedsnavnBobleId toDomainBobleId(StedsnavnBubbleObjectId wsBubbleId) {
         String value = wsBubbleId.getValue();
         StedsnavnBobleId bobleId;
