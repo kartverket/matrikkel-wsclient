@@ -37,7 +37,7 @@ sourceSets {
     }
       xjc {
           schema {
-              srcDir 'src/main/resources/ebyggesakmatrikkelfoering'
+              srcDir 'src/main/resources/ebyggesakmatrikkelfoering/xsd'
               genOutputPath = generatedMainJavaDir
           }
       }

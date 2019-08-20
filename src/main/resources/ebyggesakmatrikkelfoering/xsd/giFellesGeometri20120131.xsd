@@ -2,7 +2,7 @@
 <xs:schema targetNamespace="http://rep.geointegrasjon.no/Felles/Geometri/xml.schema/2012.01.31" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://rep.geointegrasjon.no/Felles/Geometri/xml.schema/2012.01.31"
            xmlns:felleskodelistens="http://rep.geointegrasjon.no/Felles/Kodeliste/xml.schema/2012.01.31"
            elementFormDefault="qualified" version="2012.01.31 - GeoIntegrasjon v1.1.0">
-	<xs:import namespace="http://rep.geointegrasjon.no/Felles/Kodeliste/xml.schema/2012.01.31" schemaLocation="./giFellesKodeliste20120131.xsd"/>
+	<xs:import namespace="http://rep.geointegrasjon.no/Felles/Kodeliste/xml.schema/2012.01.31" schemaLocation="giFellesKodeliste20120131.xsd"/>
 	<xs:element name="KoordinatsystemKodeListe" type="tns:KoordinatsystemKodeListe"/>
 	<xs:complexType name="KoordinatsystemKodeListe">
 		<xs:sequence>

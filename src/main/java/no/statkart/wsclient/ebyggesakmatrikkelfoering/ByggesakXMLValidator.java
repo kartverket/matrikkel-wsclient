@@ -32,7 +32,7 @@ public class ByggesakXMLValidator {
          SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
          schema =
          schemaFactory.newSchema(
-               Thread.currentThread().getContextClassLoader().getResource("ebyggesakmatrikkelfoering/matrikkelfoering.xsd")
+               Thread.currentThread().getContextClassLoader().getResource("ebyggesakmatrikkelfoering/xsd/matrikkelfoering.xsd")
          );
          unmarshaller.setSchema(schema);
 
