@@ -5,6 +5,7 @@ import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.Matrikkelen
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.statkart.skif.util.NullHostnameVerifier;
 import no.statkart.wsclient.IntegrationTestProperties;
+import no.statkart.wsclient.grunnbok.GrunnbokHelper;
 import no.statkart.wsclient.grunnbokv2.internutskrift.DefaultGrunnboksutskriftInternWS;
 import no.statkart.wsclient.grunnbokv2.internutskrift.GrunnboksutskriftInternWS;
 import org.testng.annotations.AfterTest;

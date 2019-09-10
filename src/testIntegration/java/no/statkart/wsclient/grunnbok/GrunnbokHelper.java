@@ -1,5 +1,10 @@
-package no.statkart.wsclient.grunnbok.internutskrift;
+package no.statkart.wsclient.grunnbok;
 
+import java.util.Collections;
+import java.util.Iterator;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.Timestamp;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdent;
@@ -13,22 +18,16 @@ import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbokv2.ident.DefaultIdentWS;
 import no.statkart.wsclient.grunnbokv2.ident.IdentWS;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.Collections;
-import java.util.Iterator;
-
 public class GrunnbokHelper {
    private final transient IntegrationTestProperties config = new IntegrationTestProperties();
    private IdentWS identService;
 
 
-   GrunnbokHelper() {
+   public GrunnbokHelper() {
       setup();
    }
 
-   static MatrikkelenhetIdent matrikkelenhetIdent(String kommunenummer, Number gardsnummer, Number bruksnummer) {
+   public static MatrikkelenhetIdent matrikkelenhetIdent(String kommunenummer, Number gardsnummer, Number bruksnummer) {
       final MatrikkelenhetIdent matrikkelenhetIdent = new MatrikkelenhetIdent();
       matrikkelenhetIdent.setKommunenummer(kommunenummer);
       matrikkelenhetIdent.setGaardsnummer(gardsnummer != null ? gardsnummer.intValue() : 0);
@@ -36,7 +35,7 @@ public class GrunnbokHelper {
       return matrikkelenhetIdent;
    }
 
-   static MatrikkelenhetIdentList matrikkelenhetIdentList(MatrikkelenhetIdent idents) {
+   private static MatrikkelenhetIdentList matrikkelenhetIdentList(MatrikkelenhetIdent idents) {
       final MatrikkelenhetIdentList identList = new MatrikkelenhetIdentList();
       Collections.addAll(identList.getItem(), idents);
       return identList;

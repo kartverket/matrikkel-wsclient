@@ -1,0 +1,1094 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        xmlns:sakns="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:meldingns="http://kartverket.no/grunnbok/wsapi/v2/domain/melding"
+        xmlns:grunnboksidenterns="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
+        xmlns:register_dokumentns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"
+        xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+        xmlns:register_registerenhetns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"
+        xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+        xmlns:register_adressens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/adresse"
+        xmlns:register_personns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
+        xmlns:register_saksinfons="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"
+        xmlns:register_brukerns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/bruker"
+        xmlns:register_registreringns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registrering"
+        xmlns:integrasjon_matrikkelen="http://kartverket.no/grunnbok/wsapi/v2/service/matrikkelen"
+        xmlns:saksbehandlingns="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="grunnboksidenter.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"/>
+
+    <xs:import schemaLocation="register_dokument.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"/>
+    <xs:import schemaLocation="register_rettsstiftelse.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
+    <xs:import schemaLocation="register_adresse.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/adresse"/>
+    <xs:import schemaLocation="register_person.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
+
+    <xs:import schemaLocation="servicetyper_matrikkelen.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/service/matrikkelen"/>
+    <xs:import schemaLocation="register_registerenhet.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"/>
+
+    <xs:import schemaLocation="register_koder.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+
+    <xs:import schemaLocation="register_saksinformasjon.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"/>
+    <xs:import schemaLocation="register_bruker.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/bruker"/>
+    <xs:import schemaLocation="register_registrering.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registrering"/>
+
+    <xs:import schemaLocation="melding.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/melding"/>
+
+    <!-- Sak -->
+
+    <xs:complexType name="SakId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettesakId">
+        <xs:complexContent>
+            <xs:extension base="sakns:SakId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettesakIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:RettesakId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SakIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:SakId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Sak">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="saksinformasjonId" type="register_saksinfons:SaksinformasjonId"/>
+                    <xs:element name="saksbehandlerId" type="register_brukerns:BrukerId"/>
+                    <xs:element name="mappeeierId" type="register_brukerns:BrukerId"/>
+                    <xs:element name="createdAt" type="basistyperns:LocalDateTime"/>
+                    <xs:element name="innkommendeKanal">
+                        <xs:simpleType>
+                            <xs:restriction base="sakns:InnkommendeKanal"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="meldingId" type="meldingns:MeldingId"/>
+                    <xs:element name="kontrollresultaterFraSaksbehandler"
+                                type="meldingns:Kontrollresultater"/>
+                    <xs:element name="kontrollresultaterFraSisteEvaluering"
+                                type="meldingns:Kontrollresultater"/>
+                    <xs:element name="svarbrevId" type="sakns:SvarbrevId"/>
+                    <xs:element name="foreloepigRegistreringId"
+                                type="register_registreringns:ForeloepigRegistreringId"/>
+                    <xs:element name="saksloggId" type="sakns:SaksloggId"/>
+                    <xs:element name="registerenheterForSak" type="sakns:RegisterenheterForSakList"/>
+                    <xs:element name="maalformId" type="register_koderns:MaalformKodeId"/>
+                    <xs:element name="saksinnholdId" type="register_koderns:SaksinnholdKodeId"/>
+                    <xs:element name="saksbehandlingsenhetId" type="register_koderns:SaksbehandlingsenhetKodeId"/>
+                    <xs:element name="behandlingsnivaaId" type="register_koderns:BehandlingsnivaaKodeId"/>
+                    <xs:element name="notat" type="xs:string"/>
+                    <xs:element name="saksreferanser" type="sakns:SaksreferanseList"/>
+                    <xs:element name="returtypeKodeId" type="register_koderns:ReturtypeKodeId"/>
+                    <xs:element name="arkenDokumentId" type="xs:string"/>
+                    <xs:element name="lokalFilstiArkenDokument" type="xs:string"/>
+                    <xs:element name="opprettetArkenDokumentFraElida" type="xs:boolean" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Rettesak">
+        <xs:complexContent>
+            <xs:extension base="sakns:Sak">
+                <xs:sequence>
+                    <xs:element name="aarsakTilRettingIds" type="register_koderns:AarsakTilRettingKodeIdList"/>
+                    <xs:element name="dokumenterIds" type="register_dokumentns:DokumentIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SaksreferanseList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:Saksreferanse"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Saksreferanse">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="saksreferanse" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenheterForSakList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:RegisterenhetForSak"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetForSak">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="MatrikkelenhetForSak">
+        <xs:complexContent>
+            <xs:extension base="sakns:RegisterenhetForSak">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="registerenhetIdent" type="grunnboksidenterns:MatrikkelenhetIdent"/>
+                    </xs:sequence>
+
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelForSak">
+        <xs:complexContent>
+            <xs:extension base="sakns:RegisterenhetForSak">
+                <xs:sequence>
+                    <xs:sequence>
+                        <xs:element name="registerenhetIdent" type="grunnboksidenterns:BorettslagsandelIdent"/>
+                    </xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="InnkommendeKanal">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ALTINN"/>
+            <xs:enumeration value="WEBSERVICES"/>
+            <xs:enumeration value="SAKSKLIENT_ELEKTRONISK"/>
+            <xs:enumeration value="SAKSKLIENT"/>
+            <xs:enumeration value="KONVERTERT"/>
+            <!-- Usikker på om denne hører hjemme her, høres ut som en intern greie -->
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="InnkommendeKanalList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item">
+                <xs:simpleType>
+                    <xs:restriction base="sakns:InnkommendeKanal"/>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Grunnboksutskrift -->
+
+    <xs:complexType name="GrunnboksutskriftId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnboksutskriftIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:GrunnboksutskriftId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Grunnboksutskrift">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="gjelderRegisterenhetId" type="register_registerenhetns:RegisterenhetId"/>
+                    <xs:element name="sakId" type="sakns:SakId"/>
+                    <xs:element name="pdfUtskrift" type="xs:base64Binary"/>
+                    <xs:element name="signertUtskrift" type="xs:base64Binary"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnboksutskriftList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:Grunnboksutskrift"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnboksutskriftIdMedRegisterenhetId">
+        <xs:sequence>
+            <xs:element name="grunnboksutskriftId" type="sakns:GrunnboksutskriftId"/>
+            <xs:element name="registerenhetId" type="register_registerenhetns:RegisterenhetId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GrunnboksutskriftIdMedRegisterenhetIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="sakns:GrunnboksutskriftIdMedRegisterenhetId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FindSakParameters">
+        <xs:sequence>
+            <xs:element name="sakIds" type="basistyperns:LongList"/>
+            <xs:element name="fraOgMedDato" type="basistyperns:LocalDate"/>
+            <xs:element name="tilOgMedDato" type="basistyperns:LocalDate"/>
+            <xs:element name="saksstatuser" type="register_saksinfons:SaksstatusList"/>
+            <xs:element name="behandlingsstatuser" type="register_registreringns:BehandlingsstatusList"/>
+            <xs:element name="behandlingsutfall" type="register_saksinfons:BehandlingsutfallList"/>
+            <xs:element name="fraDokumentaar" type="xs:int" nillable="true"/>
+            <xs:element name="tilDokumentaar" type="xs:int" nillable="true"/>
+            <xs:element name="fraDokumentnummer" type="xs:long" nillable="true"/>
+            <xs:element name="tilDokumentnummer" type="xs:long" nillable="true"/>
+            <xs:element name="brukernavn" type="basistyperns:StringList"/>
+            <xs:element name="sakType" type="xs:string"/>
+            <xs:element name="saksnummerFra" type="xs:long" nillable="true"/>
+            <xs:element name="saksnummerTil" type="xs:long" nillable="true"/>
+            <xs:element name="sortertRetning" type="xs:string"/>
+            <xs:element name="innkommendeKanal" type="sakns:InnkommendeKanalList"/>
+            <xs:element name="limit" type="xs:int"/>
+            <xs:element name="registerenhetIdenter" type="grunnboksidenterns:RegisterenhetIdentList"/>
+            <xs:element name="sakspersonIdentifikasjonsnumre" type="sakns:IdentifikasjonsnummerList"/>
+            <xs:element name="saksbehandlingsenheter" type="register_koderns:SaksbehandlingsenhetKodeIdList"/>
+            <xs:element name="behandlingsnivaaer" type="register_koderns:BehandlingsnivaaKodeIdList"/>
+            <xs:element name="skrevetUt" type="xs:boolean" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="HentSakPaa" final="restriction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SAKSNUMMER"/>
+            <xs:enumeration value="DOKUMENTNUMMER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="HentSakParameters">
+        <xs:sequence>
+            <xs:element name="dokumentaar" type="xs:int"/>
+            <xs:element name="nummer" type="xs:long"/>
+            <xs:element name="embeteKode" type="register_koderns:EmbeteKode"/>
+            <xs:element name="hentSakPaa" type="sakns:HentSakPaa"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IdentifikasjonsnummerList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SaksloggIdTilSaksloggEntryIdsMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="sakns:SaksloggId"/>
+                        <xs:element name="value" type="sakns:SaksloggEntryIdList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SaksinformasjonIdToSakIdMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="register_saksinfons:SaksinformasjonId"/>
+                        <xs:element name="value" type="sakns:SakId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="MeldingIdToSakIdMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="meldingns:MeldingId"/>
+                        <xs:element name="value" type="sakns:SakId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SaksinformasjonIdToLocalDateTimeMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="register_saksinfons:SaksinformasjonId"/>
+                        <xs:element name="value" type="basistyperns:LocalDateTime"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ForeloepigRegistreringIdToSakIdMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="register_registreringns:ForeloepigRegistreringId"/>
+                        <xs:element name="value" type="sakns:SakId"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="SaksloggId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Sakslogg">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="saksloggEntryIds" type="sakns:SaksloggEntryIdList"/>
+                    <xs:element name="sakId" type="sakns:SakId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SaksloggEntryId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SaksloggEntryIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:SaksloggEntryId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SaksloggIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:SaksloggId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SaksloggEntry">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="tidsstempel" type="basistyperns:Timestamp"/>
+                    <xs:element name="brukerId" type="register_brukerns:BrukerId"/>
+                    <xs:element name="saksstatus">
+                        <xs:simpleType>
+                            <xs:restriction base="register_saksinfons:Saksstatus"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="behandlingsutfall">
+                        <xs:simpleType>
+                            <xs:restriction base="register_saksinfons:Behandlingsutfall"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="behandlingsstatus">
+                        <xs:simpleType>
+                            <xs:restriction base="register_registreringns:Behandlingsstatus"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="foreslaattBehandlingsutfall">
+                            <xs:simpleType>
+                                <xs:restriction base="register_registreringns:ForeslaattBehandlingsutfall"/>
+                            </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="saksloggId" type="sakns:SaksloggId"/>
+                    <xs:element name="tekst" type="xs:string"/>
+                    <xs:element name="saksbehandlingsenhetId" type="register_koderns:SaksbehandlingsenhetKodeId"/>
+                    <xs:element name="behandlingsnivaaId" type="register_koderns:BehandlingsnivaaKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SvarbrevId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SvarbrevIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:SvarbrevId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Svarbrev">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="sakId" type="sakns:SakId"/>
+                    <xs:element name="brevinnhold" type="sakns:Brevinnhold"/>
+                    <xs:element name="oppdateringsBruker" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Brevinnhold">
+        <xs:sequence>
+            <xs:element name="htmlContent" type="xs:base64Binary"/>
+            <xs:element name="printed" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InformasjonFraMatrikkelenForMatrikkelenhet">
+        <xs:sequence>
+            <xs:element name="informasjonselementer" type="sakns:InformasjonOmMatrikkelenhetList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InformasjonOmMatrikkelenhetList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:InformasjonOmMatrikkelenhet"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InformasjonOmMatrikkelenhet">
+        <xs:sequence>
+            <xs:element name="matrikkelenhetIdent" type="grunnboksidenterns:MatrikkelenhetIdent"/>
+            <xs:element name="arealInfo" type="sakns:ArealInfo"/>
+            <xs:element name="konsesjonsforhold" type="sakns:KonsesjonsforholdInfoList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KonsesjonsforholdInfoList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:KonsesjonsforholdInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KonsesjonsforholdInfo">
+        <xs:sequence>
+            <xs:element name="matrikkelenheter" type="grunnboksidenterns:MatrikkelenhetIdentList"/>
+            <xs:element name="personerMedAndel" type="sakns:PersonMedAndelList"/>
+            <xs:element name="salgsbeloep" type="xs:double" nillable="true"/>
+            <xs:element name="typeKonsesjonsforhold" type="sakns:TypeKonsesjonsforhold"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="TypeKonsesjonsforhold" final="restriction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="KONSESJONSVEDTAK"/>
+            <xs:enumeration value="KONSESJONSFRIHET_FRA_EGENERKLAERING"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="PersonMedAndelList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:PersonMedAndel"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonMedAndel">
+        <xs:sequence>
+            <xs:element name="person" type="meldingns:PersonSpecification"/>
+            <xs:element name="andel" type="sakns:Andel"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Andel">
+        <xs:sequence>
+            <xs:element name="teller" type="xs:long"/>
+            <xs:element name="nevner" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ArealInfo">
+        <xs:sequence>
+            <xs:element name="areal" type="xs:double" nillable="true"/>
+            <xs:element name="historiskOppgittAreal" type="xs:double" nillable="true"/>
+            <xs:element name="teigInfo" type="sakns:TeigInfoList"/>
+            <xs:element name="bygninger" type="sakns:BygningInfoList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TeigInfo">
+        <xs:sequence>
+            <xs:element name="teigArealMerknader" type="sakns:ArealmerknadInfoList"/>
+            <xs:element name="lagretBeregnetAreal" type="xs:double" nillable="true"/>
+            <xs:element name="uregistrertJordsameie" type="xs:boolean"/>
+            <xs:element name="teigMedFlereMatrikkelenheter" type="xs:boolean"/>
+            <xs:element name="tvist" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ArealmerknadInfo">
+        <xs:sequence>
+            <xs:element name="kodeverdi" type="xs:string"/>
+            <xs:element name="beskrivelse" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BygningInfo">
+        <xs:sequence>
+            <xs:element name="bygningBeskrivelse" type="xs:string"/>
+            <xs:element name="bygningStatus" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="TeigInfoList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:TeigInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BygningInfoList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:BygningInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ArealmerknadInfoList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:ArealmerknadInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="registerenhetsrettKommuneInfoMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="register_registerenhetns:Registerenhetsrett"/>
+                        <xs:element name="value" type="integrasjon_matrikkelen:KommuneInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InformasjonFraMatrikkelenForBorettslagsandel">
+        <xs:sequence>
+            <xs:element name="kommuneInfoViaAdresse" type="integrasjon_matrikkelen:KommuneInfo"/>
+            <xs:element name="utenlandsAdresse" type="register_adressens:UtenlandskAdresse"/>
+            <xs:element name="konvertertAdresse" type="register_adressens:KonvertertAdresse"/>
+            <xs:element name="registerenhetsrettKommuneInfoMap" type="sakns:registerenhetsrettKommuneInfoMap"/>
+            <xs:element name="realkobletKommuneInfoMap" type="sakns:registerenhetsrettKommuneInfoMap"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- DokumentSaksbehandling -->
+
+    <xs:complexType name="DokumentSaksbehandlingId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentSaksbehandlingIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:DokumentSaksbehandlingId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentSaksbehandlingIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="sakns:DokumentSaksbehandlingId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentSaksbehandlingIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="sakns:DokumentSaksbehandlingIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentSaksbehandling">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="dokumentId" type="register_dokumentns:DokumentId"/>
+                    <xs:element name="aarsakTilFjerningId" type="register_koderns:AarsakTilFjerningKodeId"
+                                nillable="true"/>
+                    <xs:element name="dokumentkildeId" type="register_koderns:DokumentkildeKodeId"/>
+                    <xs:element name="interntNotat" type="sakns:InterntNotat" nillable="true"/>
+                    <xs:element name="aarsakTilFjerningTekst" type="xs:string" nillable="true"/>
+                    <xs:element name="edokReferanse" type="xs:decimal" nillable="true"/>
+                    <xs:element name="elektroniskFullsignert" type="xs:boolean"/>
+                    <xs:element name="dokumentflyt" type="sakns:DokumentflytStegList"/>
+                    <xs:element name="organisatoriskEnhetId" type="register_brukerns:OrganisatoriskEnhetId"
+                                nillable="true"/>
+                    <xs:element name="sistKonferertDato" type="basistyperns:LocalDate" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- DokumentflytSteg -->
+
+    <xs:complexType name="DokumentflytSteg">
+        <xs:sequence>
+            <xs:element name="foeringstidspunkt" type="basistyperns:LocalDateTime"/>
+            <xs:element name="foeringsstatusId" type="register_koderns:FoeringsstatusKodeId"/>
+            <xs:element name="brukerId" type="register_brukerns:BrukerId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentflytStegList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:DokumentflytSteg"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- InterntNotat -->
+
+    <xs:complexType name="InterntNotat">
+        <xs:sequence>
+            <xs:element name="historisk" type="xs:boolean"/>
+            <xs:element name="tekst" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InterntNotatList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:InterntNotat"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- RettsstiftelsestypeSaksbehandling -->
+
+    <xs:complexType name="RettsstiftelsestypeSaksbehandlingId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelsestypeSaksbehandlingIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="sakns:RettsstiftelsestypeSaksbehandlingId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelsestypeSaksbehandlingIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="sakns:RettsstiftelsestypeSaksbehandlingId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelsestypeSaksbehandlingIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true"
+                                type="sakns:RettsstiftelsestypeSaksbehandlingIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelsestypeSaksbehandling">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="edokAutomatiskKonferering" type="xs:boolean"/>
+                    <xs:element name="edokHelelektronisk" type="xs:boolean"/>
+                    <xs:element name="forfallAntallAar" type="xs:int"/>
+                    <xs:element name="gebyr" type="xs:boolean"/>
+                    <xs:element name="genererAutomatiskPanteattest" type="xs:boolean"/>
+                    <xs:element name="kanEdokRegistreres" type="xs:boolean"/>
+                    <xs:element name="kanEdokSlettes" type="xs:boolean"/>
+                    <xs:element name="kanHaForretningsnummer" type="xs:boolean"/>
+                    <xs:element name="arkivtypeId" type="register_koderns:ArkivtypeKodeId"/>
+                    <xs:element name="rettsstiftelsestypeId" type="register_koderns:RettsstiftelsestypeKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- RettsstiftelseSaksbehandling -->
+
+    <xs:complexType name="RettsstiftelseSaksbehandlingId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseSaksbehandlingIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:RettsstiftelseSaksbehandlingId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseSaksbehandlingIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="sakns:RettsstiftelseSaksbehandlingId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseSaksbehandlingIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" nillable="true" type="sakns:RettsstiftelseSaksbehandlingIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseSaksbehandling">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="rettsstiftelseId" type="register_rettsstiftelsens:RettsstiftelseId"/>
+                    <xs:element name="edokDokumentVersjonId" type="register_koderns:EdokDokumentVersjonKodeId"/>
+                    <xs:element name="edokDokumentnavnId" type="register_koderns:EdokDokumentnavnKodeId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- LovligTeksttypekode -->
+    <xs:complexType name="LovligTeksttypekode">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="teksttypeId" type="register_koderns:TeksttypeKodeId"/>
+                    <xs:element name="rettsstiftelsestypeId" type="register_koderns:RettsstiftelsestypeKodeId"/>
+                    <xs:element name="raaderettskode" type="xs:boolean"/>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LovligTeksttypekodeList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="sakns:LovligTeksttypekode"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Sats -->
+
+    <xs:complexType name="SatsId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SatsIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:SatsId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SatsIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" type="sakns:SatsId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SatsIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" type="sakns:SatsIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Sats">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="satstypeId" type="register_koderns:SatsKodeId"/>
+                    <xs:element name="rettstypeId" type="register_koderns:RettstypeKodeId"/>
+                    <xs:element name="rettsstiftelsestypeId" type="register_koderns:RettsstiftelsestypeKodeId"/>
+                    <xs:element name="historisk" type="xs:boolean"/>
+                    <xs:element name="panteattest" type="xs:boolean"/>
+                    <xs:element name="gjelderFraOgMed" type="basistyperns:LocalDate"/>
+                    <xs:element name="gjelderTilOgMed" type="basistyperns:LocalDate"/>
+                    <xs:element name="minimumsbeloep" type="xs:decimal"/>
+                    <xs:element name="broeksatsTeller" type="xs:decimal" nillable="true"/>
+                    <xs:element name="broeksatsNevner" type="xs:long" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Fakturatransaksjon -->
+
+    <xs:complexType name="Fakturaadresse">
+        <xs:sequence>
+            <xs:element name="identifikasjonsnummer" type="xs:string"/>
+            <xs:element name="navn" type="xs:string"/>
+            <xs:element name="adresselinje1" type="xs:string"/>
+            <xs:element name="adresselinje2" type="xs:string"/>
+            <xs:element name="adresselinje3" type="xs:string"/>
+            <xs:element name="postnummer" type="xs:string"/>
+            <xs:element name="landkode" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Fakturatransaksjon">
+        <xs:sequence>
+            <xs:element name="beregningstidspunkt" type="basistyperns:Timestamp" nillable="true"/>
+            <xs:element name="beloep" type="register_rettsstiftelsens:Beloep"/>
+            <xs:element name="fakturamottakersReferanse" type="xs:string" nillable="true"/>
+            <xs:element name="artikkelId" type="register_koderns:ArtikkelKodeId"/>
+            <xs:element name="rettsstiftelseId" type="register_rettsstiftelsens:RettsstiftelseId"/>
+            <xs:element name="fakturamottaker" type="sakns:Fakturaadresse"/>
+            <xs:element name="fakturamatrikkelenhet" type="grunnboksidenterns:MatrikkelenhetIdent"/>
+            <xs:element name="fakturaborettslagsandel" type="grunnboksidenterns:BorettslagsandelIdent"/>
+            <xs:element name="borettslagsnavn" type="xs:string"/>
+            <xs:element name="fakturadokument" type="grunnboksidenterns:DokumentIdent"/>
+            <xs:element name="sakId" type="sakns:SakId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FakturatransaksjonList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="sakns:Fakturatransaksjon"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- Fakturagrunnlag -->
+
+    <xs:complexType name="FakturagrunnlagId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FakturagrunnlagIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:FakturagrunnlagId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FakturagrunnlagIdInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" type="sakns:FakturagrunnlagId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FakturagrunnlagIdListInverseRelation">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:InverseRelation">
+                <xs:sequence>
+                    <xs:element name="cachedValue" type="sakns:FakturagrunnlagIdList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Fakturagrunnlag">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="dokumentId" type="register_dokumentns:DokumentId"/>
+                    <xs:element name="debiterte" type="sakns:FakturatransaksjonList"/>
+                    <xs:element name="krediterte" type="sakns:FakturatransaksjonList"/>
+                    <xs:element name="gebyrgrunnlag" type="sakns:FakturatransaksjonList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Fullmakt -->
+
+    <xs:complexType name="FullmaktId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FullmaktIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="sakns:FullmaktId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Fullmakt">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="fullmaktspersoner" type="sakns:FullmaktspersonList"/>
+                    <xs:element name="gjelderRettsstiftelsestypeKodeIds"
+                                type="register_koderns:RettsstiftelsestypeKodeIdList"/>
+                    <xs:element name="fullmaktstypeId" type="register_koderns:FullmaktstypeKodeId"/>
+                    <xs:element name="kanTransporteres" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Fullmaktsperson">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="personId" type="register_personns:PersonId"/>
+                    <xs:element name="fullmaktsrolleId" type="register_koderns:FullmaktsrolleKodeId"/>
+                    <xs:element name="saksnummerOpprettet" type="xs:string"/>
+                    <xs:element name="saksnummerAvsluttet" type="xs:string"/>
+                    <xs:element name="gjelderFraOgMed" type="basistyperns:LocalDate"/>
+                    <xs:element name="gjelderTil" type="basistyperns:LocalDate"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FullmaktspersonList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:Fullmaktsperson"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType abstract="true" name="GrunnboksutskriftMedKontrollresultater">
+        <xs:sequence>
+            <xs:element name="kontrollresultater" type="meldingns:Kontrollresultater"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ByteUtskriftMedKontrollresultater">
+        <xs:complexContent>
+            <xs:extension base="saksbehandlingns:GrunnboksutskriftMedKontrollresultater">
+                <xs:sequence>
+                    <xs:element name="grunnboksutskrift" type="basistyperns:ByteList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="StringUtskriftMedKontrollresultater">
+        <xs:complexContent>
+            <xs:extension base="saksbehandlingns:GrunnboksutskriftMedKontrollresultater">
+                <xs:sequence>
+                    <xs:element name="grunnboksutskrift" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="UbekreftetGrunnboksutskriftParameters">
+        <xs:sequence>
+            <xs:element name="historisk" type="xs:boolean"/>
+            <xs:element name="format" type="saksbehandlingns:UtskriftFormat"/>
+            <xs:element name="sakId" type="sakns:SakId"/>
+            <xs:element name="registerenhetIdent" type="grunnboksidenterns:RegisterenhetIdent"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:simpleType name="UtskriftFormat">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TEKST"/>
+            <xs:enumeration value="HTML"/>
+            <xs:enumeration value="PDFA"/>
+            <xs:enumeration value="PDF"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Foeringsdag -->
+
+    <xs:complexType name="FoeringsdagId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FoeringsdagIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:FoeringsdagId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Foeringsdag">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="registreringstidspunkt" type="basistyperns:Timestamp"/>
+                    <xs:element name="avslutningstidspunkt" type="basistyperns:Timestamp"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ArkenWordDokument">
+        <xs:sequence>
+            <xs:element name="documentNumber" type="xs:string"/>
+            <xs:element name="wordDokument" type="xs:base64Binary"/>
+            <xs:element name="sjekketUtAvSaksbehandlersKortnavn" type="xs:string"/>
+            <xs:element name="arkenDocumentRecordUrl" type="xs:string"/>
+            <xs:element name="wordDocumentRecordNumber" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema
+        version="1.0"
+        targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/matrikkelen"
+        xmlns:matrikkelen_servicens="http://kartverket.no/grunnbok/wsapi/v2/service/matrikkelen"
+        xmlns:grunnboksidenterns="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
+        xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+    <xs:import schemaLocation="grunnboksidenter.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"/>
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+
+    <!-- ========================================================= -->
+    <!-- Servicetyper for MatrikkelService                         -->
+    <!-- Typer som kun brukes av webtjenesten.                     -->
+    <!-- Trenger muligens ikke versjonering.                       -->
+    <!-- ========================================================= -->
+
+
+    <xs:complexType name="MatrikkelenhetInfo">
+        <xs:sequence>
+            <xs:element name="matrikkelenhetIdent" type="grunnboksidenterns:MatrikkelenhetIdent"/>
+            <xs:element name="aktiv" type="xs:boolean"/>
+            <xs:element name="tinglyst" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetIdentTilMatrikkelenhetInfoMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="grunnboksidenterns:MatrikkelenhetIdent"/>
+                        <xs:element name="value" type="matrikkelen_servicens:MatrikkelenhetInfo"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KonsesjonsinformasjonInfo">
+        <xs:sequence>
+            <xs:element name="konsesjonAvklart" type="xs:boolean"/>
+            <xs:element name="begrunnelser" type="basistyperns:StringList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KommuneInfo">
+        <xs:sequence>
+            <xs:element name="kommunenummer" type="xs:string"/>
+            <xs:element name="harNedsattKonsesjonsgrense" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AdresseInformasjon">
+        <xs:sequence>
+            <xs:element name="bruksenhetId" type="xs:long"/>
+            <xs:element name="adresseId" type="xs:long" nillable="true"/>
+            <xs:element name="etasjenummer" type="xs:int"/>
+            <xs:element name="lopenummer" type="xs:int"/>
+            <xs:element name="etasjeplanKode" type="xs:string"/>
+            <xs:element name="adressekode" type="xs:string"/>
+            <xs:element name="adressenavn" type="xs:string"/>
+            <xs:element name="nummer" type="xs:int"/>
+            <xs:element name="bokstav" type="xs:string"/>
+            <xs:element name="kommunenummer" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AdressenavnMedAdressekode">
+        <xs:sequence>
+            <xs:element name="adressenavn" type="xs:string"/>
+            <xs:element name="adressekode" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AdresseInformasjonList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="matrikkelen_servicens:AdresseInformasjon"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AdressenavnMedAdressekodeList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="matrikkelen_servicens:AdressenavnMedAdressekode"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,1564 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xs:schema version="1.0"
+           targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/domain/melding"
+           xmlns:meldingns="http://kartverket.no/grunnbok/wsapi/v2/domain/melding"
+
+           xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+           xmlns:kodelistens="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste"
+           xmlns:grunnboksidenterns="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
+
+           xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+           xmlns:register_registerenhetns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"
+           xmlns:register_personns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
+           xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
+
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
+    <xs:import schemaLocation="kodeliste.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste"/>
+
+    <xs:import schemaLocation="grunnboksidenter.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"/>
+
+    <xs:import schemaLocation="register_rettsstiftelse.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
+    <xs:import schemaLocation="register_registerenhet.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"/>
+    <xs:import schemaLocation="register_person.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
+    <xs:import schemaLocation="register_koder.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+
+    <!-- Melding -->
+
+    <xs:complexType name="MeldingId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MeldingIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="meldingns:MeldingId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Melding">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="registreringstidspunkt" type="basistyperns:Timestamp"/>
+                    <xs:element name="innsendingId" type="xs:long" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="forsendelsesreferanse" type="xs:string"/>
+                    <xs:element name="rekkefoelgenummer" type="xs:int"/>
+                    <xs:element name="meldingSpecification" type="meldingns:MeldingSpecification"/>
+                    <xs:element name="formidletAvId" type="meldingns:FormidlerId"/>
+                    <xs:element name="elektroniskeSignaturer"
+                                type="meldingns:ElektroniskeSignaturerList"/>
+                    <xs:element name="dokumentreferanser"
+                                type="meldingns:MeldingDokumentreferanseList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FormidlerId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TinglysingBrukerId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="Formidler">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="personIdent" type="grunnboksidenterns:PersonIdent"/>
+                    <xs:element name="kanTinglyseUsignertMelding" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TinglysingBruker">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="brukernavn" type="xs:string"/>
+                    <xs:element name="formidlerId" type="meldingns:FormidlerId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="RettsstiftelsestypebegrensningId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Rettsstiftelsestypebegrensning">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="rettsstiftelsestypeId" type="register_koderns:RettsstiftelsestypeKodeId"/>
+                    <xs:element name="personIdent" type="grunnboksidenterns:PersonIdent"/>
+                    <xs:element name="begrensningKategori" type="meldingns:BegrensningKategori"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="BegrensningKategori">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TINGLYSING"/>
+            <xs:enumeration value="RETTSENDRING"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- KodeSpecification -->
+
+    <xs:complexType name="KodeSpecification">
+        <xs:sequence>
+            <xs:element name="kodeverdi" type="xs:string"/>
+            <xs:element name="navn" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelsestypeKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FormaalKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TilleggsdeltypeKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentavgiftsaarsakKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BoligtypeKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BrukstypeKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AarsaksparagrafKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LandkodeKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmsetningstypeKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnketypeKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AarsakGebyrfritakKodeSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:KodeSpecification"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- MeldingSpecification -->
+
+    <xs:complexType name="MeldingSpecification">
+        <xs:sequence>
+            <xs:element name="innkommetElektronisk" type="xs:boolean"/>
+            <xs:element name="dokumenter" type="meldingns:DokumentSpecificationList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettingUnitOfWorkTransfer">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokUnitOfWorkTransfer">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettemeldingSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MeldingSpecification">
+                <xs:sequence>
+                    <xs:element name="rettingUnitOfWorkTransfer"
+                                type="meldingns:RettingUnitOfWorkTransfer"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- DokumentSpecification -->
+
+    <xs:complexType name="DokumentSpecification">
+        <xs:sequence>
+            <xs:element name="ref" type="xs:string"/>
+            <xs:element name="innsendersRef" type="xs:string"/>
+            <xs:element name="ident" type="grunnboksidenterns:DokumentIdent"/>
+            <xs:element name="signaturer" type="meldingns:PersonSpecificationList"/>
+            <xs:element name="rettsstiftelser" type="meldingns:RettsstiftelseOperationList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettedokumentSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:DokumentSpecification">
+                <xs:sequence>
+                    <xs:element name="registrertDato" type="basistyperns:LocalDate"/>
+                    <xs:element name="registrertTidspunkt" type="basistyperns:LocalTime"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DokumentSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:DokumentSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- RettsstiftelseOperations og Specifications -->
+
+    <xs:complexType name="RettsstiftelseOperation">
+        <xs:sequence>
+            <xs:element name="rettsstiftelsesnummer" type="xs:int"/>
+            <xs:element name="rettsstiftelsestype"
+                        type="meldingns:RettsstiftelsestypeKodeSpecification"/>
+            <xs:element name="aarsakGebyrfritak" type="meldingns:AarsakGebyrfritakKodeSpecification"/>
+            <xs:element name="harGebyr" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="tekster" type="register_rettsstiftelsens:TekstList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsstiftelseOperationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:RettsstiftelseOperation"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonSpecification">
+        <xs:sequence>
+            <xs:element name="personId" type="register_personns:PersonId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersonSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:PersonSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetSpecification">
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:RegisterenhetSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RegisterenhetSpecification">
+                <xs:sequence>
+                    <xs:element name="matrikkelenhetIdent" type="grunnboksidenterns:MatrikkelenhetIdent"/>
+                    <xs:element name="kommunenavn" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:MatrikkelenhetSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RegisterenhetSpecification">
+                <xs:sequence>
+                    <xs:element name="borettslagsandelIdent" type="grunnboksidenterns:BorettslagsandelIdent"/>
+                    <xs:element name="borettslagnavn" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:BorettslagsandelSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagSpecification">
+        <xs:sequence>
+            <xs:element name="borettslagnummer" type="xs:string"/>
+            <xs:element name="borettslagnavn" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettSpecification">
+        <xs:sequence>
+            <xs:element name="registerenhet" type="meldingns:RegisterenhetSpecification"/>
+            <xs:element name="registerenhetsrettstype" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:RegisterenhetsrettSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForDokumentnummerOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+                <xs:sequence>
+                    <xs:element name="veketFor" type="grunnboksidenterns:RettsstiftelseIdentList"/>
+                    <xs:element name="sidestiltMed" type="grunnboksidenterns:RettsstiftelseIdentList"/>
+                    <xs:element name="medBeloep" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="forBeloep" type="register_rettsstiftelsens:BeloepList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsendringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsstiftelseOperation">
+                <xs:sequence>
+                    <xs:element name="omsetningSpecification" type="meldingns:OmsetningSpecification"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OpphevingAvSeksjoneringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RegisterenhetsendringOperation">
+                <xs:sequence>
+                    <xs:element name="til" type="meldingns:MatrikkelenhetSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjoneringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RegisterenhetsendringOperation">
+                <xs:sequence>
+                    <xs:element name="fra" type="meldingns:MatrikkelenhetSpecificationList"/>
+                    <xs:element name="nye" type="meldingns:SeksjonssameieandelSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieandelSpecification">
+        <xs:sequence>
+            <xs:element name="seksjon" type="meldingns:MatrikkelenhetSpecification"/>
+            <xs:element name="teller" type="xs:long"/>
+            <xs:element name="nevner" type="xs:long"/>
+            <xs:element name="loepenummer" type="xs:int"/>
+            <xs:element name="formaalKode" type="meldingns:FormaalKodeSpecification"/>
+            <xs:element name="tilleggsdeltypeKode" type="meldingns:TilleggsdeltypeKodeSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieandelSpecificationList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded"
+                        type="meldingns:SeksjonssameieandelSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieendringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RegisterenhetsendringOperation">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieandelList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_registerenhetns:Seksjonssameieandel"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ReseksjoneringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:SeksjonssameieendringOperation">
+                <xs:sequence>
+                    <xs:element name="seksjonertMatrikkelenhet" type="grunnboksidenterns:MatrikkelenhetIdent"/>
+                    <xs:element name="delingAvSeksjonerSpecifications"
+                                type="meldingns:DelingAvSeksjonerSpecificationList"/>
+                    <xs:element name="nyeSeksjonerFraFellesarealSpecifications"
+                                type="meldingns:DelingAvSeksjonerSpecificationList"/>
+                    <xs:element name="sammenslaaingAvSeksjonerSpecifications"
+                                type="meldingns:SammenslaaingAvSeksjonerSpecificationList"/>
+                    <xs:element name="fjerningAvSeksjonerSpecifications"
+                                type="meldingns:FjerningAvSeksjonerSpecificationList"/>
+                    <xs:element name="reseksjoneringUtenEndringerSpecifications"
+                                type="meldingns:SeksjonssameieandelSpecificationList"/>
+                    <xs:element name="resultatEksisterendeSeksjonssameieandeler"
+                                type="meldingns:SeksjonssameieandelSpecificationList"/>
+                    <xs:element name="eksisterendeSeksjonssameieandeler"
+                                type="meldingns:SeksjonssameieandelSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FjerningAvSeksjonerSpecification">
+        <xs:sequence>
+            <xs:element name="fjernSeksjonssameieandelSpecifications"
+                        type="meldingns:SeksjonssameieandelSpecificationList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FjerningAvSeksjonerSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:FjerningAvSeksjonerSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelingAvSeksjonerSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:DelingAvSeksjonerSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelingAvSeksjonerSpecification">
+        <xs:sequence>
+            <xs:element name="nyeSeksjoner" type="meldingns:SeksjonssameieandelSpecificationList"/>
+            <xs:element name="delesFraSeksjonerMedBroek"
+                        type="meldingns:SeksjonMedOppgittBroekSpecificationList"/>
+            <xs:element name="delesFraFellesareal" type="xs:boolean"/>
+            <xs:element name="oppgittBroekForFellesarealTeller" type="xs:long"/>
+            <xs:element name="oppgittBroekForFellesarealNevner" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvSeksjonerSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:SammenslaaingAvSeksjonerSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvSeksjonerSpecification">
+        <xs:sequence>
+            <xs:element name="utgaaendeSeksjoner" type="meldingns:SeksjonssameieandelSpecificationList"/>
+            <xs:element name="bestaaendeSeksjonssameieandelSpecification"
+                        type="meldingns:SeksjonssameieandelSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonMedOppgittBroekSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:SeksjonMedOppgittBroekSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonMedOppgittBroekSpecification">
+        <xs:sequence>
+            <xs:element name="seksjonssameieandelSpecification"
+                        type="meldingns:SeksjonssameieandelSpecification"/>
+            <xs:element name="teller" type="xs:long"/>
+            <xs:element name="nevner" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieandelFraTilSpecification">
+
+        <xs:sequence>
+            <xs:element name="fra" type="meldingns:MatrikkelenhetSpecification"/>
+            <xs:element name="til" type="meldingns:SeksjonssameieandelSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SeksjonssameieandelFraTilSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:SeksjonssameieandelFraTilSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvEierseksjonssameierOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RegisterenhetsendringOperation">
+                <xs:sequence>
+                    <xs:element name="fra" type="meldingns:MatrikkelenhetSpecificationList"/>
+                    <xs:element name="til" type="meldingns:MatrikkelenhetSpecificationList"/>
+                    <xs:element name="utgaaendeOgBestaaendeSeksjonssameieandeler" type="meldingns:SeksjonssameieandelFraTilSpecificationList"/>
+                    <xs:element name="omnummereringAvUnderliggende" type="meldingns:MatrikkelenhetFraTilSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetsendringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RegisterenhetsendringOperation">
+                <xs:sequence>
+                    <xs:element name="fra" type="meldingns:MatrikkelenhetSpecificationList"/>
+                    <xs:element name="til" type="meldingns:MatrikkelenhetSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FradelingOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation">
+                <xs:sequence>
+                    <xs:element name="registerenhetsrettsandelerForNy"
+                                type="meldingns:RegisterenhetsrettAndelerSpecificationList"/>
+                    <xs:element name="rekvirenterAvForretning" type="meldingns:PersonSpecificationList"/>
+                    <xs:element name="heftelserSomIkkeSkalOverfoeres"
+                                type="grunnboksidenterns:RettsstiftelseIdentList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringAvTidligereUregistrertGrunnOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetFraTilSpecification">
+        <xs:sequence>
+            <xs:element name="fra" type="meldingns:MatrikkelenhetSpecification"/>
+            <xs:element name="til" type="meldingns:MatrikkelenhetSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetFraTilSpecificationList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded"
+                        type="meldingns:MatrikkelenhetFraTilSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FestenummerGittBruksnummerOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation">
+                <xs:sequence>
+                    <xs:element name="registerenhetsrettsandelerForNy"
+                                type="meldingns:RegisterenhetsrettAndelerSpecificationList"/>
+                    <xs:element name="heftelserSomIkkeSkalOverfoeres"
+                                type="grunnboksidenterns:RettsstiftelseIdentList"/>
+                    <xs:element name="omnummereringAvUnderliggende"
+                                type="meldingns:MatrikkelenhetFraTilSpecificationList"/>
+                    <xs:element name="rekvirenterAvForretning" type="meldingns:PersonSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmnummereringAvMatrikkelenheterOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation">
+                <xs:sequence>
+                    <xs:element name="omnummereringAvUnderliggende"
+                                type="meldingns:MatrikkelenhetFraTilSpecificationList"/>
+                    <xs:element name="rekvirenterAvForretning" type="meldingns:PersonSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnnenMatrikkelinformasjonOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MatrikkelenhetUtgaarOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvMatrikkelenheterOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation">
+                <xs:sequence>
+                    <xs:element name="omnummereringAvUnderliggende"
+                                type="meldingns:MatrikkelenhetFraTilSpecificationList"/>
+                    <xs:element name="rekvirenterAvForretning" type="meldingns:PersonSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="ArealoverfoeringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation">
+                <xs:sequence>
+                    <xs:element name="boligtype" type="meldingns:BoligtypeKodeSpecification"/>
+                    <xs:element name="brukstype" type="meldingns:BrukstypeKodeSpecification"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="HeftelseOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsstiftelseOperation">
+                <xs:sequence>
+                    <xs:element name="rettighetshavere" type="meldingns:PersonSpecificationList"/>
+                    <xs:element name="realkobletTil"
+                                type="meldingns:RegisterenhetsrettSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="HeftelseIRegisterenhetsrettOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseOperation">
+                <xs:sequence>
+                    <xs:element name="hefterIRegisterenhetsretter"
+                                type="meldingns:RegisterenhetsrettAndelerSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="HeftelseIAnnenRettOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseOperation">
+                <xs:sequence>
+                    <xs:element name="beloep" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="hefterI" type="meldingns:DelAvRettSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="TvangsforretningIRettighetOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseIAnnenRettOperation">
+                <xs:sequence>
+                    <xs:element name="avholdtTvangsforretning"
+                                type="meldingns:AvholdtTvangsforretningSpecification"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="HeftelseIRettighetOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseIAnnenRettOperation">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="HeftelseMedBeloepOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseIRegisterenhetsrettOperation">
+                <xs:sequence>
+                    <xs:element name="beloep" type="register_rettsstiftelsens:BeloepList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PantOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseMedBeloepOperation">
+                <xs:sequence>
+                    <xs:element name="erklaeringerOmSivilstand"
+                                type="meldingns:ErklaeringOmSivilstandSpecificationList"/>
+                    <xs:element name="pantsettere" type="meldingns:PersonSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NotertPantOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseMedBeloepOperation">
+                <xs:sequence>
+                    <xs:element name="notifikasjonsdato" type="basistyperns:LocalDate"/>
+                    <xs:element name="prioritet" type="xs:string"/>
+                    <xs:element name="besittereAvAndelsbrev" type="meldingns:PersonSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NotertTvangspantOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:NotertPantOperation">
+                <xs:sequence>
+                    <xs:element name="avholdtTvangsforretningSpecification"
+                                type="meldingns:AvholdtTvangsforretningSpecification"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnkeOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseIRegisterenhetsrettOperation">
+                <xs:sequence>
+                    <xs:element name="datoForAvgjoerelseSomAnkenGjelder" type="basistyperns:LocalDate"/>
+                    <xs:element name="anketype" type="meldingns:AnketypeKodeSpecification"/>
+                    <xs:element name="dokumenterSomAnkes" type="grunnboksidenterns:DokumentIdentList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettAndelerSpecificationList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:RegisterenhetsrettAndelerSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettAndelerSpecification">
+        <xs:sequence>
+            <xs:element name="andelerIRegisterenhetsrett"
+                        type="meldingns:RegisterenhetsrettsandelSpecificationList"/>
+            <xs:element name="registerenhetsrett" type="meldingns:RegisterenhetsrettSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsstiftelseOperation">
+                <xs:sequence>
+                    <xs:element name="saksnummer" type="xs:string" nillable="true"/>
+                    <xs:element name="forvaltere" type="meldingns:PersonSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaPersonOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:AnmerkningOperation">
+                <xs:sequence>
+                    <xs:element name="anmerketPerson" type="meldingns:PersonSpecification"/>
+                    <xs:element name="bostyrer" type="meldingns:PersonSpecification"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnmerkningPaaRegisterenhetsrettsandelOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:AnmerkningOperation">
+                <xs:sequence>
+                    <xs:element name="anmerkedeRegisterenhetsrettsandeler"
+                                type="meldingns:RegisterenhetsrettAndelerSpecificationList"/>
+                    <xs:element name="tingrett" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettsandelSpecification">
+        <xs:sequence>
+            <xs:element name="teller" type="xs:long"/>
+            <xs:element name="nevner" type="xs:long"/>
+            <xs:element name="rettighetshaver" type="meldingns:PersonSpecification" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element name="realkobletTil" type="meldingns:RegisterenhetSpecification" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterenhetsrettsandelSpecificationList">
+        <xs:sequence>
+            <xs:element name="item" type="meldingns:RegisterenhetsrettsandelSpecification" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ErklaeringOmSivilstandSpecification">
+        <xs:sequence>
+            <xs:element name="erklaeringFor" type="meldingns:PersonSpecification"/>
+            <xs:element name="kreverSamtykke" type="xs:boolean"/>
+            <xs:element name="ektefellePartner" type="meldingns:PersonSpecification" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ErklaeringOmSivilstandSpecificationList">
+        <xs:sequence>
+            <xs:element name="item" type="meldingns:ErklaeringOmSivilstandSpecification" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OverdragelseAvRegisterenhetsrettOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsstiftelseOperation">
+                <xs:sequence>
+                    <xs:element name="omsetningSpecification" type="meldingns:OmsetningSpecification"/>
+                    <xs:element name="erklaeringerOmSivilstand"
+                                type="meldingns:ErklaeringOmSivilstandSpecificationList"/>
+                    <xs:element name="heftelserSomIkkeSkalOverfoeres"
+                                type="grunnboksidenterns:RettsstiftelseIdentList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmsetningSpecification">
+        <xs:sequence>
+            <xs:element name="omsetningstype" type="meldingns:OmsetningstypeKodeSpecification"/>
+            <xs:element name="utlystTilSalgPaaDetFrieMarked" type="xs:boolean" nillable="true"/>
+            <xs:element name="omsatte"
+                        type="meldingns:OmsattRegisterenhetsrettSpecificationList"/>
+            <xs:element name="vederlag" type="register_rettsstiftelsens:Beloep" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="dokumentavgiftsplikt" type="meldingns:DokumentavgiftspliktSpecification"
+                        minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- TODO: Lag mappingtest -->
+    <xs:complexType name="DokumentavgiftspliktSpecification">
+        <xs:sequence>
+            <xs:element name="dokumentavgiftSkalBeregnes" type="xs:boolean"/>
+            <xs:element name="dokumentavgiftsgrunnlag" type="register_rettsstiftelsens:Beloep" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element name="dokumentavgiftsaarsak"
+                        type="meldingns:DokumentavgiftsaarsakKodeSpecification" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OmsattRegisterenhetsrettSpecification">
+        <xs:sequence>
+            <xs:element name="boligtype" type="meldingns:BoligtypeKodeSpecification"/>
+            <xs:element name="brukstype" type="meldingns:BrukstypeKodeSpecification"/>
+            <xs:element name="registerenhetsrett" type="meldingns:RegisterenhetsrettSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OmsattRegisterenhetsrettSpecificationList">
+        <xs:sequence>
+            <xs:element name="item" type="meldingns:OmsattRegisterenhetsrettSpecification" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="OmsatteRegisterenhetsrettsandelerSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OmsattRegisterenhetsrettSpecification">
+                <xs:sequence>
+                    <xs:element name="kjoeptePersonligeAndeler"
+                                type="meldingns:RegisterenhetsrettsandelSpecificationList"/>
+                    <xs:element name="solgtePersonligeAndeler"
+                                type="meldingns:RegisterenhetsrettsandelSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EtableringAvFesterettOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EtableringAvRealkoblingOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EndringAvRealkoblingOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OpphoerAvRealkoblingOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EtableringAvEiendomsrettBorettslagsandelOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringAvBorettslagOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringAvBorettslagsandelNyttBorettslagOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringAvBorettslagsandelEksisterendeBorettslagOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OverdragelseAvFesterettOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EierskifteMatrikkelenhetOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Borett2Strek13Operation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EierskifteBorettslagsandelOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EierskifteFraBorett2Strek13Operation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VilkaarIFestekontraktOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseIRegisterenhetsrettOperation">
+                <xs:sequence>
+                    <xs:element name="aarligFesteavgift" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="tomteverdi" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="festetidIAntallAar" type="xs:int" nillable="true"/>
+                    <xs:element name="festeFraDato" type="basistyperns:LocalDate"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelvisSlettingForIkkeTinglystMatrikkelenhetOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+                <xs:sequence>
+                    <xs:element name="slettetFor" type="meldingns:MatrikkelenhetSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsstiftelseOperation">
+                <xs:sequence>
+                    <xs:element name="endrer" type="meldingns:DelAvRettSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelAvRettSpecification">
+        <xs:sequence>
+            <xs:element name="rettsstiftelse" type="grunnboksidenterns:RettsstiftelseIdent"/>
+            <xs:element name="begrensetTil" type="meldingns:RegisterenhetsrettAndelerSpecificationList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DelAvRettSpecificationList">
+        <xs:sequence>
+            <xs:element name="item" type="meldingns:DelAvRettSpecification" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SlettingOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+                <xs:sequence>
+                    <xs:element name="aarsaksparagraf" type="meldingns:AarsaksparagrafKodeSpecification"
+                                nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnnenRettighetOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseIRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LeieavtaleOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:AnnenRettighetOperation">
+                <xs:sequence>
+                    <xs:element name="leieFraDato" type="basistyperns:LocalDate"/>
+                    <xs:element name="leietid" type="register_rettsstiftelsens:Tidsperiode"/>
+                    <xs:element name="leiebeloep" type="register_rettsstiftelsens:BeloepForPeriode"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FremleieavtaleOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:LeieavtaleOperation">
+                <xs:sequence>
+                    <xs:element name="fremleieavtaleFor" type="grunnboksidenterns:RettsstiftelseIdent"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NedkvitteringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+                <xs:sequence>
+                    <xs:element name="beloepNedkvittertTil" type="register_rettsstiftelsens:BeloepList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TinglysingPaaNyOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AnnenHeftelseOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseIRegisterenhetsrettOperation">
+                <xs:sequence>
+                    <xs:element name="kanIkkeSlettesUtenSamtykkeFra"
+                                type="meldingns:PersonSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForIkkeTinglystDokumentOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+                <xs:sequence>
+                    <xs:element name="veketFor" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="sidestiltMed" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="medBeloep" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="forBeloep" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="rettighetshavere" type="meldingns:PersonSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TransportOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+                <xs:sequence>
+                    <xs:element name="fraRettighetshaver" type="meldingns:PersonSpecificationList"/>
+                    <xs:element name="tilRettighetshaver" type="meldingns:PersonSpecificationList"/>
+                    <xs:element name="fraRealkobletTil"
+                                type="meldingns:RegisterenhetsrettSpecificationList"/>
+                    <xs:element name="tilRealkobletTil"
+                                type="meldingns:RegisterenhetsrettSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarILeieavtaleOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+                <xs:sequence>
+                    <xs:element name="leieFraDato" type="basistyperns:LocalDate"/>
+                    <xs:element name="leietid" type="register_rettsstiftelsens:Tidsperiode"/>
+                    <xs:element name="leiebeloep" type="register_rettsstiftelsens:BeloepForPeriode"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="NyeVilkaarIFestekontraktOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+                <xs:sequence>
+                    <xs:element name="aarligFesteavgift" type="register_rettsstiftelsens:BeloepList"/>
+                    <xs:element name="festetidIAntallAar" type="xs:int" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DiverseRettsendringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TvangsforretningOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseMedBeloepOperation">
+                <xs:sequence>
+                    <xs:element name="avholdtTvangsforretningSpecification"
+                                type="meldingns:AvholdtTvangsforretningSpecification"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmbytteOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsendringOperation">
+                <xs:sequence>
+                    <xs:element name="paaberoptOmbytteMed" type="grunnboksidenterns:RettsstiftelseIdentList"/>
+                    <xs:element name="paaberoptPrioritetFra" type="basistyperns:LocalDate"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="AvholdtTvangsforretningSpecification">
+        <xs:sequence>
+            <xs:element name="avholdtDato" type="basistyperns:LocalDate"/>
+            <xs:element name="avholdtKlokkeslett" type="basistyperns:LocalTime" nillable="true"/>
+            <xs:element name="saksoekere" type="meldingns:PersonSpecificationList"/>
+            <xs:element name="prosessfullmektiger" type="meldingns:PersonSpecificationList"/>
+            <xs:element name="saksoekte" type="meldingns:PersonSpecificationList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelsendringOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:RettsstiftelseOperation">
+                <xs:sequence>
+                    <xs:element name="borettslag" type="meldingns:BorettslagSpecification"/>
+                    <xs:element name="fraBorettslagsandeler" type="meldingns:BorettslagsandelSpecificationList"/>
+                    <xs:element name="tilBorettslagsandeler"
+                                type="meldingns:BorettslagsandelMedAdresseSpecificationList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelMedAdresseSpecification">
+        <xs:sequence>
+            <xs:element name="borettslagsandel" type="meldingns:BorettslagsandelSpecification"/>
+            <xs:element name="adresse" type="meldingns:AdresseSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BorettslagsandelMedAdresseSpecificationList">
+        <xs:sequence>
+            <xs:element name="item" minOccurs="0" maxOccurs="unbounded"
+                        type="meldingns:BorettslagsandelMedAdresseSpecification"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AdresseSpecification"/>
+
+    <xs:complexType name="MatrikkeladresseSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:AdresseSpecification">
+                <xs:sequence>
+                    <xs:element name="kommune" type="grunnboksidenterns:KommuneIdent"/>
+                    <xs:element name="gaardsnummer" type="xs:int"/>
+                    <xs:element name="bruksnummer" type="xs:int"/>
+                    <xs:element name="festenummer" type="xs:int"/>
+                    <xs:element name="undernummer" type="xs:int"/>
+                    <xs:element name="bolignummer" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="UtenlandskAdresseSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:AdresseSpecification">
+                <xs:sequence>
+                    <xs:element name="landkode" nillable="false"
+                                type="meldingns:LandkodeKodeSpecification"/>
+                    <xs:element name="adressetekst" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VegadresseSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:AdresseSpecification">
+                <xs:sequence>
+                    <xs:element name="kommune" type="grunnboksidenterns:KommuneIdent"/>
+                    <xs:element name="adressekode" type="xs:int"/>
+                    <xs:element name="adressenavn" type="xs:string" nillable="true"/>
+                    <xs:element name="husnummer" type="xs:int"/>
+                    <xs:element name="bokstav" type="xs:string" nillable="true"/>
+                    <xs:element name="bolignummer" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KonvertertAdresseSpecification">
+        <xs:complexContent>
+            <xs:extension base="meldingns:AdresseSpecification">
+                <xs:sequence>
+                    <xs:element name="adressetekst" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SlettingAvBorettslagsandelOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvBorettslagsandelerOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelingAvBorettslagsandelOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation">
+                <xs:sequence>
+                    <xs:element name="registerenhetsrettsandelerForNy"
+                                type="meldingns:RegisterenhetsrettAndelerSpecificationList"/>
+                    <xs:element name="heftelserSomIkkeSkalOverfoeres"
+                                type="grunnboksidenterns:RettsstiftelseIdentList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OpploesningAvBorettslagOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OmnummereringAvBorettslagsandelerOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DelingAvBorettslagOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SammenslaaingAvBorettslagOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:BorettslagsandelsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EtableringAvJordsameieOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EndringAvJordsameieOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="OpphoerAvJordsameieOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:OverdragelseAvRegisterenhetsrettOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Kontrollresulter  -->
+
+    <xs:simpleType name="KontrollutfallKode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GODKJENT"/>
+            <xs:enumeration value="IKKE_GODKJENT"/>
+            <xs:enumeration value="UAVKLART"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Kontrollkategori">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FORMAT"/>
+            <xs:enumeration value="IDENT"/>
+            <xs:enumeration value="RESULTAT"/>
+            <xs:enumeration value="VURDERING"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="BegrunnelsestypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BegrunnelsestypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:BegrunnelsestypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BegrunnelsestypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                    <xs:element name="tekst" type="basistyperns:LocalizedString"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KontrolltypeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KontrolltypeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:KontrolltypeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KontrolltypeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                    <xs:element name="kontrollkategori" type="meldingns:Kontrollkategori"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Begrunnelse">
+        <xs:sequence>
+            <xs:element name="begrunnelsestypeId" type="meldingns:BegrunnelsestypeKodeId"/>
+            <xs:element name="utfall" type="meldingns:KontrollutfallKode"/>
+            <xs:element name="tekst" type="basistyperns:LocalizedString"/>
+            <xs:element name="elementnavn" type="xs:string" nillable="true"/>
+            <xs:element name="tekstOverstyring" type="xs:string" nillable="true"/>
+            <xs:element name="elementnavnOverstyring" type="xs:string" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BegrunnelseList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="meldingns:Begrunnelse"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Kontrollresultat">
+        <xs:sequence>
+            <xs:element name="kontrolltypeId" type="meldingns:KontrolltypeKodeId"/>
+            <xs:element name="dokumentindeks" type="xs:int" nillable="true"/>
+            <xs:element name="rettsstiftelseindeks" type="xs:int" nillable="true"/>
+            <xs:element name="begrunnelser" type="meldingns:BegrunnelseList"/>
+            <xs:element name="kontrollutfall" type="meldingns:KontrollutfallKode"/>
+            <xs:element name="elementnavn" type="xs:string" nillable="true"/>
+            <xs:element name="elementnavnOverstyring" type="xs:string" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KontrollresultatList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:Kontrollresultat"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Kontrollresultater">
+        <xs:sequence>
+            <xs:element name="resultater" type="meldingns:KontrollresultatList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ElektroniskeSignaturerList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:ElektroniskSignatur"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ElektroniskSignatur">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="identifikasjonsnummer" type="xs:string"/>
+                    <xs:element name="signaturPolicy" type="xs:string"/>
+                    <xs:element name="sertifikatType" type="xs:string"/>
+                    <xs:element name="sertifikatNivaa" type="xs:string"/>
+                    <xs:element name="versjon" type="xs:string"/>
+                    <xs:element name="valideringstidspunkt" type="basistyperns:Timestamp"/>
+                    <xs:element name="gjelderDokumentreferanse" type="xs:string"/>
+                    <xs:element name="signaturFor" type="meldingns:SignertObjektType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MeldingDokumentreferanseList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:MeldingDokumentreferanse"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MeldingDokumentreferanse">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="dokumentaar" type="xs:int"/>
+                    <xs:element name="dokumentnummer" type="xs:long"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="SignertObjektType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DOKUMENT_OG_FOELGEBREV"/>
+            <xs:enumeration value="DOKUMENT"/>
+            <xs:enumeration value="FOLGEBREV"/>
+            <xs:enumeration value="GRUNNBOKSUTSKRIFT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ManuellBehandling">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="rettstypeKodeId" type="register_koderns:RettstypeKodeId"/>
+                    <xs:element name="rettsstiftelsestypeKodeId" type="register_koderns:RettsstiftelsestypeKodeId"/>
+                    <xs:element name="innkommetElektronisk" type="xs:boolean" nillable="true"/>
+                    <xs:element name="gjelderFraOgMed" type="basistyperns:LocalDate"/>
+                    <xs:element name="gjelderTil" type="basistyperns:LocalDate"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ManuellBehandlingId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ManuellBehandlingList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:ManuellBehandling"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringPaaRegisterenhetId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegistreringPaaRegisterenhetIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:RegistreringPaaRegisterenhetId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="RegistreringPaaRegisterenhet">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="registerenhetId" type="register_registerenhetns:RegisterenhetId"/>
+                    <xs:element name="registreringstidspunkt" type="basistyperns:Timestamp"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

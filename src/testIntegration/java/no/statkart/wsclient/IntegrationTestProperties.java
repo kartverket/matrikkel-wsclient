@@ -49,6 +49,15 @@ public class IntegrationTestProperties {
       return String.format("%s/grunnbok/wsapi/v2/IdentServiceWS", getGrunnbokServerUrl());
    }
 
+   public String getGrunnbokSaksinformasjonServiceUrl() {
+      return String.format("%s/grunnbok/wsapi/v2/SaksinformasjonServiceWS", getGrunnbokServerUrl());
+   }
+
+
+   public String getGrunnbokStoreServiceUrl() {
+      return String.format("%s/grunnbok/wsapi/v2/StoreServiceWS", getGrunnbokServerUrl());
+   }
+
    public String getLandbruksregisterUser() {
       return configuration.getString("landbruksregister_brukernavn");
    }
