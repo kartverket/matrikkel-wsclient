@@ -1,0 +1,75 @@
+[
+  {
+    "avsender": {
+      "adresselinje1": "Postboks 600 Sentrum",
+      "adresselinje2": "",
+      "adresselinje3": "",
+      "navn": "Kartverket",
+      "poststed": "HØNEFOSS",
+      "postnr": "3507"
+    },
+    "mottaker": {
+      "adresse1": "Adresselinje 1",
+      "adresse2": "",
+      "adresse3": "",
+      "postnr": "0000",
+      "poststed": "Ukjent",
+      "navn": "ukjent enhet",
+      "land": null,
+      "orgnr": "910958496",
+      "fnr": null
+    },
+    "id": "9205d6c4-86cf-4b9d-a174-e3a898031594",
+    "tittel": "Test forsendelse med 2 bygninger",
+    "date": 1569928804175,
+    "metadataFraAvleverendeSystem": {
+      "sakssekvensnummer": 0,
+      "saksaar": 0,
+      "journalaar": 0,
+      "journalsekvensnummer": 0,
+      "journalpostnummer": 0,
+      "journalposttype": null,
+      "journalstatus": null,
+      "journaldato": null,
+      "dokumentetsDato": null,
+      "tittel": null,
+      "saksBehandler": null,
+      "ekstraMetadata": []
+    },
+    "metadataForImport": {
+      "sakssekvensnummer": 0,
+      "saksaar": 0,
+      "journalposttype": null,
+      "journalstatus": null,
+      "dokumentetsDato": null,
+      "tittel": null
+    },
+    "status": "Klar for mottak",
+    "niva": "3",
+    "filmetadata": [
+      {
+        "filnavn": "eksempelMed2Bygninger.txt",
+        "mimetype": "text/text",
+        "sha256hash": "0ada66329a7aafee5210132bd0d4a70b0094be650a6832f4cd6cf1cb275e7bee",
+        "dokumentType": null,
+        "size": 15695
+      }
+    ],
+    "svarSendesTil": {
+      "adresse1": "Postboks 600 Sentrum",
+      "adresse2": "",
+      "adresse3": "",
+      "postnr": "3507",
+      "poststed": "HØNEFOSS",
+      "navn": "Kartverket",
+      "land": null,
+      "orgnr": "971040238",
+      "fnr": null
+    },
+    "svarPaForsendelse": null,
+    "forsendelseType": "Byggesøknad",
+    "eksternRef": null,
+    "lenker": [],
+    "downloadUrl": "https://test.svarut.ks.no/tjenester/svarinn/forsendelse/9205d6c4-86cf-4b9d-a174-e3a898031594"
+  }
+]

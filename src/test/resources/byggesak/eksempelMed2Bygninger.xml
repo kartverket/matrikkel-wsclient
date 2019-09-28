@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Byggesak xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://rep.geointegrasjon.no/Matrikkel/foering/v1">
+    <systemId xsi:nil="true" />
+    <tittel>Ny bygning - rammetillatelse</tittel>
+    <saksnummer>
+        <saksaar>2019</saksaar>
+        <sakssekvensnummer>367244</sakssekvensnummer>
+    </saksnummer>
+    <kategori>
+        <kode>137653</kode>
+    </kategori>
+    <tiltakstype xsi:nil="true"/>
+    <vedtak>
+        <beskrivelse>Vedtak om rammetillatelse</beskrivelse>
+        <vedtaksdato>2019-02-13T12:12:12</vedtaksdato>
+        <status>
+            <kode>1</kode>
+            <beskrivelse>Godkjent</beskrivelse>
+        </status>
+        <dispensasjoner xsi:nil="true"/>
+    </vedtak>
+    <ansvarligSoeker>
+        <partstype>
+            <kode>2</kode>
+            <beskrivelse>Kontaktperson</beskrivelse>
+        </partstype>
+        <organisasjonsnummer>04028210001</organisasjonsnummer>
+        <navn>Seamus Cowden</navn>
+        <adresse>
+            <adresselinje1 xsi:nil="true"/>
+            <adresselinje2>ÅSENGATA 8 B</adresselinje2>
+            <adresselinje3>0480 OSLO</adresselinje3>
+            <postnr>0480</postnr>
+            <poststed>OSLO</poststed>
+            <landkode>5001</landkode>
+        </adresse>
+        <mobilnummer>12345678</mobilnummer>
+        <epost>sledge@clutch.com</epost>
+    </ansvarligSoeker>
+    <tiltakshaver>
+        <partstype>
+            <kode>1</kode>
+            <beskrivelse>Tiltakshaver</beskrivelse>
+        </partstype>
+        <foedselsnummer>08118533481</foedselsnummer>
+        <navn>Ela Bosak</navn>
+        <adresse>
+            <adresselinje1 xsi:nil="true"/>
+            <adresselinje2>LINDEBERGLIA 17</adresselinje2>
+            <adresselinje3>1069 OSLO</adresselinje3>
+            <postnr>1069</postnr>
+            <poststed>OSLO</poststed>
+            <landkode>5001</landkode>
+        </adresse>
+        <mobilnummer>87654321</mobilnummer>
+        <epost>ela.bosak@ccihtmain.com</epost>
+    </tiltakshaver>
+    <matrikkelopplysninger>
+        <eiendomsidentifikasjon>
+            <matrikkelnummer>
+                <kommunenummer>0233</kommunenummer>
+                <gaardsnummer>2</gaardsnummer>
+                <bruksnummer>45</bruksnummer>
+                <festenummer xsi:nil="true"/>
+                <seksjonsnummer xsi:nil="true"/>
+            </matrikkelnummer>
+        </eiendomsidentifikasjon>
+        <adresse>
+            <adresse>
+                <adressekode>14580</adressekode>
+                <adressenavn>Tjernslia</adressenavn>
+                <adressenummer>13</adressenummer>
+                <adressebokstav xsi:nil="true"/>
+                <seksjonsnummer xsi:nil="true"/>
+            </adresse>
+        </adresse>
+        <bygning>
+            <bygning>
+                <bygningsnummer xsi:nil="true"/>
+                <naeringsgruppe>
+                    <kode>1</kode>
+                    <beskrivelse>Bolig</beskrivelse>
+                </naeringsgruppe>
+                <bygningstype>
+                    <kode>1</kode>
+                    <beskrivelse>Enebolig</beskrivelse>
+                </bygningstype>
+                <bebygdAreal>70</bebygdAreal>
+                <bruksenheter>
+                    <bruksenhet>
+                        <bruksenhetsnummer>
+                            <etasjeplan>
+                                <kode>1</kode>
+                                <beskrivelse>Hovedetasje</beskrivelse>
+                            </etasjeplan>
+                            <etasjenummer>1</etasjenummer>
+                            <loepenummer>3</loepenummer>
+                        </bruksenhetsnummer>
+                        <bruksenhetstype>
+                            <kode>0</kode>
+                            <beskrivelse>Bolig</beskrivelse>
+                        </bruksenhetstype>
+                        <bruksareal>50</bruksareal>
+                        <kjoekkentilgang>
+                            <kode>1</kode>
+                            <beskrivelse>Kjøkken</beskrivelse>
+                        </kjoekkentilgang>
+                        <antallRom>3</antallRom>
+                        <antallBad>1</antallBad>
+                        <antallWC>1</antallWC>
+                        <adresse>
+                            <adressekode>14580</adressekode>
+                            <adressenavn>Tjernslia</adressenavn>
+                            <adressenummer>13</adressenummer>
+                            <adressebokstav xsi:nil="true"/>
+                            <seksjonsnummer xsi:nil="true"/>
+                        </adresse>
+                        <matrikkelnummer>
+                            <kommunenummer>0233</kommunenummer>
+                            <gaardsnummer>2</gaardsnummer>
+                            <bruksnummer>45</bruksnummer>
+                            <festenummer xsi:nil="true"/>
+                            <seksjonsnummer xsi:nil="true"/>
+                        </matrikkelnummer>
+                        <endring>Ny</endring>
+                    </bruksenhet>
+                    <bruksenhet>
+                        <bruksenhetsnummer>
+                            <etasjeplan>
+                                <kode>2</kode>
+                                <beskrivelse>Kjelleretasje</beskrivelse>
+                            </etasjeplan>
+                            <etasjenummer>2</etasjenummer>
+                            <loepenummer>3</loepenummer>
+                        </bruksenhetsnummer>
+                        <bruksenhetstype>
+                            <kode>0</kode>
+                            <beskrivelse>Bolig</beskrivelse>
+                        </bruksenhetstype>
+                        <bruksareal>50</bruksareal>
+                        <kjoekkentilgang>
+                            <kode>2</kode>
+                            <beskrivelse>Ikke Kjøkken</beskrivelse>
+                        </kjoekkentilgang>
+                        <antallRom>2</antallRom>
+                        <antallBad xsi:nil="true"/>
+                        <antallWC>1</antallWC>
+                        <adresse>
+                            <adressekode>14580</adressekode>
+                            <adressenavn>Tjernslia</adressenavn>
+                            <adressenummer>13</adressenummer>
+                            <adressebokstav xsi:nil="true"/>
+                            <seksjonsnummer xsi:nil="true"/>
+                        </adresse>
+                        <matrikkelnummer>
+                            <kommunenummer>0233</kommunenummer>
+                            <gaardsnummer>2</gaardsnummer>
+                            <bruksnummer>45</bruksnummer>
+                            <festenummer xsi:nil="true"/>
+                            <seksjonsnummer xsi:nil="true"/>
+                        </matrikkelnummer>
+                        <endring>Ny</endring>
+                    </bruksenhet>
+                </bruksenheter>
+                <etasjer>
+                    <etasje>
+                        <etasjenummer>1</etasjenummer>
+                        <etasjeplan>
+                            <kode>1</kode>
+                            <beskrivelse>Hovedetasje</beskrivelse>
+                        </etasjeplan>
+                        <antallBoenheter>2</antallBoenheter>
+                        <bruksarealTilAnnet xsi:nil="true"/>
+                        <bruksarealTilBolig>50</bruksarealTilBolig>
+                        <bruksarealTotalt xsi:nil="true"/>
+                        <bruttoarealTilBolig xsi:nil="true"/>
+                        <bruttoarealTotalt xsi:nil="true"/>
+                        <bruttoarealTilAnnet xsi:nil="true"/>
+                        <endring>Ny</endring>
+                    </etasje>
+                    <etasje>
+                        <etasjenummer>2</etasjenummer>
+                        <etasjeplan>
+                            <kode>2</kode>
+                            <beskrivelse>Kjelleretasje</beskrivelse>
+                        </etasjeplan>
+                        <antallBoenheter>1</antallBoenheter>
+                        <bruksarealTilAnnet xsi:nil="true"/>
+                        <bruksarealTilBolig>50</bruksarealTilBolig>
+                        <bruksarealTotalt xsi:nil="true"/>
+                        <bruttoarealTilBolig xsi:nil="true"/>
+                        <bruttoarealTotalt xsi:nil="true"/>
+                        <bruttoarealTilAnnet xsi:nil="true"/>
+                        <endring>Ny</endring>
+                    </etasje>
+                </etasjer>
+                <avlop>
+                    <kode>3</kode>
+                    <beskrivelse>Ingen Kloakk</beskrivelse>
+                </avlop>
+                <energiforsyning>
+                    <varmefordeling>
+                        <varmefordeling>
+                            <kode>0</kode>
+                            <beskrivelse>Elektrisk</beskrivelse>
+                        </varmefordeling>
+                        <varmefordeling>
+                            <kode>2</kode>
+                            <beskrivelse>Annen Oppvarming</beskrivelse>
+                        </varmefordeling>
+                    </varmefordeling>
+                    <energiforsyning>
+                        <energiforsyningType>
+                            <kode>0</kode>
+                            <beskrivelse>Elektrisitet</beskrivelse>
+                        </energiforsyningType>
+                        <energiforsyningType>
+                            <kode>3</kode>
+                            <beskrivelse>Solenergi</beskrivelse>
+                        </energiforsyningType>
+                        <energiforsyningType>
+                            <kode>5</kode>
+                            <beskrivelse>Gass</beskrivelse>
+                        </energiforsyningType>
+                        <energiforsyningType>
+                            <kode>4</kode>
+                            <beskrivelse>Varmepumpe</beskrivelse>
+                        </energiforsyningType>
+                    </energiforsyning>
+                    <relevant>true</relevant>
+                </energiforsyning>
+                <vannforsyning>
+                    <kode>3</kode>
+                    <beskrivelse>Privat innlagt</beskrivelse>
+                </vannforsyning>
+                <harHeis>false</harHeis>
+                <endring>Ny</endring>
+            </bygning>
+			<bygning>
+                <bygningsnummer xsi:nil="true"/>
+                <naeringsgruppe>
+                    <kode> </kode>
+                    <beskrivelse>IkkeOppgitt</beskrivelse>
+                </naeringsgruppe>
+                <bygningstype>
+                    <kode>439</kode>
+                    <beskrivelse>Annengarasjehangarbygning</beskrivelse>
+                </bygningstype>
+                <bebygdAreal>50</bebygdAreal>
+                <bruksenheter>
+                    <bruksenhet>
+                        <bruksenhetsnummer>
+                            <etasjeplan>
+                                <kode></kode>
+                                <beskrivelse>Tom</beskrivelse>
+                            </etasjeplan>
+                            <etasjenummer>1</etasjenummer>
+                            <loepenummer>3</loepenummer>
+                        </bruksenhetsnummer>
+                        <bruksenhetstype>
+                            <kode>A</kode>
+                            <beskrivelse>annet_enn_bolig</beskrivelse>
+                        </bruksenhetstype>
+                        <bruksareal>50</bruksareal>
+                        <kjoekkentilgang>
+                            <kode>2</kode>
+                            <beskrivelse>ikkeKjokken</beskrivelse>
+                        </kjoekkentilgang>
+                        <antallRom>1</antallRom>
+                        <antallBad>0</antallBad>
+                        <antallWC>0</antallWC>
+                        <adresse>
+                            <adressekode>14580</adressekode>
+                            <adressenavn>Tjernslia</adressenavn>
+                            <adressenummer>13</adressenummer>
+                            <adressebokstav xsi:nil="true"/>
+                            <seksjonsnummer xsi:nil="true"/>
+                        </adresse>
+                        <matrikkelnummer>
+                            <kommunenummer>0233</kommunenummer>
+                            <gaardsnummer>2</gaardsnummer>
+                            <bruksnummer>45</bruksnummer>
+                            <festenummer xsi:nil="true"/>
+                            <seksjonsnummer xsi:nil="true"/>
+                        </matrikkelnummer>
+                        <endring>Ny</endring>
+                    </bruksenhet>
+                </bruksenheter>
+                <etasjer>
+                    <etasje>
+                        <etasjenummer>1</etasjenummer>
+                        <etasjeplan>
+                            <kode></kode>
+                            <beskrivelse>Tom</beskrivelse>
+                        </etasjeplan>
+                        <antallBoenheter>0</antallBoenheter>
+                        <bruksarealTilAnnet xsi:nil="true"/>
+                        <bruksarealTilBolig>50</bruksarealTilBolig>
+                        <bruksarealTotalt xsi:nil="true"/>
+                        <bruttoarealTilBolig xsi:nil="true"/>
+                        <bruttoarealTotalt xsi:nil="true"/>
+                        <bruttoarealTilAnnet xsi:nil="true"/>
+                        <endring>Ny</endring>
+                    </etasje>
+                </etasjer>
+                <avlop>
+                    <kode>3</kode>
+                    <beskrivelse>Ingen Kloakk</beskrivelse>
+                </avlop>
+                <energiforsyning>
+                    <varmefordeling>
+                        <varmefordeling>
+                            <kode>E</kode>
+                            <beskrivelse>Elektrisk</beskrivelse>
+                        </varmefordeling>
+                    </varmefordeling>
+                    <energiforsyning>
+                        <energiforsyningType>
+                            <kode>E</kode>
+                            <beskrivelse>Elektrisitet</beskrivelse>
+                        </energiforsyningType>
+                    </energiforsyning>
+                    <relevant>true</relevant>
+                </energiforsyning>
+                <vannforsyning>
+                    <kode>4</kode>
+                    <beskrivelse>AnnenPrivatIkkeInnlagt</beskrivelse>
+                </vannforsyning>
+                <harHeis>false</harHeis>
+                <endring>Ny</endring>
+            </bygning>
+        </bygning>
+        <oppdatertDato>2019-03-11T12:00:05</oppdatertDato>
+    </matrikkelopplysninger>
+    <adresse>Tjernslia 13</adresse>
+    <referanseAndreSaker xsi:nil="true"/>
+    <referanseKlagesaker xsi:nil="true"/>
+    <registrertDato>2019-01-02T09:11:56</registrertDato>
+    <saksbehandler xsi:nil="true"/>
+    <posisjon xsi:nil="true"/>
+</Byggesak>
