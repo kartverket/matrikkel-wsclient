@@ -73,20 +73,14 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="findRegisterenhetsrettIdsForIdents">
-    <part element="tns:findRegisterenhetsrettIdsForIdents" name="parameters"/>
-  </message>
-  <message name="findRegisterenhetsrettIdsForIdentsResponse">
-    <part element="tns:findRegisterenhetsrettIdsForIdentsResponse" name="parameters"/>
-  </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
-  </message>
   <message name="findRettsstiftelseIdsForIdents">
     <part element="tns:findRettsstiftelseIdsForIdents" name="parameters"/>
   </message>
   <message name="findRettsstiftelseIdsForIdentsResponse">
     <part element="tns:findRettsstiftelseIdsForIdentsResponse" name="parameters"/>
+  </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
   </message>
   <message name="findMatrikkelenhetIdsForIdents">
     <part element="tns:findMatrikkelenhetIdsForIdents" name="parameters"/>
@@ -130,6 +124,12 @@
   <message name="findRegisterenhetIdsForIdentsResponse">
     <part element="tns:findRegisterenhetIdsForIdentsResponse" name="parameters"/>
   </message>
+  <message name="findRegisterenhetsrettIdsForIdents">
+    <part element="tns:findRegisterenhetsrettIdsForIdents" name="parameters"/>
+  </message>
+  <message name="findRegisterenhetsrettIdsForIdentsResponse">
+    <part element="tns:findRegisterenhetsrettIdsForIdentsResponse" name="parameters"/>
+  </message>
   <message name="findIdentsForIds">
     <part element="tns:findIdentsForIds" name="parameters"/>
   </message>
@@ -137,11 +137,6 @@
     <part element="tns:findIdentsForIdsResponse" name="parameters"/>
   </message>
   <portType name="IdentService">
-    <operation name="findRegisterenhetsrettIdsForIdents">
-      <input message="tns:findRegisterenhetsrettIdsForIdents" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRegisterenhetsrettIdsForIdentsRequest"/>
-      <output message="tns:findRegisterenhetsrettIdsForIdentsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRegisterenhetsrettIdsForIdentsResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRegisterenhetsrettIdsForIdents/Fault/ServiceException"/>
-    </operation>
     <operation name="findRettsstiftelseIdsForIdents">
       <input message="tns:findRettsstiftelseIdsForIdents" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRettsstiftelseIdsForIdentsRequest"/>
       <output message="tns:findRettsstiftelseIdsForIdentsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRettsstiftelseIdsForIdentsResponse"/>
@@ -182,6 +177,11 @@
       <output message="tns:findRegisterenhetIdsForIdentsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRegisterenhetIdsForIdentsResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRegisterenhetIdsForIdents/Fault/ServiceException"/>
     </operation>
+    <operation name="findRegisterenhetsrettIdsForIdents">
+      <input message="tns:findRegisterenhetsrettIdsForIdents" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRegisterenhetsrettIdsForIdentsRequest"/>
+      <output message="tns:findRegisterenhetsrettIdsForIdentsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRegisterenhetsrettIdsForIdentsResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findRegisterenhetsrettIdsForIdents/Fault/ServiceException"/>
+    </operation>
     <operation name="findIdentsForIds">
       <input message="tns:findIdentsForIds" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findIdentsForIdsRequest"/>
       <output message="tns:findIdentsForIdsResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/ident/IdentService/findIdentsForIdsResponse"/>
@@ -190,18 +190,6 @@
   </portType>
   <binding name="IdentServicePortBinding" type="tns:IdentService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="findRegisterenhetsrettIdsForIdents">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-      <fault name="ServiceException">
-        <soap:fault name="ServiceException" use="literal"/>
-      </fault>
-    </operation>
     <operation name="findRettsstiftelseIdsForIdents">
       <soap:operation soapAction=""/>
       <input>
@@ -287,6 +275,18 @@
       </fault>
     </operation>
     <operation name="findRegisterenhetIdsForIdents">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="findRegisterenhetsrettIdsForIdents">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

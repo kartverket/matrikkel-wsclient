@@ -70,36 +70,36 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="findOverfoeringerForOverfoerende">
-    <part element="tns:findOverfoeringerForOverfoerende" name="parameters"/>
-  </message>
-  <message name="findOverfoeringerForOverfoerendeResponse">
-    <part element="tns:findOverfoeringerForOverfoerendeResponse" name="parameters"/>
-  </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
-  </message>
   <message name="findOverfoeringerForOverfoerte">
     <part element="tns:findOverfoeringerForOverfoerte" name="parameters"/>
   </message>
   <message name="findOverfoeringerForOverfoerteResponse">
     <part element="tns:findOverfoeringerForOverfoerteResponse" name="parameters"/>
   </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
+  </message>
+  <message name="findOverfoeringerForOverfoerende">
+    <part element="tns:findOverfoeringerForOverfoerende" name="parameters"/>
+  </message>
+  <message name="findOverfoeringerForOverfoerendeResponse">
+    <part element="tns:findOverfoeringerForOverfoerendeResponse" name="parameters"/>
+  </message>
   <portType name="OverfoeringService">
-    <operation name="findOverfoeringerForOverfoerende">
-      <input message="tns:findOverfoeringerForOverfoerende" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering/OverfoeringService/findOverfoeringerForOverfoerendeRequest"/>
-      <output message="tns:findOverfoeringerForOverfoerendeResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering/OverfoeringService/findOverfoeringerForOverfoerendeResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering/OverfoeringService/findOverfoeringerForOverfoerende/Fault/ServiceException"/>
-    </operation>
     <operation name="findOverfoeringerForOverfoerte">
       <input message="tns:findOverfoeringerForOverfoerte" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering/OverfoeringService/findOverfoeringerForOverfoerteRequest"/>
       <output message="tns:findOverfoeringerForOverfoerteResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering/OverfoeringService/findOverfoeringerForOverfoerteResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering/OverfoeringService/findOverfoeringerForOverfoerte/Fault/ServiceException"/>
     </operation>
+    <operation name="findOverfoeringerForOverfoerende">
+      <input message="tns:findOverfoeringerForOverfoerende" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering/OverfoeringService/findOverfoeringerForOverfoerendeRequest"/>
+      <output message="tns:findOverfoeringerForOverfoerendeResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering/OverfoeringService/findOverfoeringerForOverfoerendeResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering/OverfoeringService/findOverfoeringerForOverfoerende/Fault/ServiceException"/>
+    </operation>
   </portType>
   <binding name="OverfoeringServicePortBinding" type="tns:OverfoeringService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="findOverfoeringerForOverfoerende">
+    <operation name="findOverfoeringerForOverfoerte">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -111,7 +111,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="findOverfoeringerForOverfoerte">
+    <operation name="findOverfoeringerForOverfoerende">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg" version="1.0">
-
-  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" schemaLocation="endringslogg.xsd"/>
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/endringslogg" version="1.0">
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" schemaLocation="endringslogg.xsd"/>
 
   <xs:element name="findEndringer" type="tns:findEndringer"/>
 
@@ -12,32 +12,32 @@
 
   <xs:element name="findSisteEndringIdResponse" type="tns:findSisteEndringIdResponse"/>
 
-  <xs:complexType name="findEndringer">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="id" type="ns1:EndringId"/>
-      <xs:element minOccurs="0" name="domainklasse" type="ns1:Domainklasse"/>
-      <xs:element minOccurs="0" name="filter" type="xs:string"/>
-      <xs:element minOccurs="0" name="returnerBobler" type="ns1:ReturnerBobler"/>
-      <xs:element name="maksAntall" type="xs:int"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findEndringerResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns1:Endringer"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findSisteEndringId">
     <xs:sequence>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="findSisteEndringIdResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns1:EndringId"/>
+      <xs:element minOccurs="0" name="return" type="ns2:EndringId"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findEndringer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="ns2:EndringId"/>
+      <xs:element minOccurs="0" name="domainklasse" type="ns2:Domainklasse"/>
+      <xs:element minOccurs="0" name="filter" type="xs:string"/>
+      <xs:element minOccurs="0" name="returnerBobler" type="ns2:ReturnerBobler"/>
+      <xs:element name="maksAntall" type="xs:int"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findEndringerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns2:Endringer"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

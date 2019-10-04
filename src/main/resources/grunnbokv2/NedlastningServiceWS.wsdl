@@ -70,36 +70,36 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
-  <message name="findObjekterEtterId">
-    <part element="tns:findObjekterEtterId" name="parameters"/>
-  </message>
-  <message name="findObjekterEtterIdResponse">
-    <part element="tns:findObjekterEtterIdResponse" name="parameters"/>
-  </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
-  </message>
   <message name="findIdsEtterId">
     <part element="tns:findIdsEtterId" name="parameters"/>
   </message>
   <message name="findIdsEtterIdResponse">
     <part element="tns:findIdsEtterIdResponse" name="parameters"/>
   </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
+  </message>
+  <message name="findObjekterEtterId">
+    <part element="tns:findObjekterEtterId" name="parameters"/>
+  </message>
+  <message name="findObjekterEtterIdResponse">
+    <part element="tns:findObjekterEtterIdResponse" name="parameters"/>
+  </message>
   <portType name="NedlastningService">
-    <operation name="findObjekterEtterId">
-      <input message="tns:findObjekterEtterId" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterIdRequest"/>
-      <output message="tns:findObjekterEtterIdResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterIdResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterId/Fault/ServiceException"/>
-    </operation>
     <operation name="findIdsEtterId">
       <input message="tns:findIdsEtterId" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findIdsEtterIdRequest"/>
       <output message="tns:findIdsEtterIdResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findIdsEtterIdResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findIdsEtterId/Fault/ServiceException"/>
     </operation>
+    <operation name="findObjekterEtterId">
+      <input message="tns:findObjekterEtterId" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterIdRequest"/>
+      <output message="tns:findObjekterEtterIdResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterIdResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/nedlastning/NedlastningService/findObjekterEtterId/Fault/ServiceException"/>
+    </operation>
   </portType>
   <binding name="NedlastningServicePortBinding" type="tns:NedlastningService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="findObjekterEtterId">
+    <operation name="findIdsEtterId">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -111,7 +111,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="findIdsEtterId">
+    <operation name="findObjekterEtterId">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

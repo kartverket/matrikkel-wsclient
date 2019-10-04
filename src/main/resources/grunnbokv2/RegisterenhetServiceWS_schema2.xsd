@@ -67,19 +67,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findFestegrunnerFor">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="registerenhetIds" type="ns3:RegisterenhetIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findFestegrunnerForResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns4:RegisterenhetIdTilFestegrunnIdsMap"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findBorettslagsandelerFor">
     <xs:sequence>
       <xs:element minOccurs="0" name="borettslagIds" type="ns1:BorettslagIdList"/>
@@ -90,6 +77,19 @@
   <xs:complexType name="findBorettslagsandelerForResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns4:BorettslagIdTilBorettslagsandelIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findFestegrunnerFor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetIds" type="ns3:RegisterenhetIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findFestegrunnerForResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns4:RegisterenhetIdTilFestegrunnIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

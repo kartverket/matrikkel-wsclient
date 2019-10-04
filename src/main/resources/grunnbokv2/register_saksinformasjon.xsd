@@ -87,8 +87,9 @@
             <xs:element name="adresselinje2" type="xs:string" nillable="true"/>
             <xs:element name="adresselinje3" type="xs:string" nillable="true"/>
             <xs:element name="epostadresse" type="xs:string" nillable="true"/>
-            <xs:element name="poststedId" type="registerns:PostnummeromraadeId" nillable="true"/>
-            <xs:element name="landkodeId" type="register_koderns:LandkodeKodeId" nillable="true"/>
+            <xs:element name="postnummer" type="xs:string" nillable="true"/>
+            <xs:element name="poststednavn" type="xs:string" nillable="true"/>
+            <xs:element name="land" type="xs:string" nillable="true"/>
             <xs:element name="referanse" type="xs:string" nillable="true"/>
         </xs:sequence>
     </xs:complexType>

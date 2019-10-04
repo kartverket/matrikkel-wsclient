@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" xmlns:ns6="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/overdragelse" xmlns:ns5="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" xmlns:ns8="http://kartverket.no/grunnbok/wsapi/v2/domain/register" xmlns:ns7="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" xmlns:ns9="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument" xmlns:ns11="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse" xmlns:ns10="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/registerenhetsendring" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" xmlns:ns6="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" xmlns:ns5="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/overdragelse" xmlns:ns8="http://kartverket.no/grunnbok/wsapi/v2/domain/register" xmlns:ns7="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" xmlns:ns9="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument" xmlns:ns11="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse" xmlns:ns10="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/registerenhetsendring" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/rettsstiftelse" version="1.0">
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" schemaLocation="register_registerenhet.xsd"/>
 
@@ -6,11 +6,11 @@
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" schemaLocation="servicetyper.xsd"/>
 
-  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" schemaLocation="register_rettsstiftelse.xsd"/>
-
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" schemaLocation="register_koder.xsd"/>
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/overdragelse" schemaLocation="register_rettsstiftelse_overdragelse.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" schemaLocation="register_rettsstiftelse.xsd"/>
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" schemaLocation="register_person.xsd"/>
 
@@ -223,22 +223,9 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findHeftelserIAnnenRett">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="rettsstiftelseIds" type="ns4:RettsstiftelseIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findHeftelserIAnnenRettResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdTilHeftelseIAnnenRettIdsMap"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findOverdragelserForPeriode">
     <xs:sequence>
-      <xs:element minOccurs="0" name="rettstypeKodeIds" type="ns5:RettstypeKodeIdList"/>
+      <xs:element minOccurs="0" name="rettstypeKodeIds" type="ns4:RettstypeKodeIdList"/>
       <xs:element minOccurs="0" name="fraOgMedDato" type="ns2:Timestamp"/>
       <xs:element minOccurs="0" name="tilOgMedDato" type="ns2:Timestamp"/>
       <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
@@ -247,7 +234,20 @@
 
   <xs:complexType name="findOverdragelserForPeriodeResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns6:OverdragelseAvRegisterenhetsrettIdList"/>
+      <xs:element minOccurs="0" name="return" type="ns5:OverdragelseAvRegisterenhetsrettIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findHeftelserIAnnenRett">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rettsstiftelseIds" type="ns6:RettsstiftelseIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findHeftelserIAnnenRettResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdTilHeftelseIAnnenRettIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -261,20 +261,7 @@
 
   <xs:complexType name="findOverdragelserAvRegisterenhetsrettForPersonResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns6:OverdragelseAvRegisterenhetsrettIdList"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findRettsendringer">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="rettsstiftelseIds" type="ns4:RettsstiftelseIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findRettsendringerResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdTilRettsendringIdsMap"/>
+      <xs:element minOccurs="0" name="return" type="ns5:OverdragelseAvRegisterenhetsrettIdList"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -291,6 +278,19 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="findRettsendringer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rettsstiftelseIds" type="ns6:RettsstiftelseIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsendringerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdTilRettsendringIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="findBorettslagsandelsendringerFra">
     <xs:sequence>
       <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
@@ -304,20 +304,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findRettigheterForPerson">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="personId" type="ns7:PersonId"/>
-      <xs:element minOccurs="0" name="kommuneIds" type="ns8:KommuneIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findRettigheterForPersonResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns4:RettsstiftelseIdList"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findRettsstiftelserMedHistoriskRettighetshaverEllerSaksoeker">
     <xs:sequence>
       <xs:element minOccurs="0" name="personIds" type="ns7:PersonIdList"/>
@@ -328,6 +314,20 @@
   <xs:complexType name="findRettsstiftelserMedHistoriskRettighetshaverEllerSaksoekerResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns3:PersonIdTilRettsstiftelseIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettigheterForPerson">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="personId" type="ns7:PersonId"/>
+      <xs:element minOccurs="0" name="kommuneIds" type="ns8:KommuneIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettigheterForPersonResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns6:RettsstiftelseIdList"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -384,6 +384,19 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="findAnmerkninger">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rettsstiftelseIds" type="ns6:RettsstiftelseIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAnmerkningerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdTilAnmerkningIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="findOverdragelserAvRegisterenhetsrett">
     <xs:sequence>
       <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
@@ -395,19 +408,6 @@
   <xs:complexType name="findOverdragelserAvRegisterenhetsrettResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns3:OverdragelseAvRegisterenhetsrettIdListTransfer"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findAnmerkninger">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="rettsstiftelseIds" type="ns4:RettsstiftelseIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findAnmerkningerResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdTilAnmerkningIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -446,13 +446,13 @@
 
   <xs:complexType name="findRettsstiftelserForDokumentResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns4:RettsstiftelseIdList"/>
+      <xs:element minOccurs="0" name="return" type="ns6:RettsstiftelseIdList"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="findRettsstiftelsestypeKoderForRettstypeKoder">
     <xs:sequence>
-      <xs:element minOccurs="0" name="rettstypeIds" type="ns5:RettstypeKodeIdList"/>
+      <xs:element minOccurs="0" name="rettstypeIds" type="ns4:RettstypeKodeIdList"/>
       <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
@@ -489,6 +489,19 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="findRettigheterForRegisterenheter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettigheterForRegisterenheterResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilHeftelseIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="findSeksjonssameieendringerAlleRoller">
     <xs:sequence>
       <xs:element minOccurs="0" name="seksjonssameieandelIds" type="ns1:SeksjonssameieandelIdList"/>
@@ -515,16 +528,16 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findRettigheterForRegisterenheter">
+  <xs:complexType name="findHeftelserIRegisterenhetsretter">
     <xs:sequence>
-      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
+      <xs:element minOccurs="0" name="registerenhetsrettIds" type="ns1:RegisterenhetsrettIdList"/>
       <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findRettigheterForRegisterenheterResponse">
+  <xs:complexType name="findHeftelserIRegisterenhetsretterResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilHeftelseIdsMap"/>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettIdTilHeftelseIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -541,16 +554,16 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findHeftelserIRegisterenhetsretter">
+  <xs:complexType name="findMatrikkelenhetsendringerTil">
     <xs:sequence>
-      <xs:element minOccurs="0" name="registerenhetsrettIds" type="ns1:RegisterenhetsrettIdList"/>
+      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
       <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findHeftelserIRegisterenhetsretterResponse">
+  <xs:complexType name="findMatrikkelenhetsendringerTilResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettIdTilHeftelseIdsMap"/>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilRegisterenhetsendringIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -565,19 +578,6 @@
   <xs:complexType name="findTidligereOverdragelserAvRegisterenhetsrettResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns3:OverdragelseAvRegisterenhetsrettIdListTransfer"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findMatrikkelenhetsendringerTil">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findMatrikkelenhetsendringerTilResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilRegisterenhetsendringIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -647,19 +647,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findRettsstiftelserMedAktivSaksoeker">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="personIds" type="ns7:PersonIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findRettsstiftelserMedAktivSaksoekerResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:PersonIdTilRettsstiftelseIdsMap"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findRettsstiftelserForDokumentNummerOgAar">
     <xs:sequence>
       <xs:element name="dokumentNummer" type="xs:long"/>
@@ -672,6 +659,19 @@
   <xs:complexType name="findRettsstiftelserForDokumentNummerOgAarResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdListTransfer"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstiftelserMedAktivSaksoeker">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="personIds" type="ns7:PersonIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findRettsstiftelserMedAktivSaksoekerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:PersonIdTilRettsstiftelseIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -795,16 +795,16 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findSeksjonssameieendringerForNye">
+  <xs:complexType name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
     <xs:sequence>
-      <xs:element minOccurs="0" name="seksjonssameieandelIds" type="ns1:SeksjonssameieandelIdList"/>
+      <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
       <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findSeksjonssameieendringerForNyeResponse">
+  <xs:complexType name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:SeksjonssameieandelIdTilRegisterenhetsendringIdsMap"/>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -821,16 +821,16 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhet">
+  <xs:complexType name="findSeksjonssameieendringerForNye">
     <xs:sequence>
-      <xs:element minOccurs="0" name="registerenhetId" type="ns1:RegisterenhetId"/>
+      <xs:element minOccurs="0" name="seksjonssameieandelIds" type="ns1:SeksjonssameieandelIdList"/>
       <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findOverdragelserMedAktiveAndelerRealkobletTilRegisterenhetResponse">
+  <xs:complexType name="findSeksjonssameieendringerForNyeResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap"/>
+      <xs:element minOccurs="0" name="return" type="ns3:SeksjonssameieandelIdTilRegisterenhetsendringIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

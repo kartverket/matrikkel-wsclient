@@ -71,7 +71,8 @@ public class DefaultInnsendingServiceWSIT {
          }
       }).isInstanceOf(WebServiceException.class)
             .hasCauseInstanceOf(SAXParseException.class)
-            .hasMessageContaining("Invalid content was found starting with element 'rettsstiftelser'");
+            .hasMessageContaining("Invalid content was found starting with element ")
+            .hasMessageContaining("rettsstiftelser");
    }
 
    public void hentStatusPakkerUtGrunnboksutskrift() {

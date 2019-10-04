@@ -70,14 +70,50 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
+  <message name="findPersoner">
+    <part element="tns:findPersoner" name="parameters"/>
+  </message>
+  <message name="findPersonerResponse">
+    <part element="tns:findPersonerResponse" name="parameters"/>
+  </message>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
+  </message>
+  <message name="slettAnnetSaerskilteForetak">
+    <part element="tns:slettAnnetSaerskilteForetak" name="parameters"/>
+  </message>
+  <message name="slettAnnetSaerskilteForetakResponse">
+    <part element="tns:slettAnnetSaerskilteForetakResponse" name="parameters"/>
+  </message>
+  <message name="oppdaterSaerskilteForetak">
+    <part element="tns:oppdaterSaerskilteForetak" name="parameters"/>
+  </message>
+  <message name="oppdaterSaerskilteForetakResponse">
+    <part element="tns:oppdaterSaerskilteForetakResponse" name="parameters"/>
+  </message>
   <message name="lagNyttPersonloepenummer">
     <part element="tns:lagNyttPersonloepenummer" name="parameters"/>
   </message>
   <message name="lagNyttPersonloepenummerResponse">
     <part element="tns:lagNyttPersonloepenummerResponse" name="parameters"/>
   </message>
-  <message name="ServiceException">
-    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
+  <message name="oppdaterAnnetSaerskilteForetak">
+    <part element="tns:oppdaterAnnetSaerskilteForetak" name="parameters"/>
+  </message>
+  <message name="oppdaterAnnetSaerskilteForetakResponse">
+    <part element="tns:oppdaterAnnetSaerskilteForetakResponse" name="parameters"/>
+  </message>
+  <message name="slettSaerskilteForetak">
+    <part element="tns:slettSaerskilteForetak" name="parameters"/>
+  </message>
+  <message name="slettSaerskilteForetakResponse">
+    <part element="tns:slettSaerskilteForetakResponse" name="parameters"/>
+  </message>
+  <message name="hentAnnetSaerskilteForetak">
+    <part element="tns:hentAnnetSaerskilteForetak" name="parameters"/>
+  </message>
+  <message name="hentAnnetSaerskilteForetakResponse">
+    <part element="tns:hentAnnetSaerskilteForetakResponse" name="parameters"/>
   </message>
   <message name="opprettLoepenummerperson">
     <part element="tns:opprettLoepenummerperson" name="parameters"/>
@@ -85,32 +121,134 @@
   <message name="opprettLoepenummerpersonResponse">
     <part element="tns:opprettLoepenummerpersonResponse" name="parameters"/>
   </message>
-  <message name="findPersoner">
-    <part element="tns:findPersoner" name="parameters"/>
+  <message name="hentSaerskilteForetak">
+    <part element="tns:hentSaerskilteForetak" name="parameters"/>
   </message>
-  <message name="findPersonerResponse">
-    <part element="tns:findPersonerResponse" name="parameters"/>
+  <message name="hentSaerskilteForetakResponse">
+    <part element="tns:hentSaerskilteForetakResponse" name="parameters"/>
   </message>
   <portType name="PersonService">
+    <operation name="findPersoner">
+      <input message="tns:findPersoner" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersonerRequest"/>
+      <output message="tns:findPersonerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersonerResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersoner/Fault/ServiceException"/>
+    </operation>
+    <operation name="slettAnnetSaerskilteForetak">
+      <input message="tns:slettAnnetSaerskilteForetak" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/slettAnnetSaerskilteForetakRequest"/>
+      <output message="tns:slettAnnetSaerskilteForetakResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/slettAnnetSaerskilteForetakResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/slettAnnetSaerskilteForetak/Fault/ServiceException"/>
+    </operation>
+    <operation name="oppdaterSaerskilteForetak">
+      <input message="tns:oppdaterSaerskilteForetak" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/oppdaterSaerskilteForetakRequest"/>
+      <output message="tns:oppdaterSaerskilteForetakResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/oppdaterSaerskilteForetakResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/oppdaterSaerskilteForetak/Fault/ServiceException"/>
+    </operation>
     <operation name="lagNyttPersonloepenummer">
       <input message="tns:lagNyttPersonloepenummer" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/lagNyttPersonloepenummerRequest"/>
       <output message="tns:lagNyttPersonloepenummerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/lagNyttPersonloepenummerResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/lagNyttPersonloepenummer/Fault/ServiceException"/>
+    </operation>
+    <operation name="oppdaterAnnetSaerskilteForetak">
+      <input message="tns:oppdaterAnnetSaerskilteForetak" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/oppdaterAnnetSaerskilteForetakRequest"/>
+      <output message="tns:oppdaterAnnetSaerskilteForetakResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/oppdaterAnnetSaerskilteForetakResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/oppdaterAnnetSaerskilteForetak/Fault/ServiceException"/>
+    </operation>
+    <operation name="slettSaerskilteForetak">
+      <input message="tns:slettSaerskilteForetak" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/slettSaerskilteForetakRequest"/>
+      <output message="tns:slettSaerskilteForetakResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/slettSaerskilteForetakResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/slettSaerskilteForetak/Fault/ServiceException"/>
+    </operation>
+    <operation name="hentAnnetSaerskilteForetak">
+      <input message="tns:hentAnnetSaerskilteForetak" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/hentAnnetSaerskilteForetakRequest"/>
+      <output message="tns:hentAnnetSaerskilteForetakResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/hentAnnetSaerskilteForetakResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/hentAnnetSaerskilteForetak/Fault/ServiceException"/>
     </operation>
     <operation name="opprettLoepenummerperson">
       <input message="tns:opprettLoepenummerperson" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/opprettLoepenummerpersonRequest"/>
       <output message="tns:opprettLoepenummerpersonResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/opprettLoepenummerpersonResponse"/>
       <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/opprettLoepenummerperson/Fault/ServiceException"/>
     </operation>
-    <operation name="findPersoner">
-      <input message="tns:findPersoner" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersonerRequest"/>
-      <output message="tns:findPersonerResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersonerResponse"/>
-      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/findPersoner/Fault/ServiceException"/>
+    <operation name="hentSaerskilteForetak">
+      <input message="tns:hentSaerskilteForetak" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/hentSaerskilteForetakRequest"/>
+      <output message="tns:hentSaerskilteForetakResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/hentSaerskilteForetakResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/person/PersonService/hentSaerskilteForetak/Fault/ServiceException"/>
     </operation>
   </portType>
   <binding name="PersonServicePortBinding" type="tns:PersonService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="findPersoner">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="slettAnnetSaerskilteForetak">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="oppdaterSaerskilteForetak">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
     <operation name="lagNyttPersonloepenummer">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="oppdaterAnnetSaerskilteForetak">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="slettSaerskilteForetak">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="hentAnnetSaerskilteForetak">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -134,7 +272,7 @@
         <soap:fault name="ServiceException" use="literal"/>
       </fault>
     </operation>
-    <operation name="findPersoner">
+    <operation name="hentSaerskilteForetak">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/person" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/person" version="1.0">
-
-  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/person" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/person" version="1.0">
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" schemaLocation="register_person.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" schemaLocation="register_koder.xsd"/>
 
@@ -10,17 +10,64 @@
 
   <xs:element name="findPersonerResponse" type="tns:findPersonerResponse"/>
 
+  <xs:element name="hentAnnetSaerskilteForetak" type="tns:hentAnnetSaerskilteForetak"/>
+
+  <xs:element name="hentAnnetSaerskilteForetakResponse" type="tns:hentAnnetSaerskilteForetakResponse"/>
+
+  <xs:element name="hentSaerskilteForetak" type="tns:hentSaerskilteForetak"/>
+
+  <xs:element name="hentSaerskilteForetakResponse" type="tns:hentSaerskilteForetakResponse"/>
+
   <xs:element name="lagNyttPersonloepenummer" type="tns:lagNyttPersonloepenummer"/>
 
   <xs:element name="lagNyttPersonloepenummerResponse" type="tns:lagNyttPersonloepenummerResponse"/>
+
+  <xs:element name="oppdaterAnnetSaerskilteForetak" type="tns:oppdaterAnnetSaerskilteForetak"/>
+
+  <xs:element name="oppdaterAnnetSaerskilteForetakResponse" type="tns:oppdaterAnnetSaerskilteForetakResponse"/>
+
+  <xs:element name="oppdaterSaerskilteForetak" type="tns:oppdaterSaerskilteForetak"/>
+
+  <xs:element name="oppdaterSaerskilteForetakResponse" type="tns:oppdaterSaerskilteForetakResponse"/>
 
   <xs:element name="opprettLoepenummerperson" type="tns:opprettLoepenummerperson"/>
 
   <xs:element name="opprettLoepenummerpersonResponse" type="tns:opprettLoepenummerpersonResponse"/>
 
+  <xs:element name="slettAnnetSaerskilteForetak" type="tns:slettAnnetSaerskilteForetak"/>
+
+  <xs:element name="slettAnnetSaerskilteForetakResponse" type="tns:slettAnnetSaerskilteForetakResponse"/>
+
+  <xs:element name="slettSaerskilteForetak" type="tns:slettSaerskilteForetak"/>
+
+  <xs:element name="slettSaerskilteForetakResponse" type="tns:slettSaerskilteForetakResponse"/>
+
+  <xs:complexType name="slettAnnetSaerskilteForetak">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ids" type="ns1:JuridiskPersonIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="slettAnnetSaerskilteForetakResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="hentSaerskilteForetak">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="hentSaerskilteForetakResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:JuridiskPersonIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="lagNyttPersonloepenummer">
     <xs:sequence>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -36,26 +83,71 @@
       <xs:element name="fysiskPerson" type="xs:boolean"/>
       <xs:element name="juridiskPerson" type="xs:boolean"/>
       <xs:element name="foedselsaar" type="xs:int"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="findPersonerResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns2:PersonIdList"/>
+      <xs:element minOccurs="0" name="return" type="ns1:PersonIdList"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="oppdaterAnnetSaerskilteForetak">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ids" type="ns1:JuridiskPersonIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="oppdaterAnnetSaerskilteForetakResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="hentAnnetSaerskilteForetak">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="hentAnnetSaerskilteForetakResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:JuridiskPersonIdList"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="oppdaterSaerskilteForetak">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ids" type="ns1:JuridiskPersonIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="oppdaterSaerskilteForetakResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="slettSaerskilteForetak">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ids" type="ns1:JuridiskPersonIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="slettSaerskilteForetakResponse">
+    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="opprettLoepenummerperson">
     <xs:sequence>
-      <xs:element minOccurs="0" name="person" type="ns2:Person"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
+      <xs:element minOccurs="0" name="person" type="ns1:Person"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="opprettLoepenummerpersonResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns2:PersonId"/>
+      <xs:element minOccurs="0" name="return" type="ns1:PersonId"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

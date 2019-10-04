@@ -4,6 +4,9 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/postnummer" schemaLocation="PostnummeromraadeServiceWS_schema1.xsd"/>
     </xsd:schema>
     <xsd:schema>
+      <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/exception" schemaLocation="exception.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" schemaLocation="register_saksinformasjon.xsd"/>
     </xsd:schema>
     <xsd:schema>
@@ -58,12 +61,18 @@
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" schemaLocation="kodeliste.xsd"/>
     </xsd:schema>
     <xsd:schema>
+      <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" schemaLocation="grunnboksidenter.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" schemaLocation="endringslogg.xsd"/>
     </xsd:schema>
     <xsd:schema>
       <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
     </xsd:schema>
   </types>
+  <message name="ServiceException">
+    <part xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/exception" element="ns1:ServiceException" name="fault"/>
+  </message>
   <message name="findAll">
     <part element="tns:findAll" name="parameters"/>
   </message>
@@ -74,6 +83,7 @@
     <operation name="findAll">
       <input message="tns:findAll" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/postnummer/PostnummeromraadeService/findAllRequest"/>
       <output message="tns:findAllResponse" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/postnummer/PostnummeromraadeService/findAllResponse"/>
+      <fault message="tns:ServiceException" name="ServiceException" wsam:Action="http://kartverket.no/grunnbok/wsapi/v2/service/postnummer/PostnummeromraadeService/findAll/Fault/ServiceException"/>
     </operation>
   </portType>
   <binding name="PostnummeromraadeServicePortBinding" type="tns:PostnummeromraadeService">
@@ -86,6 +96,9 @@
       <output>
         <soap:body use="literal"/>
       </output>
+      <fault name="ServiceException">
+        <soap:fault name="ServiceException" use="literal"/>
+      </fault>
     </operation>
   </binding>
   <service name="PostnummeromraadeServiceWS">

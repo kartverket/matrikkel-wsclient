@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/postnummer" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/register" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/postnummer" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/postnummer" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"  xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/register" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/postnummer" version="1.0">
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
 
@@ -8,15 +8,16 @@
 
   <xs:element name="findAllResponse" type="tns:findAllResponse"/>
 
+
   <xs:complexType name="findAll">
     <xs:sequence>
-      <xs:element form="unqualified" minOccurs="0" name="arg0" type="ns1:GrunnbokContext"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="findAllResponse">
     <xs:sequence>
-      <xs:element form="unqualified" minOccurs="0" name="return" type="ns2:PostnummeromraadeIdList"/>
+      <xs:element minOccurs="0" name="return" type="ns3:PostnummeromraadeIdList"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

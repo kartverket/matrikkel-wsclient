@@ -20,19 +20,6 @@
 
   <xs:element name="findAndelerRealkobletTilRegisterenheterResponse" type="tns:findAndelerRealkobletTilRegisterenheterResponse"/>
 
-  <xs:complexType name="findAndelerRealkobletTilRegisterenheter">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findAndelerRealkobletTilRegisterenheterResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilRegisterenhetsrettsandelIdsMap"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findAndelerIRetter">
     <xs:sequence>
       <xs:element minOccurs="0" name="rettIds" type="ns1:RegisterenhetsrettIdList"/>
@@ -43,6 +30,19 @@
   <xs:complexType name="findAndelerIRetterResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAndelerRealkobletTilRegisterenheter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="registerenhetIds" type="ns1:RegisterenhetIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findAndelerRealkobletTilRegisterenheterResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RegisterenhetIdTilRegisterenhetsrettsandelIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 
