@@ -311,6 +311,6 @@ class MeldingerFraSaksystemInfoBuilder {
    private static <T> String getKodeOrNull(T element) {
       try {
          return element != null ? (String) element.getClass().getMethod("getKode").invoke(element) : null;
-      } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) {return null; }
+      } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) { return null; }
    }
 }

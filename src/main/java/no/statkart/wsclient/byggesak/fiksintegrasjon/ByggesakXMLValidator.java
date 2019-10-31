@@ -4,6 +4,8 @@ package no.statkart.wsclient.byggesak.fiksintegrasjon;
 import no.statkart.skif.exception.ImplementationException;
 import no.statkart.skif.exception.OperationalException;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -23,6 +25,7 @@ import java.util.Objects;
  * Validerer velformet xml på bakgrunn av modellen (matrikkelfoering.xsd)
  */
 class ByggesakXMLValidator {
+   private static Logger logger = LoggerFactory.getLogger(ByggesakXMLValidator.class);
 
    private static final JAXBContext jaxbContext;
    private static final Unmarshaller unmarshaller;
@@ -41,18 +44,20 @@ class ByggesakXMLValidator {
                unmarshaller.setSchema(schema);
 
             } catch (JAXBException | SAXException e) {
-               throw new RuntimeException(e.getMessage());
+               logger.error("Alvorlig feil i static constructor: "+e.getMessage(), e);
+               throw new RuntimeException("Alvorlig feil i ByggesakXMLValidator: "+e.getMessage());
             }
    }
 
-   static void validateByggesakXML(String xmlString) throws IOException, SAXException {
-      validateByggesakXML(new ByteArrayInputStream(xmlString.getBytes()));
+   static boolean validateByggesakXML(String xmlString) throws IOException, SAXException {
+      return validateByggesakXML(new ByteArrayInputStream(xmlString.getBytes()));
    }
 
-   private static void validateByggesakXML(InputStream inputStream) throws IOException, SAXException {
+   private static boolean validateByggesakXML(InputStream inputStream) throws IOException, SAXException {
       final byte[] xmlBytes = IOUtils.toByteArray(inputStream);
       try {
          schema.newValidator().validate(new StreamSource(new ByteArrayInputStream(xmlBytes)));
+         return true;
       } catch (SAXParseException e) {
          BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(xmlBytes), StandardCharsets.UTF_8));
          StringBuilder sb = new StringBuilder();
@@ -75,7 +80,8 @@ class ByggesakXMLValidator {
                ++lineNumber;
             }
          }
-         throw new OperationalException("OBS: SJEKK OBLIGATORISKE ELEMENTER ELLER REKKEFOLGE\n"+sb.toString());
+         logger.error("OBS: SJEKK OBLIGATORISKE ELEMENTER ELLER REKKEFOLGE\n"+sb.toString(), e);
+         return false;
       }
    }
 }

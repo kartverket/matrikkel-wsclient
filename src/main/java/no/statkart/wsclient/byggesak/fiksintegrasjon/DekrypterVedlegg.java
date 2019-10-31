@@ -3,12 +3,15 @@ package no.statkart.wsclient.byggesak.fiksintegrasjon;
 import no.statkart.skif.exception.OperationalException;
 import org.apache.commons.io.IOUtils;
 import org.bouncycastle.cms.CMSEnvelopedDataParser;
+import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.cms.CMSTypedStream;
 import org.bouncycastle.cms.RecipientInformation;
 import org.bouncycastle.cms.RecipientInformationStore;
 import org.bouncycastle.cms.jcajce.JceKeyTransEnvelopedRecipient;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.io.pem.PemReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,6 +26,7 @@ import java.util.Objects;
  * Dekrypterer kryptert fil mottatt via fiks. I zip-format
  */
 class DekrypterVedlegg {
+   private Logger logger = LoggerFactory.getLogger(DekrypterVedlegg.class);
 
    private Provider provider;
    private final PrivateKey privateKey;
@@ -47,6 +51,7 @@ class DekrypterVedlegg {
          privateKey = keyFactory.generatePrivate(spec);
 
       } catch (IOException | GeneralSecurityException e) {
+         logger.error("Constructor feilet: "+e.getMessage());
          throw new OperationalException("Oppsett av dekrypterer feilet: "+e.getMessage());
       }
    }
@@ -57,7 +62,7 @@ class DekrypterVedlegg {
     * @param kryptertBytes Representerer payload fra http-kallet
     * @return dekryptert byte array
     */
-   byte[] dekrypterBytes(byte[] kryptertBytes) {
+   byte[] dekrypterBytes(byte[] kryptertBytes) throws IOException, CMSException {
       try(final ByteArrayInputStream encryptedStream = new ByteArrayInputStream(kryptertBytes)) {
          // Initialise parser
          CMSEnvelopedDataParser envDataParser = new CMSEnvelopedDataParser(encryptedStream);
@@ -69,10 +74,6 @@ class DekrypterVedlegg {
          final byte[] bytes = IOUtils.toByteArray(envelopedData.getContentStream());
          envelopedData.getContentStream().close();
          return bytes;
-      } catch (Exception e) {
-         throw new OperationalException("Dektryptering av fil feilet: "+e.getMessage());
       }
    }
-
-
 }

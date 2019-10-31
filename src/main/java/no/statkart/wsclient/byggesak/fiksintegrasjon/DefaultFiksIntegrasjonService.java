@@ -40,7 +40,7 @@ public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
          Objects.requireNonNull(response, "Tomt resultat fra kall til FIKS");
          responseJson = EntityUtils.toString(response.getEntity());
       } catch (IOException e) {
-         logger.error("Feil i FIKS-kall: "+e.getMessage(), e);
+         logger.error("Get-kall til Fiks feilet: "+request.getRequestLine()+" Exception: "+e.getMessage(), e);
          throw new OperationalException("Feil i FIKS-kall: "+e.getMessage(), e);
       }
 
@@ -49,8 +49,10 @@ public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
 
       // last ned vedlegg
       LastNedVedlegg lastNedVedlegg = new LastNedVedlegg(serviceBrukernavn, servicePassord, privateKeyUrl);
+
+      // last ned xml-fil for responsMelding
       for (ResponsMelding responsMelding : responsMeldinger) {
-         lastNedVedlegg.lastNedVedlegg(responsMelding);
+         responsMelding.setByggesakXml(lastNedVedlegg.lastNedVedlegg(responsMelding));
       }
 
       // fjern meldinger uten uten XML (hvis nedlasting har feilet)
@@ -76,6 +78,7 @@ public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
 
          return responseJson.contains(forsendelseId);
       } catch (IOException e) {
+         logger.error("Get-kall til FIKS feilet: "+request.getRequestLine()+" Exception: "+e.getMessage(), e);
          throw new OperationalException("Get-kall til FIKS feilet: "+e.getMessage());
       }
    }
@@ -89,6 +92,7 @@ public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
          try(CloseableHttpResponse response = FiksMottakerRestClient.executeHttpsRequest(httpPost, serviceBrukernavn, servicePassord)) {
             return response != null;
          } catch (IOException e) {
+            logger.error("Kvitter Mottatt feilet: "+e.getMessage(), e);
             throw new OperationalException("Kvitter til FIKS feilet: "+e.getMessage());
          }
       } else { return false; }
