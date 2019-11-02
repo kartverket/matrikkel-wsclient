@@ -62,8 +62,10 @@ public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
                   .collect(Collectors.toSet())
       );
 
-      // valider meldinger
-      responsMeldinger.forEach(ResponsMelding::validerResponsMelding);
+      // filtrer ut de responsmeldingene som mangler obligatorisk informasjon
+      responsMeldinger = responsMeldinger.stream()
+            .filter(responsMelding -> responsMelding.validerResponsMelding().isEmpty())
+            .collect(Collectors.toSet());
 
       return MeldingerFraSaksystemInfoBuilder.build(responsMeldinger);
    }

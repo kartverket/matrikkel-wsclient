@@ -1,18 +1,19 @@
 package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
 import no.statkart.skif.exception.ValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Representerer 1 forsendelse fra FIKS.
  * Lagrer metadata fra forsendelsen.
  */
 class ResponsMelding {
+   private Logger logger = LoggerFactory.getLogger(ResponsMelding.class);
 
    /**
     * ForsendelsesId på (JSON) forsendelsen som hentes via FIKS.
@@ -109,14 +110,14 @@ class ResponsMelding {
       return xmlFilnavn;
    }
 
-   void validerResponsMelding() throws ValidationException {
+   List<String> validerResponsMelding() throws ValidationException {
       feilmeldinger.clear();
 
       if(this.forsendelseId == null) this.feilmeldinger.add("Mangler forsendelseId");
       if(this.byggesakXml == null) this.feilmeldinger.add("Mangler XML.");
       if(this.downloadUrl == null) this.feilmeldinger.add("Mangler URL til vedlegg");
 
-      if(!feilmeldinger.isEmpty())
-         throw new ValidationException("ResponsMelding har ikke nødvendig info: "+ Arrays.toString(feilmeldinger.toArray()));
+      if(!feilmeldinger.isEmpty()) { logger.error("Responsmelding validerer ikke: "+this.forsendelseId); }
+      return feilmeldinger;
    }
 }
