@@ -114,7 +114,7 @@ class ResponsMelding {
       feilmeldinger.clear();
 
       if(this.forsendelseId == null) this.feilmeldinger.add("Mangler forsendelseId");
-      if(this.byggesakXml == null) this.feilmeldinger.add("Mangler XML.");
+      if(this.byggesakXml == null) this.feilmeldinger.add("Mangler XML");
       if(this.downloadUrl == null) this.feilmeldinger.add("Mangler URL til vedlegg");
 
       if(!feilmeldinger.isEmpty()) { logger.error("Responsmelding validerer ikke: "+this.forsendelseId); }

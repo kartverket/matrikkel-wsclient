@@ -76,23 +76,13 @@ public class BehandleDataFraFiksTest {
       responsMelding.validerResponsMelding();
 
       responsMelding.setByggesakXml(null);
-      try {
-         responsMelding.validerResponsMelding();
-         fail("Skulle kastet exception når XML mangler");
-      } catch (ValidationException e) {
-         assertThat(e.getMessage()).contains("Mangler XML");
-      }
+      assertThat(responsMelding.validerResponsMelding()).isNotEmpty();
+      assertThat(responsMelding.validerResponsMelding()).contains("Mangler XML");
 
       responsMelding.setDownloadUrl(null);
       responsMelding.setForsendelseId(null);
-
-      try {
-         responsMelding.validerResponsMelding();
-         fail("Skulle kastet exception når alt mangler");
-      } catch (ValidationException e) {
-         assertThat(e.getMessage()).contains(Arrays.asList("Mangler URL", "Mangler forsendelseId"));
-      }
-
+      assertThat(responsMelding.validerResponsMelding().size()).isEqualTo(3);
+      assertThat(responsMelding.validerResponsMelding()).contains("Mangler URL til vedlegg", "Mangler forsendelseId", "Mangler XML");
    }
 
    @Test
