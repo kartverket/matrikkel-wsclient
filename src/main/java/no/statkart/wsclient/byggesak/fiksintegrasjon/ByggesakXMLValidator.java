@@ -80,7 +80,7 @@ class ByggesakXMLValidator {
                ++lineNumber;
             }
          }
-         logger.error("OBS: SJEKK OBLIGATORISKE ELEMENTER ELLER REKKEFOLGE\n"+sb.toString(), e);
+//         logger.error("OBS: SJEKK OBLIGATORISKE ELEMENTER ELLER REKKEFOLGE\n"+sb.toString(), e);
          return false;
       }
    }
