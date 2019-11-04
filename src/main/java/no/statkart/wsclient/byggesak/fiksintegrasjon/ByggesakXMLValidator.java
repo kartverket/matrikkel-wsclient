@@ -50,10 +50,10 @@ class ByggesakXMLValidator {
    }
 
    static boolean validateByggesakXML(String xmlString) throws IOException, SAXException {
-      return validateByggesakXML(new ByteArrayInputStream(xmlString.getBytes()));
+      return validateByggesakXML(new ByteArrayInputStream(xmlString.getBytes(StandardCharsets.UTF_8)));
    }
 
-   private static boolean validateByggesakXML(InputStream inputStream) throws IOException, SAXException {
+   public static boolean validateByggesakXML(InputStream inputStream) throws IOException, SAXException {
       final byte[] xmlBytes = IOUtils.toByteArray(inputStream);
       try {
          schema.newValidator().validate(new StreamSource(new ByteArrayInputStream(xmlBytes)));
@@ -80,7 +80,7 @@ class ByggesakXMLValidator {
                ++lineNumber;
             }
          }
-//         logger.error("OBS: SJEKK OBLIGATORISKE ELEMENTER ELLER REKKEFOLGE\n"+sb.toString(), e);
+         logger.error("OBS: SJEKK OBLIGATORISKE ELEMENTER ELLER REKKEFOLGE\n"+sb.toString(), e);
          return false;
       }
    }

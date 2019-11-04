@@ -14,6 +14,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -62,7 +63,7 @@ class LastNedVedlegg {
             ZipEntry entry;
             while ((entry = zipInputStream.getNextEntry()) != null) {
                if (entry.getName().equals(filnavn)) {
-                  final String xmlString = IOUtils.toString(zipInputStream, Charset.defaultCharset());
+                  final String xmlString = IOUtils.toString(zipInputStream, StandardCharsets.UTF_8);
                   if(!ByggesakXMLValidator.validateByggesakXML(xmlString)) return null;
                   zipInputStream.close();
                   return xmlString;
