@@ -49,6 +49,10 @@ class ByggesakXMLValidator {
             }
    }
 
+   /**
+    *
+    * @param xmlString med utf-8 encoding
+    */
    static boolean validateByggesakXML(String xmlString) throws IOException, SAXException {
       return validateByggesakXML(new ByteArrayInputStream(xmlString.getBytes(StandardCharsets.UTF_8)));
    }
@@ -73,14 +77,13 @@ class ByggesakXMLValidator {
                for (int j = 1; j < e.getColumnNumber(); ++j) {
                   sb.append(' ');
                }
-               sb.append("^--- HERE ---");
-               sb.append('\n');
+               sb.append("^--- HERE ---\n");
                break;
             } else {
                ++lineNumber;
             }
          }
-         logger.error("OBS: SJEKK OBLIGATORISKE ELEMENTER ELLER REKKEFOLGE\n"+sb.toString(), e);
+         logger.error("OBS: SJEKK OBLIGATORISKE ELEMENTER ELLER REKKEFOLGE\n" + sb, e);
          return false;
       }
    }

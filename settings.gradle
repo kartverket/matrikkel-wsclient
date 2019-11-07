@@ -22,10 +22,3 @@ gradle.afterProject { project ->
     }
 }
 
-/*
-Until Gradle 4.7, the publishing {} block was implicitly treated as if all the logic inside it was executed after the project is evaluated. This caused quite a bit of confusion, because it was the only block that behaved that way. As part of the stabilization effort in Gradle 4.8, we are deprecating this behavior and asking all users to migrate their build.
-The new, stable behavior can be switched on by adding the following to your settings file: enableFeaturePreview('STABLE_PUBLISHING')
-*/
-if (gradle.gradleVersion >= '4.8') {
-    enableFeaturePreview('STABLE_PUBLISHING')
-}

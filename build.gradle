@@ -9,6 +9,7 @@ apply plugin: 'sktools-xjc-plugin'
 apply from: file('integration-test.gradle')
 
 sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 def generatedSrcDir = file("${projectDir}/gen")
 def generatedMainJavaDir = file("${generatedSrcDir}/main/java")
@@ -99,7 +100,7 @@ dependencies {
     exclude module: 'jaxb-api'
   }
 
-    implementation 'org.apache.httpcomponents:httpclient:4.3.5'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.8'
     implementation 'commons-io:commons-io:2.6'
     implementation 'commons-fileupload:commons-fileupload:1.4'
     implementation 'org.json:json:20190722'
@@ -107,7 +108,7 @@ dependencies {
     implementation 'org.bouncycastle:bcprov-jdk15on:1.63'
 
     testImplementation 'org.testng:testng:6.14.3'
-    testImplementation 'org.assertj:assertj-core:3.12.2' /* assertJ 3.x for java 8 */
+    testImplementation 'org.assertj:assertj-core:3.14.0'
     testImplementation 'org.mockito:mockito-core:2.25.1'
 
     testRuntimeOnly 'org.slf4j:slf4j-simple:'+slf4jVersion
@@ -372,9 +373,7 @@ clean {
 ext.mergeServiceExceptionInDifferentPackages = { File destination, String packageRoot, String exceptionSubPackage ->
   def packageString = packageRoot + '.' + exceptionSubPackage
   def replacePath = new File(destination.getPath() + '/' + packageString.replace('.', '/'))
-  if( !replacePath.exists() ) {
-    replacePath.mkdirs()
-  }
+  replacePath.mkdirs()
 
   def exceptionFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*Exception.java'], excludes: ['**/exception/*'])
   File relocatedFile
@@ -388,7 +387,7 @@ ext.mergeServiceExceptionInDifferentPackages = { File destination, String packag
   }
 
   //kjører regexp replace på package statement for flyttet fil
-  relocatedFile = new File(replacePath.getPath(), 'ServiceException.java')
+  relocatedFile = new File(replacePath, 'ServiceException.java')
   relocatedFile.setText(relocatedFile.getText('UTF-8').replaceFirst(/(?ms)package[^;]+/, "package " + packageString), 'UTF-8')
 
   def javaFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*.java'])
