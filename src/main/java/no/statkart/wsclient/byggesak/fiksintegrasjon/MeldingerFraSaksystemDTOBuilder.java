@@ -44,8 +44,8 @@ import java.util.stream.Collectors;
  * 1 melding representerer 1 byggesak fra 1 forsendelse.
  * En forsendelse kan ha flere byggesaker.
  */
-class MeldingerFraSaksystemInfoBuilder {
-   private static Logger logger = LoggerFactory.getLogger(MeldingerFraSaksystemInfoBuilder.class);
+class MeldingerFraSaksystemDTOBuilder {
+   private static Logger logger = LoggerFactory.getLogger(MeldingerFraSaksystemDTOBuilder.class);
    /**
     * Bygger et set med infomeldinger basert på responsmeldingene.
     * Deserialiserer xml-filen med bygginfo.
@@ -136,6 +136,7 @@ class MeldingerFraSaksystemInfoBuilder {
       byggesakDTO.setAvlopsKode(getKodeOrNull(evaluateObject(bygningType.getAvlop())));
       byggesakDTO.setNaringsgruppeKode(getKodeOrNull(evaluateObject(bygningType.getNaeringsgruppe())));
       byggesakDTO.setVannforsyningsKode(getKodeOrNull(evaluateObject(bygningType.getVannforsyning())));
+      byggesakDTO.setBygningstypeKode(getKodeOrNull(evaluateObject(bygningType.getBygningstype())));
 
       // flere koder i liste
       EnergiforsyningType energiforsyningType = evaluateObject(bygningType.getEnergiforsyning());

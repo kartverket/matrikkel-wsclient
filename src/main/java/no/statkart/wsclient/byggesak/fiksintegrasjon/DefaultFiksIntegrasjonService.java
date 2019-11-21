@@ -67,7 +67,7 @@ public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
             .filter(responsMelding -> responsMelding.validerResponsMelding().isEmpty())
             .collect(Collectors.toSet());
 
-      return MeldingerFraSaksystemInfoBuilder.build(responsMeldinger);
+      return MeldingerFraSaksystemDTOBuilder.build(responsMeldinger);
    }
 
    @Override

@@ -1,6 +1,5 @@
 package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
-import no.statkart.skif.exception.ValidationException;
 import no.statkart.wsclient.byggesak.model.ByggesakBruksenhetDTO;
 import no.statkart.wsclient.byggesak.model.ByggesakEtasjeDTO;
 import no.statkart.wsclient.byggesak.model.MeldingFraSaksystemDTO;
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
@@ -92,7 +90,7 @@ public class BehandleDataFraFiksTest {
       assertThat(responsMeldinger.size()).as("Sjekk antall responsmeldinger som er opprettet").isEqualTo(1);
       String forsendelseId = responsMeldinger.iterator().next().getForsendelseId();
 
-      Set<MeldingFraSaksystemDTO> meldingFraSaksystemDTOS = MeldingerFraSaksystemInfoBuilder.build(responsMeldinger);
+      Set<MeldingFraSaksystemDTO> meldingFraSaksystemDTOS = MeldingerFraSaksystemDTOBuilder.build(responsMeldinger);
       assertThat(meldingFraSaksystemDTOS.size()).as("Sjekk antall MeldingFraSaksystem som er opprettet").isEqualTo(2);
       meldingFraSaksystemDTOS.forEach(melding -> assertThat(melding.getForsendelsesId()).isEqualTo(forsendelseId));
    }

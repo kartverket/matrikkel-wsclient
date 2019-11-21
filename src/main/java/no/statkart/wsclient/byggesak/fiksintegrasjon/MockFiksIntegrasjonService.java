@@ -65,7 +65,7 @@ public class MockFiksIntegrasjonService implements FiksIntegrasjonService {
          responsMelding.setDate(new Date());
          responsMelding.setTittel("Eksempel-byggesak for test-rammeverk "+responsMelding.getForsendelseId());
 
-         Set<MeldingFraSaksystemDTO> meldinger = MeldingerFraSaksystemInfoBuilder.build(Collections.singleton(responsMelding));
+         Set<MeldingFraSaksystemDTO> meldinger = MeldingerFraSaksystemDTOBuilder.build(Collections.singleton(responsMelding));
          mockupBaseForMeldinger.put(responsMelding.getForsendelseId(), meldinger.iterator().next());
       }
    }
