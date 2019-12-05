@@ -2,7 +2,7 @@ plugins {
   id 'java-library'
   id 'idea'
   id 'maven-publish'
-  id 'sktools.xjc' version '5.0'
+  id 'sktools.xjc' version '5.1'
 }
 
 group = 'no.statkart.wsclient'
@@ -11,14 +11,14 @@ version = projectVersion + System.getProperty('suffix', '-SNAPSHOT')
 
 apply from: file('integration-test.gradle')
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 def generatedSrcDir = file("${projectDir}/gen")
 def generatedMainJavaDir = file("${generatedSrcDir}/main/java")
-def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
 def WS_IMPORT_QUAL_NAME = 'com.sun.tools.ws.ant.WsImport'
-def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn")
 
 
 sourceSets {
@@ -44,7 +44,7 @@ test {
   }
 }
 
-project.tasks.withType(Test) {
+tasks.withType(Test).configureEach {
   // Jenkins setter denne til true slik at bygget feiler på testrapporten.
   ignoreFailures = System.getProperty('ignoreFailures', 'false') == 'true'
 }
@@ -71,7 +71,6 @@ dependencies {
 
   wsImport 'com.sun.xml.ws:jaxws-tools:2.3.0.2'
 
-  wsImportWithXJCBinding 'com.sun.xml.bind:jaxb-xjc:2.2.11'
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:'+jaxb2Version
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics:'+jaxb2Version
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-tools:'+jaxb2Version
@@ -103,7 +102,6 @@ dependencies {
     testRuntimeOnly 'org.slf4j:slf4j-simple:'+slf4jVersion
 }
 
-//noinspection GroovyAssignabilityCheck
 task sourceJar(type: Jar) {
   from sourceSets.main.allJava
   classifier 'sources'
@@ -122,17 +120,12 @@ publishing {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task createGeneratedDir(dependsOn: processResources) {
-  doLast {
-    generatedMainJavaDir.mkdirs()
-  }
-}
 
-//noinspection GroovyAssignabilityCheck
-task wsImportInnsendingService(dependsOn: createGeneratedDir) {
+def wsImportInnsendingService = tasks.register('wsImportInnsendingService') {
   def sourceWsdl = file('src/main/resources/innsending/InnsendingServiceWS.wsdl')
   def wsGenSrc = file("${buildDir}/wsimport/innsending")
+  def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
+  inputs.file jaxbBindingsFile
   inputs.file sourceWsdl
   outputs.dir wsGenSrc
 
@@ -149,10 +142,11 @@ task wsImportInnsendingService(dependsOn: createGeneratedDir) {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImportValideringService(dependsOn: createGeneratedDir) {
+def wsImportValideringService = tasks.register('wsImportValideringService') {
   def sourceWsdl = file('src/main/resources/innsending/ValideringServiceWS.wsdl')
   def wsGenSrc = file("${buildDir}/wsimport/validering")
+  def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
+  inputs.file jaxbBindingsFile
   inputs.file sourceWsdl
   outputs.dir wsGenSrc
 
@@ -169,9 +163,11 @@ task wsImportValideringService(dependsOn: createGeneratedDir) {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImportStedsnavnAdressenavnInndataService(dependsOn: createGeneratedDir) {
+def wsImportStedsnavnAdressenavnInndataService = tasks.register('wsImportStedsnavnAdressenavnInndataService') {
   def sourceWsdl = file('src/main/resources/stedsnavn/adressenavn/adressenavn.wsdl')
+  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
+  def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
+  inputs.file jaxbBindingsFile
   inputs.file sourceWsdl
   outputs.dir wsGenSrcForStedsnavn 
 
@@ -187,9 +183,9 @@ task wsImportStedsnavnAdressenavnInndataService(dependsOn: createGeneratedDir) {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImportStedsnavnStoreService(dependsOn: createGeneratedDir ) {
+def wsImportStedsnavnStoreService = tasks.register('wsImportStedsnavnStoreService') {
   def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/StoreServiceWS.wsdl')
+  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
   inputs.file sourceWsdl
   outputs.dir wsGenSrcForStedsnavn
 
@@ -204,9 +200,9 @@ task wsImportStedsnavnStoreService(dependsOn: createGeneratedDir ) {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImportStedsnavnEndringsloggService(dependsOn: createGeneratedDir ) {
+def wsImportStedsnavnEndringsloggService = tasks.register('wsImportStedsnavnEndringsloggService') {
   def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/EndringsloggServiceWS.wsdl')
+  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
   inputs.file sourceWsdl
   outputs.dir wsGenSrcForStedsnavn
 
@@ -221,9 +217,9 @@ task wsImportStedsnavnEndringsloggService(dependsOn: createGeneratedDir ) {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImportStedsnavnService(dependsOn: createGeneratedDir ) {
+def wsImportStedsnavnService = tasks.register('wsImportStedsnavnService') {
   def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/StedsnavnServiceWS.wsdl')
+  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
   inputs.file sourceWsdl
   outputs.dir wsGenSrcForStedsnavn
 
@@ -238,9 +234,10 @@ task wsImportStedsnavnService(dependsOn: createGeneratedDir ) {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImportSkrivemaateService(dependsOn: createGeneratedDir ) {
+def wsImportSkrivemaateService = tasks.register('wsImportSkrivemaateService') {
   def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/SkrivemaateServiceWS.wsdl')
+  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
+
   inputs.file sourceWsdl
   outputs.dir wsGenSrcForStedsnavn
 
@@ -255,8 +252,7 @@ task wsImportSkrivemaateService(dependsOn: createGeneratedDir ) {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
+def wsImportLandbruksregister = tasks.register('wsImportLandbruksregister') {
   def sourceWsdl = file('src/main/resources/landbruksregisteret/landbruksregisteret.wsdl')
   def wsGenSrc = file("${buildDir}/wsimport/landbruksregisteret")
   inputs.file sourceWsdl
@@ -277,8 +273,45 @@ task wsImportLandbruksregister(dependsOn: createGeneratedDir) {
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
+// Konfigurasjon for å samle "samme" Exception med ulikt pakkenavn
+// TODO: Er det virkelig nødvendig å samle disse exceptionene?
+// TODO: Disse er en del av api-et. En bør fjerne disse ved en renskriving / opprettelse av interfaces for denne modulen.
+final def mergeServiceExceptionInDifferentPackages = { File destination, String packageRoot, String exceptionSubPackage ->
+  def packageString = packageRoot + '.' + exceptionSubPackage
+  def replacePath = new File(destination, packageString.replace('.', '/'))
+  replacePath.mkdirs()
+
+  def exceptionFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*Exception.java'], excludes: ['**/exception/*'])
+  logger.info('replacePath {}', replacePath)
+  exceptionFiles.files.each { logger.info('merging exception {} <- {}', replacePath, it) }
+  //flytter alle exceptions til felles katalog
+  copy {
+    from exceptionFiles.files.first()
+    into replacePath
+  }
+  delete exceptionFiles
+
+  //kjører regexp replace på package statement for flyttet fil
+  File relocatedFile = new File(replacePath, 'ServiceException.java')
+  relocatedFile.setText(relocatedFile.getText('UTF-8').replaceFirst(/(?ms)package[^;]+/, 'package ' + packageString), 'UTF-8')
+
+  def javaFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*.java'])
+  //legger til import statements for de andre java filene
+  javaFiles.files.each { File file ->
+    logger.info('adding exception import statement in {}', file)
+    file.setText(file.getText('UTF-8').replaceFirst('import ', "import ${packageString}.*;\nimport "), 'UTF-8')
+  }
+
+  ant.replaceregexp(encoding: 'UTF-8') {
+    regexp(pattern: /url = new URL\(([^"]+)"\."\), "(.*)"\);/)
+    substitution(expression: ('url = \\1"/\\2"); if (url == null) throw new MalformedURLException("Not found");'))
+    fileset(dir: destination, erroronmissingdir: true) {
+      include(name: '**/*.java')
+    }
+  }
+}
+
+def wsImportGrunnboksutskriftInternv2 = tasks.register('wsImportGrunnboksutskriftInternv2') {
   def sourceWsdlDir = file('src/main/resources/grunnboksutskriftinternv2')
   def wsGenSrc = file("${buildDir}/wsimport/grunnboksutskriftinternv2")
   inputs.dir sourceWsdlDir
@@ -286,8 +319,8 @@ task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
 
   doLast {
     ant.taskdef(name: 'wsImportGrunnboksutskriftInternv2', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImportWithXJCBinding.asPath)
+    wsGenSrc.mkdirs()
     fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
-      wsGenSrc.mkdirs()
       //noinspection GroovyAssignabilityCheck
       ant.wsImportGrunnboksutskriftInternv2(keep: true,
               sourcedestdir: wsGenSrc,
@@ -299,12 +332,11 @@ task wsImportGrunnboksutskriftInternv2(dependsOn: createGeneratedDir) {
         xjcarg(value: "-XhashCode")
       }
     }
-    mergeServiceExceptionInDifferentPackages(file("${buildDir}/wsimport/grunnboksutskriftinternv2"), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
+    mergeServiceExceptionInDifferentPackages(file(wsGenSrc), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImportGrunnbokv2(dependsOn: createGeneratedDir) {
+def wsImportGrunnbokv2 = tasks.register('wsImportGrunnbokv2') {
   def sourceWsdlDir = file('src/main/resources/grunnbokv2')
   def wsGenSrc = file("${buildDir}/wsimport/grunnbokv2")
   inputs.dir sourceWsdlDir
@@ -325,101 +357,57 @@ task wsImportGrunnbokv2(dependsOn: createGeneratedDir) {
         xjcarg(value: "-XhashCode")
       }
     }
-    mergeServiceExceptionInDifferentPackages(file("${buildDir}/wsimport/grunnbokv2"), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
+    mergeServiceExceptionInDifferentPackages(file(wsGenSrc), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
   }
 }
 
-//noinspection GroovyAssignabilityCheck
-task wsImport {
-  outputs.dir generatedMainJavaDir
 
-  def wsImportTasks = tasks
-          .findAll { it.name.matches("^wsImport\\p{javaJavaIdentifierPart}+") }
-          .each    {
-    dependsOn it
-    assert it.outputs.files.size() == 1
-    inputs.dir it.outputs.files.singleFile
-  }
+def wsImport = tasks.register('wsImport', Sync) {
+  dependsOn processResources
 
-  doLast {
-    wsImportTasks.each { task ->
-      println "  updating generated files from ${task.name}"
-      copy {
-        from task.outputs.files.singleFile
-        into generatedMainJavaDir
-        duplicatesStrategy DuplicatesStrategy.WARN
-      }
-    }
-  }
+  into generatedMainJavaDir
+  duplicatesStrategy DuplicatesStrategy.EXCLUDE
+
+  from wsImportInnsendingService
+  from wsImportValideringService
+  from wsImportStedsnavnAdressenavnInndataService
+  from wsImportStedsnavnStoreService
+  from wsImportStedsnavnEndringsloggService
+  from wsImportStedsnavnService
+  from wsImportSkrivemaateService
+  from wsImportLandbruksregister
+  from wsImportGrunnboksutskriftInternv2
+  from wsImportGrunnbokv2
 }
 
-clean {
+tasks.named('clean') {
   delete generatedSrcDir
 }
 
-// Konfigurasjon for å samle "samme" Exception med ulikt pakkenavn
-// TODO: Er det virkelig nødvendig å samle disse exceptionene?
-ext.mergeServiceExceptionInDifferentPackages = { File destination, String packageRoot, String exceptionSubPackage ->
-  def packageString = packageRoot + '.' + exceptionSubPackage
-  def replacePath = new File(destination.getPath() + '/' + packageString.replace('.', '/'))
-  replacePath.mkdirs()
-
-  def exceptionFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*Exception.java'], excludes: ['**/exception/*'])
-  File relocatedFile
-  logger.info("replacePath ${replacePath}")
-  //flytter alle exceptions til felles katalog
-  exceptionFiles.files.each { File file ->
-    logger.info("merging exception ${replacePath} <- ${file}")
-
-    ant.copy(file: file, toDir: replacePath)
-    file.delete()
-  }
-
-  //kjører regexp replace på package statement for flyttet fil
-  relocatedFile = new File(replacePath, 'ServiceException.java')
-  relocatedFile.setText(relocatedFile.getText('UTF-8').replaceFirst(/(?ms)package[^;]+/, "package " + packageString), 'UTF-8')
-
-  def javaFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*.java'])
-  //legger til import statements for de andre java filene
-  javaFiles.files.each { File file ->
-    logger.info("adding exception import statement in ${file}")
-    file.setText(file.getText('UTF-8').replaceFirst('import ', "import ${packageString}.*;\nimport "), 'UTF-8')
-  }
-
-  ant.replaceregexp(encoding: 'UTF-8') {
-    regexp(pattern: /url = new URL\(([^"]+)"\."\), "(.*)"\);/)
-    substitution(expression: ('url = \\1"/\\2"); if (url == null) throw new MalformedURLException("Not found");'))
-    fileset(dir: destination, erroronmissingdir: true) {
-      include(name: '**/*.java')
-    }
-  }
+tasks.named('compileJava') {
+  dependsOn wsImport
 }
 
-compileJava.dependsOn(wsImport)
-
-allprojects {
-  tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-    options.compilerArgs << "-Xlint:unchecked" << "-Werror"
-  }
+tasks.withType(JavaCompile).configureEach {
+  options.encoding = 'UTF-8'
+  options.compilerArgs << '-Xlint:unchecked' << '-Werror'
 }
 
-jar.manifest {
-    attributes([
-            'Specification-Title': project.name,
-            'Specification-Vendor': 'Statens kartverk',
-            'Specification-Version': (gradle.startParameter.projectProperties.get('projectVersion') ?: projectVersion).replace('-SNAPSHOT', ''),
+manifest {
+  attributes([
+          'Specification-Title'   : project.name,
+          'Specification-Vendor'  : 'Statens kartverk',
+          'Specification-Version' : (gradle.startParameter.projectProperties.get('projectVersion') ?: projectVersion).replace('-SNAPSHOT', ''),
 
-            //misc build info
-            'Build-By'     : System.getProperty('user.name'),
-            'Build-Machine': InetAddress.localHost.hostName,
-            'Build-Repo': MAVEN_REPO,
-            'Build-Gradle': gradle.gradleVersion,
-            'Build-JDK': System.getProperty("java.version"),
+          //misc build info
+          'Build-By'              : System.getProperty('user.name'),
+          'Build-Machine'         : InetAddress.localHost.hostName,
+          'Build-Repo'            : MAVEN_REPO,
+          'Build-Gradle'          : gradle.gradleVersion,
+          'Build-JDK'             : System.getProperty('java.version'),
 
-            'Implementation-Title': "${project.name} bygget for ${(version == null || version.contains('-SNAPSHOT') || version.contains('-build')) ? 'TEST' : 'Produksjon'}",
-            'Implementation-Vendor': 'Statens kartverk',
-            'Implementation-Version': project.version,
-    ])
+          'Implementation-Title'  : "${project.name} bygget for ${(version == null || version.contains('-SNAPSHOT') || version.contains('-build')) ? 'TEST' : 'Produksjon'}",
+          'Implementation-Vendor' : 'Statens kartverk',
+          'Implementation-Version': project.version,
+  ])
 }
-

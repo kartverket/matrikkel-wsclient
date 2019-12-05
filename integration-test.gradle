@@ -27,7 +27,7 @@ configurations {
 
 //Create the task that runs the integration tests found from the
 //configured source directory and uses the correct classpath.
-task testIntegration(type: Test) {
+def testIntegration = tasks.register('testIntegration', Test) {
     group = 'verification'
     description = 'Runs the integration tests.'
     testClassesDirs = sourceSets.testIntegration.output.classesDirs
@@ -37,10 +37,11 @@ task testIntegration(type: Test) {
     useTestNG() {
         useDefaultListeners = true
     }
+
+    //Ensure that our unit tests are run before our integration tests
+    mustRunAfter tasks.named('test')
 }
 
 //Ensure that the check task fails the build if there are failing integration tests.
-check.dependsOn testIntegration
-//Ensure that our unit tests are run before our integration tests
-testIntegration.mustRunAfter test
+tasks.named('check') { dependsOn testIntegration }
 
