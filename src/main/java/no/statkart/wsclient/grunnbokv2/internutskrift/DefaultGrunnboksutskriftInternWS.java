@@ -7,7 +7,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.internutskrift.GrunnboksutskriftI
 import no.kartverket.grunnbok.wsapi.v2.service.internutskrift.GrunnboksutskriftInternServiceWS;
 import no.statkart.wsclient.WebServiceBuilder;
 
-import javax.net.ssl.HostnameVerifier;
 
 /**
  *

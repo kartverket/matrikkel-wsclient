@@ -12,8 +12,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.KommuneIdentTilKommu
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.MatrikkelenhetIdentTilMatrikkelenhetIdMap;
 import no.statkart.wsclient.WebServiceBuilder;
 
-import javax.net.ssl.HostnameVerifier;
-
 
 public class DefaultIdentWS implements IdentWS {
 

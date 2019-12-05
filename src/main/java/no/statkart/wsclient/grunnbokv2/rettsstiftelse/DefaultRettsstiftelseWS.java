@@ -5,14 +5,11 @@ import no.kartverket.grunnbok.wsapi.v2.domain.register.dokument.DokumentId;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.RegisterenhetId;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.RegisterenhetsrettsandelIdList;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.RettsstiftelseIdList;
-import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.heftelse.HeftelseIdList;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.kartverket.grunnbok.wsapi.v2.service.rettsstiftelse.RettsstiftelseService;
 import no.kartverket.grunnbok.wsapi.v2.service.rettsstiftelse.RettsstiftelseServiceWS;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.*;
 import no.statkart.wsclient.WebServiceBuilder;
-
-import javax.net.ssl.HostnameVerifier;
 
 
 public class DefaultRettsstiftelseWS implements RettsstiftelseWS {

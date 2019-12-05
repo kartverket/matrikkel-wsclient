@@ -10,7 +10,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.PersonIdTilRegistere
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap;
 import no.statkart.wsclient.WebServiceBuilder;
 
-import javax.net.ssl.HostnameVerifier;
 
 /**
  *

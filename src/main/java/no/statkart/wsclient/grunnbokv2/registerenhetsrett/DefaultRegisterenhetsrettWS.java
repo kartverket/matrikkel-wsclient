@@ -8,7 +8,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.registerenhetsrett.Registerenhets
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetIdTilRegisterenhetsrettIdsMap;
 import no.statkart.wsclient.WebServiceBuilder;
 
-import javax.net.ssl.HostnameVerifier;
 
 /**
  *

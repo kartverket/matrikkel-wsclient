@@ -10,7 +10,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.endringslogg.EndringsloggServiceW
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.statkart.wsclient.WebServiceBuilder;
 
-import javax.net.ssl.HostnameVerifier;
 
 /**
  *

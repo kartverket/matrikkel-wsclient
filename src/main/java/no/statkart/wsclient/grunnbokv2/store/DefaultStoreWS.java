@@ -6,7 +6,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.store.StoreService;
 import no.kartverket.grunnbok.wsapi.v2.service.store.StoreServiceWS;
 import no.statkart.wsclient.WebServiceBuilder;
 
-import javax.net.ssl.HostnameVerifier;
 
 
 public class DefaultStoreWS implements StoreWS {
