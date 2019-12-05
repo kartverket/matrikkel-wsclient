@@ -259,17 +259,14 @@ def wsImportLandbruksregister = tasks.register('wsImportLandbruksregister') {
   outputs.dir wsGenSrc
 
   doLast {
-    ant.taskdef(name: 'wsimportLandbruksregister', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImportWithXJCBinding.asPath)
+    ant.taskdef(name: 'wsimportLandbruksregister', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
     wsGenSrc.mkdirs()
     ant.wsimportLandbruksregister(keep: true,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/landbruksregisteret/landbruksregisteret.wsdl',
             xnocompile: true,
-            encoding: 'UTF-8') {
-      xjcarg(value: "-Xequals")
-      xjcarg(value: "-XhashCode")
-    }
+            encoding: 'UTF-8')
   }
 }
 
