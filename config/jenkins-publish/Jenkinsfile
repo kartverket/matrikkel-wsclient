@@ -21,7 +21,7 @@ pipeline { //declarative pipeline syntax
     }
 
     tools {
-        jdk 'Java 8 Latest' //spesifisert java versjon for bygging av release
+        jdk 'Java 12 Latest'
     }
 
     parameters {

@@ -64,27 +64,27 @@ configurations {
 }
 
 dependencies {
-  def jaxb2Version = '0.9.3'
+  def jaxb2Version = '0.12.0'
   def slf4jVersion = '1.7.26'
-  def jaxwsVersion = '2.2.10'
-  def skifVersion = '2.10-build10'
+  def jaxwsVersion = '2.3.2'
+  def skifVersion = '2.10.1'
 
-  wsImport 'com.sun.xml.ws:jaxws-tools:2.3.0.2'
+  wsImport 'com.sun.xml.ws:jaxws-tools:2.3.2'
 
-  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:'+jaxb2Version
-  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics:'+jaxb2Version
-  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-tools:'+jaxb2Version
-  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-commons-lang:2.3'
-  wsImportWithXJCBinding 'org.slf4j:slf4j-simple:'+slf4jVersion
+  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:' + jaxb2Version
+  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics:' + jaxb2Version
+  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-tools:' + jaxb2Version
+  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-commons-lang:2.4'
+  wsImportWithXJCBinding 'org.slf4j:slf4j-simple:' + slf4jVersion
 
-  implementation 'com.sun.xml.ws:jaxws-rt:'+jaxwsVersion //bruker Sun/Oracle JAXWS Stack
+  implementation 'com.sun.xml.ws:jaxws-rt:' + jaxwsVersion //bruker Sun/Oracle JAXWS Stack
 
   api 'no.statkart.skif:skif-service-common:'+skifVersion
   api 'joda-time:joda-time:2.10.1'
   implementation 'com.google.guava:guava:27.1-jre'
   implementation 'org.slf4j:slf4j-api:'+slf4jVersion
   api ('org.jvnet.jaxb2_commons:jaxb2-basics-runtime:'+jaxb2Version) {
-    exclude module: 'jaxb-runtime' //disse er ekskludert da man ønker å bruke weblogic sine providede biblioteker på runtime
+    exclude module: 'jaxb-runtime' //disse er ekskludert da man ønsker å bruke Weblogic providede biblioteker på runtime
     exclude module: 'jaxb-api'
   }
 
