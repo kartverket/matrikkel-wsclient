@@ -46,10 +46,6 @@ class ResponsMelding {
     */
    String tittel;
 
-   /**
-    * Liste med feilmeldinger. Denne skal være tom!
-    */
-   List<String> feilmeldinger = new ArrayList<>();
 
    ResponsMelding() { }
 
@@ -111,13 +107,15 @@ class ResponsMelding {
    }
 
    List<String> validerResponsMelding() throws ValidationException {
-      feilmeldinger.clear();
+      List<String> feilmeldinger = new ArrayList<>(0);
 
-      if(this.forsendelseId == null) this.feilmeldinger.add("Mangler forsendelseId");
-      if(this.byggesakXml == null) this.feilmeldinger.add("Mangler XML");
-      if(this.downloadUrl == null) this.feilmeldinger.add("Mangler URL til vedlegg");
+      if(this.forsendelseId == null) feilmeldinger.add("Mangler forsendelseId");
+      if(this.byggesakXml == null) feilmeldinger.add("Mangler XML");
+      if(this.downloadUrl == null) feilmeldinger.add("Mangler URL til vedlegg");
 
-      if(!feilmeldinger.isEmpty()) { logger.error("Responsmelding validerer ikke: "+this.forsendelseId); }
+      if (!feilmeldinger.isEmpty()) {
+         logger.debug("Responsmelding validerer ikke: " + this.forsendelseId);
+      }
       return feilmeldinger;
    }
 }
