@@ -1,7 +1,7 @@
 package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
+import com.google.common.io.ByteStreams;
 import no.statkart.skif.exception.OperationalException;
-import org.apache.commons.io.IOUtils;
 import org.bouncycastle.cms.CMSEnvelopedDataParser;
 import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.cms.CMSTypedStream;
@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.security.*;
@@ -70,9 +71,9 @@ class DekrypterVedlegg {
          RecipientInformation recipient = recipients.getRecipients().iterator().next();
 
          CMSTypedStream envelopedData = recipient.getContentStream(new JceKeyTransEnvelopedRecipient(privateKey).setProvider(provider));
-         final byte[] bytes = IOUtils.toByteArray(envelopedData.getContentStream());
-         envelopedData.getContentStream().close();
-         return bytes;
+         try (InputStream inputStream = envelopedData.getContentStream()) {
+            return ByteStreams.toByteArray(inputStream);
+         }
       }
    }
 }

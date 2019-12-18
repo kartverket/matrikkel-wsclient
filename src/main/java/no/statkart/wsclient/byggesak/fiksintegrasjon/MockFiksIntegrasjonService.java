@@ -2,7 +2,6 @@ package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
 import no.statkart.skif.exception.OperationalException;
 import no.statkart.wsclient.byggesak.model.MeldingFraSaksystemDTO;
-import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +14,8 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static no.statkart.wsclient.byggesak.BuildString.buildStringFromStream;
 
 /**
  * En mockup-implementasjon for å simulere flyten fra FIKS.
@@ -53,7 +54,7 @@ public class MockFiksIntegrasjonService implements FiksIntegrasjonService {
       String byggesakXml;
       try {
          Objects.requireNonNull(byggesakEksempel, "Fil ikke funnet.");
-         byggesakXml = IOUtils.toString(byggesakEksempel.openStream(), StandardCharsets.UTF_8);
+         byggesakXml = buildStringFromStream(byggesakEksempel.openStream(), StandardCharsets.UTF_8);
       } catch (IOException e) {
          throw new OperationalException("Opprettelse av byggesak-xml feilet");
       }

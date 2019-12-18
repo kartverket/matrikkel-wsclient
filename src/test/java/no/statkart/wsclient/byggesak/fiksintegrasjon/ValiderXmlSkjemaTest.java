@@ -1,36 +1,30 @@
 package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
-import org.apache.commons.io.IOUtils;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.contentOf;
 
 
 public class ValiderXmlSkjemaTest {
 
    @Test
    public void testXmlSkjemaGodkjent() throws IOException, SAXException {
-      URL eksempelRiktig = getClass().getClassLoader().getResource("byggesak/standardEksempelByggesak.xml");
-      Objects.requireNonNull(eksempelRiktig, "Filen finnes ikke");
+      String eksempelRiktig = contentOf(getClass().getClassLoader().getResource("byggesak/standardEksempelByggesak.xml"), UTF_8);
 
-      final boolean b = ByggesakXMLValidator.validateByggesakXML(IOUtils.toString(eksempelRiktig.openStream(), StandardCharsets.UTF_8));
-      assertThat(b).as("Godkjent validering av byggesak").isTrue();
-
+      assertThat(ByggesakXMLValidator.validateByggesakXML(eksempelRiktig))
+              .as("Godkjent validering av byggesak").isTrue();
    }
 
    @Test
    public void testXmlSkjemaFeiler() throws IOException, SAXException {
-      URL eksempelFeil = getClass().getClassLoader().getResource("byggesak/eksempelByggesakFeilRekkefolge.xml");
-      Objects.requireNonNull(eksempelFeil, "Filen finnes ikke");
+      String eksempelFeil = contentOf(getClass().getClassLoader().getResource("byggesak/eksempelByggesakFeilRekkefolge.xml"), UTF_8);
 
-      final boolean b = ByggesakXMLValidator.validateByggesakXML(IOUtils.toString(eksempelFeil.openStream(), StandardCharsets.UTF_8));
-      assertThat(b).as("Validering som skal feile.").isFalse();
-
+      assertThat(ByggesakXMLValidator.validateByggesakXML(eksempelFeil))
+              .as("Validering som skal feile.").isFalse();
    }
 }

@@ -3,44 +3,28 @@ package no.statkart.wsclient.byggesak.fiksintegrasjon;
 import no.statkart.wsclient.byggesak.model.ByggesakBruksenhetDTO;
 import no.statkart.wsclient.byggesak.model.ByggesakEtasjeDTO;
 import no.statkart.wsclient.byggesak.model.MeldingFraSaksystemDTO;
-import org.apache.commons.io.IOUtils;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 import java.util.zip.ZipInputStream;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.contentOf;
 import static org.assertj.core.api.Assertions.fail;
 
+@SuppressWarnings("ConstantConditions")
 public class BehandleDataFraFiksTest {
 
-   ClassLoader classLoader = getClass().getClassLoader();
-   String eksempelForsendelseId = "9205d6c4-86cf-4b9d-a174-e3a898031594";
-   URL dekryptertZipfil = classLoader.getResource("byggesak/dekryptertZipfil.zip");
-   URL eksempelXmlUrl = classLoader.getResource("byggesak/eksempelMed2Bygninger.xml");
-   URL eksempelJsonUrl = classLoader.getResource("byggesak/eksempelJson.json");
-   URL getEksempelJsonFeilMimetypeUrl = classLoader.getResource("byggesak/eksempelJsonFeilMimetype.json");
-   String eksempelXml;
-   String eksempelJson;
-   String eksempelJsonFeilMimetype;
-
-   @BeforeClass
-   public void setup() {
-      try {
-         eksempelXml = IOUtils.toString(eksempelXmlUrl.openStream(), Charset.defaultCharset());
-         eksempelJson = IOUtils.toString(eksempelJsonUrl.openStream(), Charset.defaultCharset());
-         eksempelJsonFeilMimetype = IOUtils.toString(getEksempelJsonFeilMimetypeUrl.openStream(), Charset.defaultCharset());
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-   }
+   static final ClassLoader classLoader = BehandleDataFraFiksTest.class.getClassLoader();
+   static final String eksempelForsendelseId = "9205d6c4-86cf-4b9d-a174-e3a898031594";
+   static final String eksempelXml = contentOf(classLoader.getResource("byggesak/eksempelMed2Bygninger.xml"), UTF_8);
+   static final String eksempelJson = contentOf(classLoader.getResource("byggesak/eksempelJson.json"), UTF_8);
+   static final String eksempelJsonFeilMimetype = contentOf(classLoader.getResource("byggesak/eksempelJsonFeilMimetype.json"), UTF_8);
 
    @Test
    public void testLagResponsMeldinger() {
@@ -56,9 +40,9 @@ public class BehandleDataFraFiksTest {
 
    @Test
    public void testHenteUtXmlFraZip() {
-      Objects.requireNonNull(dekryptertZipfil, "Finner ikke filen: "+dekryptertZipfil);
+      final URL zipFil = Objects.requireNonNull(classLoader.getResource("byggesak/dekryptertZipfil.zip"));
 
-      try(final ZipInputStream zipInputStream = new ZipInputStream(dekryptertZipfil.openStream())) {
+      try (final ZipInputStream zipInputStream = new ZipInputStream(zipFil.openStream())) {
          assertThat(zipInputStream.getNextEntry().getName()).isEqualTo("eksempelMed2Bygninger.xml");
       } catch (Exception e) {
          e.printStackTrace();
