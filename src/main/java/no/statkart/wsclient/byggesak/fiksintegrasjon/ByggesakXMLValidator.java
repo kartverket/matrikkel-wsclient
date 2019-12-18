@@ -2,7 +2,6 @@ package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
 
 import no.statkart.skif.exception.ImplementationException;
-import no.statkart.skif.exception.OperationalException;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
