@@ -23,7 +23,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * Validerer velformet xml på bakgrunn av modellen (matrikkelfoering.xsd)
  */
 class ByggesakXMLValidator {
-   private static Logger logger = LoggerFactory.getLogger(ByggesakXMLValidator.class);
+   private static final Logger logger = LoggerFactory.getLogger(ByggesakXMLValidator.class);
 
    private static final JAXBContext jaxbContext;
    private static final Unmarshaller unmarshaller;

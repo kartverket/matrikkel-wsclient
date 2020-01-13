@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
  * En forsendelse kan ha flere byggesaker.
  */
 class MeldingerFraSaksystemDTOBuilder {
-   private static Logger logger = LoggerFactory.getLogger(MeldingerFraSaksystemDTOBuilder.class);
+   private static final Logger logger = LoggerFactory.getLogger(MeldingerFraSaksystemDTOBuilder.class);
    /**
     * Bygger et set med infomeldinger basert på responsmeldingene.
     * Deserialiserer xml-filen med bygginfo.

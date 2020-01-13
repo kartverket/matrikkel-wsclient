@@ -26,7 +26,7 @@ import java.util.Objects;
  * Dekrypterer kryptert fil mottatt via fiks. I zip-format
  */
 class DekrypterVedlegg {
-   private Logger logger = LoggerFactory.getLogger(DekrypterVedlegg.class);
+   private static final Logger logger = LoggerFactory.getLogger(DekrypterVedlegg.class);
 
    private Provider provider;
    private final PrivateKey privateKey;

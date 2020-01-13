@@ -21,7 +21,7 @@ import static no.statkart.wsclient.byggesak.BuildString.buildStringFromStream;
  * Hjelpeklasse for å laste ned vedlegg fra FIKS knyttet til 1 forsendelse.
  */
 class LastNedVedlegg {
-   private Logger logger = LoggerFactory.getLogger(LastNedVedlegg.class);
+   private static final Logger logger = LoggerFactory.getLogger(LastNedVedlegg.class);
 
    private DekrypterVedlegg dekrypterer;
    private String serviceBrukernavn;

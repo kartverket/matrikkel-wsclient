@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Set;
 
 public class LoggingHandler implements SOAPHandler<SOAPMessageContext> {
-   private final Logger logger = LoggerFactory.getLogger(LoggingHandler.class);
+   private static final Logger logger = LoggerFactory.getLogger(LoggingHandler.class);
 
    public Set<QName> getHeaders() {
       return Collections.emptySet();

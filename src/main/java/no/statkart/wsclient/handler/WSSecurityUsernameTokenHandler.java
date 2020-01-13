@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Set;
 
 public class WSSecurityUsernameTokenHandler implements SOAPHandler<SOAPMessageContext> {
-   private final Logger logger = LoggerFactory.getLogger(WSSecurityUsernameTokenHandler.class);
+   private static final Logger logger = LoggerFactory.getLogger(WSSecurityUsernameTokenHandler.class);
    private String bruker;
    private String pass;
 

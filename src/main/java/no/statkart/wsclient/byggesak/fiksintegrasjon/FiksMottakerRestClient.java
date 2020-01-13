@@ -18,7 +18,7 @@ import java.io.IOException;
  * Klient for å utføre kall mot FIKS-systemet.
  */
 class FiksMottakerRestClient {
-   private static Logger logger = LoggerFactory.getLogger(FiksMottakerRestClient.class);
+   private static final Logger logger = LoggerFactory.getLogger(FiksMottakerRestClient.class);
 
    /**
     * Utfører et http-kall mot FIKS.

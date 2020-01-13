@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 class KodeMapper {
-
     private static final Logger logger = LoggerFactory.getLogger(KodeMapper.class);
 
     static Kode mapKode(no.statkart.stedsnavn.ssr.wsapi.v1.domain.kodeliste.Kode kode) {

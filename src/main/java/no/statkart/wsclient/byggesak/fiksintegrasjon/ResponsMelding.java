@@ -13,7 +13,7 @@ import java.util.List;
  * Lagrer metadata fra forsendelsen.
  */
 class ResponsMelding {
-   private Logger logger = LoggerFactory.getLogger(ResponsMelding.class);
+   private static final Logger logger = LoggerFactory.getLogger(ResponsMelding.class);
 
    /**
     * ForsendelsesId på (JSON) forsendelsen som hentes via FIKS.
@@ -114,7 +114,7 @@ class ResponsMelding {
       if(this.downloadUrl == null) feilmeldinger.add("Mangler URL til vedlegg");
 
       if (!feilmeldinger.isEmpty()) {
-         logger.debug("Responsmelding validerer ikke: " + this.forsendelseId);
+         logger.debug("Responsmelding validerer ikke: {}", forsendelseId);
       }
       return feilmeldinger;
    }

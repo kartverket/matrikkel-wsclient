@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 
 public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
-   private Logger logger = LoggerFactory.getLogger(DefaultFiksIntegrasjonService.class);
+   private static final Logger logger = LoggerFactory.getLogger(DefaultFiksIntegrasjonService.class);
 
    private final String serviceBrukernavn;
    private final String servicePassord;

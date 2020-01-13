@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 public final class InnsendingServiceWSProvider {
 
-   private static Logger logger = LoggerFactory.getLogger(InnsendingServiceWSProvider.class);
+   private static final Logger logger = LoggerFactory.getLogger(InnsendingServiceWSProvider.class);
 
    private InnsendingServiceWSProvider() {
    }

@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
  * Hjelpeklasse for å lagre informasjon vedrørende 1 http-respons (1 forsendelse) fra FIKS.
  */
 class BehandleRespons {
-   private static Logger logger = LoggerFactory.getLogger(BehandleRespons.class);
+   private static final Logger logger = LoggerFactory.getLogger(BehandleRespons.class);
 
    /**
     * Lager et set med ResponsMeldinger basert på respons fra FIKS.

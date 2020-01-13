@@ -16,8 +16,7 @@ import java.lang.reflect.UndeclaredThrowableException;
  * kaller mot kan hente seg inn.
  */
 public class OutboundServiceProxyInvocationHandler implements InvocationHandler {
-   private final Logger logger = LoggerFactory.getLogger(OutboundServiceProxyInvocationHandler.class);
-
+   private static final Logger logger = LoggerFactory.getLogger(OutboundServiceProxyInvocationHandler.class);
 
    private Object service;
    private int retries;
