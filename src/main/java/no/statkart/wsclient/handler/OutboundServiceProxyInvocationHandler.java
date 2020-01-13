@@ -14,8 +14,6 @@ import java.lang.reflect.UndeclaredThrowableException;
 /**
  * Klasse som forsøker et kall til en tjenste opptil flere ganger, dersom den får noen feil, som er mulig at serveren man
  * kaller mot kan hente seg inn.
- *
- * Created by hanste on 30.06.2015.
  */
 public class OutboundServiceProxyInvocationHandler implements InvocationHandler {
    private final Logger logger = LoggerFactory.getLogger(OutboundServiceProxyInvocationHandler.class);

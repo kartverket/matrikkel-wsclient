@@ -12,9 +12,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.Set;
 
-/**
- * @author Steinar Hansen
- */
 public class LoggingHandler implements SOAPHandler<SOAPMessageContext> {
    private final Logger logger = LoggerFactory.getLogger(LoggingHandler.class);
 

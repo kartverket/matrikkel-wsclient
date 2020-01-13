@@ -13,9 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 
-/**
- * @author Leif Lislegård
- */
 public class SDOParserTest {
 
    @Test
