@@ -52,20 +52,27 @@ public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
 
       // last ned xml-fil for responsMelding
       for (ResponsMelding responsMelding : responsMeldinger) {
-         responsMelding.setByggesakXml(lastNedVedlegg.lastNedVedlegg(responsMelding));
+         String xmlString = lastNedVedlegg.lastNedVedlegg(responsMelding);
+         responsMelding.setByggesakXml(xmlString);
       }
 
-      // fjern meldinger uten uten XML (hvis nedlasting har feilet)
-      responsMeldinger.removeAll(
-            responsMeldinger.stream()
-                  .filter(o -> o.getByggesakXml() == null)
-                  .collect(Collectors.toSet())
-      );
+      // kvitterer ut de som feilet på xml validering fra kø, så vi ikke må ta stilling til de igjen og igjen
+      responsMeldinger.stream()
+              .filter(responsMelding -> responsMelding.getByggesakXml() == null)
+              .map(ResponsMelding::getForsendelseId)
+              .forEach(forsendelsesId -> {
+                 if(kvitterMelding(forsendelsesId)) { // prøv å kvittere ut forsendelsen
+                    logger.error("XML-validering av forsendelse feilet: "+ forsendelsesId + ". Kvittert ut.");
+                 } else {
+                    logger.error("XML-validering av forsendelse feilet: " + forsendelsesId + ". Kvittering feilet");
+                 }
+              });
 
-      // filtrer ut de responsmeldingene som mangler obligatorisk informasjon
+      // filtrer ut de som mangler byggesak-XML og  obligatorisk informasjon
       responsMeldinger = responsMeldinger.stream()
-            .filter(responsMelding -> responsMelding.validerResponsMelding().isEmpty())
-            .collect(Collectors.toSet());
+              .filter(responsMelding -> responsMelding.getByggesakXml() != null)
+              .filter(responsMelding -> responsMelding.validerResponsMelding().isEmpty())
+              .collect(Collectors.toSet());
 
       return MeldingerFraSaksystemDTOBuilder.build(responsMeldinger);
    }

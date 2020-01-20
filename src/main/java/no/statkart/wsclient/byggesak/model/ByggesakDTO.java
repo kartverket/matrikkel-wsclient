@@ -1,5 +1,7 @@
 package no.statkart.wsclient.byggesak.model;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ public class ByggesakDTO {
     String tittel;
     String ansvarligSokerIdNummer;
     String tiltakshaverIdNummer;
+    Instant vedtaksdato;
 
    // Bygningsdata
     Long bygningsnr;
@@ -27,6 +30,14 @@ public class ByggesakDTO {
 
     Set<ByggesakBruksenhetDTO> bruksenheter = new HashSet<>();
     Set<ByggesakEtasjeDTO> etasjer = new HashSet<>();
+
+   public Instant getVedtaksdato() {
+      return vedtaksdato;
+   }
+
+   public void setVedtaksdato(Instant vedtaksdato) {
+      this.vedtaksdato = vedtaksdato != null ? vedtaksdato : new Date().toInstant();
+   }
 
    public String getTittel() {
       return tittel;
@@ -49,6 +60,10 @@ public class ByggesakDTO {
    public void setTiltakshaverIdNummer(String tiltakshaverIdNummer) { this.tiltakshaverIdNummer = tiltakshaverIdNummer; }
 
    public Long getBygningsnr() { return bygningsnr; }
+
+   public void setBygningsnr(Long bygningsnr) {
+      this.bygningsnr = bygningsnr;
+   }
 
    public void setBygningsnr(String bygningsnr) {
       try {
@@ -110,31 +125,16 @@ public class ByggesakDTO {
       return energikildeKoder;
    }
 
-   public void setEnergikildeKoder(Set<String> energikildeKoder) {
-      this.energikildeKoder = energikildeKoder;
-   }
-
    public Set<String> getOppvarmingsKoder() {
       return oppvarmingsKoder;
-   }
-
-   public void setOppvarmingsKoder(Set<String> oppvarmingsKoder) {
-      this.oppvarmingsKoder = oppvarmingsKoder;
    }
 
    public Set<ByggesakBruksenhetDTO> getBruksenheter() {
       return bruksenheter;
    }
 
-   public void setBruksenheter(Set<ByggesakBruksenhetDTO> bruksenheter) {
-      this.bruksenheter = bruksenheter;
-   }
-
    public Set<ByggesakEtasjeDTO> getEtasjer() {
       return etasjer;
    }
 
-   public void setEtasjer(Set<ByggesakEtasjeDTO> etasjer) {
-      this.etasjer = etasjer;
-   }
 }

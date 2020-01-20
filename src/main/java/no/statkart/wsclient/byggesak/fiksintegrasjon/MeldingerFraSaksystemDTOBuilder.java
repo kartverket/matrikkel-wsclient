@@ -3,6 +3,7 @@ package no.statkart.wsclient.byggesak.fiksintegrasjon;
 import no.geointegrasjon.rep.matrikkel.foering.v1.AdresseType;
 import no.geointegrasjon.rep.matrikkel.foering.v1.BruksenhetListe;
 import no.geointegrasjon.rep.matrikkel.foering.v1.BruksenhetType;
+import no.geointegrasjon.rep.matrikkel.foering.v1.BruksenhetstypeKodeType;
 import no.geointegrasjon.rep.matrikkel.foering.v1.ByggesakType;
 import no.geointegrasjon.rep.matrikkel.foering.v1.BygningListe;
 import no.geointegrasjon.rep.matrikkel.foering.v1.BygningType;
@@ -10,11 +11,13 @@ import no.geointegrasjon.rep.matrikkel.foering.v1.EnergiforsyningType;
 import no.geointegrasjon.rep.matrikkel.foering.v1.EnergiforsyningTypeType;
 import no.geointegrasjon.rep.matrikkel.foering.v1.EtasjeListe;
 import no.geointegrasjon.rep.matrikkel.foering.v1.EtasjeType;
+import no.geointegrasjon.rep.matrikkel.foering.v1.KjoekkentilgangKodeType;
 import no.geointegrasjon.rep.matrikkel.foering.v1.MatrikkelnummerListe;
 import no.geointegrasjon.rep.matrikkel.foering.v1.MatrikkelnummerType;
 import no.geointegrasjon.rep.matrikkel.foering.v1.MatrikkelopplysningerType;
 import no.geointegrasjon.rep.matrikkel.foering.v1.PartType;
 import no.geointegrasjon.rep.matrikkel.foering.v1.VarmefordelingType;
+import no.geointegrasjon.rep.matrikkel.foering.v1.VedtakType;
 import no.statkart.wsclient.byggesak.model.ByggesakBruksenhetDTO;
 import no.statkart.wsclient.byggesak.model.ByggesakEtasjeDTO;
 import no.statkart.wsclient.byggesak.model.ByggesakDTO;
@@ -26,11 +29,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -59,7 +64,6 @@ class MeldingerFraSaksystemDTOBuilder {
       for(ResponsMelding responsMelding : responsMeldinger) {
          // fellesinfo pr. bygning i forsendelse
          String tittel = responsMelding.getTittel();
-         Date date = responsMelding.getDate();
          String forsendelseId = responsMelding.getForsendelseId();
 
          // de-serialiser xml (ByggesakType er rot-noden)
@@ -80,14 +84,19 @@ class MeldingerFraSaksystemDTOBuilder {
             List<BygningType> bygningsliste = Objects.requireNonNull(
                   evaluateObject(matrikkelopplysningerType.getBygning()).getBygning(), "Finner ingen bygningsliste");
 
+            int lopenr = 1;
+
             // opprett en info-melding pr. bygning.
             for (BygningType bygningType : bygningsliste) {
+               // løpenummer pr bygning (for visning i aktivitetslisten)
                MeldingFraSaksystemDTO meldingFraSaksystemDTO = new MeldingFraSaksystemDTO();
 
                // metadata om forsendelsen
                meldingFraSaksystemDTO.setForsendelsesId(forsendelseId);
-               meldingFraSaksystemDTO.setInfo(tittel + " " + byggesakType.getTittel() + " " + bygningType.hashCode());
-               meldingFraSaksystemDTO.setCreatedAt(date.toInstant());
+               meldingFraSaksystemDTO.setInfo(tittel + " " + byggesakType.getTittel() + " " + lopenr++);
+
+               VedtakType vedtakType = evaluateObject(byggesakType.getVedtak());
+               meldingFraSaksystemDTO.setCreatedAt(vedtakType.getVedtaksdato().toGregorianCalendar().toInstant());
                meldingFraSaksystemDTO.setKommuneNummer(kommunenr);
                // hvilket brukstilfelle meldingen skal høre til
                meldingFraSaksystemDTO.setBrukstilfelleKode(byggesakType.getKategori().getKode());
@@ -127,6 +136,7 @@ class MeldingerFraSaksystemDTOBuilder {
     * Info om 1 bygning i byggesak-xml
     */
    private static ByggesakDTO buildByggesakDTO(ByggesakDTO byggesakDTO, BygningType bygningType) {
+
       // BYGNINGSDATA
       byggesakDTO.setBygningsnr(evaluateObject(bygningType.getBygningsnummer()));
       byggesakDTO.setBebygdAreal(evaluateObject(bygningType.getBebygdAreal()));
@@ -199,6 +209,9 @@ class MeldingerFraSaksystemDTOBuilder {
          bruksenhetDTO.setAntallBad(evaluateObject(bruksenhetType.getAntallBad()));
          bruksenhetDTO.setAntallWC(evaluateObject(bruksenhetType.getAntallWC()));
 
+         bruksenhetDTO.setBruksenhetstypeKode(getKodeOrNull(evaluateObject(bruksenhetType.getBruksenhetstype())));
+         bruksenhetDTO.setKjokkentilgangKode(getKodeOrNull(evaluateObject(bruksenhetType.getKjoekkentilgang())));
+
          // matrikkelnummer
          MatrikkelnummerType matrikkelnummerType = evaluateObject(bruksenhetType.getMatrikkelnummer());
          if(matrikkelnummerType != null) {
@@ -245,7 +258,7 @@ class MeldingerFraSaksystemDTOBuilder {
 
          etasjeDTO.setBruttoarealTilAnnet(evaluateObject(etasjeType.getBruttoarealTilAnnet()));
          etasjeDTO.setBruttoarealTilBolig(evaluateObject(etasjeType.getBruttoarealTilBolig()));
-         etasjeDTO.setBruttoarealTilAnnet(evaluateObject(etasjeType.getBruksarealTotalt()));
+         etasjeDTO.setBruttoarealTotalt(evaluateObject(etasjeType.getBruksarealTotalt()));
 
          final List<String> feilkoder = etasjeDTO.validerEtasjeInfo();
          if(feilkoder.isEmpty()) etasjer.add(etasjeDTO);

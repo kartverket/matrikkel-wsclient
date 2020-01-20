@@ -1,6 +1,7 @@
 package no.statkart.wsclient.byggesak.model;
 
 import java.time.Instant;
+import java.util.Date;
 
 /**
  * Ferdig behandlet objekt fra FIKS.
@@ -52,8 +53,9 @@ public class MeldingFraSaksystemDTO {
 
    public Instant getCreatedAt() { return createdAt; }
 
-   public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
-
+   public void setCreatedAt(Instant createdAt) {
+      this.createdAt = createdAt != null ? createdAt : new Date().toInstant();
+   }
    public String getForsendelsesId() { return forsendelsesId; }
 
    public void setForsendelsesId(String forsendelsesId) { this.forsendelsesId = forsendelsesId; }

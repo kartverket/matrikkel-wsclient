@@ -3,6 +3,8 @@ package no.statkart.wsclient.byggesak.model;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Data for 1 bruksenhet på 1 bygning i en byggesak
@@ -93,7 +95,7 @@ public class ByggesakBruksenhetDTO {
    }
 
    public void setAdressekode(String adressekode) {
-      this.adressekode = adressekode != null ? Integer.valueOf(adressekode) : null;
+      this.adressekode = setVerdi(Integer::valueOf, adressekode);
    }
 
    public Integer getAdressenummer() {
@@ -101,8 +103,7 @@ public class ByggesakBruksenhetDTO {
    }
 
    public void setAdressenummer(String adressenummer) {
-
-      this.adressenummer = adressenummer != null ? Integer.valueOf(adressenummer) : null;
+      this.adressenummer = setVerdi(Integer::valueOf, adressenummer);
    }
 
    public String getAdressebokstav() {
@@ -175,6 +176,14 @@ public class ByggesakBruksenhetDTO {
 
    public void setKjokkentilgangKode(String kjokkentilgangKode) {
       this.kjokkentilgangKode = kjokkentilgangKode;
+   }
+
+   private <T, V> V setVerdi(Function<T, V> function, T verdi) {
+      try {
+         return verdi != null ? function.apply(verdi) : null;
+      } catch (Exception e) {
+         return null;
+      }
    }
 
    /**
