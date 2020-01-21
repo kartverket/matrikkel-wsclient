@@ -16,13 +16,13 @@ rootProject {
                                 String creds = mavenUpload.split('@|//').getAt(1)
                                 url mavenUpload.replace(creds.concat('@'), '') //url kommer i konsoll - ikke ha credentials der
                                 credentials {
-                                    username creds.split(':').getAt(0) ?: ""
-                                    password creds.split(':').getAt(1) ?: ""
+                                    username creds.split(':')[0] ?: ''
+                                    password creds.split(':')[1] ?: ''
                                 }
                             } else {
-                                logger.error("ERROR: Maven publish not defined. Set missing env variable {}", 'MAVEN_PUBLISH')
+                                logger.error('ERROR: Maven publish not defined. Set missing env variable {}', 'MAVEN_PUBLISH')
                             }
-                            logger.info("Configured maven publish of {} to {} with credentials {}", project.path, url, credentials)
+                            logger.info('Configured maven publish of {} to {} with credentials {}', project.path, url, credentials)
                         }
                     }
                 }
@@ -30,5 +30,3 @@ rootProject {
         }
     }
 }
-
-
