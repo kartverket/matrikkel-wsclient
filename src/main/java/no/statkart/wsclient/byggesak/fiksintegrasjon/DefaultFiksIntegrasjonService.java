@@ -1,7 +1,7 @@
 package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
 import no.statkart.skif.exception.OperationalException;
-import no.statkart.wsclient.byggesak.model.MeldingFraSaksystemDTO;
+import no.statkart.wsclient.byggesak.model.ByggesakmeldingDTO;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -32,7 +32,7 @@ public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
    }
 
    @Override
-   public Set<MeldingFraSaksystemDTO> hentForsendelser(Set<String> eksisterendeForsendelseIds, URL privateKeyUrl) {
+   public Set<ByggesakmeldingDTO> hentForsendelser(Set<String> eksisterendeForsendelseIds, URL privateKeyUrl) {
       HttpGet request = new HttpGet(HENT_FORSENDELSER);
       String responseJson;
 
@@ -74,7 +74,7 @@ public class DefaultFiksIntegrasjonService implements FiksIntegrasjonService {
               .filter(responsMelding -> responsMelding.validerResponsMelding().isEmpty())
               .collect(Collectors.toSet());
 
-      return MeldingerFraSaksystemDTOBuilder.build(responsMeldinger);
+      return ByggesakmeldingerDTOBuilder.build(responsMeldinger);
    }
 
    @Override

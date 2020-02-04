@@ -1,6 +1,6 @@
 package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
-import no.statkart.wsclient.byggesak.model.MeldingFraSaksystemDTO;
+import no.statkart.wsclient.byggesak.model.ByggesakmeldingDTO;
 
 import java.net.URL;
 import java.util.Set;
@@ -17,7 +17,7 @@ public interface FiksIntegrasjonService {
     * @param privateKeyUrl PrivateKey for å dekryptere vedlegg
     * @return En samling av Info-objekter som inneholder alle data fra forsendelse og byggesak
     */
-    Set<MeldingFraSaksystemDTO> hentForsendelser(Set<String> forsendelseIds, URL privateKeyUrl);
+    Set<ByggesakmeldingDTO> hentForsendelser(Set<String> forsendelseIds, URL privateKeyUrl);
 
    /**
     * Sjekker om vedlagt id fortsatt er tilgjengelig i listen av nye meldinger.

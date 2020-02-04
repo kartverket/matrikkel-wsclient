@@ -2,7 +2,7 @@ package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
 import no.statkart.wsclient.byggesak.model.ByggesakBruksenhetDTO;
 import no.statkart.wsclient.byggesak.model.ByggesakEtasjeDTO;
-import no.statkart.wsclient.byggesak.model.MeldingFraSaksystemDTO;
+import no.statkart.wsclient.byggesak.model.ByggesakmeldingDTO;
 import org.testng.annotations.Test;
 
 import java.math.BigInteger;
@@ -68,15 +68,15 @@ public class BehandleDataFraFiksTest {
    }
 
    @Test
-   public void testAtByggesakXmlMed2BygningerGir2MeldingerFraSaksystemInfos() {
+   public void testAtByggesakXmlMed2BygningerGir2ByggesakmeldingDTOs() {
       Set<ResponsMelding> responsMeldinger = BehandleRespons.lagResponsMeldinger(eksempelJson, null);
       responsMeldinger.forEach(responsMelding -> responsMelding.setByggesakXml(eksempelXml));
       assertThat(responsMeldinger.size()).as("Sjekk antall responsmeldinger som er opprettet").isEqualTo(1);
       String forsendelseId = responsMeldinger.iterator().next().getForsendelseId();
 
-      Set<MeldingFraSaksystemDTO> meldingFraSaksystemDTOS = MeldingerFraSaksystemDTOBuilder.build(responsMeldinger);
-      assertThat(meldingFraSaksystemDTOS.size()).as("Sjekk antall MeldingFraSaksystem som er opprettet").isEqualTo(2);
-      meldingFraSaksystemDTOS.forEach(melding -> assertThat(melding.getForsendelsesId()).isEqualTo(forsendelseId));
+      Set<ByggesakmeldingDTO> byggesakmeldingDTOS = ByggesakmeldingerDTOBuilder.build(responsMeldinger);
+      assertThat(byggesakmeldingDTOS.size()).as("Sjekk antall Byggesakmelding som er opprettet").isEqualTo(2);
+      byggesakmeldingDTOS.forEach(melding -> assertThat(melding.getForsendelsesId()).isEqualTo(forsendelseId));
    }
 
    @Test

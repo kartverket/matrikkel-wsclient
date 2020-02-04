@@ -7,7 +7,7 @@ import java.util.Date;
  * Ferdig behandlet objekt fra FIKS.
  * Det lages en Melding pr. byggesak.
  */
-public class MeldingFraSaksystemDTO {
+public class ByggesakmeldingDTO {
    /**
     * Id til forsendelsen i FIKS. Brukes for å kvittere ut.
     */
@@ -33,7 +33,7 @@ public class MeldingFraSaksystemDTO {
     */
    private String brukstilfelleKode;
 
-   public MeldingFraSaksystemDTO() {}
+   public ByggesakmeldingDTO() {}
 
    public String getBrukstilfelleKode() {
       return brukstilfelleKode;
