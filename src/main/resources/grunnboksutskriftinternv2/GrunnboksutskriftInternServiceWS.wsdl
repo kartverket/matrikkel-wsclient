@@ -8,76 +8,73 @@
 </wsp:Policy>
 <types>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift" schemaLocation="GrunnboksutskriftInternServiceWS1.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift" schemaLocation="GrunnboksutskriftInternServiceWS1.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/exception" schemaLocation="GrunnboksutskriftInternServiceWS12.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/exception" schemaLocation="../grunnbokv2/exception.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling" schemaLocation="GrunnboksutskriftInternServiceWS18.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" schemaLocation="../grunnbokv2/register_saksinformasjon.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" schemaLocation="GrunnboksutskriftInternServiceWS19.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring" schemaLocation="../grunnbokv2/register_rettsstiftelse_rettsendring.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring" schemaLocation="GrunnboksutskriftInternServiceWS20.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/registerenhetsendring" schemaLocation="../grunnbokv2/register_rettsstiftelse_registerenhetsendring.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/registerenhetsendring" schemaLocation="GrunnboksutskriftInternServiceWS21.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/personkoblingsendring" schemaLocation="../grunnbokv2/register_rettsstiftelse_personkoblingsendring.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/personkoblingsendring" schemaLocation="GrunnboksutskriftInternServiceWS22.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/overdragelse" schemaLocation="../grunnbokv2/register_rettsstiftelse_overdragelse.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/overdragelse" schemaLocation="GrunnboksutskriftInternServiceWS23.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse" schemaLocation="../grunnbokv2/register_rettsstiftelse_heftelse.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse" schemaLocation="GrunnboksutskriftInternServiceWS24.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/anmerkning" schemaLocation="../grunnbokv2/register_rettsstiftelse_anmerkning.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/anmerkning" schemaLocation="GrunnboksutskriftInternServiceWS2.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" schemaLocation="../grunnbokv2/register_rettsstiftelse.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" schemaLocation="GrunnboksutskriftInternServiceWS3.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registrering" schemaLocation="../grunnbokv2/register_registrering.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registrering" schemaLocation="GrunnboksutskriftInternServiceWS4.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" schemaLocation="../grunnbokv2/register_registerenhet.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" schemaLocation="GrunnboksutskriftInternServiceWS5.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" schemaLocation="../grunnbokv2/register_person.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" schemaLocation="GrunnboksutskriftInternServiceWS6.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" schemaLocation="../grunnbokv2/register_koder.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" schemaLocation="GrunnboksutskriftInternServiceWS7.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/journalpost" schemaLocation="../grunnbokv2/register_journalpost.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/journalpost" schemaLocation="GrunnboksutskriftInternServiceWS8.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument" schemaLocation="../grunnbokv2/register_dokument.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument" schemaLocation="GrunnboksutskriftInternServiceWS9.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/bruker" schemaLocation="../grunnbokv2/register_bruker.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/bruker" schemaLocation="GrunnboksutskriftInternServiceWS10.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/adresse" schemaLocation="../grunnbokv2/register_adresse.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/adresse" schemaLocation="GrunnboksutskriftInternServiceWS11.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register" schemaLocation="../grunnbokv2/register.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register" schemaLocation="GrunnboksutskriftInternServiceWS13.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" schemaLocation="../grunnbokv2/kodeliste.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/melding" schemaLocation="GrunnboksutskriftInternServiceWS14.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" schemaLocation="../grunnbokv2/grunnboksidenter.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" schemaLocation="GrunnboksutskriftInternServiceWS15.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" schemaLocation="../grunnbokv2/endringslogg.xsd"/>
 </xsd:schema>
 <xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/endringslogg" schemaLocation="GrunnboksutskriftInternServiceWS16.xsd"/>
-</xsd:schema>
-<xsd:schema>
-<xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="GrunnboksutskriftInternServiceWS17.xsd"/>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="../grunnbokv2/basistyper.xsd"/>
 </xsd:schema>
 </types>
 <message name="ubekreftetHistoriskGrunnboksutskrift">

@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.10-b140319.1121 svn-revision#7b34660d6bc70e587e8ec81a17e4d76af68816a6. --><xs:schema xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.0" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/internutskrift">
 
-<xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" schemaLocation="GrunnboksutskriftInternServiceWS5.xsd"/>
+<xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" schemaLocation="../grunnbokv2/register_registerenhet.xsd"/>
 
-<xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="GrunnboksutskriftInternServiceWS17.xsd"/>
+<xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="../grunnbokv2/basistyper.xsd"/>
 
 <xs:element name="bekreftetGrunnboksutskriftPdf" type="tns:bekreftetGrunnboksutskriftPdf"/>
 
