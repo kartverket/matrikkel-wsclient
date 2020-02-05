@@ -14,6 +14,9 @@
     <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/exception" schemaLocation="../grunnbokv2/exception.xsd"/>
 </xsd:schema>
 <xsd:schema>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling" schemaLocation="../grunnbokv2/saksbehandling.xsd"/>
+</xsd:schema>
+<xsd:schema>
     <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" schemaLocation="../grunnbokv2/register_saksinformasjon.xsd"/>
 </xsd:schema>
 <xsd:schema>
@@ -63,6 +66,9 @@
 </xsd:schema>
 <xsd:schema>
     <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register" schemaLocation="../grunnbokv2/register.xsd"/>
+</xsd:schema>
+<xsd:schema>
+    <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/melding" schemaLocation="../grunnbokv2/melding.xsd"/>
 </xsd:schema>
 <xsd:schema>
     <xsd:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/kodeliste" schemaLocation="../grunnbokv2/kodeliste.xsd"/>
