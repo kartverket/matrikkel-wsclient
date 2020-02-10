@@ -91,7 +91,9 @@ class ByggesakmeldingerDTOBuilder {
                byggesakmeldingDTO.setInfo(tittel + " " + byggesakType.getTittel() + " " + lopenr++);
 
                VedtakType vedtakType = evaluateObject(byggesakType.getVedtak());
-               byggesakmeldingDTO.setCreatedAt(vedtakType.getVedtaksdato().toGregorianCalendar().toInstant());
+               if(vedtakType != null) {
+                  byggesakmeldingDTO.setCreatedAt(vedtakType.getVedtaksdato().toGregorianCalendar().toInstant());
+               }
                byggesakmeldingDTO.setKommuneNummer(kommunenr);
                // hvilket brukstilfelle meldingen skal høre til
                byggesakmeldingDTO.setBrukstilfelleKode(byggesakType.getKategori().getKode());
