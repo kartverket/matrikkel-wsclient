@@ -2,7 +2,7 @@ pluginManagement {
     repositories {
         mavenLocal()
         maven {
-            url 'https://nexus.statkart.no/repository/public/'
+            url = settings.ext.properties.get('MAVEN_REPO', 'https://nexus.statkart.no/repository/public/')
         }
     }
 }
@@ -10,24 +10,7 @@ pluginManagement {
 rootProject.name = 'matrikkel-wsclient'
 
 
-gradle.beforeProject { project ->
-    if (!project.hasProperty('MAVEN_REPO')) {
-        project.ext.set('MAVEN_REPO', 'https://nexus.statkart.no/repository/public/')
-    }
-}
-
-/**
- * Vedlikehold av wrapper via kommando. Feks:
- * gradle wrapper --gradle-version 2.12
- */
-gradle.afterProject { project ->
-    project.tasks.withType(Wrapper) {
-        doFirst {
-            // Company wide download service
-            distributionUrl = uri("http://devbin.statkart.no:8070/gradle/dists/gradle-${gradleVersion}-all.zip")
-            jarFile = gradle.rootProject.file('gradle/wrapper/gradle-wrapper.jar')
-            scriptFile = gradle.rootProject.file('gradlew')
-        }
-    }
+gradle.rootProject { project -> //nested projects fallback to properties of root project
+    project.ext.MAVEN_REPO = settings.ext.properties.get('MAVEN_REPO', 'https://nexus.statkart.no/repository/public/')
 }
 

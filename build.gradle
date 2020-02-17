@@ -51,8 +51,7 @@ tasks.withType(Test).configureEach {
 
 repositories {
     maven {
-        name = 'public'
-        url MAVEN_REPO
+        name = 'public'; url = MAVEN_REPO
     }
 }
 
