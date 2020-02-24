@@ -7,9 +7,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Kontrollresultat;
 
 import java.util.List;
 
-/**
- *
- */
 public class KontrollresultatBuilder {
    protected List<Begrunnelse> begrunnelser = Lists.newArrayList();
    protected Integer dokumentindeks;

@@ -7,9 +7,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.KontrollresultatList;
 
 import java.util.List;
 
-/**
- *
- */
 public class BehandlingsinformasjonBuilder {
    protected List<Kontrollresultat> kontrollresultater = Lists.newArrayList();
 

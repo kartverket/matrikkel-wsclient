@@ -9,9 +9,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.Map;
 
-/**
- *
- */
+
 @SuppressWarnings("unchecked")
 public final class WebServiceBuilder<T> {
    private static final int TIMEOUT_MILLIS = 30_000; //30 sekunder

@@ -4,9 +4,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.RegisterenhetId;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 
-/**
- *
- */
 public interface GrunnboksutskriftInternWS {
 
    String ubekreftetHistoriskGrunnboksutskrift(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException;

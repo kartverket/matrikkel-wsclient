@@ -7,9 +7,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.endringslogg.Endringer;
 import no.kartverket.grunnbok.wsapi.v2.domain.endringslogg.ReturnerBobler;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 
-/**
- *
- */
 public interface EndringsloggWS {
 
    EndringId findSisteEndringId(GrunnbokContext grunnbokContext) throws ServiceException;

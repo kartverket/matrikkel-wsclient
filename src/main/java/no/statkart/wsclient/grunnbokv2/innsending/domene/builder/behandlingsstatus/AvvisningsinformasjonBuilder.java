@@ -6,9 +6,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Kontrollresultat;
 
 import java.util.List;
 
-/**
- *
- */
 public class AvvisningsinformasjonBuilder {
    protected List<Kontrollresultat> kontrollresultater = Lists.newArrayList();
 

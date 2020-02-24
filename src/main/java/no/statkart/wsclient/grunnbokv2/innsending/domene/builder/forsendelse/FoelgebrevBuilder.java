@@ -7,9 +7,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Saksperson;
 
 import java.util.List;
 
-/**
- *
- */
 public class FoelgebrevBuilder {
    private List<Referanse> dokumentrekkefoelge = Lists.newArrayList();
 

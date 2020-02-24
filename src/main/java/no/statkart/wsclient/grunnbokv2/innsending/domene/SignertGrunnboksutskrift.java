@@ -3,9 +3,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 import java.util.List;
 
-/**
- *
- */
 public class SignertGrunnboksutskrift {
 
    private Registerenhet gjelderFor;

@@ -3,9 +3,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingssta
 
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Begrunnelse;
 
-/**
- *
- */
 public class BegrunnelseBuilder {
    protected String elementnavn;
    protected String kodeverdi;

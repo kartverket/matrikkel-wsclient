@@ -5,9 +5,6 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-/**
- *
- */
 public class Behandlingsinformasjon {
 
    private List<Kontrollresultat> kontrollresultater = Lists.newArrayList();

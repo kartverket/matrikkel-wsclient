@@ -9,9 +9,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.BorettslagsandelIden
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.KommuneIdentTilKommuneIdMap;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.MatrikkelenhetIdentTilMatrikkelenhetIdMap;
 
-/**
- *
- */
 public interface IdentWS {
 
    MatrikkelenhetIdentTilMatrikkelenhetIdMap findMatrikkelenhetIdsForIdents(MatrikkelenhetIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException;

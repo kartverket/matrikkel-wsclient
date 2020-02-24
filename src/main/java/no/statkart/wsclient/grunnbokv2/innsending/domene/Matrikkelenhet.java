@@ -4,9 +4,6 @@ import com.google.common.base.Objects;
 
 import static com.google.common.base.Objects.equal;
 
-/**
- *
- */
 public class Matrikkelenhet {
 
    private String kommunenummer;

@@ -14,9 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 
-/**
- *
- */
 public class ForsendelsesstatusBuilder {
    public static final int DOKUMENTNUMMER = 22;
    public static final String DEFAULT_INNSENDING_ID = "1";

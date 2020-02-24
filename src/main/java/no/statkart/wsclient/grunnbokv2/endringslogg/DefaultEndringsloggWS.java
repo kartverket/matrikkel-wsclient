@@ -11,9 +11,6 @@ import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.statkart.wsclient.WebServiceBuilder;
 
 
-/**
- *
- */
 public class DefaultEndringsloggWS implements EndringsloggWS {
 
    private static EndringsloggServiceWS endringsloggServiceWS;

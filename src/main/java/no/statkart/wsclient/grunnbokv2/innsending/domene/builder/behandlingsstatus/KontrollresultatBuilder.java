@@ -6,9 +6,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Kontrollresultat;
 
 import java.util.List;
 
-/**
- *
- */
 public class KontrollresultatBuilder {
    protected List<Begrunnelse> begrunnelser = Lists.newArrayList();
    protected Integer dokumentindeks;

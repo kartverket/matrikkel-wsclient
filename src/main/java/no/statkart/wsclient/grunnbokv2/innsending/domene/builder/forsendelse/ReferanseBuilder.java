@@ -2,9 +2,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse;
 
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Referanse;
 
-/**
- *
- */
 public class ReferanseBuilder {
    private byte[] digest;
    private String gjelderDokumentreferanse;

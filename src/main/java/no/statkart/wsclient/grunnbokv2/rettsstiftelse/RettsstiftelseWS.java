@@ -9,9 +9,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.heftelse.H
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.*;
 
-/**
- *
- */
 public interface RettsstiftelseWS {
    RegisterenhetsendringIdListTransfer findRegisterenhetsendringer(RegisterenhetId registerenhetId, TransferMode transferMode,
                                                                    GrunnbokContext grunnbokContext) throws ServiceException;

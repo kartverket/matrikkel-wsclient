@@ -1,8 +1,5 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
-/**
- *
- */
 public class Rettsstiftelsesinformasjon {
 
    private String rettsstiftelsesreferanse;

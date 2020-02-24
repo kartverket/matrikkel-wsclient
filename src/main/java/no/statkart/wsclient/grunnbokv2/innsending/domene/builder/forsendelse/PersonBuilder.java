@@ -2,9 +2,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse;
 
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Person;
 
-/**
- *
- */
 public class PersonBuilder {
    private String identifikasjonsnummer;
    private String navn;

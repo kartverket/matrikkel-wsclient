@@ -1,13 +1,10 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
-
 import com.google.common.collect.Lists;
 
 import java.util.List;
 
-/**
- *
- */
+
 public class Kontrollresultat {
 
    private Integer dokumentindeks;

@@ -5,9 +5,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.Registerenh
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetIdTilRegisterenhetsrettIdsMap;
 
-/**
- *
- */
 public interface RegisterenhetsrettWS {
 
    RegisterenhetIdTilRegisterenhetsrettIdsMap findRetterForEnheter(RegisterenhetIdList registerenhetIds,

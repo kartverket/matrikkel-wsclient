@@ -8,9 +8,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Person;
 
 import java.util.List;
 
-/**
- *
- */
 public class MatrikkelenhetsendringBuilder {
    private List<Matrikkelenhet> fra = Lists.newArrayList();
    private List<Matrikkelenhet> til = Lists.newArrayList();

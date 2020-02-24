@@ -5,9 +5,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Borettslagsandel;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhet;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Registerenhet;
 
-/**
- *
- */
 public class RegisterenhetBuilder {
    private Borettslagsandel borettslagsandel;
    private Matrikkelenhet matrikkelenhet;

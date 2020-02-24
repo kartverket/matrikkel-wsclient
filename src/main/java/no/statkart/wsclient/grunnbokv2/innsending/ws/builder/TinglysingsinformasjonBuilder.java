@@ -5,9 +5,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
 
 import java.util.List;
 
-/**
- *
- */
 public class TinglysingsinformasjonBuilder {
    private List<Dokumentinformasjon> dokumentinformasjonList = Lists.newArrayList();
    private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = Lists.newArrayList();

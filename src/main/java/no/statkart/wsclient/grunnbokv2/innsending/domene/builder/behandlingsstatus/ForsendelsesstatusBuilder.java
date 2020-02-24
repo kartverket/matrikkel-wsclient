@@ -5,9 +5,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Tinglysingsinformasjon;
 import org.joda.time.LocalDateTime;
 
-/**
- *
- */
 public class ForsendelsesstatusBuilder {
 
    protected Behandlingsinformasjon behandlingsinformasjon;

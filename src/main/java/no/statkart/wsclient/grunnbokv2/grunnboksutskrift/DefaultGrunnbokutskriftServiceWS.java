@@ -7,9 +7,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.grunnboksutskrift.Grunnboksutskri
 import no.kartverket.grunnbok.wsapi.v2.service.grunnboksutskrift.GrunnboksutskriftServiceWS;
 import no.statkart.wsclient.WebServiceBuilder;
 
-/**
- *
- */
 public class DefaultGrunnbokutskriftServiceWS implements GrunnboksutskriftService {
 
    private static GrunnboksutskriftServiceWS grunnboksutskriftServiceWS;

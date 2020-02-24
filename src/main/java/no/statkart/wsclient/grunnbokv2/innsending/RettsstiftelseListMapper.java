@@ -16,9 +16,6 @@ import java.util.List;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.*;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.MATRIKKELENHETSENDRING;
 
-/**
- *
- */
 class RettsstiftelseListMapper implements TypeMapper<RettsstiftelseList, List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse>> {
 
    private Mapping mapping;

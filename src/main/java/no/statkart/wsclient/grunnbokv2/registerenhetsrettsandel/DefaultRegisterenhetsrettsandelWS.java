@@ -10,10 +10,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.PersonIdTilRegistere
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap;
 import no.statkart.wsclient.WebServiceBuilder;
 
-
-/**
- *
- */
 public class DefaultRegisterenhetsrettsandelWS implements RegisterenhetsrettsandelWS {
 
    private static RegisterenhetsrettsandelServiceWS registerenhetsrettsandelServiceWS;

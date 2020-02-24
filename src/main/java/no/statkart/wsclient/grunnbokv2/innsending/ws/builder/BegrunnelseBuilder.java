@@ -2,9 +2,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
 
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Begrunnelse;
 
-/**
- *
- */
 public class BegrunnelseBuilder {
    protected String elementnavn;
    protected String kodeverdi;

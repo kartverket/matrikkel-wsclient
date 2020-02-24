@@ -3,9 +3,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
 
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhet;
 
-/**
- *
- */
 public class MatrikkelenhetBuilder {
    private int bruksnummer;
    private String kommunenummer;

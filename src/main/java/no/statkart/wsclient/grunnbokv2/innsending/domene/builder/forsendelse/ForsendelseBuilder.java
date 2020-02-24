@@ -8,9 +8,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertMelding;
 
 import java.util.List;
 
-/**
- *
- */
 public class ForsendelseBuilder {
 
    private List<Signatur> ikkeDigitaleSignaturer = Lists.newArrayList();

@@ -8,9 +8,6 @@ import javax.xml.ws.handler.HandlerResolver;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class HandlerResolverBuilder {
 
     private boolean enableLogging;

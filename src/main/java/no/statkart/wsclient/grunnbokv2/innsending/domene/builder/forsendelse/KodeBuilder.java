@@ -2,9 +2,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse;
 
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Kode;
 
-/**
- *
- */
 public class KodeBuilder {
    private String kodeverdi;
    private String navn;

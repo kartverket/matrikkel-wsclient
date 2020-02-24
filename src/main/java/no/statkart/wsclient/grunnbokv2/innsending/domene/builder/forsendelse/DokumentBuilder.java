@@ -7,9 +7,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse;
 
 import java.util.List;
 
-/**
- *
- */
 public class DokumentBuilder {
    private String dokumentreferanse;
    private List<Rettsstiftelse> rettsstiftelser = Lists.newArrayList();

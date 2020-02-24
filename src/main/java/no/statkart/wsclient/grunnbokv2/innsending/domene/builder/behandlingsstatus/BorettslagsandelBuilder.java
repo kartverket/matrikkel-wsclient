@@ -3,9 +3,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingssta
 
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Borettslagsandel;
 
-/**
- *
- */
 public class BorettslagsandelBuilder {
    private int andelsnummer;
    private String borettslagnummer;

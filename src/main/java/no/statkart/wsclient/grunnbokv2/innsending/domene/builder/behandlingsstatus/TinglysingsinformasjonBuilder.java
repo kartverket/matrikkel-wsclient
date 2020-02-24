@@ -7,9 +7,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Tinglysingsinformasjon;
 
 import java.util.List;
 
-/**
- *
- */
 public class TinglysingsinformasjonBuilder {
    private List<Dokumentinformasjon> dokumentinformasjonList = Lists.newArrayList();
    private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = Lists.newArrayList();

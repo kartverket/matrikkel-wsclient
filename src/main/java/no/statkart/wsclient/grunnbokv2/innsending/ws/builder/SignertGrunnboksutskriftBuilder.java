@@ -7,9 +7,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskrif
 
 import java.util.List;
 
-/**
- *
- */
 public class SignertGrunnboksutskriftBuilder {
    protected Registerenhet gjelderFor;
    protected SDODokument signertUtskrift;

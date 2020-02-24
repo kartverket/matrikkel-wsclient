@@ -7,9 +7,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelsesinformas
 
 import java.util.List;
 
-/**
- *
- */
 public class DokumentinformasjonBuilder {
    protected int dokumentaar;
    protected String dokumentreferanse;

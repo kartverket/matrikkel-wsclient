@@ -1,8 +1,5 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
-/**
- *
- */
 public class Signatur {
 
    private String gjelderDokumentreferanse;

@@ -7,9 +7,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.SignertGrunnboksutskrif
 
 import java.util.List;
 
-/**
- *
- */
 public class SignertGrunnboksutskriftBuilder {
    protected Registerenhet gjelderFor;
    protected SDODokument signertUtskrift;

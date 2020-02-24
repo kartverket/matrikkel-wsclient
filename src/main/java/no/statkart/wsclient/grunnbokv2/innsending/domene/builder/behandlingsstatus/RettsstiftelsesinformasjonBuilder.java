@@ -3,9 +3,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingssta
 
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelsesinformasjon;
 
-/**
- *
- */
 public class RettsstiftelsesinformasjonBuilder {
    protected Integer rettsstiftelsesnummer;
    protected String rettsstiftelsesreferanse;

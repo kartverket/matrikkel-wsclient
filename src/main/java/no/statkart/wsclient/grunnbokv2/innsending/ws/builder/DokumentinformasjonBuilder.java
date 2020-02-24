@@ -5,9 +5,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
 
 import java.util.List;
 
-/**
- *
- */
 public class DokumentinformasjonBuilder {
    protected int dokumentaar;
    protected String dokumentreferanse;

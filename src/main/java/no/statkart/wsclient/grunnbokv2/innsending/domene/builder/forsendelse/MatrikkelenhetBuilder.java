@@ -2,9 +2,6 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse;
 
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhet;
 
-/**
- *
- */
 public class MatrikkelenhetBuilder {
    private int bruksnummer;
    private String kommunenummer;

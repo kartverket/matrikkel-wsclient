@@ -4,9 +4,6 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-/**
- *
- */
 public class Tinglysingsinformasjon {
 
    private List<Dokumentinformasjon> dokumentinformasjon = Lists.newArrayList();

@@ -7,9 +7,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertMelding;
 
 import java.util.List;
 
-/**
- *
- */
 public class UsignertMeldingBuilder {
    private List<Dokument> dokumenter = Lists.newArrayList();
    private Foelgebrev foelgebrev;

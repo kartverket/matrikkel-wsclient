@@ -5,9 +5,6 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Borettslagsandel;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhet;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Registerenhet;
 
-/**
- *
- */
 public class RegisterenhetBuilder {
    private Borettslagsandel borettslagsandel;
    private Matrikkelenhet matrikkelenhet;
