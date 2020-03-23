@@ -1,24 +1,19 @@
 #!groovy
-
-@Library('common@matrikkel') _
+@Library('common@master') _
 
 /*
  Multibranch Pipeline for Continuous integration (CI) prosess i Jenkins.
  Hver branch har denne innsjekket på fast plassering: config/jenkins-integration/Jenkinsfile
 
- For jenkins pipeline documentation https://jenkins.io/doc/book/pipeline/
- TIP: Import DSL into your IntelliJ from http://jenkins.statkart.no:8021/jenkins/pipeline-syntax/gdsl
-
  Polling skjer via oppsett av multibranch-jobb og defineres derfor ikke her i denne filen.
 
- Multibranch oppsett sjekker ut kodebasen automatisk. Denne havner som i roten til hvert workspace (som default).
+ Multibranch oppsett sjekker ut kodebasen automatisk. Denne havner i roten til hvert workspace (som default).
 */
 
 pipeline { //declarative pipeline syntax
     // agent defines where the pipeline will run.
     agent {
-        // This could also have been 'agent any' - which has the same meaning as: label "".
-        label ""
+        label 'matrikkelen'
     }
 
     triggers {
@@ -31,26 +26,25 @@ pipeline { //declarative pipeline syntax
     }
 
     environment {
-        GRADLE_OPTS = "-Xmx1g"
+        GRADLE_OPTS = '-Xmx1g'
     }
 
     stages {
         stage('Prepare') {
             steps {
-                bat "gradlew clean assemble --refresh-dependencies --profile ${gradleOptions(this)}"
+                sh "./gradlew clean assemble --refresh-dependencies --profile ${gradleOptions(this)}"
             }
         }
         stage('Integration test') {
             steps {
-                bat "gradlew testIntegration -DignoreFailures=true ${gradleOptions(this)}"
+                sh "./gradlew testIntegration -DignoreFailures=true ${gradleOptions(this)}"
             }
             post {
                 always {
-                    junit '**/test-results/testIntegration/*.xml'
+                    junit '**/build/test-results/testIntegration/*.xml'
                 }
             }
         }
-
     }
 
     // The options directive is for configuration that applies to the whole job.
@@ -74,11 +68,6 @@ pipeline { //declarative pipeline syntax
     post {
         always {
             pushBuildFeed()
-        }
-
-        changed {
-            echo 'build status changed'
-            emailBuildDetails('lislei@kartverket.no')
         }
     }
 

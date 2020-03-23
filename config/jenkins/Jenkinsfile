@@ -1,24 +1,19 @@
 #!groovy
-
-@Library('common@matrikkel') _
+@Library('common@master') _
 
 /*
  Multibranch Pipeline for Continuous integration (CI) prosess i Jenkins.
  Hver branch har denne innsjekket på fast plassering: config/jenkins/Jenkinsfile
 
- For jenkins pipeline documentation https://jenkins.io/doc/book/pipeline/
- TIP: Import DSL into your IntelliJ from http://jenkins.statkart.no:8021/jenkins/pipeline-syntax/gdsl
-
  Polling skjer via oppsett av multibranch-jobb og defineres derfor ikke her i denne filen.
 
- Multibranch oppsett sjekker ut kodebasen automatisk. Denne havner som i roten til hvert workspace (som default).
+ Multibranch oppsett sjekker ut kodebasen automatisk. Denne havner i roten til hvert workspace (som default).
 */
 
 pipeline { //declarative pipeline syntax
     // agent defines where the pipeline will run.
     agent {
-        // This could also have been 'agent any' - which has the same meaning as: label "".
-        label ""
+        label 'matrikkelen'
     }
 
     tools {
@@ -26,7 +21,7 @@ pipeline { //declarative pipeline syntax
     }
 
     environment {
-        GRADLE_OPTS = "-Xmx1g"
+        GRADLE_OPTS = '-Xmx1g'
 
         //for publisering til sentralt maven repo bindes opp via jenkins credential (secret text)
         MAVEN_PUBLISH = credentials('MAVEN_DEPLOY_RELEASE_CANDIDATE')
@@ -35,16 +30,16 @@ pipeline { //declarative pipeline syntax
     stages {
         stage('Prepare') {
             steps {
-                bat "gradlew clean assemble --refresh-dependencies --profile ${gradleOptions(this)}"
+                sh "./gradlew clean assemble --refresh-dependencies --profile ${gradleOptions(this)}"
             }
         }
         stage('Unit test') {
             steps {
-                bat "gradlew test -DignoreFailures=true ${gradleOptions(this)}"
+                sh "./gradlew test -DignoreFailures=true ${gradleOptions(this)}"
             }
             post {
                 always {
-                    junit '**/test-results/test/*.xml'
+                    junit '**/build/test-results/test/*.xml'
                 }
             }
         }
@@ -76,12 +71,7 @@ pipeline { //declarative pipeline syntax
 
     post {
         always {
-            pushBuildFeed(currentBuild.resultIsWorseOrEqualTo('UNSTABLE') ? "\nChanges: ${env.CHANGES_SINCE_LAST_SUCCESS ?: 'n/a'}" : '')
-        }
-
-        changed {
-            echo 'build status changed'
-            emailBuildDetails('lislei@kartverket.no')
+            pushBuildFeed()
         }
     }
 
