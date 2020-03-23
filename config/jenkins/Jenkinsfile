@@ -47,7 +47,7 @@ pipeline { //declarative pipeline syntax
         stage('Publish release-candidate') {
             when { branch 'master' }
             steps {
-                bat "gradlew publish ${gradleOptions(this)} --init-script config/gradle/scripts/mavenPublish.gradle"
+                sh "./gradlew publish ${gradleOptions(this)} --init-script config/gradle/scripts/mavenPublish.gradle"
             }
         }
     }
