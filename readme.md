@@ -7,7 +7,11 @@ Disse er kompilert med Sun/Oracle sin JAXWS/HTTP Stack og krever ```com.sun.xml.
 Denne testen verifiserer at implementert kontrakt for web service fungerer mot eksterne systemer.
 Testene er skrevet med visse data og forutsetter at disse eksisterer i eksterne system.
 
-Integrasjonstest kjøres lokalt via `gradlew testIntegration`.
+Integrasjonstest kjøres lokalt via `gradlew testIntegration`. Merk at det er ikke alle integrasjonstester som 
+kan kjøres lokalt da enkelte testmiljøer kun er tilgjengelige fra gitte ip-adresse på våre tjenere. Eksempel på 
+dette er KontaktinformasjonClientTest mot brønnøysundregistrene. Denne kan kun kjøres fra tjenere som utgir seg for å ha
+en gitt ip-adresse.
+
 For jenkins se [pipeline konfigurasjon](config/jenkins-integration/Jenkinsfile).
 
 # IntelliJ
