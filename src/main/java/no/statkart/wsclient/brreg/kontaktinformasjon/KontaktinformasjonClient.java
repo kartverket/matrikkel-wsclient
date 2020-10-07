@@ -82,6 +82,7 @@ public class KontaktinformasjonClient {
             URL url = new URL(endpointURL + matrikkelenhetId);
             conn = (HttpURLConnection) url.openConnection();
             conn.connect();
+            conn.setReadTimeout(5000);
 
             //Gjør kall til tjenesten
             try (InputStream is = conn.getInputStream()) {
@@ -91,7 +92,9 @@ public class KontaktinformasjonClient {
             String error = null;
             if (conn != null) {
                 try (InputStream errorStream = conn.getErrorStream()) {
-                    error = CharStreams.toString(new InputStreamReader(errorStream, StandardCharsets.UTF_8));
+                    if(errorStream != null) {
+                        error = CharStreams.toString(new InputStreamReader(errorStream, StandardCharsets.UTF_8));
+                    }
                 } catch (IOException ioException) {
                     //Feil ved feil! Vi ønsker da å kaste opprinnelig feil og ikke denne, så kastet ikke denne videre.
                     logger.error("Feil oppstod ved uthenting av errorstream etter å ha fått en ioexception. ", ioException);
