@@ -55,6 +55,11 @@ public class DefaultRettsstiftelseWS implements RettsstiftelseWS {
       return rettsstiftelseService.findRettsstiftelserForDokument(dokumentId, grunnbokContext);
    }
 
+     @Override
+    public RettsstiftelseIdListTransfer findRettsstiftelserForDokumentNummerOgAar(long dokumentNr, int dokumentAar, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException {
+        return rettsstiftelseService.findRettsstiftelserForDokumentNummerOgAar(dokumentNr, dokumentAar, transferMode, grunnbokContext);
+    }
+
    @Override
    public RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findRettsstiftelserMedNyeAndeler(RegisterenhetsrettsandelIdList andeler, GrunnbokContext grunnbokContext) throws ServiceException {
       return rettsstiftelseService.findRettsstiftelserMedNyeAndeler(andeler, grunnbokContext);
