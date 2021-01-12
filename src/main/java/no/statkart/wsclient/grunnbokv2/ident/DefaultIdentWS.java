@@ -2,12 +2,14 @@ package no.statkart.wsclient.grunnbokv2.ident;
 
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.BorettslagsandelIdentList;
+import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.DokumentIdentList;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.KommuneIdentList;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdentList;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.kartverket.grunnbok.wsapi.v2.service.ident.IdentService;
 import no.kartverket.grunnbok.wsapi.v2.service.ident.IdentServiceWS;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.BorettslagsandelIdentTilBorettslagsandelIdMap;
+import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.DokumentIdentTilDokumentIdMap;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.KommuneIdentTilKommuneIdMap;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.MatrikkelenhetIdentTilMatrikkelenhetIdMap;
 import no.statkart.wsclient.WebServiceBuilder;
@@ -51,4 +53,9 @@ public class DefaultIdentWS implements IdentWS {
    public KommuneIdentTilKommuneIdMap findKommuneIdsForIdents(KommuneIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException {
       return identService.findKommuneIdsForIdents(idents, grunnbokContext);
    }
+
+    @Override
+    public DokumentIdentTilDokumentIdMap findDokumentIdsForIdents(DokumentIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException {
+        return identService.findDokumentIdsForIdents(idents, grunnbokContext);
+    }
 }
