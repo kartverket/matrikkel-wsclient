@@ -24,10 +24,12 @@ pipeline { //declarative pipeline syntax
     }
 
     environment {
-        GRADLE_OPTS = '-Xmx1g'
-
         //for publisering til sentralt maven repo bindes opp via jenkins credential (secret text)
         MAVEN_PUBLISH = credentials('MAVEN_DEPLOY_RELEASES')
+
+        GRADLE_USER_HOME = '$WORKSPACE/.gradle' // Forhindre samtidighetsproblemer
+        GRADLE_OPTS = '-Dorg.gradle.daemon=false' +
+            ' -Dmaven.repo.local=$WORKSPACE/.m2/repository' // Forhindre samtidighetsproblemer
     }
 
     stages {
@@ -75,7 +77,6 @@ pipeline { //declarative pipeline syntax
 static def gradleOptions(script) {
     return [
             "-Dsuffix=${script.params.SUFFIX}", // offisiell versjon for publisering
-            '-Dorg.gradle.daemon=false',
             '--stacktrace'
     ].join(' ')
 }
