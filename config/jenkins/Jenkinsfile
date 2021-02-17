@@ -24,9 +24,9 @@ pipeline { //declarative pipeline syntax
         //for publisering til sentralt maven repo bindes opp via jenkins credential (secret text)
         MAVEN_PUBLISH = credentials('MAVEN_DEPLOY_RELEASE_CANDIDATE')
 
-        GRADLE_USER_HOME = '$WORKSPACE/.gradle' // Forhindre samtidighetsproblemer
+        GRADLE_USER_HOME = "$WORKSPACE/.gradle" // Forhindre samtidighetsproblemer
         GRADLE_OPTS = '-Dorg.gradle.daemon=false' +
-            ' -Dmaven.repo.local=$WORKSPACE/.m2/repository' // Forhindre samtidighetsproblemer
+            " -Dmaven.repo.local=$WORKSPACE/.m2/repository" // Forhindre samtidighetsproblemer
     }
 
     stages {
@@ -76,7 +76,6 @@ pipeline { //declarative pipeline syntax
             pushBuildFeed()
         }
     }
-
 }
 
 
