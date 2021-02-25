@@ -77,4 +77,6 @@ public class IntegrationTestProperties {
     public String getLandbruksregisterUrl() {
         return configuration.getString("landbruksregister_url");
     }
+
+    public String getLandmalerregisterUrl() { return configuration.getString("landmalerregister_url"); }
 }
