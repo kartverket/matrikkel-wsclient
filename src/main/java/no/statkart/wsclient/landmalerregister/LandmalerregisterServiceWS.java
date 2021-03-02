@@ -13,5 +13,5 @@ public interface LandmalerregisterServiceWS {
      *
      * @return Et set av landmålere. Kan være tomt.
      */
-    Set<LandmalerFraAAL> findLandmalerWS(String landmalernr, String fornavn, String etternavn);
+    Set<LandmalerFraAAL> findLandmalerWS(Long landmalernr, String fornavn, String etternavn);
 }

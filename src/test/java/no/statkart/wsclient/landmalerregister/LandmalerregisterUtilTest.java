@@ -8,7 +8,7 @@ public class LandmalerregisterUtilTest {
 
     @Test
     public void testvalidateAndBuildUrlParameters() {
-        String landmalernummer = "12345";
+        Long landmalernummer = 12345L;
         String fornavn = "Test";
         String etternavn = "Testesen";
 

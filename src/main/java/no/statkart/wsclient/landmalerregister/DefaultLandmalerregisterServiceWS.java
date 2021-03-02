@@ -25,7 +25,7 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
     }
 
     @Override
-    public Set<LandmalerFraAAL> findLandmalerWS(String landmalernr, String fornavn, String etternavn) {
+    public Set<LandmalerFraAAL> findLandmalerWS(Long landmalernr, String fornavn, String etternavn) {
 
         Set<LandmalerFraAAL> landmalerResultat = new HashSet<>();
 
@@ -48,7 +48,7 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
             // opprett LandmalerDTO-objekter pr landmåler som returneres
                 landmaalere.toList().stream()
                     .map(o -> new JSONObject((Map) o))
-                    .map(o -> new LandmalerFraAAL(o.getInt("landmaalernummer"), o.getString("navn")))
+                    .map(o -> new LandmalerFraAAL(o.getLong("landmaalernummer"), o.getString("navn")))
                     .forEach(landmalerResultat::add);
 
         } catch (IOException e) {

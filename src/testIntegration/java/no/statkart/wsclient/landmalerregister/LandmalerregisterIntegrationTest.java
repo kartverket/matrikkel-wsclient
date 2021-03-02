@@ -36,7 +36,7 @@ public class LandmalerregisterIntegrationTest {
             .isInstanceOf(ValidationException.class)
             .hasMessage("Søk i Landmålerregister inneholder bare tomme felter.");
 
-        assertThatThrownBy(() -> landmalerregisterServiceWS.findLandmalerWS(" ", "", "   "))
+        assertThatThrownBy(() -> landmalerregisterServiceWS.findLandmalerWS(null, "", "   "))
             .isInstanceOf(ValidationException.class)
             .hasMessage("Søk i Landmålerregister inneholder bare tomme felter.");
     }

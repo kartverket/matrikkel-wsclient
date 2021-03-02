@@ -1,5 +1,6 @@
 package no.statkart.wsclient.landmalerregister;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,15 +10,15 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
     private final List<LandmalerFraAAL> landmalerDb;
 
     public MockLandmalerregisterServiceWS() {
-        landmalerDb = List.of(
-                new LandmalerFraAAL(101, "Kari Nordmann"),
-                new LandmalerFraAAL(102, "Ola Nordmann"),
-                new LandmalerFraAAL(103, "Landmåler Landmålersen")
-            );
+        landmalerDb = Arrays.asList(
+            new LandmalerFraAAL(101L, "Kari Nordmann"),
+            new LandmalerFraAAL(102L, "Ola Nordmann"),
+            new LandmalerFraAAL(103L, "Landmåler Landmålersen")
+        );
     }
 
     @Override
-    public Set<LandmalerFraAAL> findLandmalerWS(String landmalernr, String fornavn, String etternavn) {
+    public Set<LandmalerFraAAL> findLandmalerWS(Long landmalernr, String fornavn, String etternavn) {
         Set<LandmalerFraAAL> sokeresultat = new HashSet<>();
 
         LandmalerregisterUtil.validateAndBuildUrlParameters(landmalernr, fornavn, etternavn);
@@ -27,15 +28,15 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
 
             // hent ut landmåler fra "db"
             // hvis landmålernummer ikke er null og ikke blankt
-            if (landmalernr != null && !landmalernr.isBlank()) {
+            if (landmalernr != null) {
                 // hvis det ikke stemmer, gå videre
-                if (!landmalerFraDb.getLandmalernr().equals(Integer.valueOf(landmalernr))) {
+                if (!landmalerFraDb.getLandmalernr().equals(landmalernr)) {
                     continue;
                 }
             }
 
             // hvis fornavn ikke er null og ikke er blankt
-            if (fornavn != null && !fornavn.isBlank()) {
+            if (fornavn != null && !fornavn.trim().isEmpty()) {
                 // hvis det ikke stemmer, gå videre
                 if (!landmalerFraDb.getNavn().contains(fornavn)) {
                     continue;
@@ -43,7 +44,7 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
             }
 
             // hvis etternavn ikke er null og ikke er blankt
-            if (etternavn != null && !etternavn.isBlank()) {
+            if (etternavn != null && !etternavn.trim().isEmpty()) {
                 if (!landmalerFraDb.getNavn().contains(etternavn)) {
                     continue;
                 }
