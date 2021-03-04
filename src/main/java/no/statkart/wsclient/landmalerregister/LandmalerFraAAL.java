@@ -7,10 +7,12 @@ public class LandmalerFraAAL {
 
     private final Long landmalernr;
     private final String navn;
+    private final String autorisasjonsdato;
 
-    public LandmalerFraAAL(Long landmalernr, String navn) {
+    public LandmalerFraAAL(Long landmalernr, String navn, String autorisasjonsdato) {
         this.landmalernr = landmalernr;
         this.navn = navn;
+        this.autorisasjonsdato = autorisasjonsdato;
     }
 
     public Long getLandmalernr() {
@@ -19,5 +21,9 @@ public class LandmalerFraAAL {
 
     public String getNavn() {
         return navn;
+    }
+
+    public String getAutorisasjonsdato() {
+        return autorisasjonsdato;
     }
 }

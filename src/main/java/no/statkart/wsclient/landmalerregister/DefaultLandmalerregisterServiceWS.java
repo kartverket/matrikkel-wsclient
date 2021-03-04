@@ -34,12 +34,6 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
 
         try (CloseableHttpResponse response = RestClient.executeHttpsRequest(request, null, null)) {
 
-            if (response == null) {
-                String msg = "Respons fra REST-kall er null: "+request.getRequestLine();
-                logger.error(msg);
-                throw new OperationalException(msg);
-            }
-
             // respons fra tjener er et jsonObject, med en liste
             String responseJson = EntityUtils.toString(response.getEntity());
             JSONObject jsonObject = new JSONObject(responseJson);
@@ -48,7 +42,7 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
             // opprett LandmalerDTO-objekter pr landmåler som returneres
                 landmaalere.toList().stream()
                     .map(o -> new JSONObject((Map) o))
-                    .map(o -> new LandmalerFraAAL(o.getLong("landmaalernummer"), o.getString("navn")))
+                    .map(o -> new LandmalerFraAAL(o.getLong("landmaalernummer"), o.getString("navn"), o.getString("autorisasjonsdato")))
                     .forEach(landmalerResultat::add);
 
         } catch (IOException e) {

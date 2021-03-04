@@ -11,9 +11,9 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
 
     public MockLandmalerregisterServiceWS() {
         landmalerDb = Arrays.asList(
-            new LandmalerFraAAL(101L, "Kari Nordmann"),
-            new LandmalerFraAAL(102L, "Ola Nordmann"),
-            new LandmalerFraAAL(103L, "Landmåler Landmålersen")
+            new LandmalerFraAAL(101L, "Kari Nordmann", "01.01.2021"),
+            new LandmalerFraAAL(102L, "Ola Nordmann", "02.01.2021"),
+            new LandmalerFraAAL(103L, "Landmåler Landmålersen", "03.01.2021")
         );
     }
 
@@ -54,7 +54,8 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
             sokeresultat.add(
                 new LandmalerFraAAL(
                     landmalerFraDb.getLandmalernr(),
-                    landmalerFraDb.getNavn()
+                    landmalerFraDb.getNavn(),
+                    landmalerFraDb.getAutorisasjonsdato()
                 )
             );
         }
