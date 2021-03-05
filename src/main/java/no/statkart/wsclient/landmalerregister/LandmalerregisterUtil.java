@@ -1,13 +1,44 @@
 package no.statkart.wsclient.landmalerregister;
 
+import no.statkart.skif.exception.ImplementationException;
 import no.statkart.skif.exception.ValidationException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
  * Hjelpeklasser for søk mot AAL eller mock-implementasjon
  */
 public class LandmalerregisterUtil {
+
+    /**
+     * Henter ut landmålere fra JSONObjectet som returneres fra AAL
+     *
+     * @param landmalerArray Listen av av treff fra webservice (rest)
+     * @return Et set av den interne objekttypen LandmalerFraAAL
+     */
+    public static Set<LandmalerFraAAL> lagSetLandmalereFraAALFraJsonResponse(JSONArray landmalerArray) {
+        Set<LandmalerFraAAL> landmalere = new HashSet<>();
+
+        // opprett LandmalerDTO-objekter pr landmåler som returneres
+        landmalerArray.toList().stream()
+            .map(o -> new JSONObject((Map) o))
+            .map(o -> new LandmalerFraAAL(
+                    o.getLong("landmaalernummer"),
+                    o.getString("navn"),
+                    o.isNull("autorisasjonsdato") ? null : o.getString("autorisasjonsdato"),
+                    o.getBoolean("autorisert")
+                )
+            )
+            .forEach(landmalere::add);
+
+        return landmalere;
+    }
 
     /**
      * Valider input og bygg parameter-string til URL
@@ -17,7 +48,7 @@ public class LandmalerregisterUtil {
     public static String validateAndBuildUrlParameters(Long landmalernr, String fornavn, String etternavn) {
         // hvis alt er blankt
         if (landmalernr == null && Stream.of(fornavn, etternavn).allMatch(s -> s == null || s.trim().isEmpty())) {
-            throw new ValidationException("Søk i Landmålerregister inneholder bare tomme felter.");
+            throw new ImplementationException("Kun tomme parametre");
         }
 
         return buildUrlParameters(landmalernr, fornavn, etternavn);

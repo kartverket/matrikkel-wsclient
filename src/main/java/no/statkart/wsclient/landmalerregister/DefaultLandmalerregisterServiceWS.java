@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServiceWS {
@@ -27,23 +26,21 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
     @Override
     public Set<LandmalerFraAAL> findLandmalerWS(Long landmalernr, String fornavn, String etternavn) {
 
-        Set<LandmalerFraAAL> landmalerResultat = new HashSet<>();
+        Set<LandmalerFraAAL> landmalerResultat;
 
+        // validerer input, og lager request-url
         String requestUrlParameters = LandmalerregisterUtil.validateAndBuildUrlParameters(landmalernr, fornavn, etternavn);
         HttpGet request = new HttpGet(requestUrl + requestUrlParameters);
 
+        // http-request
         try (CloseableHttpResponse response = RestClient.executeHttpsRequest(request, null, null)) {
 
             // respons fra tjener er et jsonObject, med en liste
             String responseJson = EntityUtils.toString(response.getEntity());
-            JSONObject jsonObject = new JSONObject(responseJson);
-            JSONArray landmaalere = jsonObject.getJSONArray("landmaalere");
+            JSONObject landmalereJson = new JSONObject(responseJson);
+            JSONArray landmaalere = landmalereJson.getJSONArray("landmaalere");
 
-            // opprett LandmalerDTO-objekter pr landmåler som returneres
-                landmaalere.toList().stream()
-                    .map(o -> new JSONObject((Map) o))
-                    .map(o -> new LandmalerFraAAL(o.getLong("landmaalernummer"), o.getString("navn"), o.getString("autorisasjonsdato")))
-                    .forEach(landmalerResultat::add);
+            landmalerResultat = LandmalerregisterUtil.lagSetLandmalereFraAALFraJsonResponse(landmaalere);
 
         } catch (IOException e) {
             String msg = "REST-kall feilet: "+request.getRequestLine() + " Årsak: " + e.getMessage();
