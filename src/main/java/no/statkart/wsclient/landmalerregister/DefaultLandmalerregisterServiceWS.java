@@ -1,6 +1,8 @@
 package no.statkart.wsclient.landmalerregister;
 
+import no.statkart.skif.exception.ImplementationException;
 import no.statkart.skif.exception.OperationalException;
+import no.statkart.skif.exception.ValidationException;
 import no.statkart.wsclient.RestClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -34,6 +36,11 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
 
         // http-request
         try (CloseableHttpResponse response = RestClient.executeHttpsRequest(request, null, null)) {
+
+            // hvis url ikke er satt, vil denne returnere null
+            if (response == null) {
+                throw new ImplementationException("Respons fra kall er null. Sjekk om URL til Landmalerregisteret er satt.");
+            }
 
             // respons fra tjener er et jsonObject, med en liste
             String responseJson = EntityUtils.toString(response.getEntity());

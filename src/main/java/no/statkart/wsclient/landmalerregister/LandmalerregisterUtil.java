@@ -29,10 +29,7 @@ public class LandmalerregisterUtil {
         landmalerArray.toList().stream()
             .map(o -> new JSONObject((Map) o))
             .map(o -> new LandmalerFraAAL(
-                    o.getLong("landmaalernummer"),
-                    o.getString("navn"),
-                    o.isNull("autorisasjonsdato") ? null : o.getString("autorisasjonsdato"),
-                    o.getBoolean("autorisert")
+                    o.getLong("landmaalernummer"),o.getString("navn")
                 )
             )
             .forEach(landmalere::add);
