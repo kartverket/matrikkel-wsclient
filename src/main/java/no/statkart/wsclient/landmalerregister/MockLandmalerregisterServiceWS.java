@@ -1,5 +1,6 @@
 package no.statkart.wsclient.landmalerregister;
 
+import com.google.common.base.Strings;
 import no.statkart.skif.exception.OperationalException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,15 +21,15 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
     LandmalerregisterMockDb landmalerregisterMockDb;
 
     @Override
-    public Set<LandmalerFraAAL> findLandmalerWS(Long landmalernr, String fornavn, String etternavn) {
+    public Set<LandmalerFraAAL> findLandmalerWS(String landmalernummer, String fornavn, String etternavn) {
 
         landmalerregisterMockDb = new LandmalerregisterMockDb();
 
         Set<LandmalerFraAAL> sokeresultat;
 
-        LandmalerregisterUtil.validateAndBuildUrlParameters(landmalernr, fornavn, etternavn);
+        LandmalerregisterUtil.validateAndBuildUrlParameters(landmalernummer, fornavn, etternavn);
 
-        JSONArray sokeTreffArray = landmalerregisterMockDb.sokEtterLandmaler(landmalernr, fornavn, etternavn);
+        JSONArray sokeTreffArray = landmalerregisterMockDb.sokEtterLandmaler(landmalernummer, fornavn, etternavn);
         sokeresultat = LandmalerregisterUtil.lagSetLandmalereFraAALFraJsonResponse(sokeTreffArray);
 
         return sokeresultat;
@@ -45,14 +46,14 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
             this.landmalereArray = new JSONObject(jsonString).getJSONArray("landmaalere");
         }
 
-        public JSONArray sokEtterLandmaler(Long landmalernr, String fornavn, String etternavn) {
+        public JSONArray sokEtterLandmaler(String landmalernummer, String fornavn, String etternavn) {
             JSONArray sokeresultatArray = new JSONArray();
 
             // søker gjennom jsonArrayen og vurderer om gjeldende jsonObjectet skal legges til i svarArray.
             landmalereArray.toList().stream()
                 .map(o -> new JSONObject((Map) o))
                 .forEach(o -> {
-                    if (treffPaSok(o, landmalernr, fornavn, etternavn)) {
+                    if (treffPaSok(o, landmalernummer, fornavn, etternavn)) {
                         sokeresultatArray.put(o);
                     }
                 });
@@ -61,18 +62,17 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
         }
 
         // sjekker om noen jsonObjectet svarer til søkekriteriene
-        private boolean treffPaSok(JSONObject landmalerJson, Long landmalernr, String fornavn, String etternavn) {
+        private boolean treffPaSok(JSONObject landmalerJson, String landmalernummer, String fornavn, String etternavn) {
             boolean treff = false;
 
             // hvis landmålernummer er fylt ut
-            if (landmalernr != null) {
+            if (landmalernummer != null) {
 
                 // gjør om til string, da AAL returnerer alle med f.eks. 1 i landmalernummer-feltet (212, 1, 123, 51 = true)
-                String landmalernrString = Long.toString(landmalernr);
-                String landmalernrKey = "landmaalernummer";
-                String landmalernrFraJson = Long.toString(landmalerJson.getLong(landmalernrKey));
+                String landmalernummerKey = "landmaalernummer";
+                String landmalernummerFraJson = Strings.padStart(String.valueOf(landmalerJson.get(landmalernummerKey)), 6, '0'); //TODO MAT-18144 Hack for at det skal funke pr nå, vil gjøres om til string
                 // sett treff til true
-                if (landmalernrFraJson.contains(landmalernrString)) {
+                if (landmalernummerFraJson.contains(landmalernummer)) {
                     treff = true;
                 } else {
                     // hvis fylt ut, men ikke riktig = ikke treff

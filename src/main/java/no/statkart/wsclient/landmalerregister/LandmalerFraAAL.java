@@ -5,17 +5,17 @@ package no.statkart.wsclient.landmalerregister;
  */
 public class LandmalerFraAAL {
 
-    private final Long landmalernr;
+    private final String landmalernummer;
     private final String navn;
 
 
-    public LandmalerFraAAL(Long landmalernr, String navn) {
-        this.landmalernr = landmalernr;
+    public LandmalerFraAAL(String landmalernummer, String navn) {
+        this.landmalernummer = landmalernummer;
         this.navn = navn;
     }
 
-    public Long getLandmalernr() {
-        return landmalernr;
+    public String getLandmalernummer() {
+        return landmalernummer;
     }
 
     public String getNavn() {

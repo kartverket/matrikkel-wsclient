@@ -1,5 +1,6 @@
 package no.statkart.wsclient.landmalerregister;
 
+import com.google.common.base.Strings;
 import no.statkart.skif.exception.ImplementationException;
 import no.statkart.skif.exception.ValidationException;
 import org.json.JSONArray;
@@ -29,7 +30,8 @@ public class LandmalerregisterUtil {
         landmalerArray.toList().stream()
             .map(o -> new JSONObject((Map) o))
             .map(o -> new LandmalerFraAAL(
-                    o.getLong("landmaalernummer"),o.getString("navn")
+                Strings.padStart(String.valueOf(o.get("landmaalernummer")), 6, '0'), //TODO MAT-18144 Hack for at det skal funke pr nå, vil gjøres om til string
+                o.getString("navn")
                 )
             )
             .forEach(landmalere::add);
@@ -42,20 +44,20 @@ public class LandmalerregisterUtil {
      *
      * @return Søkeparametere for request-strengen
      */
-    public static String validateAndBuildUrlParameters(Long landmalernr, String fornavn, String etternavn) {
+    public static String validateAndBuildUrlParameters(String landmalernummer, String fornavn, String etternavn) {
         // hvis alt er blankt
-        if (landmalernr == null && Stream.of(fornavn, etternavn).allMatch(s -> s == null || s.trim().isEmpty())) {
+        if (landmalernummer == null && Stream.of(fornavn, etternavn).allMatch(s -> s == null || s.trim().isEmpty())) {
             throw new ImplementationException("Kun tomme parametre");
         }
 
-        return buildUrlParameters(landmalernr, fornavn, etternavn);
+        return buildUrlParameters(landmalernummer, fornavn, etternavn);
     }
 
     // bygg en url med de parameterene som er angitt
-    private static String buildUrlParameters(Long landmalernr, String fornavn, String etternavn) {
+    private static String buildUrlParameters(String landmalernummer, String fornavn, String etternavn) {
 
         // sjekk hva som er fylt ut
-        boolean landmalerUtfylt = landmalernr != null;
+        boolean landmalerUtfylt = landmalernummer != null;
         boolean fornavnUtfylt = fornavn != null && !fornavn.trim().isEmpty();
         boolean etternavnUtfylt = etternavn != null && !etternavn.trim().isEmpty();
 
@@ -64,9 +66,9 @@ public class LandmalerregisterUtil {
 
         // hvis landmåler er fylt ut
         if (landmalerUtfylt) {
-            String urlLandmalernrParameter = "landmaalernummer=";
-            urlBuilder.append(urlLandmalernrParameter);
-            urlBuilder.append(landmalernr);
+            String urlLandmalernummerParameter = "landmaalernummer=";
+            urlBuilder.append(urlLandmalernummerParameter);
+            urlBuilder.append(landmalernummer);
 
             // hvis det skal være flere parametre i url
             if (fornavnUtfylt || etternavnUtfylt) {

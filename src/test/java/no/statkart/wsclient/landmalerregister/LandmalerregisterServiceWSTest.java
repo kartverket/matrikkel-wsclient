@@ -21,8 +21,16 @@ public class LandmalerregisterServiceWSTest {
     }
 
     @Test
+    public void testAntallSifferLandmalernummer() {
+        Set<LandmalerFraAAL> landmalere = landmalerregisterServiceWS.findLandmalerWS("1", null, null);
+        assertThat(
+            landmalere.stream().allMatch(l -> l.getLandmalernummer().length() == 6)
+        ).isTrue();
+    }
+
+    @Test
     public void testService1() {
-        Set<LandmalerFraAAL> landmalere = landmalerregisterServiceWS.findLandmalerWS(1L, null, null);
+        Set<LandmalerFraAAL> landmalere = landmalerregisterServiceWS.findLandmalerWS("1", null, null);
         assertThat(landmalere.size()).isEqualTo(6);
     }
 
