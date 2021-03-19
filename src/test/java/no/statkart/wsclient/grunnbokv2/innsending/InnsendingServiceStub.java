@@ -26,11 +26,6 @@ public class InnsendingServiceStub implements InnsendingService {
    }
 
    @Override
-   public Forsendelsesstatus valider(Forsendelse forsendelse) throws ServiceException {
-      return null;
-   }
-
-   @Override
    public Forsendelsesstatus hentStatus(String innsendingId) throws ServiceException {
       return ForsendelsesstatusBuilder.defaultForsendelsesstatus().build();
    }

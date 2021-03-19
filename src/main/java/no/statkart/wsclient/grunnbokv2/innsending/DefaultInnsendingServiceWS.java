@@ -51,19 +51,6 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
    }
 
    @Override
-   public Forsendelsesstatus valider(Forsendelse forsendelse) {
-      try {
-         final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs = innsendingServiceMapper.mapForsendelse(forsendelse);
-         //noinspection UnnecessaryLocalVariable
-         final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
-               innsendingWebService.valider(mappedArgs));
-         return returnvalue;
-      } catch( ServiceException e ) {
-         throw new RuntimeException(e);
-      }
-   }
-
-   @Override
    public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
       try {
          final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs = innsendingServiceMapper.mapForsendelse(forsendelse);

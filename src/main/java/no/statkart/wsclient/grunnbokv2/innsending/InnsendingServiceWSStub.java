@@ -32,21 +32,6 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    private static Map<String, Forsendelsesstatus> forsendelsesstatusByInnsendingIdMap = new ForsendelsesstatusProvider().createInitState();
 
    @Override
-   public Forsendelsesstatus valider(Forsendelse forsendelse) {
-      return ForsendelsesstatusBuilder
-            .aBehandlingsstatus()
-            .withAvvisningsinformasjon(
-                  anAvvisningsinformasjon()
-                        .withKontrollresultater(Collections.singletonList(
-                              aKontrollresultat().withDokumentindeks(1)
-                                                 .withRettsstiftelsesindeks(1)
-                                                 .withUtfall("GODKJENT")
-                                                 .build()))
-                        .build())
-            .build();
-   }
-
-   @Override
    public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
       new InnsendingServiceMapper().mapForsendelse(forsendelse);
       Forsendelsesstatus forsendelsesstatus = createForsendelsestatus(forsendelse);

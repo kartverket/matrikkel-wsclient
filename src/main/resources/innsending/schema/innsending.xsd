@@ -19,6 +19,7 @@
     <xs:complexType name="Forsendelse">
         <xs:sequence>
             <xs:element name="forsendelsesreferanse" type="xs:string"/>
+            <xs:element name="linkTilUtskrifter" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
             <xs:element name="signertMelding" type="inn:SignertMelding" minOccurs="0" maxOccurs="1"/>
             <xs:element name="usignertMelding" type="inn:UsignertMelding" minOccurs="0" maxOccurs="1"/>
             <xs:element name="ikkeDigitaleSignaturer" type="inn:SignaturList" minOccurs="0" maxOccurs="1"/>
@@ -46,7 +47,8 @@
             TODO: Gjøre denne til paakrevet nå vi får tak i informasjonen
             -->
             <xs:element name="dokumentinformasjon" type="inn:DokumentinformasjonList"/>
-            <xs:element name="signerteGrunnboksutskrifter" type="inn:SignertGrunnboksutskriftList"/>
+            <xs:element name="signerteGrunnboksutskrifter" type="inn:SignertGrunnboksutskriftList" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="grunnboksutskrifter" type="inn:GrunnboksutskriftList" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -89,10 +91,31 @@
             <xs:element name="rettsstiftelsesnummer" type="xs:int" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
+
+    <xs:complexType name="GrunnboksutskriftList">
+        <xs:sequence>
+            <xs:element name="usignertGrunnboksutskrift" type="inn:UsignertGrunnboksutskrift" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UsignertGrunnboksutskrift">
+        <xs:sequence>
+            <xs:element name="gjelderFor" type="inn:Registerenhet"/>
+            <xs:element name="link" type="xs:string"/>
+            <xs:element name="utskrift" type="inn:UsignertPDFDokument"/>
+            <xs:element name="dokumentreferanser" type="inn:DokumentreferanseList"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UsignertPDFDokument">
+        <xs:sequence>
+            <xs:element name="usignertDokument" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="SignertGrunnboksutskriftList">
         <xs:sequence>
-            <xs:element name="signertGrunnboksutskrift" type="inn:SignertGrunnboksutskrift" minOccurs="0"
-                        maxOccurs="unbounded"/>
+            <xs:element name="signertGrunnboksutskrift" type="inn:SignertGrunnboksutskrift" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -178,6 +201,24 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="PDFDokumentList">
+        <xs:sequence>
+            <xs:element name="PDFDokument" type="inn:PDFDokument" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PDFDokument">
+        <xs:sequence>
+            <xs:element name="signertPDFInnhold" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CMSDokument">
+        <xs:sequence>
+            <xs:element name="signertCMSInnhold" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="Referanse">
         <xs:sequence>
             <xs:element name="gjelderDokumentreferanse" type="xs:string"/>
@@ -209,15 +250,15 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:complexType name="SignertMelding">
         <xs:sequence>
             <xs:element name="dokumenter" type="inn:SDODokumentList" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="PDFDokumenter" type="inn:PDFDokumentList" minOccurs="0" maxOccurs="1"/>
             <xs:element name="foelgebrev" type="inn:SDODokument" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="CMSFoelgebrev" type="inn:CMSDokument" minOccurs="0" maxOccurs="1"/>
             <xs:element name="dokumenterOgFoelgebrev" type="inn:SDODokument" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
-
 
     <xs:complexType name="Kode">
         <xs:sequence>
@@ -432,14 +473,19 @@
                 <xs:element name="pant" type="inn:Pant"/>
                 <xs:element name="annenHeftelse" type="inn:AnnenHeftelse"/>
                 <xs:element name="tvangsforretning" type="inn:Tvangsforretning"/>
+                <xs:element name="tinglysingPaaNy" type="inn:TinglysingPaaNy"/>
                 <xs:element name="sletting" type="inn:Sletting"/>
+                <xs:element name="nedkvittering" type="inn:Nedkvittering"/>
+                <xs:element name="transport" type="inn:Transport"/>
                 <xs:element name="anmerkningPaaPerson" type="inn:AnmerkningPaaPerson"/>
                 <xs:element name="fradeling" type="inn:Matrikkelenhetsendring"/>
                 <xs:element name="sammenslaaingAvMatrikkelenheter" type="inn:Matrikkelenhetsendring"/>
-                <xs:element name="omnummereringAvMatrikkelenheter" type="inn:Matrikkelenhetsendring"/>
                 <xs:element name="festenummerGittBruksnummer" type="inn:Matrikkelenhetsendring"/>
                 <xs:element name="prioritetsbestemmelseForDokumentnummer"
                             type="inn:PrioritetsbestemmelseForDokumentnummer"/>
+                <xs:element name="prioritetsbestemmelseForIkkeTinglystDokument"
+                            type="inn:PrioritetsbestemmelseForIkkeTinglystDokument"/>
+                <xs:element name="omnummereringAvMatrikkelenheter" type="inn:Matrikkelenhetsendring"/>
             </xs:choice>
         </xs:sequence>
     </xs:complexType>
@@ -449,6 +495,8 @@
             <xs:element name="rettsstiftelsesreferanse" type="xs:string"/>
             <xs:element name="rettsstiftelsestype" type="inn:Kode"/>
             <xs:element name="tekster" type="inn:TekstList" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="skalHaGebyr" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="aarsakGebyrfritak" type="inn:Kode" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -630,8 +678,40 @@
                 <xs:sequence>
                     <xs:element name="veketFor" type="inn:RettsstiftelseHenvisningList"/>
                     <xs:element name="sidestiltMed" type="inn:RettsstiftelseHenvisningList"/>
+                    <xs:element name="medBeloep" type="inn:BeloepList"/>
+                    <xs:element name="forBeloep" type="inn:BeloepList"/>
                 </xs:sequence>
             </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PrioritetsbestemmelseForIkkeTinglystDokument">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="sidestiltMed" type="inn:BeloepList"/>
+                    <xs:element name="veketFor" type="inn:BeloepList"/>
+                    <xs:element name="medBeloep" type="inn:BeloepList"/>
+                    <xs:element name="forBeloep" type="inn:BeloepList"/>
+                    <xs:element name="rettighetshavere" type="inn:PersonList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Nedkvittering">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="beloepNedkvittertTil" type="inn:BeloepList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TinglysingPaaNy">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsendring"/>
         </xs:complexContent>
     </xs:complexType>
 
@@ -672,6 +752,19 @@
                     <xs:element name="fra" type="inn:MatrikkelenhetList"/>
                     <xs:element name="til" type="inn:MatrikkelenhetList"/>
                     <xs:element name="omnummereringAvUnderliggende" type="inn:MatrikkelenhetFraTilList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Transport">
+        <xs:complexContent>
+            <xs:extension base="inn:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="fraRettighetshaver" type="inn:PersonList"/>
+                    <xs:element name="tilRettighetshaver" type="inn:PersonList"/>
+                    <xs:element name="fraRealkobletTil" type="inn:RegisterenhetsrettList"/>
+                    <xs:element name="tilRealkobletTil" type="inn:RegisterenhetsrettList"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

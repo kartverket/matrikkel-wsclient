@@ -21,13 +21,6 @@
         <part name="parameters" element="tns:sendTilTinglysingResponse"/>
     </message>
 
-    <message name="validerRequest">
-        <part name="parameters" element="tns:valider"/>
-    </message>
-    <message name="validerResponse">
-        <part name="parameters" element="tns:validerResponse"/>
-    </message>
-
     <message name="hentStatusRequest">
         <part name="parameters" element="tns:hentStatus"/>
     </message>
@@ -45,12 +38,6 @@
             <output message="tns:sendTilTinglysingResponse"/>
             <fault message="tns:serviceException" name="ServiceException"/>
         </operation>
-        <operation name="valider">
-            <input message="tns:validerRequest"/>
-            <output message="tns:validerResponse"/>
-            <fault message="tns:serviceException" name="ServiceException"/>
-        </operation>
-
         <operation name="hentStatus">
             <input message="tns:hentStatusRequest"/>
             <output message="tns:hentStatusResponse"/>
@@ -62,18 +49,6 @@
     <binding name="InnsendingServicePortBinding" type="tns:InnsendingService">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <operation name="sendTilTinglysing">
-            <soap:operation soapAction=""/>
-            <input>
-                <soap:body use="literal"/>
-            </input>
-            <output>
-                <soap:body use="literal"/>
-            </output>
-            <fault name="ServiceException">
-                <soap:fault name="ServiceException" use="literal"/>
-            </fault>
-        </operation>
-        <operation name="valider">
             <soap:operation soapAction=""/>
             <input>
                 <soap:body use="literal"/>
