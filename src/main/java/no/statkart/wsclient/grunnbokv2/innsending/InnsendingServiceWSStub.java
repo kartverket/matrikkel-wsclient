@@ -3,6 +3,7 @@ package no.statkart.wsclient.grunnbokv2.innsending;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.ByteStreams;
+import no.kartverket.grunnbok.wsapi.v2.service.internutskrift.UbekreftetGrunnboksutskrift;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.*;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus.Behandlingsutfall;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.Rettsstiftelsestype;
@@ -14,7 +15,6 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 import static java.util.Collections.singletonList;
-import static no.statkart.wsclient.grunnbokv2.innsending.DefaultInnsendingServiceWS.pakkUtBekreftetGrunnboksutskrift;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.AvvisningsinformasjonBuilder.anAvvisningsinformasjon;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.BegrunnelseBuilder.aBegrunnelse;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.KontrollresultatBuilder.aKontrollresultat;
@@ -42,7 +42,6 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    @Override
    public Forsendelsesstatus hentStatus(String innsendingId) {
       final Forsendelsesstatus returnvalue = hentStatusFraStub(innsendingId);
-      pakkUtBekreftetGrunnboksutskrift(returnvalue);
       return returnvalue;
    }
 
@@ -146,7 +145,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
          return forsendelsesstatusByInnsendingIdMap;
       }
 
-      private Forsendelsesstatus createForsendelsestatusTinglyst(List<SignertGrunnboksutskrift> grunnboksutskrifter, String id) {
+      private Forsendelsesstatus createForsendelsestatusTinglyst(List<UsignertGrunnboksutskrift> grunnboksutskrifter, String id) {
          return ForsendelsesstatusBuilder.aBehandlingsstatus()
                .withInnsendingId(id)
                .withForsendelsesreferanse("1")
@@ -171,22 +170,22 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                                        .build())
                                  .build()))
                            .build()))
-                     .withSignerteGrunnboksutskrifter(grunnboksutskrifter)
+                     .withUsignerteGrunnboksutskrifter(grunnboksutskrifter)
                      .build())
                .build();
       }
    }
 
    private static Forsendelsesstatus createForsendelsestatus(Forsendelse forsendelse) {
-      List<SignertGrunnboksutskrift> grunnboksutskrifter = createGrunnboksutskrifter(forsendelse);
+      List<UsignertGrunnboksutskrift> grunnboksutskrifter = createGrunnboksutskrifter(forsendelse);
       return createForsendelsestatus(Behandlingsutfall.UAVKLART, grunnboksutskrifter);
    }
 
    private static Forsendelsesstatus createForsendelsestatus(Behandlingsutfall behandlingsutfall) {
-      return createForsendelsestatus(behandlingsutfall, Lists.<SignertGrunnboksutskrift>newArrayList());
+      return createForsendelsestatus(behandlingsutfall, Lists.newArrayList());
    }
 
-   private static Forsendelsesstatus createForsendelsestatus(Behandlingsutfall behandlingsutfall, List<SignertGrunnboksutskrift> grunnboksutskrifter) {
+   private static Forsendelsesstatus createForsendelsestatus(Behandlingsutfall behandlingsutfall, List<UsignertGrunnboksutskrift> grunnboksutskrifter) {
       return ForsendelsesstatusBuilder.aBehandlingsstatus()
             .withInnsendingId(getNextInnseningsIdAndIncreaseSequence())
             .withForsendelsesreferanse("1")
@@ -211,13 +210,13 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                                     .build())
                               .build()))
                         .build()))
-                  .withSignerteGrunnboksutskrifter(grunnboksutskrifter)
+                  .withUsignerteGrunnboksutskrifter(grunnboksutskrifter)
                   .build())
             .build();
    }
 
-   private static List<SignertGrunnboksutskrift> createGrunnboksutskrifter(Forsendelse forsendelse) {
-      List<SignertGrunnboksutskrift> grunnboksutskrifter = new ArrayList<>();
+   private static List<UsignertGrunnboksutskrift> createGrunnboksutskrifter(Forsendelse forsendelse) {
+      List<UsignertGrunnboksutskrift> grunnboksutskrifter = new ArrayList<>();
       Collection<Matrikkelenhet> matrikkelenheterIForsendelse = new ArrayList<>();
       for (Dokument dokument : forsendelse.getUsignertMelding().getDokumenter()) {
          for (Rettsstiftelse rettsstiftelse : dokument.getRettsstiftelser()) {
@@ -234,22 +233,24 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
       return grunnboksutskrifter;
    }
 
-   private static SignertGrunnboksutskrift createGrunnboksutskrift(Matrikkelenhet matrikkelenhet) {
-      String resourceName = "sdo/eksempel-SDOv1.0.xml";
-      final byte[] bytes;
-      try {
-         bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream(resourceName));
-      } catch (IOException e) {
-         throw new RuntimeException(e);
-      }
+   private static UsignertGrunnboksutskrift createGrunnboksutskrift(Matrikkelenhet matrikkelenhet) {
+       String resourceName = "sdo/eksempel-SDOv1.0.pdf";
+       final byte[] bytes;
+       try {
+           bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream(resourceName));
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
 
-      return SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
-            .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
-                  .withMatrikkelenhet(matrikkelenhet)
-                  .build())
-            .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
-                  .withSignertDokument(bytes)
-                  .build()).build();
+       return UsignertGrunnboksutskriftBuilder.aUsignertGrunnboksutskrift()
+           .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
+               .withMatrikkelenhet(matrikkelenhet)
+               .build())
+           .withLink("http://www.test.no")
+           .withUsignertUtskrift(UsignertPDFDokumentBuilder.aUsignertPDFDokument()
+               .withUsignertDokument(bytes)
+               .build())
+           .build();
    }
 
    private static String createInnsendingIdFromForsendelse(Forsendelse forsendelse) {

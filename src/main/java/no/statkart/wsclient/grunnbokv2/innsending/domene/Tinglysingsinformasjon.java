@@ -8,6 +8,7 @@ public class Tinglysingsinformasjon {
 
    private List<Dokumentinformasjon> dokumentinformasjon = Lists.newArrayList();
    private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = Lists.newArrayList();
+   private List<UsignertGrunnboksutskrift> grunnboksutskrifter = Lists.newArrayList();
 
    public List<Dokumentinformasjon> getDokumentinformasjon() {
       return dokumentinformasjon;
@@ -24,4 +25,12 @@ public class Tinglysingsinformasjon {
    public void setSignerteGrunnboksutskrifter(List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter) {
       this.signerteGrunnboksutskrifter = signerteGrunnboksutskrifter;
    }
+
+    public List<UsignertGrunnboksutskrift> getGrunnboksutskrifter() {
+        return grunnboksutskrifter;
+    }
+
+    public void setGrunnboksutskrifter(List<UsignertGrunnboksutskrift> grunnboksutskrifter) {
+        this.grunnboksutskrifter = grunnboksutskrifter;
+    }
 }

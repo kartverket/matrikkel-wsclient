@@ -8,6 +8,7 @@ import java.util.List;
 public class TinglysingsinformasjonBuilder {
    private List<Dokumentinformasjon> dokumentinformasjonList = Lists.newArrayList();
    private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = Lists.newArrayList();
+   private List<UsignertGrunnboksutskrift> usignertGrunnboksutskrifter = Lists.newArrayList();
 
    private TinglysingsinformasjonBuilder() {
    }
@@ -21,13 +22,9 @@ public class TinglysingsinformasjonBuilder {
       return this;
    }
 
-   public TinglysingsinformasjonBuilder withSignerteGrunnboksutskrifter(List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter) {
-      this.signerteGrunnboksutskrifter = signerteGrunnboksutskrifter;
-      return this;
-   }
-
-   public TinglysingsinformasjonBuilder but() {
-      return aTinglysingsinformasjon().withDokumentinformasjon(dokumentinformasjonList).withSignerteGrunnboksutskrifter(signerteGrunnboksutskrifter);
+   public TinglysingsinformasjonBuilder withUsignerteGrunnboksutskrifter(List<UsignertGrunnboksutskrift> usignerteGrunnboksutskrifter) {
+       this.usignertGrunnboksutskrifter = usignerteGrunnboksutskrifter;
+       return this;
    }
 
    public Tinglysingsinformasjon build() {
@@ -39,6 +36,11 @@ public class TinglysingsinformasjonBuilder {
       SignertGrunnboksutskriftList signertGrunnboksutskriftList = new SignertGrunnboksutskriftList();
       signertGrunnboksutskriftList.getSignertGrunnboksutskrift().addAll(signerteGrunnboksutskrifter);
       tinglysingsinformasjon.setSignerteGrunnboksutskrifter(signertGrunnboksutskriftList);
-      return tinglysingsinformasjon;
+
+       GrunnboksutskriftList usignertGrunnboksutskriftList = new GrunnboksutskriftList();
+       usignertGrunnboksutskriftList.getUsignertGrunnboksutskrift().addAll(usignertGrunnboksutskrifter);
+       tinglysingsinformasjon.setGrunnboksutskrifter(usignertGrunnboksutskriftList);
+
+       return tinglysingsinformasjon;
    }
 }

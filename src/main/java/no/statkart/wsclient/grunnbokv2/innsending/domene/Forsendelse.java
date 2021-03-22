@@ -8,6 +8,8 @@ import java.util.List;
 public class Forsendelse {
 
    private String forsendelsesreferanse;
+   // MAT-18022 Flagget skal alltid være true.
+   private final Boolean linkTilUtskrifter = true;
    private SignertMelding signertMelding;
    private UsignertMelding usignertMelding;
    private List<Signatur> ikkeDigitaleSignaturer = Lists.newArrayList();
@@ -28,7 +30,15 @@ public class Forsendelse {
       this.forsendelsesreferanse = forsendelsesreferanse;
    }
 
-   public SignertMelding getSignertMelding() {
+   public Boolean getLinkTilUtskrifter() {
+        return linkTilUtskrifter;
+   }
+
+   public void setLinkTilUtskrifter(Boolean linkTilUtskrifter) {
+   // Trenger setter for mapping, men flagget skal alltid være true
+   }
+
+    public SignertMelding getSignertMelding() {
       return signertMelding;
    }
 

@@ -16,10 +16,12 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Kontrollresultat;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhet;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Registerenhet;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelsesinformasjon;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.SDODokument;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.SignertGrunnboksutskrift;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Tinglysingsinformasjon;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertGrunnboksutskrift;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertPDFDokument;
 import no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
 import javax.xml.bind.JAXBElement;
@@ -92,10 +94,13 @@ public class InnsendingServiceMapperTest {
       assertEquals(rettsstiftelsesinformasjon.getRettsstiftelsesreferanse(), RETTSSTIFTELSESREFERANSE);
 
       List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = tinglysingsinformasjon.getSignerteGrunnboksutskrifter();
-      assertEquals(signerteGrunnboksutskrifter.size(), 1);
-      SignertGrunnboksutskrift signertGrunnboksutskrift = signerteGrunnboksutskrifter.get(0);
+      assertEquals(signerteGrunnboksutskrifter.size(), 0);
 
-      Registerenhet gjelderFor = signertGrunnboksutskrift.getGjelderFor();
+      List<UsignertGrunnboksutskrift> grunnboksutskrifter = tinglysingsinformasjon.getGrunnboksutskrifter();
+      Assertions.assertThat(grunnboksutskrifter).hasSize(1);
+      UsignertGrunnboksutskrift usignertGrunnboksutskrift = grunnboksutskrifter.get(0);
+
+      Registerenhet gjelderFor = usignertGrunnboksutskrift.getGjelderFor();
       Matrikkelenhet matrikkelenhet = gjelderFor.getMatrikkelenhet();
       assertEquals(matrikkelenhet.getBruksnummer(), BRUKSNUMMER);
       assertEquals(matrikkelenhet.getFestenummer(), FESTENUMMER);
@@ -104,10 +109,10 @@ public class InnsendingServiceMapperTest {
       assertEquals(matrikkelenhet.getKommunenummer(), KOMMUNENUMMER);
       assertEquals(matrikkelenhet.getSeksjonsnummer(), SEKSJONSNUMMER);
 
-      SDODokument signertUtskrift = signertGrunnboksutskrift.getSignertUtskrift();
-      assertEquals(signertUtskrift.getSignertDokument(), SIGNERT_DOKUMENT_BYTES);
+       UsignertPDFDokument utskrift = usignertGrunnboksutskrift.getUtskrift();
+       assertEquals(utskrift.getUsignertDokument(), USIGNERT_DOKUMENT_BYTES);
 
-      assertEquals(signertGrunnboksutskrift.getDokumentreferanser(), SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE);
+      assertEquals(usignertGrunnboksutskrift.getDokumentreferanser(), USIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE);
    }
 
    private static void assertAvvisningsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {

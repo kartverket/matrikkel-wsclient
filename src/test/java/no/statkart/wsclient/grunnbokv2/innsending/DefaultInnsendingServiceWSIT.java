@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokument;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.SignertGrunnboksutskrift;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertGrunnboksutskrift;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.DokumentBuilder;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.ForsendelseBuilder;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.UsignertMeldingBuilder;
@@ -80,18 +80,13 @@ public class DefaultInnsendingServiceWSIT {
       final Forsendelsesstatus forsendelsesstatus = innsendingService.hentStatus(innsendingId);
 
       Preconditions.checkState("TINGLYST".equals(forsendelsesstatus.getBehandlingsutfall()));
-      Preconditions.checkState(!forsendelsesstatus.getTinglysingsinformasjon().getSignerteGrunnboksutskrifter().isEmpty());
+      Preconditions.checkState(forsendelsesstatus.getTinglysingsinformasjon().getSignerteGrunnboksutskrifter().isEmpty());
+      Preconditions.checkState(!forsendelsesstatus.getTinglysingsinformasjon().getGrunnboksutskrifter().isEmpty());
 
-      for (SignertGrunnboksutskrift signertGrunnboksutskrift : forsendelsesstatus.getTinglysingsinformasjon().getSignerteGrunnboksutskrifter()) {
-         Preconditions.checkNotNull(signertGrunnboksutskrift.getSignertUtskrift());
-         Preconditions.checkNotNull(signertGrunnboksutskrift.getSignertUtskrift().getSignertDokument());
 
-         Assertions.assertThat(signertGrunnboksutskrift.getUtskrift())
-               .describedAs("Har fått satt pdf dokument")
-               .isNotEmpty();
-
-         Assertions.assertThat(signertGrunnboksutskrift.getMimeType())
-               .isEqualToIgnoringCase("application/pdf");
+       for (UsignertGrunnboksutskrift usignertGrunnboksutskrift : forsendelsesstatus.getTinglysingsinformasjon().getGrunnboksutskrifter()) {
+         Preconditions.checkNotNull(usignertGrunnboksutskrift.getUtskrift());
+         Preconditions.checkNotNull(usignertGrunnboksutskrift.getUtskrift().getUsignertDokument());
       }
    }
 }

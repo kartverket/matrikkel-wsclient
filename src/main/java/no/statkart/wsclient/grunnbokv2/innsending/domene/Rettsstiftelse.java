@@ -10,6 +10,8 @@ public abstract class Rettsstiftelse {
    private String rettsstiftelsesreferanse;
    private Kode rettsstiftelsestype;
    private List<Tekst> tekster = Lists.newArrayList();
+   private Boolean skalHaGebyr;
+   private Kode aarsakGebyrfritak;
 
    public enum Rettsstiftelsestype {
       MATRIKKELENHETSENDRING
@@ -40,4 +42,20 @@ public abstract class Rettsstiftelse {
    public void setTekster(List<Tekst> tekster) {
       this.tekster = tekster;
    }
+
+    public Boolean getSkalHaGebyr() {
+        return skalHaGebyr;
+    }
+
+    public void setSkalHaGebyr(Boolean skalHaGebyr) {
+        this.skalHaGebyr = skalHaGebyr;
+    }
+
+    public Kode getAarsakGebyrfritak() {
+        return aarsakGebyrfritak;
+    }
+
+    public void setAarsakGebyrfritak(Kode aarsakGebyrfritak) {
+        this.aarsakGebyrfritak = aarsakGebyrfritak;
+    }
 }

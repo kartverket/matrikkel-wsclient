@@ -25,22 +25,22 @@ public class ForsendelsesstatusTest {
       Matrikkelenhet enhetINittedalWithDifferentSeksjonsnummer = enhetINittedalBuilder.but()
             .withSeksjonsnummer(seksjonsnummer).build();
 
-      SignertGrunnboksutskriftBuilder utskriftBuilder1 = SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
-            .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
-                  .withMatrikkelenhet(enhetINittedal)
-                  .build())
-            .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
-                  .withSignertDokument("Dokument1".getBytes())
-                  .build());
+      UsignertGrunnboksutskriftBuilder utskriftBuilder1 = UsignertGrunnboksutskriftBuilder.aUsignertGrunnboksutskrift()
+          .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
+              .withMatrikkelenhet(enhetINittedal)
+              .build())
+          .withUsignertUtskrift(UsignertPDFDokumentBuilder.aUsignertPDFDokument()
+              .withUsignertDokument("Dokument1".getBytes())
+              .build());
 
       byte[] pdf2 = "Dokument2".getBytes();
-      SignertGrunnboksutskriftBuilder utskriftBuilder2 = SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
-            .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
-                  .withMatrikkelenhet(enhetINittedalWithDifferentSeksjonsnummer)
-                  .build())
-            .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
-                  .withSignertDokument(pdf2)
-                  .build());
+      UsignertGrunnboksutskriftBuilder utskriftBuilder2 = UsignertGrunnboksutskriftBuilder.aUsignertGrunnboksutskrift()
+          .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
+              .withMatrikkelenhet(enhetINittedalWithDifferentSeksjonsnummer)
+              .build())
+          .withUsignertUtskrift(UsignertPDFDokumentBuilder.aUsignertPDFDokument()
+              .withUsignertDokument(pdf2)
+              .build());
 
       Forsendelsesstatus forsendelsesstatus = ForsendelsesstatusBuilder.aBehandlingsstatus()
             .withInnsendingId("1")
@@ -66,12 +66,12 @@ public class ForsendelsesstatusTest {
                                     .build())
                               .build()))
                         .build()))
-                  .withSignerteGrunnboksutskrifter(Lists.newArrayList(utskriftBuilder1.build(), utskriftBuilder2.build()))
+                  .withUsignerteGrunnboksutskrifter(Lists.newArrayList(utskriftBuilder1.build(), utskriftBuilder2.build()))
                   .build())
             .build();
 
-      SignertGrunnboksutskrift foundUtskrift = forsendelsesstatus.findBekreftetGrunnboksutskriftForMatrikkelenhet(enhetINittedalWithDifferentSeksjonsnummer);
+      UsignertGrunnboksutskrift foundUtskrift = forsendelsesstatus.findBekreftetGrunnboksutskriftForMatrikkelenhet(enhetINittedalWithDifferentSeksjonsnummer);
       assertEquals(foundUtskrift.getGjelderFor().getMatrikkelenhet().getSeksjonsnummer(), seksjonsnummer);
-      assertEquals(foundUtskrift.getSignertUtskrift().getSignertDokument(), pdf2);
+      assertEquals(foundUtskrift.getUtskrift().getUsignertDokument(), pdf2);
    }
 }

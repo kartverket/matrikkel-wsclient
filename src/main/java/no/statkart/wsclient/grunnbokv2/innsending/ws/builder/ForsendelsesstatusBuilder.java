@@ -26,7 +26,7 @@ public class ForsendelsesstatusBuilder {
    public static final String DOKUMENTREFERANSE = "Referanse1";
    public static final int RETTSSTIFTELSESNUMMER = 235;
    public static final String RETTSSTIFTELSESREFERANSE = "Xyz";
-   public static final byte[] SIGNERT_DOKUMENT_BYTES = psedudoSDO();
+   public static final byte[] USIGNERT_DOKUMENT_BYTES = psedudoPDF();
    public static final String KOMMUNENUMMER = "1301";
    public static final String KOMMUNENAVN = "OSLO";
    public static final int GAARDSNUMMER = 1;
@@ -41,7 +41,7 @@ public class ForsendelsesstatusBuilder {
    public static final String KONTROLL_RESULTAT_NAVN = "Resultat 1";
    public static final int KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS = 2;
    public static final String KONTROLL_RESULTAT_UTFALL = "Ikke tinglyst";
-   public static final List<String> SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE = Collections.singletonList("235A");
+   public static final List<String> USIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE = Collections.singletonList("235A");
    public static final String BEGRUNNELSE_UTFALL = "UAVKLART";
 
    protected Behandlingsinformasjon behandlingsinformasjon;
@@ -138,7 +138,7 @@ public class ForsendelsesstatusBuilder {
                                     .build())
                               .build()))
                         .build()))
-                  .withSignerteGrunnboksutskrifter(Lists.newArrayList(SignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
+                  .withUsignerteGrunnboksutskrifter(Lists.newArrayList(UsignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
                         .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
                               .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
                                     .withKommunenummer(KOMMUNENUMMER)
@@ -149,10 +149,11 @@ public class ForsendelsesstatusBuilder {
                                     .withSeksjonsnummer(SEKSJONSNUMMER)
                                     .build())
                               .build())
-                        .withSignertUtskrift(SDODokumentBuilder.aSDODokument()
-                              .withSignertDokument(SIGNERT_DOKUMENT_BYTES)
+                        .withLink("http://www.test.no/")
+                        .withUsignertUtskrift(UsignertPDFDokumentBuilder.aUsignertPDFDokument()
+                              .withUsignertDokument(USIGNERT_DOKUMENT_BYTES)
                               .build())
-                        .withDokumentreferanser(SIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE)
+                        .withDokumentreferanser(USIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE)
                         .build()))
                   .build())
             .withBehandlingsinformasjon(BehandlingsinformasjonBuilder.anAvvisningsinformasjon()
@@ -173,11 +174,11 @@ public class ForsendelsesstatusBuilder {
    }
 
    /**
-    * @return Base64 encodet SDO
+    * eksempel-pdf
     */
-   static byte[] psedudoSDO() {
+   static byte[] psedudoPDF() {
       try {
-         final byte[] bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream("sdo/eksempel-SDOv1.0.xml"));
+         final byte[] bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream("sdo/eksempel-SDOv1.0.pdf"));
          return bytes;
       } catch (IOException e) {
          throw new RuntimeException(e);

@@ -43,24 +43,25 @@ public class Forsendelsesstatus {
       }
    }
 
-   public SignertGrunnboksutskrift findBekreftetGrunnboksutskriftForMatrikkelenhet(final Matrikkelenhet matrikkelenhet) {
+   public UsignertGrunnboksutskrift findBekreftetGrunnboksutskriftForMatrikkelenhet(final Matrikkelenhet matrikkelenhet) {
       if (tinglysingsinformasjon != null) {
-         Collection<SignertGrunnboksutskrift> utskrifterForMatrikkelenhet = Collections2.filter(tinglysingsinformasjon.getSignerteGrunnboksutskrifter(), new Predicate<SignertGrunnboksutskrift>() {
-            @Override
-            public boolean apply(SignertGrunnboksutskrift signertGrunnboksutskrift) {
-               Matrikkelenhet matrikkelenhetForGrunnboksutskrift = signertGrunnboksutskrift.getGjelderFor().getMatrikkelenhet();
-               return equal(matrikkelenhet.getKommunenummer(), matrikkelenhetForGrunnboksutskrift.getKommunenummer())
+         Collection<UsignertGrunnboksutskrift> utskrifterForMatrikkelenhet = Collections2.filter(
+
+             tinglysingsinformasjon.getGrunnboksutskrifter(), usignertGrunnboksutskrift -> {
+                 Matrikkelenhet matrikkelenhetForGrunnboksutskrift = usignertGrunnboksutskrift.getGjelderFor().getMatrikkelenhet();
+                 return equal(matrikkelenhet.getKommunenummer(), matrikkelenhetForGrunnboksutskrift.getKommunenummer())
                      && equal(matrikkelenhet.getGaardsnummer(), matrikkelenhetForGrunnboksutskrift.getGaardsnummer())
                      && equal(matrikkelenhet.getBruksnummer(), matrikkelenhetForGrunnboksutskrift.getBruksnummer())
                      && equal(matrikkelenhet.getFestenummer(), matrikkelenhetForGrunnboksutskrift.getFestenummer())
                      && equal(matrikkelenhet.getSeksjonsnummer(), matrikkelenhetForGrunnboksutskrift.getSeksjonsnummer());
-            }
-         });
-         if (utskrifterForMatrikkelenhet.size() == 1) {
-            return utskrifterForMatrikkelenhet.iterator().next();
-         }
+             }
+         );
+
+          if (utskrifterForMatrikkelenhet.size() == 1) {
+              return utskrifterForMatrikkelenhet.iterator().next();
+          }
       }
-      return null;
+       return null;
    }
 
    public boolean erFerdigbehandlet() {
