@@ -70,7 +70,7 @@ public class ForsendelsesstatusTest {
                   .build())
             .build();
 
-      UsignertGrunnboksutskrift foundUtskrift = forsendelsesstatus.findBekreftetGrunnboksutskriftForMatrikkelenhet(enhetINittedalWithDifferentSeksjonsnummer);
+      UsignertGrunnboksutskrift foundUtskrift = forsendelsesstatus.findUbekreftetGrunnboksutskriftForMatrikkelenhet(enhetINittedalWithDifferentSeksjonsnummer);
       assertEquals(foundUtskrift.getGjelderFor().getMatrikkelenhet().getSeksjonsnummer(), seksjonsnummer);
       assertEquals(foundUtskrift.getUtskrift().getUsignertDokument(), pdf2);
    }

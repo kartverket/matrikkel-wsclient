@@ -43,7 +43,8 @@ public class Forsendelsesstatus {
       }
    }
 
-   public UsignertGrunnboksutskrift findBekreftetGrunnboksutskriftForMatrikkelenhet(final Matrikkelenhet matrikkelenhet) {
+   // TODO MAT-18022 Public-metode som kun finnes i test internt i wsclient
+   public UsignertGrunnboksutskrift findUbekreftetGrunnboksutskriftForMatrikkelenhet(final Matrikkelenhet matrikkelenhet) {
       if (tinglysingsinformasjon != null) {
          Collection<UsignertGrunnboksutskrift> utskrifterForMatrikkelenhet = Collections2.filter(
 
