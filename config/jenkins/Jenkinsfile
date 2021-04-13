@@ -72,7 +72,7 @@ pipeline { //declarative pipeline syntax
     }
 
     post {
-        always {
+        unsuccessful {
             pushBuildFeed()
         }
     }
