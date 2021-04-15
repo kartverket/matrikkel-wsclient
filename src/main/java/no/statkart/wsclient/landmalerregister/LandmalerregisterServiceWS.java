@@ -13,5 +13,5 @@ public interface LandmalerregisterServiceWS {
      *
      * @return Et set av landmålere. Kan være tomt.
      */
-    Set<LandmalerFraAAL> findLandmalerWS(String landmalernummer, String fornavn, String etternavn);
+    Set<LandmalerFraAAL> findLandmalerWS(String landmalernummer, String fornavn, String etternavn) throws LandmalerregisterSokException;
 }

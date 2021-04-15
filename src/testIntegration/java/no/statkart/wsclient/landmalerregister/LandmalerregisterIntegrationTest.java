@@ -1,13 +1,16 @@
 package no.statkart.wsclient.landmalerregister;
 
+import com.google.common.base.Supplier;
 import no.statkart.wsclient.IntegrationTestProperties;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Method;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class LandmalerregisterIntegrationTest {
 
@@ -17,8 +20,9 @@ public class LandmalerregisterIntegrationTest {
     public void setUp() {
         final IntegrationTestProperties config = new IntegrationTestProperties();
         String landmalerregisterUrl = config.getLandmalerregisterUrl();
+
         if (landmalerregisterServiceWS == null) {
-            landmalerregisterServiceWS = new DefaultLandmalerregisterServiceWS(landmalerregisterUrl);
+            landmalerregisterServiceWS = new DefaultLandmalerregisterServiceWS(landmalerregisterUrl, null, null);
         }
     }
 
@@ -27,7 +31,9 @@ public class LandmalerregisterIntegrationTest {
 
     @Test
     public void testHentLandmalerMedLandmalernummer() {
-        Set<LandmalerFraAAL> landmalereWS = landmalerregisterServiceWS.findLandmalerWS("1", null, null);
-        assertThat(landmalereWS).isNotEmpty();
+
+        assertThatThrownBy(() -> landmalerregisterServiceWS.findLandmalerWS("000001", null, null))
+            .isInstanceOf(LandmalerregisterSokException.class)
+            .hasMessageContaining("Feil brukernavn/passord i kall til Landmalerregisteret.");
     }
 }
