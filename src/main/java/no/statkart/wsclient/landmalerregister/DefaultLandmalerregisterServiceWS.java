@@ -1,10 +1,12 @@
 package no.statkart.wsclient.landmalerregister;
 
 import no.statkart.skif.exception.ImplementationException;
+import no.statkart.skif.exception.OperationalException;
 import no.statkart.wsclient.RestClient;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -17,7 +19,6 @@ import java.io.IOException;
 import java.util.Set;
 
 public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServiceWS {
-    private static final Logger logger = LoggerFactory.getLogger(DefaultLandmalerregisterServiceWS.class);
 
     private final String requestUrl;
     private final String brukernavn;
@@ -30,11 +31,10 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
     }
 
     @Override
-    public Set<LandmalerFraAAL> findLandmalerWS(String landmalernummer, String fornavn, String etternavn) throws LandmalerregisterSokException{
+    public Set<LandmalerFraAAL> findLandmalerWS(String landmalernummer, String fornavn, String etternavn) throws LandmalerregisterSokException {
         // hvis url til landmålerregister ikke er satt
         if (requestUrl == null) {
             String msg = "URL til Landmålerregister er ikke satt.";
-            logger.error(msg);
             throw new ImplementationException(msg);
         }
 
@@ -48,44 +48,42 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
         try (CloseableHttpClient client = RestClient.buildHttpClient(brukernavn, passord);
              CloseableHttpResponse response = client.execute(request)) {
 
-            int statusCode = response.getStatusLine().getStatusCode();
+            // valider responsobjektet
+            validateResponse(response);
 
-            // http-request gikk bra
-            if (HttpStatus.SC_OK == statusCode) {
-                // respons fra tjener er et jsonObject, med en liste
-                String responseJson = EntityUtils.toString(response.getEntity());
-                try {
-                    JSONObject landmalereJson = new JSONObject(responseJson);
-                    JSONArray landmaalere = landmalereJson.getJSONArray("landmaalere");
+            // respons fra tjener er et jsonObject, med en liste
+            String responseJson = EntityUtils.toString(response.getEntity());
 
-                    landmalerResultat = LandmalerregisterUtil.lagSetLandmalereFraAALFraJsonResponse(landmaalere);
-                }
-                // todo MAT-18034: inntil videre kan dette også bety feil brukernavn/passord, fordi AAL gir ut 200 selvom bruker og pass er feil
-                catch (JSONException ignored) {
-                    String msg = "Feil i respons fra Landmalerregisteret. Dobbeltsjekk at riktig URL/tjeneste er angitt, og at det er riktig brukernavn og passord.";
-                    logger.error(msg);
-                    throw new LandmalerregisterSokException(msg);
-                }
-            }  // feil brukernavn og/eller passord
-            else if (HttpStatus.SC_UNAUTHORIZED == statusCode) {
-                String msg = "Feil brukernavn/passord i kall til Landmalerregisteret.";
-                logger.error(msg);
-                throw new LandmalerregisterSokException(msg);
-            }
+            JSONObject landmalereJson = new JSONObject(responseJson);
+            JSONArray landmaalere = landmalereJson.getJSONArray("landmaalere");
 
-            // url kan være feil
-            else {
-                String msg = "URL til Landmålerregister er ugyldig eller tjenesten kan være nede. Status: " + statusCode;
-                logger.error(msg);
-                throw new LandmalerregisterSokException(msg);
-            }
+            landmalerResultat = LandmalerregisterUtil.lagSetLandmalereFraAALFraJsonResponse(landmaalere);
+
         } catch (IOException e) {
-
-            String msg = "URL er ukjent, eller Landmålerregisteret er nede: " + e;
-            logger.error(msg);
-            throw new LandmalerregisterSokException(msg, e);
+            String msg = "Feil i kall til Landmålerregisteret: " + e;
+            throw new OperationalException(msg, e);
         }
 
         return landmalerResultat;
+    }
+
+    // Validerer responsobjektet.
+    // 1. Riktig statuskode
+    // 2. Riktig mimeType ved 200 ok
+    private void validateResponse(CloseableHttpResponse response) {
+        int statusCode = response.getStatusLine().getStatusCode();
+
+        if (HttpStatus.SC_OK == statusCode) {
+            if (ContentType.get(response.getEntity()).getMimeType().equals("text/html")) {
+                // TODO MAT-18034: inntil AAL-131 er løst, vil dette kunne bety enten at URL er feil (men fortsatt til AAL-systemet), eller at brukernavn og/eller passord er feil
+                throw new LandmalerregisterSokException("Feil i kall til AAL. Sjekk URL, og brukernavn/passord.");
+            }
+        } else if (HttpStatus.SC_UNAUTHORIZED == statusCode) {
+            // TODO MAT-18034: inntil AAL-131 er løst, vil dette bety at brukernavn og/eller passord er null
+            throw new LandmalerregisterSokException("Feil brukernavn/passord i kall til Landmalerregisteret.");
+
+        } else {
+            throw new LandmalerregisterSokException("URL til Landmålerregister er ugyldig eller tjenesten kan være nede. Status: " + statusCode);
+        }
     }
 }
