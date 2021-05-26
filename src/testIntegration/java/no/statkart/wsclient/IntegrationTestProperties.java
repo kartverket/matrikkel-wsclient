@@ -66,6 +66,10 @@ public class IntegrationTestProperties {
         return String.format("%s/grunnbok/wsapi/v2/RettsstiftelseServiceWS", getGrunnbokServerUrl());
     }
 
+    public String getGrunnbokInnsendingServiceUrl() {
+        return String.format("%s/grunnbok/wsapi/v2/InnsendingServiceWS", getGrunnbokServerUrl());
+    }
+
     public String getLandbruksregisterUser() {
         return configuration.getString("landbruksregister_brukernavn");
     }

@@ -33,13 +33,15 @@ public class SaksinformasjonIntegrationTest {
     */
    @Test
    public void testFinnSaksinformasjonId() throws Exception {
-      final SaksinformasjonId saksinformasjonIdForInnsendingId = saksinformasjon.findSaksinformasjonIdForInnsendingId("555329097", grunnbokHelper.context());
+      final SaksinformasjonId saksinformasjonIdForInnsendingId =
+          saksinformasjon.findSaksinformasjonIdForInnsendingId("828487498", grunnbokHelper.context());
       assertThat(saksinformasjonIdForInnsendingId).isNotNull();
-      assertThat(saksinformasjonIdForInnsendingId.getValue()).isNotNull().isEqualTo("555329096");
+
+      assertThat(saksinformasjonIdForInnsendingId.getValue()).isNotNull().isEqualTo("828487497");
 
       Saksinformasjon saksinformasjon = (Saksinformasjon) store.getObject(saksinformasjonIdForInnsendingId, grunnbokHelper.context());
       assertThat(saksinformasjon).isNotNull();
-      assertThat(saksinformasjon.getInnsender().getReferanse()).isNotNull().isEqualTo("SAK.2019-01");
+      assertThat(saksinformasjon.getInnsender().getReferanse()).isNotNull().isEqualTo("195/3000702/3194022/89-20-0237 Geminivegen 11B");
    }
 
 

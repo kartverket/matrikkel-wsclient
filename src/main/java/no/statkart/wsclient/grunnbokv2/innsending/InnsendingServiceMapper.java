@@ -250,20 +250,30 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
     private class SignertGrunnboksutskriftListMapper extends InnsendingListMapper<SignertGrunnboksutskriftList, List<SignertGrunnboksutskrift>> {
         public SignertGrunnboksutskriftListMapper() {
-            super(InnsendingServiceMapper.this.getMapping(), SignertGrunnboksutskriftList.class, (Class<List<SignertGrunnboksutskrift>>) new TypeToken<List<SignertGrunnboksutskrift>>() {
+            super(InnsendingServiceMapper.this.getMapping(), SignertGrunnboksutskriftList.class,
+                (Class<List<SignertGrunnboksutskrift>>) new TypeToken<List<SignertGrunnboksutskrift>>() {
             }.getRawType());
         }
 
         // MAT-18022 Det vil ikke returneres signerte utskrifter fra Grunnboken
         @Override
         public SignertGrunnboksutskriftList mapDomainObject(List<SignertGrunnboksutskrift> source) {
-            return new SignertGrunnboksutskriftList();
+            SignertGrunnboksutskriftList wsObject = new SignertGrunnboksutskriftList();
+            for (SignertGrunnboksutskrift domainObject : source) {
+                wsObject.getSignertGrunnboksutskrift().add(getMapping().d2w(domainObject,
+                    no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskrift.class));
+            }
+            return wsObject;
         }
 
         // MAT-18022 Det vil ikke returneres signerte utskrifter fra Grunnboken
         @Override
         public List<SignertGrunnboksutskrift> mapWsapiObject(SignertGrunnboksutskriftList source) {
-            return Lists.newArrayList();
+            List<SignertGrunnboksutskrift> domainObjects = Lists.newArrayList();
+            for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskrift wsObject : source.getSignertGrunnboksutskrift()) {
+                domainObjects.add(getMapping().w2d(wsObject, SignertGrunnboksutskrift.class));
+            }
+            return domainObjects;
         }
     }
 
