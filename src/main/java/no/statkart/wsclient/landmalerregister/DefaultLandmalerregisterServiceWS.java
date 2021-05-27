@@ -10,10 +10,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Set;
@@ -34,8 +31,7 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
     public Set<LandmalerFraAAL> findLandmalerWS(String landmalernummer, String fornavn, String etternavn) throws LandmalerregisterSokException {
         // hvis url til landmålerregister ikke er satt
         if (requestUrl == null) {
-            String msg = "URL til Landmålerregister er ikke satt.";
-            throw new ImplementationException(msg);
+            throw new ImplementationException("URL til Landmålerregister er ikke satt.");
         }
 
         Set<LandmalerFraAAL> landmalerResultat;
