@@ -2,14 +2,12 @@ plugins {
   id 'java-library'
   id 'idea'
   id 'maven-publish'
-  id 'sktools.xjc' version '5.2'
+  id 'sktools.xjc' version '5.5'
 }
 
 group = 'no.statkart.wsclient'
 version = projectVersion + System.getProperty('suffix', '-SNAPSHOT')
 
-
-apply from: file('integration-test.gradle')
 
 java {
   sourceCompatibility = JavaVersion.VERSION_1_8
@@ -22,31 +20,56 @@ def WS_IMPORT_QUAL_NAME = 'com.sun.tools.ws.ant.WsImport'
 
 
 sourceSets {
-  main {
-    java {
-      srcDirs generatedMainJavaDir
+    main {
+        java {
+            srcDirs generatedMainJavaDir
+        }
+        xjc {
+            schema {
+                srcDir 'src/main/resources/byggesak/xsd'
+            }
+        }
     }
-      xjc {
-          schema {
-              srcDir 'src/main/resources/byggesak/xsd'
-          }
-      }
-  }
+    testIntegration {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+        }
+    }
 }
+
+configurations {
+    testIntegrationImplementation.extendsFrom testImplementation
+}
+
 
 idea.module {
   generatedSourceDirs += generatedMainJavaDir
 }
 
-test {
-  useTestNG() {
-    useDefaultListeners = true
-  }
+//Create the task that runs the integration tests found from the
+//configured source directory and uses the correct classpath.
+def testIntegration = tasks.register('testIntegration', Test) {
+    group = 'verification'
+    description = 'Runs the integration tests.'
+    testClassesDirs = sourceSets.testIntegration.output.classesDirs
+    classpath = sourceSets.testIntegration.runtimeClasspath
+    outputs.upToDateWhen { false /*false ensures integration tests are run every time you invoke this task */}
+
+    //Ensure that our unit tests are run before our integration tests
+    mustRunAfter tasks.named('test')
 }
 
+//Ensure that the check task fails the build if there are failing integration tests.
+tasks.named('check') { dependsOn testIntegration }
+
 tasks.withType(Test).configureEach {
-  // Jenkins setter denne til true slik at bygget feiler på testrapporten.
-  ignoreFailures = System.getProperty('ignoreFailures', 'false') == 'true'
+    // Jenkins setter denne til true slik at bygget feiler på testrapporten.
+    ignoreFailures = System.getProperty('ignoreFailures', 'false') == 'true'
+
+    useTestNG() {
+        useDefaultListeners = true
+    }
 }
 
 repositories {
