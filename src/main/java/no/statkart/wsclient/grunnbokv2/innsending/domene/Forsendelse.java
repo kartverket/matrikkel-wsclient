@@ -8,8 +8,8 @@ import java.util.List;
 public class Forsendelse {
 
    private String forsendelsesreferanse;
-   // MAT-18022 Flagget skal alltid være true.
-   private final Boolean linkTilUtskrifter = true;
+   // MAT-18455 Flagget må være false inntil MAT-18459 henter utskrift fra link
+   private final Boolean linkTilUtskrifter = false;
    private SignertMelding signertMelding;
    private UsignertMelding usignertMelding;
    private List<Signatur> ikkeDigitaleSignaturer = Lists.newArrayList();
