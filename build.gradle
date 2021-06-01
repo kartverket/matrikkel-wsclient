@@ -407,6 +407,12 @@ tasks.withType(JavaCompile).configureEach {
   options.compilerArgs << '-Xlint:unchecked' << '-Werror'
 }
 
+tasks.withType(AbstractPublishToMaven).configureEach {
+    doFirst {
+        logger.lifecycle "Publishing ${publication.groupId}:${publication.artifactId}:${publication.version}"
+    }
+}
+
 manifest {
   attributes([
           'Specification-Title'   : project.name,
