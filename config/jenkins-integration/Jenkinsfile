@@ -4,10 +4,6 @@
 /*
  Multibranch Pipeline for Continuous integration (CI) prosess i Jenkins.
  Hver branch har denne innsjekket på fast plassering: config/jenkins-integration/Jenkinsfile
-
- Polling skjer via oppsett av multibranch-jobb og defineres derfor ikke her i denne filen.
-
- Multibranch oppsett sjekker ut kodebasen automatisk. Denne havner i roten til hvert workspace (som default).
 */
 
 pipeline { //declarative pipeline syntax
