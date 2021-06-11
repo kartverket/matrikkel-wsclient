@@ -111,6 +111,7 @@ dependencies {
     implementation 'org.json:json:20190722'
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.63'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.63'
+    implementation 'commons-validator:commons-validator:1.7'
 
     testImplementation 'org.testng:testng:6.14.3'
     testImplementation 'org.assertj:assertj-core:3.19.0'

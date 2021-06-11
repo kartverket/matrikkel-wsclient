@@ -19,6 +19,7 @@ import java.util.Set;
 public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceWS {
 
     LandmalerregisterMockDb landmalerregisterMockDb;
+    String dummyUrl = "http://www.dummy.com/dummy";
 
     @Override
     public Set<LandmalerFraAAL> findLandmalerWS(String landmalernummer, String fornavn, String etternavn) {
@@ -27,7 +28,7 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
 
         Set<LandmalerFraAAL> sokeresultat;
 
-        LandmalerregisterUtil.validateAndBuildUrlParameters(landmalernummer, fornavn, etternavn);
+        LandmalerregisterUtil.validateAndBuildUrlParameters(dummyUrl, landmalernummer, fornavn, etternavn);
 
         JSONArray sokeTreffArray = landmalerregisterMockDb.sokEtterLandmaler(landmalernummer, fornavn, etternavn);
         sokeresultat = LandmalerregisterUtil.lagSetLandmalereFraAALFraJsonResponse(sokeTreffArray);
