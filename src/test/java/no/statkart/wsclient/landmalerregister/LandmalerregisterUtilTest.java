@@ -44,6 +44,7 @@ public class LandmalerregisterUtilTest {
         String urlParameters = LandmalerregisterUtil.validateAndBuildUrlParameters(requestUrl, null, fornavn, etternavn);
         assertThat(urlParameters).contains(fornavn.replaceAll("\\s", "%20"));
         assertThat(urlParameters).contains(etternavn.replaceAll("\\s", "%20"));
+        assertThat(urlParameters).doesNotContain(" ");
     }
 
     @Test
