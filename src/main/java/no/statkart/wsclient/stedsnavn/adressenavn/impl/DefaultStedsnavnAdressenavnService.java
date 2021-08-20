@@ -2,7 +2,11 @@ package no.statkart.wsclient.stedsnavn.adressenavn.impl;
 
 import no.statkart.stedsnavn.matrikkelinndata.v1.adressenavn.*;
 import no.statkart.wsclient.WebServiceBuilder;
-import no.statkart.wsclient.stedsnavn.adressenavn.*;
+import no.statkart.wsclient.stedsnavn.adressenavn.AarsakTilEndringFraMatrikkelen;
+import no.statkart.wsclient.stedsnavn.adressenavn.EndretVegRequest;
+import no.statkart.wsclient.stedsnavn.adressenavn.NyVegRequest;
+import no.statkart.wsclient.stedsnavn.adressenavn.SlettetVegRequest;
+import no.statkart.wsclient.stedsnavn.adressenavn.StedsnavnAdressenavnService;
 
 @SuppressWarnings("unused")
 public class DefaultStedsnavnAdressenavnService implements StedsnavnAdressenavnService {

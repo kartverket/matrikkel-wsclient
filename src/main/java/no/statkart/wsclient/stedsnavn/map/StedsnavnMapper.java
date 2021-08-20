@@ -5,13 +5,21 @@ import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.NavnestatusHistorikkL
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.StedsnavnInternMerknadList;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.StedsnavnTilleggsopplysningList;
 import no.statkart.wsclient.DateHjelper;
-import no.statkart.wsclient.stedsnavn.*;
+import no.statkart.wsclient.stedsnavn.NavnesakstatusHistorikk;
+import no.statkart.wsclient.stedsnavn.NavnestatusHistorikk;
+import no.statkart.wsclient.stedsnavn.Stedsnavn;
+import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
+import no.statkart.wsclient.stedsnavn.StedsnavnInternMerknad;
+import no.statkart.wsclient.stedsnavn.StedsnavnTilleggsopplysning;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
-import static no.statkart.wsclient.stedsnavn.map.Mapper.*;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.regDato;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.setFellesFelterForHistoriskBoble;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.setFellesFelterForHistoriskKomponent;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.toDomainBobleId;
 
 class StedsnavnMapper {
 

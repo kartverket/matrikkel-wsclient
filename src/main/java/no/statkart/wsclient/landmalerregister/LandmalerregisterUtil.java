@@ -2,15 +2,11 @@ package no.statkart.wsclient.landmalerregister;
 
 import com.google.common.base.Strings;
 import no.statkart.skif.exception.ImplementationException;
-import no.statkart.skif.exception.ValidationException;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;

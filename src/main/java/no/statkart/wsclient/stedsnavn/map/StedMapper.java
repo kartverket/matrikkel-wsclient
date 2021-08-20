@@ -11,16 +11,19 @@ import no.statkart.wsclient.stedsnavn.Sortering;
 import no.statkart.wsclient.stedsnavn.Sted;
 import no.statkart.wsclient.stedsnavn.StedInternMerknad;
 import no.statkart.wsclient.stedsnavn.StedTilleggsopplysning;
+import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
 import no.statkart.wsclient.stedsnavn.StedstatusHistorikk;
 import no.statkart.wsclient.stedsnavn.VedtaksmyndighetHistorikk;
 import no.statkart.wsclient.stedsnavn.Vegreferanse;
-import no.statkart.wsclient.stedsnavn.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
-import static no.statkart.wsclient.stedsnavn.map.Mapper.*;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.regDato;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.setFellesFelterForHistoriskBoble;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.setFellesFelterForHistoriskKomponent;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.toDomainBobleId;
 
 class StedMapper {
 

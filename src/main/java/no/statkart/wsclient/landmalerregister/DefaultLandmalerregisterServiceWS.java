@@ -1,8 +1,6 @@
 package no.statkart.wsclient.landmalerregister;
 
-import no.statkart.skif.exception.ImplementationException;
 import no.statkart.skif.exception.OperationalException;
-import org.apache.commons.validator.routines.UrlValidator;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,9 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.URLEncoder;
 import java.util.Set;
 import java.util.function.Supplier;
 

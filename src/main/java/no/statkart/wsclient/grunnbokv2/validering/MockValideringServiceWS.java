@@ -7,8 +7,8 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Kontrollresultat;
 import java.util.Collections;
 import java.util.List;
 
+import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.AvvisningsinformasjonBuilder.anAvvisningsinformasjon;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.ForsendelsesstatusBuilder.aBehandlingsstatus;
-import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.AvvisningsinformasjonBuilder.*;
 
 public class MockValideringServiceWS implements ValideringServiceWS {
    @Override

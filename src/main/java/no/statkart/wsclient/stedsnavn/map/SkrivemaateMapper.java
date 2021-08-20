@@ -4,14 +4,21 @@ import no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.KasusForSkrivemaate
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.SkrivemaateInternMerknadList;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.SkrivemaatestatusHistorikkList;
 import no.statkart.wsclient.DateHjelper;
-import no.statkart.wsclient.stedsnavn.*;
+import no.statkart.wsclient.stedsnavn.KasusForSkrivemaate;
+import no.statkart.wsclient.stedsnavn.Skrivemaate;
+import no.statkart.wsclient.stedsnavn.SkrivemaateInternMerknad;
+import no.statkart.wsclient.stedsnavn.SkrivemaatestatusHistorikk;
+import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static no.statkart.wsclient.stedsnavn.map.DokumentasjonMapper.toDomeneDokumentasjon;
-import static no.statkart.wsclient.stedsnavn.map.Mapper.*;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.regDato;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.setFellesFelterForHistoriskBoble;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.setFellesFelterForHistoriskKomponent;
+import static no.statkart.wsclient.stedsnavn.map.Mapper.toDomainBobleId;
 
 class SkrivemaateMapper {
 

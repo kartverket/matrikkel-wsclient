@@ -1,7 +1,6 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import org.joda.time.LocalDateTime;
 

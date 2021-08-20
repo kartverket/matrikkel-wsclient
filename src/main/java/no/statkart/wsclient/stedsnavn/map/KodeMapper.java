@@ -1,7 +1,16 @@
 package no.statkart.wsclient.stedsnavn.map;
 
 import no.statkart.wsclient.DateHjelper;
-import no.statkart.wsclient.stedsnavn.*;
+import no.statkart.wsclient.stedsnavn.KasustypeKode;
+import no.statkart.wsclient.stedsnavn.Kode;
+import no.statkart.wsclient.stedsnavn.LocalizedString;
+import no.statkart.wsclient.stedsnavn.NavnestatusKode;
+import no.statkart.wsclient.stedsnavn.RekkefoelgeKode;
+import no.statkart.wsclient.stedsnavn.SkrivemaatestatusKode;
+import no.statkart.wsclient.stedsnavn.SpraakKode;
+import no.statkart.wsclient.stedsnavn.SpraakprioriteringKode;
+import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
+import no.statkart.wsclient.stedsnavn.StedstatusKode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

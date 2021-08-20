@@ -3,7 +3,38 @@ package no.statkart.wsclient.stedsnavn;
 
 import java.util.Objects;
 
-import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.*;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.BOK;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.DEL_AV_SAMLE;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.DOKUMENT_TYPE;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.ENDRING;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.KART;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.KART_PRODUKT;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.KASUS;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.KLAGE;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.KOMMUNE;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.LAND;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.NAVNE_OBJEKT;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.NAVNE_SAK;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.NAVNE_STATUS;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.POSISJON;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.REKKEFOELGE;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.SKRIVEMAATE;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.SKRIVEMAATE_MERKNAD;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.SKRIVEMAATE_STATUS;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.SORT_1;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.SORT_2;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.SPRAAK;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.SPRAAK_PRIO;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.STED;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.STEDSNAVN;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.STEDSNAVN_KODELISTE;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.STEDSNAVN_MERKNAD;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.STEDSNAVN_TILLEGG;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.STED_MERKNAD;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.STED_STATUS;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.STED_TILLEGG;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.VEDTAK;
+import static no.statkart.wsclient.stedsnavn.StedsnavnBobleId.TypeId.VEDTAKS_MYND;
 
 public abstract class StedsnavnBobleId {
 

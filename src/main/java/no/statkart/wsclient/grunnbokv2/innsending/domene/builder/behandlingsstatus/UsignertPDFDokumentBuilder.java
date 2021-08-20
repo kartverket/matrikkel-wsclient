@@ -1,6 +1,5 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus;
 
-import no.statkart.wsclient.grunnbokv2.innsending.domene.SDODokument;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertPDFDokument;
 
 public class UsignertPDFDokumentBuilder {

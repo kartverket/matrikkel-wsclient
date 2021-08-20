@@ -5,9 +5,9 @@ import no.kartverket.grunnbok.wsapi.v2.domain.endringslogg.Domainklasse;
 import no.kartverket.grunnbok.wsapi.v2.domain.endringslogg.EndringId;
 import no.kartverket.grunnbok.wsapi.v2.domain.endringslogg.Endringer;
 import no.kartverket.grunnbok.wsapi.v2.domain.endringslogg.ReturnerBobler;
+import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.kartverket.grunnbok.wsapi.v2.service.endringslogg.EndringsloggService;
 import no.kartverket.grunnbok.wsapi.v2.service.endringslogg.EndringsloggServiceWS;
-import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.statkart.wsclient.WebServiceBuilder;
 
 

@@ -2,9 +2,16 @@ package no.statkart.wsclient.grunnbokv2.innsending;
 
 import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
-import no.statkart.skif.mapper.*;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse;
+import no.statkart.skif.mapper.AbstractMapper;
+import no.statkart.skif.mapper.AbstractTypeMapper;
+import no.statkart.skif.mapper.CollectionMapperFactory;
+import no.statkart.skif.mapper.DefaultTypeMapperFactory;
+import no.statkart.skif.mapper.IdentityTypeMapperFactory;
+import no.statkart.skif.mapper.Mapping;
+import no.statkart.skif.mapper.MappingResolver;
+import no.statkart.skif.mapper.TypeMapper;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Begrunnelse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokument;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokumentinformasjon;
@@ -19,8 +26,8 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelsesinformas
 import no.statkart.wsclient.grunnbokv2.innsending.domene.SDODokument;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Signatur;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.SignertGrunnboksutskrift;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertGrunnboksutskrift;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Tekst;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertGrunnboksutskrift;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;

@@ -13,7 +13,11 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.Rettssti
 import javax.xml.bind.JAXBElement;
 import java.util.List;
 
-import static no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.*;
+import static no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FESTENUMMER_GITT_BRUKSNUMMER;
+import static no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FRADELING;
+import static no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OMNUMMERER_MATRIKKELENHETER;
+import static no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OPPRETT_FESTEGRUNN;
+import static no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.SAMMENSLAAING_AV_MATRIKKELENHETER;
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.Rettsstiftelsestype.MATRIKKELENHETSENDRING;
 
 class RettsstiftelseListMapper implements TypeMapper<RettsstiftelseList, List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse>> {
