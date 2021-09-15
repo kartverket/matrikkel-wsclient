@@ -1,11 +1,13 @@
 package no.statkart.wsclient.landmalerregister;
 
-import com.google.common.base.Strings;
 import no.statkart.skif.exception.ImplementationException;
-import org.apache.commons.validator.routines.UrlValidator;
+import no.statkart.skif.exception.ValidationException;
+import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +17,13 @@ import java.util.stream.Stream;
  * Hjelpeklasser for søk mot AAL eller mock-implementasjon
  */
 public class LandmalerregisterUtil {
+
+    private LandmalerregisterUtil() {
+        //Dette er en util-klasse, og skal ikke kunne initieres
+    }
+
+    public static final String URL_LANDMALERNUMMER_PARAMETER = "landmaalernummer";
+    public static final String URL_NAVN_PARAMETER = "navn";
 
     /**
      * Henter ut landmålere fra JSONObjectet som returneres fra AAL
@@ -29,8 +38,8 @@ public class LandmalerregisterUtil {
         landmalerArray.toList().stream()
             .map(o -> new JSONObject((Map) o))
             .map(o -> new LandmalerFraAAL(
-                Strings.padStart(String.valueOf(o.get("landmaalernummer")), 6, '0'), //TODO MAT-18144 Hack for at det skal funke pr nå, vil gjøres om til string
-                o.getString("navn")
+                o.getString(URL_LANDMALERNUMMER_PARAMETER),
+                o.getString(URL_NAVN_PARAMETER)
                 )
             )
             .forEach(landmalere::add);
@@ -44,61 +53,28 @@ public class LandmalerregisterUtil {
      * @return Søkeparametere for request-strengen
      */
     public static String validateAndBuildUrlParameters(String requestUrl, String landmalernummer, String fornavn, String etternavn) {
-        // TODO: Lage en mer robust builder for URI med parametre
         // hvis alt er blankt
-        if (landmalernummer == null && Stream.of(fornavn, etternavn).allMatch(s -> s == null || s.trim().isEmpty())) {
-            throw new ImplementationException("Kun tomme parametre");
+        if (Stream.of(landmalernummer, fornavn, etternavn).allMatch(s -> s == null || s.trim().isEmpty())) {
+            throw new ValidationException("Kun tomme parametre");
         }
 
-        // sjekk hva som er fylt ut
-        boolean landmalerUtfylt = landmalernummer != null;
-        boolean fornavnUtfylt = fornavn != null && !fornavn.trim().isEmpty();
-        boolean etternavnUtfylt = etternavn != null && !etternavn.trim().isEmpty();
+        try {
+            URIBuilder uriBuilder = new URIBuilder(requestUrl);
 
-        StringBuilder urlParamsBuilder = new StringBuilder();
-        urlParamsBuilder.append("?");
-
-        // hvis landmåler er fylt ut
-        if (landmalerUtfylt) {
-            String urlLandmalernummerParameter = "landmaalernummer=";
-            urlParamsBuilder.append(urlLandmalernummerParameter);
-            urlParamsBuilder.append(landmalernummer);
-
-            // hvis det skal være flere parametre i url
-            if (fornavnUtfylt || etternavnUtfylt) {
-                urlParamsBuilder.append("&");
+            if (landmalernummer != null) {
+                uriBuilder.addParameter(URL_LANDMALERNUMMER_PARAMETER, landmalernummer.trim());
             }
-        }
 
-        // hvis det skal være en navneparameter
-        if (fornavnUtfylt || etternavnUtfylt) {
-            urlParamsBuilder.append("navn=");
-        }
-
-        // hvis fornavn er fylt ut
-        if (fornavnUtfylt) {
-            // hvis fornavn inneholder mellomrom
-            fornavn = fornavn.replaceAll("\\s", "%20");
-            urlParamsBuilder.append(fornavn);
-            // hvis både fornavn og etternavn er fylt ut
-            if (etternavnUtfylt) {
-                urlParamsBuilder.append("%20");
+            String navn = fornavn == null ? "" : fornavn.trim();
+            navn = navn + (etternavn == null ? "" : " " + etternavn.trim());
+            navn = navn.trim();
+            if (!navn.isEmpty()) {
+                uriBuilder.addParameter(URL_NAVN_PARAMETER, navn);
             }
+
+            return uriBuilder.build().toURL().toString();
+        } catch (IllegalArgumentException | URISyntaxException | MalformedURLException e) {
+            throw new ImplementationException("Request-url til Landmålerregisteret er ikke gyldig", e);
         }
-
-        // hvis etternavn er fylt ut
-        if (etternavnUtfylt) {
-            // hvis etternavn inneholder mellomrom
-            etternavn = etternavn.replaceAll("\\s", "%20");
-            urlParamsBuilder.append(etternavn);
-        }
-
-        String requestUrlWithParams = requestUrl + urlParamsBuilder.toString();
-
-        if (!UrlValidator.getInstance().isValid(requestUrlWithParams)) {
-            throw new ImplementationException("Request-url til Landmålerregisteret er ikke gyldig");
-        }
-
-        return requestUrlWithParams;
     }
 }

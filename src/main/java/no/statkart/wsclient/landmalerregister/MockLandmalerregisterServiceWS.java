@@ -1,6 +1,5 @@
 package no.statkart.wsclient.landmalerregister;
 
-import com.google.common.base.Strings;
 import no.statkart.skif.exception.OperationalException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -71,7 +70,7 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
 
                 // gjør om til string, da AAL returnerer alle med f.eks. 1 i landmalernummer-feltet (212, 1, 123, 51 = true)
                 String landmalernummerKey = "landmaalernummer";
-                String landmalernummerFraJson = Strings.padStart(String.valueOf(landmalerJson.get(landmalernummerKey)), 6, '0'); //TODO MAT-18144 Hack for at det skal funke pr nå, vil gjøres om til string
+                String landmalernummerFraJson = landmalerJson.getString(landmalernummerKey);
                 // sett treff til true
                 if (landmalernummerFraJson.contains(landmalernummer)) {
                     treff = true;

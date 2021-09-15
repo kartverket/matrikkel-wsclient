@@ -1,6 +1,6 @@
 package no.statkart.wsclient.landmalerregister;
 
-import no.statkart.skif.exception.ImplementationException;
+import no.statkart.skif.exception.ValidationException;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -49,7 +49,7 @@ public class LandmalerregisterServiceMockTest {
     @Test
     public void testService4() {
         assertThatThrownBy(() -> landmalerregisterServiceWS.findLandmalerWS(null, null, null))
-            .isInstanceOf(ImplementationException.class)
+            .isInstanceOf(ValidationException.class)
             .hasMessageContaining("Kun tomme parametre");
     }
 }

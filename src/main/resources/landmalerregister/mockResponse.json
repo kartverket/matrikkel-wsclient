@@ -1,8 +1,8 @@
 {"landmaalere":[
-{"navn":"Kari Nordmann","landmaalernummer":41,"autorisasjonsdato":"13.01.2021","autorisert":true},
-{"navn":"Ola Nordmann","landmaalernummer":1,"autorisasjonsdato":"14.01.2021","autorisert":false},
-{"navn":"Landmåler Landmålersen","landmaalernummer":"21","autorisasjonsdato":"12.01.2021","autorisert":true},
-{"navn":"Amy the Cat","landmaalernummer":121,"autorisasjonsdato":"19.02.2021","autorisert":false},
-{"navn":"Chuck Norris","landmaalernummer":122,"autorisasjonsdato":"19.02.2021","autorisert":true},
-{"navn":"Charlie Chaplin","landmaalernummer":"141","autorisasjonsdato":null,"autorisert":false}
+{"navn":"Kari Nordmann","landmaalernummer":"000041","autorisasjonsdato":"13.01.2021","autorisert":true},
+{"navn":"Ola Nordmann","landmaalernummer":"000001","autorisasjonsdato":"14.01.2021","autorisert":false},
+{"navn":"Landmåler Landmålersen","landmaalernummer":"000021","autorisasjonsdato":"12.01.2021","autorisert":true},
+{"navn":"Amy the Cat","landmaalernummer":"000121","autorisasjonsdato":"19.02.2021","autorisert":false},
+{"navn":"Chuck Norris","landmaalernummer":"000122","autorisasjonsdato":"19.02.2021","autorisert":true},
+{"navn":"Charlie Chaplin","landmaalernummer":"000141","autorisasjonsdato":null,"autorisert":false}
 ]}
