@@ -9,37 +9,47 @@ import no.statkart.wsclient.WebServiceBuilder;
 
 public class DefaultGrunnbokutskriftServiceWS implements GrunnboksutskriftService {
 
-   private static GrunnboksutskriftServiceWS grunnboksutskriftServiceWS;
+    private static GrunnboksutskriftServiceWS grunnboksutskriftServiceWS;
 
-   private final GrunnboksutskriftService service;
+    private final GrunnboksutskriftService service;
 
-   public DefaultGrunnbokutskriftServiceWS(String brukernavn, String passord, String endpointUrl) {
-      if(grunnboksutskriftServiceWS == null){
-         synchronized (this) {
-            if(grunnboksutskriftServiceWS == null){
-               grunnboksutskriftServiceWS = new GrunnboksutskriftServiceWS();
+    public DefaultGrunnbokutskriftServiceWS(String brukernavn, String passord, String endpointUrl) {
+        if (grunnboksutskriftServiceWS == null) {
+            synchronized (this) {
+                if (grunnboksutskriftServiceWS == null) {
+                    grunnboksutskriftServiceWS = new GrunnboksutskriftServiceWS();
+                }
             }
-         }
-      }
+        }
 
-      service = WebServiceBuilder.builderv2(grunnboksutskriftServiceWS.getGrunnboksutskriftServicePort(), GrunnboksutskriftService.class)
+        int timeoutMillis = 300000; //300 sekunder. Det Philske sameiet (3411-527/1 tar ca 4min 45 sek)
+        service = WebServiceBuilder.builderv2(grunnboksutskriftServiceWS.getGrunnboksutskriftServicePort(), GrunnboksutskriftService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
             .doCreateProxy()
+            .withTimeout(timeoutMillis)
             .build();
-   }
+    }
 
-   @Override
-   public String ubekreftetHistoriskGrunnboksutskrift(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {return service.ubekreftetHistoriskGrunnboksutskrift(registerenhetId, grunnbokContext);}
+    @Override
+    public String ubekreftetHistoriskGrunnboksutskrift(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {
+        return service.ubekreftetHistoriskGrunnboksutskrift(registerenhetId, grunnbokContext);
+    }
 
-   @Override
-   public byte[] ubekreftetHistoriskGrunnboksutskriftPdf(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {return service.ubekreftetHistoriskGrunnboksutskriftPdf(registerenhetId, grunnbokContext);}
+    @Override
+    public byte[] ubekreftetHistoriskGrunnboksutskriftPdf(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {
+        return service.ubekreftetHistoriskGrunnboksutskriftPdf(registerenhetId, grunnbokContext);
+    }
 
-   @Override
-   public String ubekreftetGrunnboksutskrift(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {return service.ubekreftetGrunnboksutskrift(registerenhetId, grunnbokContext);}
+    @Override
+    public String ubekreftetGrunnboksutskrift(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {
+        return service.ubekreftetGrunnboksutskrift(registerenhetId, grunnbokContext);
+    }
 
-   @Override
-   public byte[] ubekreftetGrunnboksutskriftPdf(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {return service.ubekreftetGrunnboksutskriftPdf(registerenhetId, grunnbokContext);}
+    @Override
+    public byte[] ubekreftetGrunnboksutskriftPdf(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {
+        return service.ubekreftetGrunnboksutskriftPdf(registerenhetId, grunnbokContext);
+    }
 
 }
