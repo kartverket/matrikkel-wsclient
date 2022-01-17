@@ -27,6 +27,7 @@ sourceSets {
         xjc {
             schema {
                 srcDir 'src/main/resources/byggesak/xsd'
+                xjcOptions << ['p':'no.statkart.wsclient.byggesak.fiksintegrasjon.generated']
             }
         }
     }

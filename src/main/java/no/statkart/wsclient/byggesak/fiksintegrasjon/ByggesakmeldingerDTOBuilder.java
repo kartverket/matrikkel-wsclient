@@ -1,21 +1,21 @@
 package no.statkart.wsclient.byggesak.fiksintegrasjon;
 
-import no.geointegrasjon.rep.matrikkel.foering.v1.AdresseType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.BruksenhetListe;
-import no.geointegrasjon.rep.matrikkel.foering.v1.BruksenhetType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.ByggesakType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.BygningListe;
-import no.geointegrasjon.rep.matrikkel.foering.v1.BygningType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.EnergiforsyningType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.EnergiforsyningTypeType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.EtasjeListe;
-import no.geointegrasjon.rep.matrikkel.foering.v1.EtasjeType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.MatrikkelnummerListe;
-import no.geointegrasjon.rep.matrikkel.foering.v1.MatrikkelnummerType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.MatrikkelopplysningerType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.PartType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.VarmefordelingType;
-import no.geointegrasjon.rep.matrikkel.foering.v1.VedtakType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.AdresseType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.BruksenhetListe;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.BruksenhetType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.ByggesakType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.BygningListe;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.BygningType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.EnergiforsyningType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.EnergiforsyningTypeType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.EtasjeListe;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.EtasjeType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.MatrikkelnummerListe;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.MatrikkelnummerType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.MatrikkelopplysningerType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.PartType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.VarmefordelingType;
+import no.statkart.wsclient.byggesak.fiksintegrasjon.generated.VedtakType;
 import no.statkart.wsclient.byggesak.model.ByggesakBruksenhetDTO;
 import no.statkart.wsclient.byggesak.model.ByggesakDTO;
 import no.statkart.wsclient.byggesak.model.ByggesakEtasjeDTO;
@@ -300,7 +300,7 @@ class ByggesakmeldingerDTOBuilder {
    // lag objekter av xml basert på matrikkelfoering.xsd (modellen)
    private static ByggesakType lagObjekterFraXML(String xml) {
       try {
-         JAXBContext jaxbContext = JAXBContext.newInstance("no.geointegrasjon.rep.matrikkel.foering.v1");
+         JAXBContext jaxbContext = JAXBContext.newInstance("no.statkart.wsclient.byggesak.fiksintegrasjon.generated");
          Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
          XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(xml));
