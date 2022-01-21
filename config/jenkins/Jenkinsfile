@@ -68,6 +68,9 @@ pipeline { //declarative pipeline syntax
     }
 
     post {
+        fixed {
+            pushBuildFeed()
+        }
         unsuccessful {
             pushBuildFeed()
         }
