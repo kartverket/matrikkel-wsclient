@@ -2,7 +2,7 @@ plugins {
   id 'java-library'
   id 'idea'
   id 'maven-publish'
-  id 'sktools.xjc' version '5.6'
+  id 'sktools.xjc' version '5.7'
 }
 
 group = 'no.statkart.wsclient'
@@ -86,10 +86,10 @@ configurations {
 dependencies {
   def jaxb2Version = '0.12.0'
   def slf4jVersion = '1.7.36'
-  def jaxwsVersion = '2.3.2'
+  def jaxwsVersion = '2.3.5'
   def skifVersion = '2.10.1'
 
-  wsImport 'com.sun.xml.ws:jaxws-tools:2.3.2'
+  wsImport "com.sun.xml.ws:jaxws-tools:$jaxwsVersion"
 
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:' + jaxb2Version
   wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics:' + jaxb2Version
