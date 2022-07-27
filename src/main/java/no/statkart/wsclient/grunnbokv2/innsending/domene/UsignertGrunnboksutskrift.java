@@ -1,5 +1,6 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
+import java.util.Collections;
 import java.util.List;
 
 public class UsignertGrunnboksutskrift {
@@ -7,7 +8,6 @@ public class UsignertGrunnboksutskrift {
     private Registerenhet gjelderFor;
     private String link;
     private UsignertPDFDokument utskrift;
-    private List<String> dokumentreferanser;
 
     public Registerenhet getGjelderFor() {
         return gjelderFor;
@@ -33,11 +33,11 @@ public class UsignertGrunnboksutskrift {
         this.utskrift = utskrift;
     }
 
-    public List<String> getDokumentreferanser() {
-        return dokumentreferanser;
+    @SuppressWarnings("unused") //SKIF mapping
+    private List<String> getDokumentreferanser() {
+        return Collections.emptyList();
     }
-
-    public void setDokumentreferanser(List<String> dokumentreferanser) {
-        this.dokumentreferanser = dokumentreferanser;
+    @SuppressWarnings("unused") //SKIF mapping
+    private void setDokumentreferanser(List<String> dokumentreferanser) {
     }
 }

@@ -1,9 +1,19 @@
 package no.statkart.wsclient.grunnbokv2.innsending.testdatafactory;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Saksperson;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.*;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.DokumentBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.FoelgebrevBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.ForsendelseBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.KodeBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.MatrikkelenhetBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.MatrikkelenhetsendringBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.PersonBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.ReferanseBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.SakspersonBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.UsignertMeldingBuilder;
+
+import java.util.List;
 
 public class ForsendelseFactory {
 
@@ -56,20 +66,20 @@ public class ForsendelseFactory {
             .withUsignertMelding(UsignertMeldingBuilder.anUsignertMelding()
                   .withFoelgebrev(FoelgebrevBuilder.aFoelgebrev()
                         .withInnsender(INNSENDER)
-                        .withDokumentrekkefoelge(Lists.newArrayList(
+                        .withDokumentrekkefoelge(List.of(
                               ReferanseBuilder.aReferanse()
                                     .withGjelderDokumentreferanse(REFERANSE_GJELDER_DOKUMENTREFERANSE)
                                     .withDigestAlgoritme(REFERANSE_DIGEST_ALGORITME)
                                     .withDigest(REFERANSE_DIGEST)
                                     .build()))
                         .build())
-                  .withDokumenter(Lists.newArrayList(DokumentBuilder.aDokument()
+                  .withDokumenter(List.of(DokumentBuilder.aDokument()
                         .withDokumentreferanse(DOKUMENTREFERANSE)
                         .withMatrikkelenhetsendring(MatrikkelenhetsendringBuilder.aFradeling()
                               .withRettsstiftelsesreferanse(MATRIKKELENHETSENDRING_RETTSSTIFTELSESREFERANSE)
                               .withRettsstiftelsestype(defaultKode.build())
-                              .withFra(Lists.newArrayList(matrikkelenhetIOslo.build()))
-                              .withTil(Lists.newArrayList(matrikkelenhetIOslo.but().withSeksjonsnummer(TIL_MATRIKKELENHET_SEKSJONSNUMMER).build()))
+                              .withFra(List.of(matrikkelenhetIOslo.build()))
+                              .withTil(List.of(matrikkelenhetIOslo.but().withSeksjonsnummer(TIL_MATRIKKELENHET_SEKSJONSNUMMER).build()))
                               .build())
                         .build())
                   )
@@ -85,17 +95,19 @@ public class ForsendelseFactory {
                         .withInnsender(SakspersonBuilder.aSaksperson()
                               .withIdentifikasjonsnummer("12313")
                               .build()) //rekvirent for tinglysing
-                        .withDokumentrekkefoelge(Lists.newArrayList(ReferanseBuilder.aReferanse().withGjelderDokumentreferanse("1").build()))
+                        .withDokumentrekkefoelge(List.of(ReferanseBuilder.aReferanse().withGjelderDokumentreferanse("1").build()))
                         .build())
-                  .withDokumenter(Lists.newArrayList((DokumentBuilder.aDokument()
+                  .withDokumenter(List.of((DokumentBuilder.aDokument()
                         .withMatrikkelenhetsendring(MatrikkelenhetsendringBuilder.aFradeling()
-                              .withTil(Lists.newArrayList(
+                              .withTil(List.of(
                                     MatrikkelenhetFactory.createMatrikkelenhet(KOMMUNENUMMER_OSLO, KOMMUNENAVN_OSLO, 2, 90)
                               ))
-                              .withFra(Lists.newArrayList(
+                              .withFra(List.of(
                                     MatrikkelenhetFactory.createMatrikkelenhet(KOMMUNENUMMER_OSLO, KOMMUNENAVN_OSLO, 2, 91)
                               ))
-                              .withRekvirenterAvForretning(Lists.newArrayList(PersonBuilder.aPerson().withIdentifikasjonsnummer("12345678910").withNavn("navn").build()))
+                              .withRekvirenterAvForretning(List.of(
+                                  PersonBuilder.aPerson().withIdentifikasjonsnummer("12345678910").withNavn("navn").build()
+                              ))
                               .build())
                         .build())))
                   .build())

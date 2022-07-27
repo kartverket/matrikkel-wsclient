@@ -1,6 +1,5 @@
 package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
 
-import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Behandlingsinformasjon;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelsesstatus;
@@ -10,7 +9,6 @@ import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDateTime;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -41,7 +39,6 @@ public class ForsendelsesstatusBuilder {
    public static final String KONTROLL_RESULTAT_NAVN = "Resultat 1";
    public static final int KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS = 2;
    public static final String KONTROLL_RESULTAT_UTFALL = "Ikke tinglyst";
-   public static final List<String> USIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE = Collections.singletonList("235A");
    public static final String BEGRUNNELSE_UTFALL = "UAVKLART";
 
    protected Behandlingsinformasjon behandlingsinformasjon;
@@ -121,16 +118,16 @@ public class ForsendelsesstatusBuilder {
             .withBehandlingsutfall(DEFAULT_BEHANDLINGSUTFALL)
             .withSaksstatus(DEFAULT_SAKS_STATUS)
             .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
-                  .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
+                  .withDokumentinformasjon(List.of(DokumentinformasjonBuilder.aDokumentinformasjon()
                         .withDokumentnummer(DOKUMENTNUMMER)
                         .withEmbetenummer(EMBETENUMMER)
                         .withDokumentaar(DOKUMENTAAR)
                         .withDokumentreferanse(DOKUMENTREFERANSE)
-                        .withRettsstiftelsesinformasjonList(Lists.newArrayList(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
+                        .withRettsstiftelsesinformasjonList(List.of(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
                               .withRettsstiftelsesnummer(RETTSSTIFTELSESNUMMER)
                               .withRettsstiftelsesreferanse(RETTSSTIFTELSESREFERANSE)
                               .build()))
-                        .withPaavirkerRegisterenheter(Lists.newArrayList(RegisterenhetBuilder.aRegisterenhet()
+                        .withPaavirkerRegisterenheter(List.of(RegisterenhetBuilder.aRegisterenhet()
                               .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
                                     .withKommunenummer("0233")
                                     .withGaardsnummer(12)
@@ -138,7 +135,7 @@ public class ForsendelsesstatusBuilder {
                                     .build())
                               .build()))
                         .build()))
-                  .withUsignerteGrunnboksutskrifter(Lists.newArrayList(UsignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
+                  .withUsignerteGrunnboksutskrifter(List.of(UsignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
                         .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
                               .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
                                     .withKommunenummer(KOMMUNENUMMER)
@@ -149,16 +146,15 @@ public class ForsendelsesstatusBuilder {
                                     .withSeksjonsnummer(SEKSJONSNUMMER)
                                     .build())
                               .build())
-                        .withLink("http://www.test.no/")
+                        .withLink("https://www.test.no/")
                         .withUsignertUtskrift(UsignertPDFDokumentBuilder.aUsignertPDFDokument()
                               .withUsignertDokument(USIGNERT_DOKUMENT_BYTES)
                               .build())
-                        .withDokumentreferanser(USIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE)
                         .build()))
                   .build())
             .withBehandlingsinformasjon(BehandlingsinformasjonBuilder.anAvvisningsinformasjon()
-                  .withKontrollresultater(Lists.newArrayList(KontrollresultatBuilder.aKontrollresultat()
-                        .withBegrunnelser(Lists.newArrayList(BegrunnelseBuilder.aBegrunnelse()
+                  .withKontrollresultater(List.of(KontrollresultatBuilder.aKontrollresultat()
+                        .withBegrunnelser(List.of(BegrunnelseBuilder.aBegrunnelse()
                               .withKodeverdi(BEGRUNNELSE_KODEVERDI)
                               .withElementnavn(BEGRUNNELSE_ELEMENTNAVN)
                               .withTekst(BEGRUNNELSE_TEKST)

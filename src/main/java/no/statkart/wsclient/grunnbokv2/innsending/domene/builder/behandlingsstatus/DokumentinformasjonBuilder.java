@@ -62,8 +62,8 @@ public class DokumentinformasjonBuilder {
       dokumentinformasjon.setDokumentreferanse(dokumentreferanse);
       dokumentinformasjon.setDokumentnummer(dokumentnummer);
       dokumentinformasjon.setEmbetenummer(embetenummer);
-      dokumentinformasjon.setRettsstiftelsesinformasjon(rettsstiftelsesinformasjonList);
-      dokumentinformasjon.setPaavirkerRegisterenheter(paavirkerRegisterenheter);
+      dokumentinformasjon.getRettsstiftelsesinformasjon().addAll(rettsstiftelsesinformasjonList);
+      dokumentinformasjon.getPaavirkerRegisterenheter().addAll(paavirkerRegisterenheter);
       return dokumentinformasjon;
    }
 }

@@ -1,7 +1,5 @@
 package no.statkart.wsclient.grunnbokv2.innsending;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.io.ByteStreams;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokument;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokumentinformasjon;
@@ -26,6 +24,7 @@ import org.joda.time.LocalDateTime;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -89,7 +88,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    private static class ForsendelsesstatusProvider {
 
       public Map<String, Forsendelsesstatus> createInitState() {
-         Map<String, Forsendelsesstatus> forsendelsesstatusByInnsendingIdMap = Maps.newHashMap();
+          Map<String, Forsendelsesstatus> forsendelsesstatusByInnsendingIdMap = new HashMap<>();
 
          MatrikkelenhetBuilder enhetINittedalBuilder = MatrikkelenhetBuilder.aMatrikkelenhet()
                .withKommunenummer("100000201")
@@ -102,7 +101,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
          Forsendelsesstatus forsendelsesstatusUavklart = createForsendelsestatus(Behandlingsutfall.UAVKLART);
          forsendelsesstatusByInnsendingIdMap.put(UAVKLART, forsendelsesstatusUavklart);
 
-         Forsendelsesstatus forsendelsestatusTinglyst = createForsendelsestatusTinglyst(Lists.newArrayList(createGrunnboksutskrift(
+         Forsendelsesstatus forsendelsestatusTinglyst = createForsendelsestatusTinglyst(List.of(createGrunnboksutskrift(
                MatrikkelenhetBuilder.aMatrikkelenhet()
                      .withKommunenummer("100001201")
                      .withKommunenavn("Nittedal")
@@ -125,7 +124,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
          Forsendelsesstatus forsendelsesstatusNektet = createForsendelsestatus(Behandlingsutfall.NEKTET);
          forsendelsesstatusNektet.setBehandlingsinformasjon(anAvvisningsinformasjon()
-               .withKontrollresultater(singletonList(aKontrollresultat()
+               .withKontrollresultater(List.of(aKontrollresultat()
                      .withUtfall("NEKTET")
                      .withNavn("TEST")
                      .withKodeverdi("9999")
@@ -143,7 +142,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
 
          Forsendelsesstatus forsendelsesstatusAvvist = createForsendelsestatus(Behandlingsutfall.AVVIST);
          forsendelsesstatusNektet.setBehandlingsinformasjon(anAvvisningsinformasjon()
-               .withKontrollresultater(singletonList(aKontrollresultat()
+               .withKontrollresultater(List.of(aKontrollresultat()
                      .withUtfall("IKKE_GODKJENT")
                      .withNavn("TEST")
                      .withKodeverdi("9999")
@@ -170,16 +169,16 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
                .withBehandlingsutfall(Behandlingsutfall.TINGLYST.name())
                .withSaksstatus("TINGLYST")
                .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
-                     .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
+                     .withDokumentinformasjon(List.of(DokumentinformasjonBuilder.aDokumentinformasjon()
                            .withDokumentnummer(2)
                            .withEmbetenummer("34")
                            .withDokumentaar(2016)
                            .withDokumentreferanse("1")
-                           .withRettsstiftelsesinformasjonList(Lists.newArrayList(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
+                           .withRettsstiftelsesinformasjonList(List.of(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
                                  .withRettsstiftelsesnummer(238)
                                  .withRettsstiftelsesreferanse("Xyz")
                                  .build()))
-                           .withPaavirkerRegisterenheterList(Lists.newArrayList(RegisterenhetBuilder.aRegisterenhet()
+                           .withPaavirkerRegisterenheterList(List.of(RegisterenhetBuilder.aRegisterenhet()
                                  .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
                                        .withKommunenummer("0233")
                                        .withGaardsnummer(12)
@@ -199,7 +198,7 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
    }
 
    private static Forsendelsesstatus createForsendelsestatus(Behandlingsutfall behandlingsutfall) {
-      return createForsendelsestatus(behandlingsutfall, Lists.newArrayList());
+       return createForsendelsestatus(behandlingsutfall, new ArrayList<UsignertGrunnboksutskrift>());
    }
 
    private static Forsendelsesstatus createForsendelsestatus(Behandlingsutfall behandlingsutfall, List<UsignertGrunnboksutskrift> grunnboksutskrifter) {
@@ -210,16 +209,16 @@ public class InnsendingServiceWSStub implements InnsendingServiceWS {
             .withBehandlingsutfall(behandlingsutfall.name())
             .withSaksstatus("UNDER_BEHANDLING")
             .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
-                  .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
+                  .withDokumentinformasjon(List.of(DokumentinformasjonBuilder.aDokumentinformasjon()
                         .withDokumentnummer(1)
                         .withEmbetenummer("34")
                         .withDokumentaar(2015)
                         .withDokumentreferanse("1")
-                        .withRettsstiftelsesinformasjonList(Lists.newArrayList(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
+                        .withRettsstiftelsesinformasjonList(List.of(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
                               .withRettsstiftelsesnummer(235)
                               .withRettsstiftelsesreferanse("Xyz")
                               .build()))
-                        .withPaavirkerRegisterenheterList(Lists.newArrayList(RegisterenhetBuilder.aRegisterenhet()
+                        .withPaavirkerRegisterenheterList(List.of(RegisterenhetBuilder.aRegisterenhet()
                               .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
                                     .withKommunenummer("0233")
                                     .withGaardsnummer(12)

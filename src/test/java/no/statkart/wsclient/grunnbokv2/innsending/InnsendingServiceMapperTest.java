@@ -7,8 +7,8 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhetsendring;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Referanse;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Rettsstiftelse;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.UsignertMelding;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.Behandlingsinformasjon;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Begrunnelse;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.Behandlingsinformasjon;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokumentinformasjon;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus;
@@ -27,9 +27,49 @@ import org.testng.annotations.Test;
 import javax.xml.bind.JAXBElement;
 import java.util.List;
 
-import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.*;
-import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.*;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.BRUKSNUMMER_OSLO;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.DEFAULT_KODEVERDI;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.DEFAULT_KODE_NAVN;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.FESTENUMMER_OSLO;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.FORSENDELSESREFERANSE;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.GAARDSNUMMER_OSLO;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.INNSENDER;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.KOMMUNENAVN_OSLO;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.KOMMUNENUMMER_OSLO;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.MATRIKKELENHETSENDRING_RETTSSTIFTELSESREFERANSE;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.REFERANSE_DIGEST;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.REFERANSE_DIGEST_ALGORITME;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.REFERANSE_GJELDER_DOKUMENTREFERANSE;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.SEKSJONSNUMMER_OSLO;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.TIL_MATRIKKELENHET_SEKSJONSNUMMER;
+import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.defaultForsendelse;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.BEGRUNNELSE_ELEMENTNAVN;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.BEGRUNNELSE_KODEVERDI;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.BEGRUNNELSE_TEKST;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.BRUKSNUMMER;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.DEFAULT_BEHANDLINGSUTFALL;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.DEFAULT_FORSENDELSESREFERANSE;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.DEFAULT_INNSENDING_ID;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.DEFAULT_REGISTRERINGS_TIDSPUNKT;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.DEFAULT_SAKS_STATUS;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.DOKUMENTAAR;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.DOKUMENTNUMMER;
 import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.DOKUMENTREFERANSE;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.EMBETENUMMER;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.FESTENUMMER;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.GAARDSNUMMER;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.KOMMUNENAVN;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.KOMMUNENUMMER;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.KONTROLL_RESULTAT_DOKUMENTINDEKS;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.KONTROLL_RESULTAT_KODEVERDI;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.KONTROLL_RESULTAT_NAVN;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.KONTROLL_RESULTAT_UTFALL;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.RETTSSTIFTELSESNUMMER;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.RETTSSTIFTELSESREFERANSE;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.SEKSJONSNUMMER;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.USIGNERT_DOKUMENT_BYTES;
+import static no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder.defaultForsendelsesstatus;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -111,8 +151,6 @@ public class InnsendingServiceMapperTest {
 
        UsignertPDFDokument utskrift = usignertGrunnboksutskrift.getUtskrift();
        assertEquals(utskrift.getUsignertDokument(), USIGNERT_DOKUMENT_BYTES);
-
-      assertEquals(usignertGrunnboksutskrift.getDokumentreferanser(), USIGNERT_GRUNNBOKSUTSKRIFT_DOKUMENTREFERANSE);
    }
 
    private static void assertAvvisningsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {

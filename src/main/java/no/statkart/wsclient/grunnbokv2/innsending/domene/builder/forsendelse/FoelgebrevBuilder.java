@@ -47,7 +47,7 @@ public class FoelgebrevBuilder {
 
    public Foelgebrev build() {
       Foelgebrev foelgebrev = new Foelgebrev();
-      foelgebrev.setDokumentrekkefoelge(dokumentrekkefoelge);
+      foelgebrev.getDokumentrekkefoelge().addAll(dokumentrekkefoelge);
       foelgebrev.setInnsender(innsender);
       foelgebrev.setFakturamottaker(fakturamottaker);
       foelgebrev.setMottaker(mottaker);

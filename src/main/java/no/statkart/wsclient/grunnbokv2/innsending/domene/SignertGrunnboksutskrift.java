@@ -1,6 +1,8 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
+import javax.xml.bind.annotation.XmlElement;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,16 +13,17 @@ public class SignertGrunnboksutskrift {
 
     private Registerenhet gjelderFor;
     private SDODokument signertUtskrift;
-    private List<String> dokumentreferanser;
+    @XmlElement //ignored
+    public List<String> dokumentreferanser = Collections.emptyList();
     private byte[] utskrift;
     private String mimeType;
 
-    public List<String> getDokumentreferanser() {
-        return dokumentreferanser;
+    @SuppressWarnings("unused") //SKIF mapping
+    private List<String> getDokumentreferanser() {
+        return null;
     }
-
-    public void setDokumentreferanser(List<String> dokumentreferanse) {
-        this.dokumentreferanser = dokumentreferanse;
+    @SuppressWarnings("unused") //SKIF mapping
+    private void setDokumentreferanser(List<String> dokumentreferanser) {
     }
 
     public Registerenhet getGjelderFor() {

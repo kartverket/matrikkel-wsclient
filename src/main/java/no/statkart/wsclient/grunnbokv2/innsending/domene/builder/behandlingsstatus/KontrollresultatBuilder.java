@@ -57,7 +57,7 @@ public class KontrollresultatBuilder {
 
    public Kontrollresultat build() {
       Kontrollresultat kontrollresultat = new Kontrollresultat();
-      kontrollresultat.setBegrunnelser(begrunnelser);
+      kontrollresultat.getBegrunnelser().addAll(begrunnelser);
       kontrollresultat.setDokumentindeks(dokumentindeks);
       kontrollresultat.setRettsstiftelsesindeks(rettsstiftelsesindeks);
       kontrollresultat.setKodeverdi(kodeverdi);

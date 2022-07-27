@@ -1,10 +1,18 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
-import com.google.common.collect.Lists;
-import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.*;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.DokumentinformasjonBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.ForsendelsesstatusBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.MatrikkelenhetBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.RegisterenhetBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.RettsstiftelsesinformasjonBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.TinglysingsinformasjonBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.UsignertGrunnboksutskriftBuilder;
+import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.UsignertPDFDokumentBuilder;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.LocalDateTime;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
@@ -49,16 +57,16 @@ public class ForsendelsesstatusTest {
             .withBehandlingsutfall("OK")
             .withSaksstatus("Prosessert")
             .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
-                  .withDokumentinformasjon(Lists.newArrayList(DokumentinformasjonBuilder.aDokumentinformasjon()
+                  .withDokumentinformasjon(List.of(DokumentinformasjonBuilder.aDokumentinformasjon()
                         .withDokumentnummer(22)
                         .withEmbetenummer("34")
                         .withDokumentaar(2015)
                         .withDokumentreferanse("Referanse1")
-                        .withRettsstiftelsesinformasjonList(Lists.newArrayList(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
+                        .withRettsstiftelsesinformasjonList(List.of(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
                               .withRettsstiftelsesnummer(235)
                               .withRettsstiftelsesreferanse("Xyz")
                               .build()))
-                        .withPaavirkerRegisterenheterList(Lists.newArrayList(RegisterenhetBuilder.aRegisterenhet()
+                        .withPaavirkerRegisterenheterList(List.of(RegisterenhetBuilder.aRegisterenhet()
                               .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
                                     .withKommunenummer("0233")
                                     .withGaardsnummer(12)
@@ -66,7 +74,7 @@ public class ForsendelsesstatusTest {
                                     .build())
                               .build()))
                         .build()))
-                  .withUsignerteGrunnboksutskrifter(Lists.newArrayList(utskriftBuilder1.build(), utskriftBuilder2.build()))
+                  .withUsignerteGrunnboksutskrifter(List.of(utskriftBuilder1.build(), utskriftBuilder2.build()))
                   .build())
             .build();
 

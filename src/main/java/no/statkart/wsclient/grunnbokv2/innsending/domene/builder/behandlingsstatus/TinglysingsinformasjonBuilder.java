@@ -32,9 +32,9 @@ public class TinglysingsinformasjonBuilder {
 
    public Tinglysingsinformasjon build() {
       Tinglysingsinformasjon tinglysingsinformasjon = new Tinglysingsinformasjon();
-      tinglysingsinformasjon.setDokumentinformasjon(dokumentinformasjonList);
-      tinglysingsinformasjon.setSignerteGrunnboksutskrifter(signerteGrunnboksutskrifter);
-      tinglysingsinformasjon.setGrunnboksutskrifter(usignertGrunnboksutskrifter);
+      tinglysingsinformasjon.getDokumentinformasjon().addAll(dokumentinformasjonList);
+      tinglysingsinformasjon.getSignerteGrunnboksutskrifter().addAll(signerteGrunnboksutskrifter);
+      tinglysingsinformasjon.getGrunnboksutskrifter().addAll(usignertGrunnboksutskrifter);
       return tinglysingsinformasjon;
    }
 }

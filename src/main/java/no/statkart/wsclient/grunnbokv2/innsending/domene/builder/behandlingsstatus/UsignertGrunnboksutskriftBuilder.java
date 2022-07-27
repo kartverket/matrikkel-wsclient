@@ -4,13 +4,10 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Registerenhet;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertGrunnboksutskrift;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertPDFDokument;
 
-import java.util.List;
-
 public class UsignertGrunnboksutskriftBuilder {
     protected Registerenhet gjelderFor;
     protected String link;
     protected UsignertPDFDokument utskrift;
-    protected List<String> dokumentreferanser;
 
     private UsignertGrunnboksutskriftBuilder() {
     }
@@ -34,17 +31,11 @@ public class UsignertGrunnboksutskriftBuilder {
         return this;
     }
 
-    public UsignertGrunnboksutskriftBuilder withDokumentreferanse(List<String> dokumentreferanser) {
-        this.dokumentreferanser = dokumentreferanser;
-        return this;
-    }
-
     public UsignertGrunnboksutskrift build() {
         UsignertGrunnboksutskrift usignertGrunnboksutskrift = new UsignertGrunnboksutskrift();
         usignertGrunnboksutskrift.setGjelderFor(gjelderFor);
         usignertGrunnboksutskrift.setLink(link);
         usignertGrunnboksutskrift.setUtskrift(utskrift);
-        usignertGrunnboksutskrift.setDokumentreferanser(dokumentreferanser);
         return usignertGrunnboksutskrift;
     }
 }

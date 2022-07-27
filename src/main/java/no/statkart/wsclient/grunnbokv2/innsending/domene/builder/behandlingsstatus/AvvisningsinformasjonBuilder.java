@@ -27,7 +27,7 @@ public class AvvisningsinformasjonBuilder {
 
    public Behandlingsinformasjon build() {
       Behandlingsinformasjon behandlingsinformasjon = new Behandlingsinformasjon();
-      behandlingsinformasjon.setKontrollresultater(kontrollresultater);
+      behandlingsinformasjon.getKontrollresultater().addAll(kontrollresultater);
       return behandlingsinformasjon;
    }
 }

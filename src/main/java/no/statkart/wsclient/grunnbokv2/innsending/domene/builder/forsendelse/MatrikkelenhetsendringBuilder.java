@@ -96,11 +96,11 @@ public class MatrikkelenhetsendringBuilder {
          throw new RuntimeException("typeMatrikkelenhetsendring is required");
       }
       Matrikkelenhetsendring matrikkelenhetsendring = new Matrikkelenhetsendring(typeMatrikkelenhetsendring);
-      matrikkelenhetsendring.setFra(fra);
-      matrikkelenhetsendring.setTil(til);
+      matrikkelenhetsendring.getFra().addAll(fra);
+      matrikkelenhetsendring.getTil().addAll(til);
       matrikkelenhetsendring.setRettsstiftelsesreferanse(rettsstiftelsesreferanse);
       matrikkelenhetsendring.setRettsstiftelsestype(rettsstiftelsestype);
-      matrikkelenhetsendring.setRekvirenterAvForretning(rekvirenterAvForretning);
+      matrikkelenhetsendring.getRekvirenterAvForretning().addAll(rekvirenterAvForretning);
       return matrikkelenhetsendring;
    }
 }

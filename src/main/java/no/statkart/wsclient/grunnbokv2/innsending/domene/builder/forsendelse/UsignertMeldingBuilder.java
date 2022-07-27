@@ -34,7 +34,7 @@ public class UsignertMeldingBuilder {
 
    public UsignertMelding build() {
       UsignertMelding usignertMelding = new UsignertMelding();
-      usignertMelding.setDokumenter(dokumenter);
+      usignertMelding.getDokumenter().addAll(dokumenter);
       usignertMelding.setFoelgebrev(foelgebrev);
       return usignertMelding;
    }
