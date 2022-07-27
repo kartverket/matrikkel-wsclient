@@ -1,17 +1,17 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokument;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DokumentBuilder {
    private String dokumentreferanse;
-   private List<Rettsstiftelse> rettsstiftelser = Lists.newArrayList();
+   private List<Rettsstiftelse> rettsstiftelser = new ArrayList<>();
 
-   private DokumentBuilder() {
+    private DokumentBuilder() {
    }
 
    public static DokumentBuilder aDokument() {

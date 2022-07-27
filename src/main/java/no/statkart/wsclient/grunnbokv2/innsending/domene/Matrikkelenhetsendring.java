@@ -1,17 +1,16 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Matrikkelenhetsendring extends Registerenhetsendring {
 
-   private List<Matrikkelenhet> fra = Lists.newArrayList();
-   private List<Matrikkelenhet> til = Lists.newArrayList();
-   private List<MatrikkelenhetFraTil> omnummereringAvUnderliggende = Lists.newArrayList();
-   private List<Person> rekvirenterAvForretning = Lists.newArrayList();
+   private List<Matrikkelenhet> fra = new ArrayList<>();
+    private List<Matrikkelenhet> til = new ArrayList<>();
+    private List<MatrikkelenhetFraTil> omnummereringAvUnderliggende = new ArrayList<>();
+    private List<Person> rekvirenterAvForretning = new ArrayList<>();
 
-   public List<MatrikkelenhetFraTil> getOmnummereringAvUnderliggende() {
+    public List<MatrikkelenhetFraTil> getOmnummereringAvUnderliggende() {
       return omnummereringAvUnderliggende;
    }
 

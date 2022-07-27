@@ -1,16 +1,16 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Foelgebrev;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Referanse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Saksperson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoelgebrevBuilder {
-   private List<Referanse> dokumentrekkefoelge = Lists.newArrayList();
+   private List<Referanse> dokumentrekkefoelge = new ArrayList<>();
 
-   private Saksperson innsender;
+    private Saksperson innsender;
    private Saksperson fakturamottaker;
    private Saksperson mottaker;
 

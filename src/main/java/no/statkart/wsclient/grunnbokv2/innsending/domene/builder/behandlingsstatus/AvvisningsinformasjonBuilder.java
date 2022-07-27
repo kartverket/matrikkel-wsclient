@@ -1,15 +1,15 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Behandlingsinformasjon;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Kontrollresultat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AvvisningsinformasjonBuilder {
-   protected List<Kontrollresultat> kontrollresultater = Lists.newArrayList();
+   protected List<Kontrollresultat> kontrollresultater = new ArrayList<>();
 
-   private AvvisningsinformasjonBuilder() {
+    private AvvisningsinformasjonBuilder() {
    }
 
    public static AvvisningsinformasjonBuilder anAvvisningsinformasjon() {

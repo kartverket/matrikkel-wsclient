@@ -1,8 +1,6 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
-import com.google.common.base.Objects;
-
-import static com.google.common.base.Objects.equal;
+import java.util.Objects;
 
 public class Matrikkelenhet {
 
@@ -63,7 +61,7 @@ public class Matrikkelenhet {
 
    @Override
    public int hashCode() {
-      return Objects.hashCode(kommunenummer, kommunenavn, gaardsnummer, bruksnummer, festenummer, seksjonsnummer);
+      return Objects.hash(kommunenummer, kommunenavn, gaardsnummer, bruksnummer, festenummer, seksjonsnummer);
    }
 
    @Override
@@ -72,11 +70,12 @@ public class Matrikkelenhet {
          return false;
       }
       Matrikkelenhet other = (Matrikkelenhet) obj;
-      return equal(kommunenummer, other.getKommunenummer()) &&
-            equal(kommunenavn, other.getKommunenavn()) &&
-            equal(gaardsnummer, other.getGaardsnummer()) &&
-            equal(bruksnummer, other.getBruksnummer()) &&
-            equal(festenummer, other.getFestenummer()) &&
-            equal(seksjonsnummer, other.getSeksjonsnummer());
+       return Objects.equals(kommunenummer, other.getKommunenummer())
+           && Objects.equals(kommunenavn, other.getKommunenavn())
+           && Objects.equals(gaardsnummer, other.getGaardsnummer())
+           && Objects.equals(bruksnummer, other.getBruksnummer())
+           && Objects.equals(festenummer, other.getFestenummer())
+           && Objects.equals(seksjonsnummer, other.getSeksjonsnummer())
+           ;
    }
 }

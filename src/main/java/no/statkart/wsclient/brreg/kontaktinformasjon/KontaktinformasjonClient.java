@@ -1,6 +1,5 @@
 package no.statkart.wsclient.brreg.kontaktinformasjon;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.io.CharStreams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,6 +117,7 @@ public class KontaktinformasjonClient {
                 }
             }
         }
-        return ImmutableList.sortedCopyOf(orgnr);
+        orgnr.sort(null); //natural order
+        return List.copyOf(orgnr);
     }
 }

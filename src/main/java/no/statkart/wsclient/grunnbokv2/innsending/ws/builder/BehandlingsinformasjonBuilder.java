@@ -1,16 +1,16 @@
 package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
 
-import com.google.common.collect.Lists;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Behandlingsinformasjon;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Kontrollresultat;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.KontrollresultatList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BehandlingsinformasjonBuilder {
-   protected List<Kontrollresultat> kontrollresultater = Lists.newArrayList();
+   protected List<Kontrollresultat> kontrollresultater = new ArrayList<>();
 
-   private BehandlingsinformasjonBuilder() {
+    private BehandlingsinformasjonBuilder() {
    }
 
    public static BehandlingsinformasjonBuilder anAvvisningsinformasjon() {

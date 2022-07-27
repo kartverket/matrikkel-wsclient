@@ -1,15 +1,14 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Behandlingsinformasjon {
 
-   private List<Kontrollresultat> kontrollresultater = Lists.newArrayList();
+   private List<Kontrollresultat> kontrollresultater = new ArrayList<>();
 
-   public List<Kontrollresultat> getKontrollresultater() {
+    public List<Kontrollresultat> getKontrollresultater() {
       return kontrollresultater;
    }
 

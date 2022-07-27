@@ -1,19 +1,19 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokumentinformasjon;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.SignertGrunnboksutskrift;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Tinglysingsinformasjon;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertGrunnboksutskrift;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TinglysingsinformasjonBuilder {
-   private List<Dokumentinformasjon> dokumentinformasjonList = Lists.newArrayList();
-   private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = Lists.newArrayList();
-   private List<UsignertGrunnboksutskrift> usignertGrunnboksutskrifter = Lists.newArrayList();
+   private List<Dokumentinformasjon> dokumentinformasjonList = new ArrayList<>();
+    private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = new ArrayList<>();
+    private List<UsignertGrunnboksutskrift> usignertGrunnboksutskrifter = new ArrayList<>();
 
-   private TinglysingsinformasjonBuilder() {
+    private TinglysingsinformasjonBuilder() {
    }
 
    public static TinglysingsinformasjonBuilder aTinglysingsinformasjon() {

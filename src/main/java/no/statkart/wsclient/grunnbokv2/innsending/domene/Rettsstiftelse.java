@@ -1,16 +1,15 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Rettsstiftelse {
 
    private String rettsstiftelsesreferanse;
    private Kode rettsstiftelsestype;
-   private List<Tekst> tekster = Lists.newArrayList();
-   private Boolean skalHaGebyr;
+   private List<Tekst> tekster = new ArrayList<>();
+    private Boolean skalHaGebyr;
    private Kode aarsakGebyrfritak;
 
    public enum Rettsstiftelsestype {

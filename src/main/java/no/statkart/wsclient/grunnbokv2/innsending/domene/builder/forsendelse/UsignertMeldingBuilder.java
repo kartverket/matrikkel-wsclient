@@ -1,15 +1,15 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokument;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Foelgebrev;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertMelding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsignertMeldingBuilder {
-   private List<Dokument> dokumenter = Lists.newArrayList();
-   private Foelgebrev foelgebrev;
+   private List<Dokument> dokumenter = new ArrayList<>();
+    private Foelgebrev foelgebrev;
 
    private UsignertMeldingBuilder() {
    }

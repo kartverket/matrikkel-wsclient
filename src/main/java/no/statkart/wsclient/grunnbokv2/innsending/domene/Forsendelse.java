@@ -1,8 +1,7 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Forsendelse {
@@ -12,7 +11,7 @@ public class Forsendelse {
     private final Boolean linkTilUtskrifter = true;
     private SignertMelding signertMelding;
     private UsignertMelding usignertMelding;
-    private List<Signatur> ikkeDigitaleSignaturer = Lists.newArrayList();
+    private List<Signatur> ikkeDigitaleSignaturer = new ArrayList<>();
 
     public void setIkkeDigitaleSignaturer(List<Signatur> ikkeDigitaleSignaturer) {
         this.ikkeDigitaleSignaturer = ikkeDigitaleSignaturer;

@@ -1,16 +1,22 @@
 package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
 
-import com.google.common.collect.Lists;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Dokumentinformasjon;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.DokumentinformasjonList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.GrunnboksutskriftList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskrift;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskriftList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Tinglysingsinformasjon;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.UsignertGrunnboksutskrift;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TinglysingsinformasjonBuilder {
-   private List<Dokumentinformasjon> dokumentinformasjonList = Lists.newArrayList();
-   private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = Lists.newArrayList();
-   private List<UsignertGrunnboksutskrift> usignertGrunnboksutskrifter = Lists.newArrayList();
+   private List<Dokumentinformasjon> dokumentinformasjonList = new ArrayList<>();
+    private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = new ArrayList<>();
+    private List<UsignertGrunnboksutskrift> usignertGrunnboksutskrifter = new ArrayList<>();
 
-   private TinglysingsinformasjonBuilder() {
+    private TinglysingsinformasjonBuilder() {
    }
 
    public static TinglysingsinformasjonBuilder aTinglysingsinformasjon() {

@@ -1,8 +1,7 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dokumentinformasjon {
@@ -11,10 +10,10 @@ public class Dokumentinformasjon {
    private int dokumentaar;
    private long dokumentnummer;
    private String embetenummer;
-   private List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjon = Lists.newArrayList();
-   private List<Registerenhet> paavirkerRegisterenheter = Lists.newArrayList();
+   private List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjon = new ArrayList<>();
+    private List<Registerenhet> paavirkerRegisterenheter = new ArrayList<>();
 
-   public int getDokumentaar() {
+    public int getDokumentaar() {
       return dokumentaar;
    }
 

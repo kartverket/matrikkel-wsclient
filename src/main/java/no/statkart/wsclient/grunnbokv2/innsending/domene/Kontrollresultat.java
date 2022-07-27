@@ -1,7 +1,6 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,9 +11,9 @@ public class Kontrollresultat {
    private String kodeverdi;
    private String navn;
    private String utfall;
-   private List<Begrunnelse> begrunnelser = Lists.newArrayList();
+   private List<Begrunnelse> begrunnelser = new ArrayList<>();
 
-   public List<Begrunnelse> getBegrunnelser() {
+    public List<Begrunnelse> getBegrunnelser() {
       return begrunnelser;
    }
 

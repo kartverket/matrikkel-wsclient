@@ -1,15 +1,14 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class SignertMelding {
 
-   private List<SDODokument> dokumenter = Lists.newArrayList();
-   private SDODokument foelgebrev;
+   private List<SDODokument> dokumenter = new ArrayList<>();
+    private SDODokument foelgebrev;
 
    public List<SDODokument> getDokumenter() {
       return dokumenter;

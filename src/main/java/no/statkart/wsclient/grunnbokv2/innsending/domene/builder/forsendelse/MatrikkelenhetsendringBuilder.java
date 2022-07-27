@@ -1,18 +1,18 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Kode;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhet;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Person;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MatrikkelenhetsendringBuilder {
-   private List<Matrikkelenhet> fra = Lists.newArrayList();
-   private List<Matrikkelenhet> til = Lists.newArrayList();
-   private List<Person> rekvirenterAvForretning = Lists.newArrayList();
-   private String rettsstiftelsesreferanse;
+   private List<Matrikkelenhet> fra = new ArrayList<>();
+    private List<Matrikkelenhet> til = new ArrayList<>();
+    private List<Person> rekvirenterAvForretning = new ArrayList<>();
+    private String rettsstiftelsesreferanse;
    private Kode rettsstiftelsestype;
 
    private Matrikkelenhetsendring.TypeMatrikkelenhetsendring typeMatrikkelenhetsendring;

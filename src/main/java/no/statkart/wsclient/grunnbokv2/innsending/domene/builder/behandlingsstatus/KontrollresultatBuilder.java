@@ -1,14 +1,14 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Begrunnelse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Kontrollresultat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KontrollresultatBuilder {
-   protected List<Begrunnelse> begrunnelser = Lists.newArrayList();
-   protected Integer dokumentindeks;
+   protected List<Begrunnelse> begrunnelser = new ArrayList<>();
+    protected Integer dokumentindeks;
    protected Integer rettsstiftelsesindeks;
    protected String kodeverdi;
    protected String navn;

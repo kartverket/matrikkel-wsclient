@@ -1,15 +1,15 @@
 package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
 
-import com.google.common.collect.Lists;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Begrunnelse;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.BegrunnelseList;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Kontrollresultat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KontrollresultatBuilder {
-   protected List<Begrunnelse> begrunnelser = Lists.newArrayList();
-   protected Integer dokumentindeks;
+   protected List<Begrunnelse> begrunnelser = new ArrayList<>();
+    protected Integer dokumentindeks;
    protected Integer rettsstiftelsesindeks;
    protected String kodeverdi;
    protected String navn;

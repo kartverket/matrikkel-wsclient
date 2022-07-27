@@ -1,16 +1,15 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dokument {
 
    private String dokumentreferanse;
-   private List<Rettsstiftelse> rettsstiftelser = Lists.newArrayList();
+   private List<Rettsstiftelse> rettsstiftelser = new ArrayList<>();
 
-   public String getDokumentreferanse() {
+    public String getDokumentreferanse() {
       return dokumentreferanse;
    }
 

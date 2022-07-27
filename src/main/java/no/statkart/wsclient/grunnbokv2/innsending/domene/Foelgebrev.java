@@ -1,8 +1,7 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Foelgebrev {
@@ -11,8 +10,8 @@ public class Foelgebrev {
    private Saksperson fakturamottaker;
    private Saksperson mottaker;
 
-   private List<Referanse> dokumentrekkefoelge = Lists.newArrayList();
-   private Kode maalform;
+   private List<Referanse> dokumentrekkefoelge = new ArrayList<>();
+    private Kode maalform;
 
    public List<Referanse> getDokumentrekkefoelge() {
       return dokumentrekkefoelge;

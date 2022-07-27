@@ -1,17 +1,17 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelse;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Signatur;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.SignertMelding;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertMelding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ForsendelseBuilder {
 
-   private List<Signatur> ikkeDigitaleSignaturer = Lists.newArrayList();
-   private String forsendelsesreferanse;
+   private List<Signatur> ikkeDigitaleSignaturer = new ArrayList<>();
+    private String forsendelsesreferanse;
    private SignertMelding signertMelding;
    private UsignertMelding usignertMelding;
 

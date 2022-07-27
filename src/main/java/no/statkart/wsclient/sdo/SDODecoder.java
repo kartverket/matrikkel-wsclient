@@ -1,6 +1,5 @@
 package no.statkart.wsclient.sdo;
 
-import com.google.common.base.Charsets;
 import com.google.common.io.ByteSource;
 import com.google.common.io.ByteStreams;
 import no.statkart.skif.exception.ImplementationException;
@@ -11,15 +10,15 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 public class SDODecoder {
-   static final List<? extends Class<? extends SDOParser>> PARSERS = Arrays.asList(
+   static final List<? extends Class<? extends SDOParser>> PARSERS = List.of(
          SeidSDOv1_0Parser.class
    );
 
@@ -35,8 +34,8 @@ public class SDODecoder {
     * @throws InvalidSDOException, hvis innholdet ikke kan parses som en sdo
     */
    public SDODecoder(InputStream inputStream, SDODecoderContext context) throws InvalidSDOException{
-      this.context = checkNotNull(context);
-      this.inputStream = checkNotNull(inputStream);
+      this.context = requireNonNull(context);
+      this.inputStream = requireNonNull(inputStream);
       try {
          processContent();
       } catch (IOException e) {
@@ -48,7 +47,7 @@ public class SDODecoder {
       rawBytes = ByteStreams.toByteArray(inputStream);
       final ByteSource source = decodedInput();
       try {
-         final String firstLine = source.asCharSource(Charsets.UTF_8).readFirstLine();
+         final String firstLine = source.asCharSource(StandardCharsets.UTF_8).readFirstLine();
          if (firstLine != null && firstLine.startsWith("<?xml ")) {
             parseXML(source);
          } else {

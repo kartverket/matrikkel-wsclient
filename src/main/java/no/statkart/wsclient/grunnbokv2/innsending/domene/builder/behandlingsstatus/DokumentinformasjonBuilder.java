@@ -1,10 +1,10 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus;
 
-import com.google.common.collect.Lists;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Dokumentinformasjon;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Registerenhet;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelsesinformasjon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DokumentinformasjonBuilder {
@@ -12,10 +12,10 @@ public class DokumentinformasjonBuilder {
    protected String dokumentreferanse;
    protected long dokumentnummer;
    protected String embetenummer;
-   protected List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjonList = Lists.newArrayList();
-   protected List<Registerenhet> paavirkerRegisterenheter = Lists.newArrayList();
+   protected List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjonList = new ArrayList<>();
+    protected List<Registerenhet> paavirkerRegisterenheter = new ArrayList<>();
 
-   private DokumentinformasjonBuilder() {
+    private DokumentinformasjonBuilder() {
    }
 
    public static DokumentinformasjonBuilder aDokumentinformasjon() {

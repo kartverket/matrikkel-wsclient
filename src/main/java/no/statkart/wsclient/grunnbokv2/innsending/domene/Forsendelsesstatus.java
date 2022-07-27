@@ -6,8 +6,8 @@ import org.joda.time.LocalDateTime;
 
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.Objects;
 
-import static com.google.common.base.Objects.equal;
 
 @SuppressWarnings("InstanceVariableMayNotBeInitialized")
 public class Forsendelsesstatus {
@@ -49,11 +49,11 @@ public class Forsendelsesstatus {
 
              tinglysingsinformasjon.getGrunnboksutskrifter(), usignertGrunnboksutskrift -> {
                  Matrikkelenhet matrikkelenhetForGrunnboksutskrift = usignertGrunnboksutskrift.getGjelderFor().getMatrikkelenhet();
-                 return equal(matrikkelenhet.getKommunenummer(), matrikkelenhetForGrunnboksutskrift.getKommunenummer())
-                     && equal(matrikkelenhet.getGaardsnummer(), matrikkelenhetForGrunnboksutskrift.getGaardsnummer())
-                     && equal(matrikkelenhet.getBruksnummer(), matrikkelenhetForGrunnboksutskrift.getBruksnummer())
-                     && equal(matrikkelenhet.getFestenummer(), matrikkelenhetForGrunnboksutskrift.getFestenummer())
-                     && equal(matrikkelenhet.getSeksjonsnummer(), matrikkelenhetForGrunnboksutskrift.getSeksjonsnummer());
+                 return Objects.equals(matrikkelenhet.getKommunenummer(), matrikkelenhetForGrunnboksutskrift.getKommunenummer())
+                     && Objects.equals(matrikkelenhet.getGaardsnummer(), matrikkelenhetForGrunnboksutskrift.getGaardsnummer())
+                     && Objects.equals(matrikkelenhet.getBruksnummer(), matrikkelenhetForGrunnboksutskrift.getBruksnummer())
+                     && Objects.equals(matrikkelenhet.getFestenummer(), matrikkelenhetForGrunnboksutskrift.getFestenummer())
+                     && Objects.equals(matrikkelenhet.getSeksjonsnummer(), matrikkelenhetForGrunnboksutskrift.getSeksjonsnummer());
              }
          );
 

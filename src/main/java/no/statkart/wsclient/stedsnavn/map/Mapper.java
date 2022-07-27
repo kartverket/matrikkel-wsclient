@@ -1,7 +1,11 @@
 package no.statkart.wsclient.stedsnavn.map;
 
-import com.google.common.collect.ImmutableMap;
-import no.statkart.stedsnavn.ssr.wsapi.v1.domain.*;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnBubbleObject;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnBubbleObjectId;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnBubbleObjectIdList;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnBubbleObjectList;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.StedsnavnBubbleObjectWithHistory;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.Timestamp;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.dokumentasjon.BokId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.dokumentasjon.KartproduktId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.dokumentasjon.koder.DokumenttypeKodeId;
@@ -23,7 +27,13 @@ import no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.RekkefoelgeKo
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.SkrivemaateMerknadstypeKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.skrivemaate.koder.SkrivemaatestatusKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.StedId;
-import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.*;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.NavneobjekttypeKodeId;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.Sortering1KodeId;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.Sortering2KodeId;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.SpraakprioriteringKodeId;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.StedMerknadstypeKodeId;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.StedTilleggsopplysningstypeKodeId;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.koder.StedstatusKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.StedsnavnId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.NavnesakstatusKodeId;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.stedsnavn.koder.NavnestatusKodeId;
@@ -90,39 +100,39 @@ public class Mapper {
 
     private static final Logger logger = LoggerFactory.getLogger(Mapper.class);
 
-    private static Map<StedsnavnBobleId.TypeId, Class<? extends StedsnavnBubbleObjectId>> typeIdTilWsIdMap = ImmutableMap.<StedsnavnBobleId.TypeId, Class<? extends StedsnavnBubbleObjectId>>builder()
-            .put(BOK, BokId.class)
-            .put(DEL_AV_SAMLE, DelAvSamlevedtakId.class)
-            .put(DOKUMENT_TYPE, DokumenttypeKodeId.class)
-            .put(KART, KartforekomstMerknadstypeKodeId.class)
-            .put(KART_PRODUKT, KartproduktId.class)
-            .put(KASUS, KasustypeKodeId.class)
-            .put(KLAGE, KlageId.class)
-            .put(KOMMUNE, KommuneId.class)
-            .put(LAND, LandKodeId.class)
-            .put(NAVNE_OBJEKT, NavneobjekttypeKodeId.class)
-            .put(NAVNE_SAK, NavnesakstatusKodeId.class)
-            .put(NAVNE_STATUS, NavnestatusKodeId.class)
-            .put(POSISJON, PosisjonId.class)
-            .put(REKKEFOELGE, RekkefoelgeKodeId.class)
-            .put(SKRIVEMAATE, SkrivemaateId.class)
-            .put(SKRIVEMAATE_MERKNAD, SkrivemaateMerknadstypeKodeId.class)
-            .put(SKRIVEMAATE_STATUS, SkrivemaatestatusKodeId.class)
-            .put(SORT_1, Sortering1KodeId.class)
-            .put(SORT_2, Sortering2KodeId.class)
-            .put(SPRAAK, SpraakKodeId.class)
-            .put(SPRAAK_PRIO, SpraakprioriteringKodeId.class)
-            .put(STED, StedId.class)
-            .put(STED_MERKNAD, StedMerknadstypeKodeId.class)
-            .put(STEDSNAVN, StedsnavnId.class)
-            .put(STEDSNAVN_MERKNAD, StedsnavnMerknadstypeKodeId.class)
-            .put(STEDSNAVN_TILLEGG, StedsnavnTilleggsopplysningstypeKodeId.class)
-            .put(STED_STATUS, StedstatusKodeId.class)
-            .put(STED_TILLEGG, StedTilleggsopplysningstypeKodeId.class)
-            .put(VEDTAK, VedtakId.class)
-            .put(VEDTAKS_MYND, VedtaksmyndighetKodeId.class)
-            .put(STEDSNAVN_KODELISTE, StedsnavnKodelisteId.class)
-            .build();
+    private static final Map<StedsnavnBobleId.TypeId, Class<? extends StedsnavnBubbleObjectId>> typeIdTilWsIdMap = Map.ofEntries(
+        Map.entry(BOK, BokId.class)
+        , Map.entry(DEL_AV_SAMLE, DelAvSamlevedtakId.class)
+        , Map.entry(DOKUMENT_TYPE, DokumenttypeKodeId.class)
+        , Map.entry(KART, KartforekomstMerknadstypeKodeId.class)
+        , Map.entry(KART_PRODUKT, KartproduktId.class)
+        , Map.entry(KASUS, KasustypeKodeId.class)
+        , Map.entry(KLAGE, KlageId.class)
+        , Map.entry(KOMMUNE, KommuneId.class)
+        , Map.entry(LAND, LandKodeId.class)
+        , Map.entry(NAVNE_OBJEKT, NavneobjekttypeKodeId.class)
+        , Map.entry(NAVNE_SAK, NavnesakstatusKodeId.class)
+        , Map.entry(NAVNE_STATUS, NavnestatusKodeId.class)
+        , Map.entry(POSISJON, PosisjonId.class)
+        , Map.entry(REKKEFOELGE, RekkefoelgeKodeId.class)
+        , Map.entry(SKRIVEMAATE, SkrivemaateId.class)
+        , Map.entry(SKRIVEMAATE_MERKNAD, SkrivemaateMerknadstypeKodeId.class)
+        , Map.entry(SKRIVEMAATE_STATUS, SkrivemaatestatusKodeId.class)
+        , Map.entry(SORT_1, Sortering1KodeId.class)
+        , Map.entry(SORT_2, Sortering2KodeId.class)
+        , Map.entry(SPRAAK, SpraakKodeId.class)
+        , Map.entry(SPRAAK_PRIO, SpraakprioriteringKodeId.class)
+        , Map.entry(STED, StedId.class)
+        , Map.entry(STED_MERKNAD, StedMerknadstypeKodeId.class)
+        , Map.entry(STEDSNAVN, StedsnavnId.class)
+        , Map.entry(STEDSNAVN_MERKNAD, StedsnavnMerknadstypeKodeId.class)
+        , Map.entry(STEDSNAVN_TILLEGG, StedsnavnTilleggsopplysningstypeKodeId.class)
+        , Map.entry(STED_STATUS, StedstatusKodeId.class)
+        , Map.entry(STED_TILLEGG, StedTilleggsopplysningstypeKodeId.class)
+        , Map.entry(VEDTAK, VedtakId.class)
+        , Map.entry(VEDTAKS_MYND, VedtaksmyndighetKodeId.class)
+        , Map.entry(STEDSNAVN_KODELISTE, StedsnavnKodelisteId.class)
+    );
 
     public static EndringerRespons mapEndringerRespons(Endringer endringer) {
         EndringerRespons respons = new EndringerRespons(

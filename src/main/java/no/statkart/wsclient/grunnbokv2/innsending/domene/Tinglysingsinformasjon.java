@@ -1,16 +1,15 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
-import com.google.common.collect.Lists;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Tinglysingsinformasjon {
 
-   private List<Dokumentinformasjon> dokumentinformasjon = Lists.newArrayList();
-   private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = Lists.newArrayList();
-   private List<UsignertGrunnboksutskrift> grunnboksutskrifter = Lists.newArrayList();
+   private List<Dokumentinformasjon> dokumentinformasjon = new ArrayList<>();
+    private List<SignertGrunnboksutskrift> signerteGrunnboksutskrifter = new ArrayList<>();
+    private List<UsignertGrunnboksutskrift> grunnboksutskrifter = new ArrayList<>();
 
-   public List<Dokumentinformasjon> getDokumentinformasjon() {
+    public List<Dokumentinformasjon> getDokumentinformasjon() {
       return dokumentinformasjon;
    }
 

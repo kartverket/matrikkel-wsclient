@@ -1,9 +1,23 @@
 package no.statkart.wsclient.grunnbokv2.innsending;
 
-import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.BegrunnelseList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.DokumentList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.DokumentinformasjonList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.DokumentreferanseList;
 import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.GrunnboksutskriftList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.KontrollresultatList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.MatrikkelenhetFraTilList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.MatrikkelenhetList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.PersonList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.ReferanseList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.RegisterenhetList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.RettsstiftelsesinformasjonList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SDODokumentList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignaturList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskriftList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.TekstList;
 import no.statkart.skif.mapper.AbstractMapper;
 import no.statkart.skif.mapper.AbstractTypeMapper;
 import no.statkart.skif.mapper.CollectionMapperFactory;
@@ -33,6 +47,7 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -197,7 +212,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Begrunnelse> mapWsapiObject(BegrunnelseList source) {
-            List<Begrunnelse> domainObjects = Lists.newArrayList();
+            List<Begrunnelse> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Begrunnelse wsObject : source.getBegrunnelse()) {
                 domainObjects.add(getMapping().w2d(wsObject, Begrunnelse.class));
             }
@@ -222,7 +237,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<MatrikkelenhetFraTil> mapWsapiObject(MatrikkelenhetFraTilList source) {
-            List<MatrikkelenhetFraTil> domainObjects = Lists.newArrayList();
+            List<MatrikkelenhetFraTil> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.MatrikkelenhetFraTil wsObject : source.getMatrikkelenhetFraTil()) {
                 domainObjects.add(getMapping().w2d(wsObject, MatrikkelenhetFraTil.class));
             }
@@ -247,7 +262,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Kontrollresultat> mapWsapiObject(KontrollresultatList source) {
-            List<Kontrollresultat> domainObjects = Lists.newArrayList();
+            List<Kontrollresultat> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Kontrollresultat wsObject : source.getKontrollresultat()) {
                 domainObjects.add(getMapping().w2d(wsObject, Kontrollresultat.class));
             }
@@ -276,7 +291,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
         // MAT-18022 Det vil ikke returneres signerte utskrifter fra Grunnboken
         @Override
         public List<SignertGrunnboksutskrift> mapWsapiObject(SignertGrunnboksutskriftList source) {
-            List<SignertGrunnboksutskrift> domainObjects = Lists.newArrayList();
+            List<SignertGrunnboksutskrift> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.SignertGrunnboksutskrift wsObject : source.getSignertGrunnboksutskrift()) {
                 domainObjects.add(getMapping().w2d(wsObject, SignertGrunnboksutskrift.class));
             }
@@ -303,7 +318,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<no.statkart.wsclient.grunnbokv2.innsending.domene.UsignertGrunnboksutskrift> mapWsapiObject(GrunnboksutskriftList source) {
-            List<UsignertGrunnboksutskrift> domainObjects = Lists.newArrayList();
+            List<UsignertGrunnboksutskrift> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.UsignertGrunnboksutskrift wsObject : source.getUsignertGrunnboksutskrift()) {
                 domainObjects.add(getMapping().w2d(wsObject, UsignertGrunnboksutskrift.class));
             }
@@ -328,7 +343,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Rettsstiftelsesinformasjon> mapWsapiObject(RettsstiftelsesinformasjonList source) {
-            List<Rettsstiftelsesinformasjon> domainObjects = Lists.newArrayList();
+            List<Rettsstiftelsesinformasjon> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Rettsstiftelsesinformasjon wsObject : source.getRettsstiftelsesinformasjon()) {
                 domainObjects.add(getMapping().w2d(wsObject, Rettsstiftelsesinformasjon.class));
             }
@@ -354,7 +369,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Dokumentinformasjon> mapWsapiObject(DokumentinformasjonList source) {
-            List<Dokumentinformasjon> domainObjects = Lists.newArrayList();
+            List<Dokumentinformasjon> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Dokumentinformasjon wsObject : source.getDokumentinformasjon()) {
                 domainObjects.add(getMapping().w2d(wsObject, Dokumentinformasjon.class));
             }
@@ -379,7 +394,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Person> mapWsapiObject(PersonList source) {
-            List<Person> domainObjects = Lists.newArrayList();
+            List<Person> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Person wsObject : source.getPerson()) {
                 domainObjects.add(getMapping().w2d(wsObject, Person.class));
             }
@@ -404,7 +419,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Matrikkelenhet> mapWsapiObject(MatrikkelenhetList source) {
-            List<Matrikkelenhet> domainObjects = Lists.newArrayList();
+            List<Matrikkelenhet> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Matrikkelenhet wsObject : source.getMatrikkelenhet()) {
                 domainObjects.add(getMapping().w2d(wsObject, Matrikkelenhet.class));
             }
@@ -429,7 +444,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Referanse> mapWsapiObject(ReferanseList source) {
-            List<Referanse> domainObjects = Lists.newArrayList();
+            List<Referanse> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Referanse wsObject : source.getReferanse()) {
                 domainObjects.add(getMapping().w2d(wsObject, Referanse.class));
             }
@@ -454,7 +469,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Tekst> mapWsapiObject(TekstList source) {
-            List<Tekst> domainObjects = Lists.newArrayList();
+            List<Tekst> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Tekst wsObject : source.getTekst()) {
                 domainObjects.add(getMapping().w2d(wsObject, Tekst.class));
             }
@@ -479,7 +494,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Dokument> mapWsapiObject(DokumentList source) {
-            List<Dokument> domainObjects = Lists.newArrayList();
+            List<Dokument> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Dokument wsObject : source.getDokument()) {
                 domainObjects.add(getMapping().w2d(wsObject, Dokument.class));
             }
@@ -504,7 +519,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<SDODokument> mapWsapiObject(SDODokumentList source) {
-            List<SDODokument> domainObjects = Lists.newArrayList();
+            List<SDODokument> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.SDODokument wsObject : source.getSDODokument()) {
                 domainObjects.add(getMapping().w2d(wsObject, SDODokument.class));
             }
@@ -529,7 +544,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Signatur> mapWsapiObject(SignaturList source) {
-            List<Signatur> domainObjects = Lists.newArrayList();
+            List<Signatur> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Signatur wsSignatur : source.getSignatur()) {
                 domainObjects.add(getMapping().w2d(wsSignatur, Signatur.class));
             }
@@ -554,7 +569,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<Registerenhet> mapWsapiObject(RegisterenhetList source) {
-            List<Registerenhet> domainObjects = Lists.newArrayList();
+            List<Registerenhet> domainObjects = new ArrayList<>();
             for (no.kartverket.grunnbok.wsapi.v2.domain.innsending.Registerenhet wsObject : source.getRegisterenhet()) {
                 domainObjects.add(getMapping().w2d(wsObject, Registerenhet.class));
             }
@@ -579,7 +594,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
 
         @Override
         public List<String> mapWsapiObject(DokumentreferanseList source) {
-            List<String> domainObjects = Lists.newArrayList();
+            List<String> domainObjects = new ArrayList<>();
             for (String wsObject : source.getDokumentreferanse()) {
                 domainObjects.add(getMapping().w2d(wsObject, String.class));
             }

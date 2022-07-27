@@ -1,8 +1,12 @@
 package no.statkart.wsclient.grunnbokv2.innsending.ws.builder;
 
-import com.google.common.collect.Lists;
-import no.kartverket.grunnbok.wsapi.v2.domain.innsending.*;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Dokumentinformasjon;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Registerenhet;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.RegisterenhetList;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.Rettsstiftelsesinformasjon;
+import no.kartverket.grunnbok.wsapi.v2.domain.innsending.RettsstiftelsesinformasjonList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DokumentinformasjonBuilder {
@@ -10,10 +14,10 @@ public class DokumentinformasjonBuilder {
    protected String dokumentreferanse;
    protected long dokumentnummer;
    protected String embetenummer;
-   protected List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjonList = Lists.newArrayList();
-   private List<Registerenhet> paavirkerRegisterenheter = Lists.newArrayList();
+   protected List<Rettsstiftelsesinformasjon> rettsstiftelsesinformasjonList = new ArrayList<>();
+    private List<Registerenhet> paavirkerRegisterenheter = new ArrayList<>();
 
-   private DokumentinformasjonBuilder() {
+    private DokumentinformasjonBuilder() {
    }
 
    public static DokumentinformasjonBuilder aDokumentinformasjon() {
