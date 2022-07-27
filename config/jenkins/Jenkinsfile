@@ -13,7 +13,7 @@ pipeline { //declarative pipeline syntax
     }
 
     tools {
-        jdk 'Java 12 Latest'
+        jdk 'Java 11 Latest'
     }
 
     environment {
