@@ -85,7 +85,7 @@ configurations {
 
 dependencies {
   def jaxb2Version = '0.12.0'
-  def slf4jVersion = '1.7.30'
+  def slf4jVersion = '1.7.36'
   def jaxwsVersion = '2.3.2'
   def skifVersion = '2.10.1'
 
