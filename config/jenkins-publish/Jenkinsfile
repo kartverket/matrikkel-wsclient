@@ -20,7 +20,7 @@ pipeline { //declarative pipeline syntax
     }
 
     parameters {
-        string(name: 'SUFFIX', defaultValue: '.0', description: 'Subversjon for bygg.')
+        string(name: 'SUFFIX', defaultValue: '', description: 'Valgfri patchversjon (f.eks. ".1")')
     }
 
     environment {
