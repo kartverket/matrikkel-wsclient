@@ -1,10 +1,8 @@
 package no.statkart.wsclient.brreg.kontaktinformasjon;
 
-import org.assertj.core.api.Assertions;
-import org.assertj.core.util.Lists;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Test
 public class KontaktinformasjonClientTest {
@@ -14,11 +12,9 @@ public class KontaktinformasjonClientTest {
      */
     @Test
     public void testKallMotBRREG(){
-
         KontaktinformasjonClient klient = new KontaktinformasjonClient(null);
 
-        List<String> kontaktinformasjonForMatrikkelenhetId = klient.findKontaktinformasjonForMatrikkelenhetId(31874161L);
-        Assertions.assertThat(kontaktinformasjonForMatrikkelenhetId).hasSameElementsAs(Lists.newArrayList("917256276","993265845", "994908782", "996761495"));
-
+        assertThat(klient.findKontaktinformasjonForMatrikkelenhetId(31874161L))
+            .containsOnly("917256276","993265845", "994908782", "996761495");
     }
 }
