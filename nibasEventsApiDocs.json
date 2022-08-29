@@ -1,0 +1,247 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "NIBAS Events API",
+        "description": "API for å hente events i Nasjonal inndelingsbase",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "http://nibas-events.dev.skip.statkart.no",
+            "description": "Generated server url"
+        }
+    ],
+    "tags": [
+        {
+            "name": "v1/admin",
+            "description": "Endepunkter for å gjøre administrative endringer i Nibas events"
+        },
+        {
+            "name": "v1/events",
+            "description": "Endepunkter for events i Nasjonal inndelingsbase"
+        }
+    ],
+    "paths": {
+        "/v1/admin/kafka/stop": {
+            "put": {
+                "tags": [
+                    "v1/admin"
+                ],
+                "summary": "Stopper å lytte på events fra nibas-backend",
+                "operationId": "stopKafkaListener",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/v1/admin/kafka/start": {
+            "put": {
+                "tags": [
+                    "v1/admin"
+                ],
+                "summary": "Starter å lytte på events fra nibas-backend",
+                "operationId": "startKafkaListener",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/v1/events": {
+            "get": {
+                "tags": [
+                    "v1/events"
+                ],
+                "summary": "Hent events",
+                "description": "Henter events i Nasjonal Inndelingsbase",
+                "operationId": "hentEvents",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "size",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageEventResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "EventResponse": {
+                "required": [
+                    "offset",
+                    "target",
+                    "targetId",
+                    "targetRevision",
+                    "timestamp",
+                    "type",
+                    "uuid"
+                ],
+                "type": "object",
+                "properties": {
+                    "uuid": {
+                        "type": "string",
+                        "description": "Unik identifikator til event"
+                    },
+                    "offset": {
+                        "type": "integer",
+                        "description": "Rekkefølge på eventen",
+                        "format": "int64"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Hvilken event har inntruffet",
+                        "enum": [
+                            "ADDED",
+                            "MODIFIED",
+                            "DELETED"
+                        ]
+                    },
+                    "target": {
+                        "type": "string",
+                        "description": "Hvilket type objekt har event skjedd for",
+                        "enum": [
+                            "STEMMEKRETS",
+                            "GRUNNKRETS",
+                            "SKOLEKRETS",
+                            "KOMMUNE",
+                            "FYLKE",
+                            "NASJON"
+                        ]
+                    },
+                    "targetId": {
+                        "type": "string",
+                        "description": "Identifikatoren til objektet eventen peker på"
+                    },
+                    "targetRevision": {
+                        "type": "integer",
+                        "description": "Id til gjeldende revisjon av objektet",
+                        "format": "int32"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "description": "Når eventen skjedde",
+                        "format": "date-time"
+                    }
+                },
+                "description": "En representasjon av en event"
+            },
+            "PageEventResponse": {
+                "type": "object",
+                "properties": {
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EventResponse"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/Sort"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PageableObject": {
+                "type": "object",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/Sort"
+                    },
+                    "paged": {
+                        "type": "boolean"
+                    },
+                    "unpaged": {
+                        "type": "boolean"
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "Sort": {
+                "type": "object",
+                "properties": {
+                    "empty": {
+                        "type": "boolean"
+                    },
+                    "unsorted": {
+                        "type": "boolean"
+                    },
+                    "sorted": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}

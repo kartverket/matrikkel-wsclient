@@ -1,0 +1,3261 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "NIBAS Server API",
+        "description": "API for å hente administrative enheter",
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Generated server url"
+        }
+    ],
+    "tags": [
+        {
+            "name": "v1/grunnkretser",
+            "description": "Endepunkter for å hente informasjon om grunnkretser i Nasjonal inndelingsbase"
+        },
+        {
+            "name": "v1/ekstern/matrikkel",
+            "description": "Endepunkter som tilbys til Matrikkel."
+        },
+        {
+            "name": "v1/fylker",
+            "description": "Endepunkter for å hente informasjon om fylker i Nasjonal inndelingsbase"
+        },
+        {
+            "name": "v1/grenser",
+            "description": "Endepunkt for å oppdatere et sett med grenser (FeatureCollection) i Nasjonal inndelingsbase"
+        },
+        {
+            "name": "v1/admin",
+            "description": "Endepunkter for å gjøre administrative endringer i Nasjonal inndelingsbase"
+        },
+        {
+            "name": "v1/kommuner",
+            "description": "Endepunkter for å hente informasjon om kommuner i Nasjonal inndelingsbase"
+        },
+        {
+            "name": "v1/stemmekretser",
+            "description": "Endepunkter for å hente informasjon om stemmekretser i Nasjonal inndelingsbase"
+        },
+        {
+            "name": "v1/nasjoner",
+            "description": "Endepunkter for å hente informasjon om nasjoner i Nasjonal inndelingsbase"
+        }
+    ],
+    "paths": {
+        "/v1/stemmekretser/{id}": {
+            "get": {
+                "tags": [
+                    "v1/stemmekretser"
+                ],
+                "summary": "Hent en stemmekrets med gitt id",
+                "description": "Henter stemmekrets med gitt id",
+                "operationId": "hentEn",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til stemmekretsen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StemmekretsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StemmekretsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "v1/stemmekretser"
+                ],
+                "summary": "Oppdater angitt stemmekrets",
+                "description": "Oppdaterer angitt stemmekrets. Returnerer den oppdaterte stemmekretsen",
+                "operationId": "oppdaterStemmekrets",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID til stemmekretsen man vil oppdatere",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StemmekretsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StemmekretsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request. Check the request body and path",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StemmekretsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/nasjoner/{id}": {
+            "get": {
+                "tags": [
+                    "v1/nasjoner"
+                ],
+                "summary": "Hent en nasjon med gitt id",
+                "description": "Henter nasjon med gitt id",
+                "operationId": "hentEn_1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til nasjonen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NasjonResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NasjonRef"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "v1/nasjoner"
+                ],
+                "operationId": "oppdaterNasjon",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID til nasjonen man vil oppdatere",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NasjonRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NasjonResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kommuner/{id}": {
+            "get": {
+                "tags": [
+                    "v1/kommuner"
+                ],
+                "summary": "Hent en kommune med gitt id",
+                "description": "Henter kommune med gitt id",
+                "operationId": "hentEn_2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til kommunen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KommuneResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KommuneResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "v1/kommuner"
+                ],
+                "summary": "Oppdater angitt kommune",
+                "description": "Oppdaterer angitt kommune. Returnerer den oppdaterte kommunen",
+                "operationId": "oppdaterKommune",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID til kommunen man vil oppdatere",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/KommuneRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad request. Check the request body and path",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KommuneResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KommuneResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grunnkretser/{id}": {
+            "get": {
+                "tags": [
+                    "v1/grunnkretser"
+                ],
+                "summary": "Hent en grunnkrets med gitt id",
+                "description": "Henter grunnkrets med gitt id",
+                "operationId": "hentEn_3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til grunnkretsen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GrunnkretsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GrunnkretsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "v1/grunnkretser"
+                ],
+                "summary": "Oppdater angitt grunnkrets",
+                "description": "Oppdaterer angitt grunnkrets. Returnerer den oppdaterte grunnkretsen",
+                "operationId": "oppdaterGrunnkrets",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID til grunnkretsen man vil oppdatere",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GrunnkretsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad request. Check the request body and path",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GrunnkretsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GrunnkretsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fylker/{id}": {
+            "get": {
+                "tags": [
+                    "v1/fylker"
+                ],
+                "summary": "Hent et fylke med gitt id",
+                "description": "Henter fylke med gitt id",
+                "operationId": "hentEn_4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til fylket man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FylkeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FylkeRef"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "v1/fylker"
+                ],
+                "operationId": "oppdaterFylke",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID til fylket man vil oppdatere",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FylkeRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FylkeResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/admin/kodelister/invalidate": {
+            "put": {
+                "tags": [
+                    "v1/admin"
+                ],
+                "summary": "Invaliderer kodeliste-cache slik at kodelister refreshes.",
+                "description": "Invaliderer kodeliste-cache slik at kodelister refreshes.",
+                "operationId": "invalidateKodelisteCache",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/v1/import": {
+            "post": {
+                "tags": [
+                    "import-controller"
+                ],
+                "operationId": "importer",
+                "parameters": [
+                    {
+                        "name": "fylker",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grenser": {
+            "post": {
+                "tags": [
+                    "v1/grenser"
+                ],
+                "summary": "Lagrer grenser som sendes inn. Støtter både nye og oppdaterte grenser.",
+                "operationId": "lagreGrenser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FeatureCollection"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/v1/stemmekretser/{id}/revisjoner": {
+            "get": {
+                "tags": [
+                    "v1/stemmekretser"
+                ],
+                "summary": "Hent historiske revisjoner for en gitt stemmekrets",
+                "description": "Henter historiske revisjoner til en stemmekrets med gitt id",
+                "operationId": "hentStemmekretsRevisjoner",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til stemmekretsen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RevisjonRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/stemmekretser/{id}/revisjoner/{revisjon}": {
+            "get": {
+                "tags": [
+                    "v1/stemmekretser"
+                ],
+                "summary": "Hent en historisk revisjon av en stemmekrets",
+                "description": "Henter en gitt historisk revisjon av en stemmekrets",
+                "operationId": "hentStemmekretsRevisjon",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til stemmekrets man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "revisjon",
+                        "in": "path",
+                        "description": "ID til revisjonen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StemmekretsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StemmekretsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/stemmekretser/{id}/grenser": {
+            "get": {
+                "tags": [
+                    "v1/stemmekretser"
+                ],
+                "summary": "Hent grensene til en gitt stemmekrets",
+                "description": "Henter grensene til en stemmekrets med gitt id",
+                "operationId": "hentGrenser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til stemmekretsen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/nasjoner": {
+            "get": {
+                "tags": [
+                    "v1/nasjoner"
+                ],
+                "summary": "Hent alle nasjoner",
+                "description": "Henter alle nasjoner i Nasjonal inndelingsbase.",
+                "operationId": "hentAlle",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/NasjonRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/nasjoner/{id}/revisjoner": {
+            "get": {
+                "tags": [
+                    "v1/nasjoner"
+                ],
+                "summary": "Hent historiske revisjoner for en gitt nasjon",
+                "description": "Henter historiske revisjoner til en nasjon med gitt id",
+                "operationId": "hentNasjonRevisjoner",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til nasjonen man vil hente historiske revisjoner for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RevisjonRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/nasjoner/{id}/revisjoner/{revisjon}": {
+            "get": {
+                "tags": [
+                    "v1/nasjoner"
+                ],
+                "summary": "Hent en historisk versjon av en nasjon",
+                "description": "Henter en gitt historisk revisjon av en nasjon",
+                "operationId": "hentNasjonRevisjon",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id til nasjonen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "revisjon",
+                        "in": "path",
+                        "description": "Id til revisjonen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NasjonResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NasjonResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/nasjoner/{id}/grenser": {
+            "get": {
+                "tags": [
+                    "v1/nasjoner"
+                ],
+                "summary": "Hent grensene til en gitt nasjon",
+                "description": "Henter grensene til en nasjon med gitt id",
+                "operationId": "hentGrenser_1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til nasjonen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kommuner": {
+            "get": {
+                "tags": [
+                    "v1/kommuner"
+                ],
+                "summary": "Hent alle kommuner",
+                "description": "Henter alle kommuner i Nasjonal inndelingsbase.",
+                "operationId": "hentAlle_1",
+                "parameters": [
+                    {
+                        "name": "fylkeid",
+                        "in": "query",
+                        "description": "Valgfri id til et fylke for å filtrere kommuner innenfor et fylke",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/KommuneRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kommuner/{id}/stemmekretser": {
+            "get": {
+                "tags": [
+                    "v1/kommuner"
+                ],
+                "operationId": "hentKommunesStemmekretser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID til kommunen man vil hente stemmekretsene til",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StemmekretsRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kommuner/{id}/revisjoner": {
+            "get": {
+                "tags": [
+                    "v1/kommuner"
+                ],
+                "summary": "Hent historiske revisjoner for en gitt kommune",
+                "description": "Henter historiske revisjoner til en kommune med gitt id",
+                "operationId": "hentKommuneRevisjoner",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til kommunen man vil hente historiske revisjoner for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RevisjonRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kommuner/{id}/revisjoner/{revisjon}": {
+            "get": {
+                "tags": [
+                    "v1/kommuner"
+                ],
+                "summary": "Hent en historisk revisjon av en kommune",
+                "description": "Henter en gitt historisk revisjon av en kommune",
+                "operationId": "hentKommuneRevisjon",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til kommunen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "revisjon",
+                        "in": "path",
+                        "description": "ID til revisjonen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KommuneResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KommuneResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kommuner/{id}/grunnkretser": {
+            "get": {
+                "tags": [
+                    "v1/kommuner"
+                ],
+                "summary": "Hent kommunes grunnkretser",
+                "description": "Henter alle grunnkretser som tilhører en kommune.",
+                "operationId": "hentKommunesGrunnkretser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID til kommunen man vil hente grunnkretsene til",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GrunnkretsRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kommuner/{id}/grenser": {
+            "get": {
+                "tags": [
+                    "v1/kommuner"
+                ],
+                "summary": "Hent grensene til en gitt kommune",
+                "description": "Henter grensene til en kommune med gitt id",
+                "operationId": "hentGrenser_2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til kommunen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kodeliste/terrengdetaljkoder": {
+            "get": {
+                "tags": [
+                    "kodeliste-controller"
+                ],
+                "operationId": "fetchTerrengdetaljkoder",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KodelisteRespons"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kodeliste/noeyaktighetsklasser": {
+            "get": {
+                "tags": [
+                    "kodeliste-controller"
+                ],
+                "operationId": "fetchNoeyaktighetsklasser",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KodelisteRespons"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kodeliste/maalemetode-koder": {
+            "get": {
+                "tags": [
+                    "kodeliste-controller"
+                ],
+                "operationId": "fetchMaalemetodeKoder",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KodelisteRespons"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kodeliste/landkoder": {
+            "get": {
+                "tags": [
+                    "kodeliste-controller"
+                ],
+                "operationId": "fetchLandkoder",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KodelisteRespons"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kodeliste/kommunenumre": {
+            "get": {
+                "tags": [
+                    "kodeliste-controller"
+                ],
+                "operationId": "fetchKommunenumre",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KodelisteRespons"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kodeliste/grensetyper": {
+            "get": {
+                "tags": [
+                    "kodeliste-controller"
+                ],
+                "operationId": "fetchGrensetyper",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KodelisteRespons"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kodeliste/grensestatuser": {
+            "get": {
+                "tags": [
+                    "kodeliste-controller"
+                ],
+                "operationId": "fetchGrensestatuskoder",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KodelisteRespons"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kodeliste/fylkesnumre": {
+            "get": {
+                "tags": [
+                    "kodeliste-controller"
+                ],
+                "operationId": "fetchFylkesnumre",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KodelisteRespons"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/kodeliste/fastsettingstyper": {
+            "get": {
+                "tags": [
+                    "kodeliste-controller"
+                ],
+                "operationId": "fetchFastsettingstyper",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KodelisteRespons"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grunnkretser/{id}/revisjoner": {
+            "get": {
+                "tags": [
+                    "v1/grunnkretser"
+                ],
+                "summary": "Hent historiske revisjoner for en gitt grunnkrets",
+                "description": "Henter historiske revisjoner til en grunnkrets med gitt id",
+                "operationId": "hentGrunnkretsRevisjoner",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til grunnkretsen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RevisjonRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grunnkretser/{id}/revisjoner/{revisjon}": {
+            "get": {
+                "tags": [
+                    "v1/grunnkretser"
+                ],
+                "summary": "Hent en historisk revisjon av en grunnkrets",
+                "description": "Henter en gitt historisk revisjon av en grunnkrets",
+                "operationId": "hentGrunnkretsRevisjon",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til grunnkretsen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "revisjon",
+                        "in": "path",
+                        "description": "ID til revisjonen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GrunnkretsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GrunnkretsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grunnkretser/{id}/grenser": {
+            "get": {
+                "tags": [
+                    "v1/grunnkretser"
+                ],
+                "summary": "Hent grensene til en gitt grunnkrets",
+                "description": "Henter grensene til en grunnkrets med gitt id",
+                "operationId": "hentGrenser_3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til grunnkretsen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grenser/{id}": {
+            "get": {
+                "tags": [
+                    "v1/grenser"
+                ],
+                "summary": "Hent grense",
+                "description": "Henter grense med gitt id",
+                "operationId": "hentGrense",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til grensen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Feature"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Feature"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grenser/{id}/revisjoner": {
+            "get": {
+                "tags": [
+                    "v1/grenser"
+                ],
+                "summary": "Hent historiske revisjoner for grense",
+                "description": "Henter historiske revisjoner for grense med gitt id",
+                "operationId": "hentGrenseRevisjoner",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til grensen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RevisjonRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/grenser/{id}/revisjoner/{revisjon}": {
+            "get": {
+                "tags": [
+                    "v1/grenser"
+                ],
+                "summary": "Hent en historisk revisjon for grense",
+                "description": "Henter gitt historisk revisjon for gitt grense",
+                "operationId": "hentGrenseRevisjon",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID til grensen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "revisjon",
+                        "in": "path",
+                        "description": "ID til revisjonen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Feature"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Feature"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fylker": {
+            "get": {
+                "tags": [
+                    "v1/fylker"
+                ],
+                "summary": "Hent alle fylker",
+                "description": "Henter alle fylker i Nasjonal inndelingsbase.",
+                "operationId": "hentAlle_2",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/FylkeRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fylker/{id}/revisjoner": {
+            "get": {
+                "tags": [
+                    "v1/fylker"
+                ],
+                "summary": "Hent historiske revisjoner for et gitt fylke",
+                "description": "Henter historiske revisjoner til et fylke med gitt id",
+                "operationId": "hentFylkesRevisjoner",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til fylket man vil hente historiske revisjoner for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RevisjonRef"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fylker/{id}/revisjoner/{revisjon}": {
+            "get": {
+                "tags": [
+                    "v1/fylker"
+                ],
+                "summary": "Hent en historisk revisjon av et fylke",
+                "description": "Henter en gitt historisk revisjon av et fylke",
+                "operationId": "hentFylkesRevisjon",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til fylket man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "revisjon",
+                        "in": "path",
+                        "description": "ID til revisjonen man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FylkeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FylkeResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fylker/{id}/grenser": {
+            "get": {
+                "tags": [
+                    "v1/fylker"
+                ],
+                "summary": "Hent grensene til et gitt fylke",
+                "description": "Henter grensene til et fylke med gitt id",
+                "operationId": "hentGrenser_4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til fylket man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FeatureCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/ekstern/matrikkel/stemmekretser": {
+            "get": {
+                "tags": [
+                    "v1/ekstern/matrikkel"
+                ],
+                "summary": "Henter stemmekretser med gitte id-er",
+                "description": "Henter stemmekretser med gitte id-er",
+                "operationId": "hentStemmekretserForIds",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID-ene til stemmekretsene man vil hente",
+                        "required": true,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StemmekretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StemmekretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/ekstern/matrikkel/grunnkretser": {
+            "get": {
+                "tags": [
+                    "v1/ekstern/matrikkel"
+                ],
+                "summary": "Henter grunnkretser med gitte id-er",
+                "description": "Henter grunnkretser med gitte id-er",
+                "operationId": "hentGrunnkretserForIds",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID-ene til grunnkretsene man vil hente",
+                        "required": true,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GrunnkretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GrunnkretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Identifikasjon": {
+                "required": [
+                    "lokalid",
+                    "navnerom"
+                ],
+                "type": "object",
+                "properties": {
+                    "lokalid": {
+                        "type": "string",
+                        "description": "Lokal id som identifiserer geometrien. Dette er en globalt unik id."
+                    },
+                    "navnerom": {
+                        "type": "string",
+                        "description": "Navnerom som unikt identifiserer datakilden til objektet, starter med to bokstavs kode jfr ISO 3166."
+                    },
+                    "versjonid": {
+                        "type": "string",
+                        "description": "Identifikasjon av en spesiell versjon av et geografisk objekt (instans), maksimum lengde på 25 karakterer."
+                    }
+                },
+                "description": "Unik identifikasjon av et objekt"
+            },
+            "StemmekretsRequest": {
+                "required": [
+                    "identifikasjon"
+                ],
+                "type": "object",
+                "properties": {
+                    "stemmekretsnummer": {
+                        "type": "string",
+                        "description": "Stemmekretsnummeret til stemmekretsen"
+                    },
+                    "identifikasjon": {
+                        "$ref": "#/components/schemas/Identifikasjon"
+                    },
+                    "stemmekretsnavn": {
+                        "type": "string",
+                        "description": "Stemmekretsnavnet til stemmekretsen"
+                    },
+                    "tellekretsnummer": {
+                        "type": "string",
+                        "description": "Tellekretsnummeret til stemmekretsen"
+                    },
+                    "tellekretsnavn": {
+                        "type": "string",
+                        "description": "Tellekretsnavnet til stemmekretsen"
+                    },
+                    "valgdistriktsnummer": {
+                        "type": "string",
+                        "description": "Valgdistriktsnummeret til stemmekretsen"
+                    },
+                    "kommunenummer": {
+                        "type": "string",
+                        "description": "Kommunenummeret stemmekretsen tilhører til"
+                    }
+                },
+                "description": "Representasjon av en stemmekrets"
+            },
+            "AdministrativGrenseMetadata": {
+                "required": [
+                    "common",
+                    "commonGrense",
+                    "dokumentasjonsreferanser",
+                    "foelgerTerrengdetalj",
+                    "noeyaktighetsklasse"
+                ],
+                "type": "object",
+                "description": "Spesfikk metadata for en administrativ grense (fylkes/kommunegrense). Beskrevet i SOSI-modellen her: https://objektkatalog.geonorge.no/Objekttype/Index/EAID_5142EDBA_4226_4ca3_924D_EECEFD216D1A",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Metadata"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "common": {
+                                "$ref": "#/components/schemas/CommonMetadata"
+                            },
+                            "commonGrense": {
+                                "$ref": "#/components/schemas/CommonGrenseMetadata"
+                            },
+                            "dokumentasjonsreferanser": {
+                                "type": "array",
+                                "description": "Henviser til fastsettings- eller lovinformasjon.",
+                                "items": {
+                                    "$ref": "#/components/schemas/Dokref"
+                                }
+                            },
+                            "foelgerTerrengdetalj": {
+                                "$ref": "#/components/schemas/KodelisteEntry"
+                            },
+                            "noeyaktighetsklasse": {
+                                "$ref": "#/components/schemas/KodelisteEntry"
+                            },
+                            "omtvistet": {
+                                "type": "boolean",
+                                "description": "Angir om grensen er omtvistet, eller det er tvil om forløpet."
+                            }
+                        }
+                    }
+                ]
+            },
+            "AvtaltAvgrensningslinjeMetadata": {
+                "required": [
+                    "common",
+                    "commonGrense",
+                    "dokumentasjonsreferanser",
+                    "maritimeGrenser"
+                ],
+                "type": "object",
+                "description": "Spesifikk metadata for en AvtaltAvgrensningslinje. Beskrevet i SOSI-modellen her: https://objektkatalog.geonorge.no/Diagram/Index/EAID_EEECEE48_B3FA_4807_AAE4_B30B63BC28E1",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Metadata"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "common": {
+                                "$ref": "#/components/schemas/CommonMetadata"
+                            },
+                            "commonGrense": {
+                                "$ref": "#/components/schemas/CommonGrenseMetadata"
+                            },
+                            "dokumentasjonsreferanser": {
+                                "type": "array",
+                                "description": "Henviser til fastsettings- eller lovinformasjon.",
+                                "items": {
+                                    "$ref": "#/components/schemas/Dokref"
+                                }
+                            },
+                            "maritimeGrenser": {
+                                "$ref": "#/components/schemas/MaritimeGrenserMetadata"
+                            }
+                        }
+                    }
+                ]
+            },
+            "CommonGrenseMetadata": {
+                "required": [
+                    "fastsettingstype",
+                    "grensestatus"
+                ],
+                "type": "object",
+                "properties": {
+                    "posisjonskvalitet": {
+                        "$ref": "#/components/schemas/Posisjonskvalitet"
+                    },
+                    "grensestatus": {
+                        "$ref": "#/components/schemas/KodelisteEntry"
+                    },
+                    "fastsettingstype": {
+                        "$ref": "#/components/schemas/KodelisteEntry"
+                    }
+                },
+                "description": "Felles metadata-egenskaper for grenser."
+            },
+            "CommonMetadata": {
+                "required": [
+                    "identifikasjon",
+                    "sporingsinformasjon"
+                ],
+                "type": "object",
+                "properties": {
+                    "identifikasjon": {
+                        "$ref": "#/components/schemas/Identifikasjon"
+                    },
+                    "datafangstdato": {
+                        "type": "string",
+                        "description": "Dato når objektet siste gang ble registrert/observert/målt i terrenget",
+                        "format": "date"
+                    },
+                    "gyldigFra": {
+                        "type": "string",
+                        "description": "Tidspunktet når objektet oppstod i den virkelige verden",
+                        "format": "date"
+                    },
+                    "gyldigTil": {
+                        "type": "string",
+                        "description": "Tidspunktet når objektet opphørte å eksistere i den virkelige verden",
+                        "format": "date"
+                    },
+                    "informasjon": {
+                        "type": "string",
+                        "description": "Generelle opplysninger/merknad"
+                    },
+                    "sporingsinformasjon": {
+                        "$ref": "#/components/schemas/Sporingsinformasjon"
+                    },
+                    "opphav": {
+                        "type": "string",
+                        "description": "Referanse til opphavsmaterialet, kildematerialet, organisasjons/publiseringskilde."
+                    }
+                },
+                "description": "Felles metadata-egenskaper."
+            },
+            "Dokref": {
+                "required": [
+                    "dokumentlenker",
+                    "fastsettingsdato",
+                    "internReferanserKartverket",
+                    "rettskildeTittel"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID for dokumentasjonsreferansen."
+                    },
+                    "dokumentlenker": {
+                        "type": "array",
+                        "description": "URL til saksdokument.",
+                        "items": {
+                            "$ref": "#/components/schemas/TekstHolder"
+                        }
+                    },
+                    "fastsettingsdato": {
+                        "type": "string",
+                        "description": "Dato for når dokumentet ble skrevet, publisert eller revidert.",
+                        "format": "date"
+                    },
+                    "fastsettingsmyndighet": {
+                        "type": "string",
+                        "description": "Offentlig instans som har fastsatt en grense."
+                    },
+                    "hjemmel": {
+                        "type": "string",
+                        "description": "Lov som rettskilden er begrunnet i."
+                    },
+                    "internReferanserKartverket": {
+                        "type": "array",
+                        "description": "Henvisning til saksdokument i Kartverkets eget arkiv.",
+                        "items": {
+                            "$ref": "#/components/schemas/TekstHolder"
+                        }
+                    },
+                    "rettskildeId": {
+                        "type": "string",
+                        "description": "Referanse til lov, forskrift, vedtak, dom eller traktat i form av kode som angir type dokument, dato og nummer For eksempel: LOV-2012-09-07-65."
+                    },
+                    "rettskildeTittel": {
+                        "type": "string",
+                        "description": "Navn på lov, forskrift, vedtak, dom eller traktat."
+                    }
+                },
+                "description": "Henviser til fastsettings- eller lovinformasjon."
+            },
+            "Feature": {
+                "required": [
+                    "geometry",
+                    "properties",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "En konstant, navn: type, verdi: Feature"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Id til feature"
+                    },
+                    "properties": {
+                        "$ref": "#/components/schemas/FeatureProperties"
+                    },
+                    "geometry": {
+                        "$ref": "#/components/schemas/GeometryI"
+                    }
+                },
+                "description": "Liste av features som holder på dataene"
+            },
+            "FeatureCollection": {
+                "required": [
+                    "features",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Toppnivå for geojson-strukturen, definert av en konstant med navn type og verdi FeatureCollection"
+                    },
+                    "features": {
+                        "type": "array",
+                        "description": "Liste av features som holder på dataene",
+                        "items": {
+                            "$ref": "#/components/schemas/Feature"
+                        }
+                    }
+                },
+                "description": "Geometrien til grunnkretsen, dvs representasjonspunkt og flaten"
+            },
+            "FeatureProperties": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Avhengig av hva slags feature man har kan dette være enten grensetype eller geometri-type (posisjon eller flate)"
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/Metadata"
+                    },
+                    "kontekstEgenskaper": {
+                        "$ref": "#/components/schemas/KontekstEgenskaper"
+                    }
+                },
+                "description": "Egenskaper som beskriver en gitt feature (properties-objektet i geojson-strukturen)"
+            },
+            "FlateMetadata": {
+                "required": [
+                    "common"
+                ],
+                "type": "object",
+                "description": "Metadata for en flate (felles for nasjon, fylke, kommune og grunnkrets)",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Metadata"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "common": {
+                                "$ref": "#/components/schemas/CommonMetadata"
+                            }
+                        }
+                    }
+                ]
+            },
+            "GeometryI": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "description": "Geometry-typene vi støtter i NIBAS.",
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "Point": "#/components/schemas/Point",
+                        "LineString": "#/components/schemas/LineString",
+                        "MultiPolygon": "#/components/schemas/MultiPolygon"
+                    }
+                }
+            },
+            "GrunnlinjeMetadata": {
+                "required": [
+                    "common",
+                    "commonGrense",
+                    "dokumentasjonsreferanser",
+                    "maritimeGrenser"
+                ],
+                "type": "object",
+                "description": "Spesifikk metadata for en Grunnlinje. Beskrevet i SOSI-modellen her: https://objektkatalog.geonorge.no/Diagram/Index/EAID_EEECEE48_B3FA_4807_AAE4_B30B63BC28E1",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Metadata"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "common": {
+                                "$ref": "#/components/schemas/CommonMetadata"
+                            },
+                            "commonGrense": {
+                                "$ref": "#/components/schemas/CommonGrenseMetadata"
+                            },
+                            "dokumentasjonsreferanser": {
+                                "type": "array",
+                                "description": "Henviser til fastsettings- eller lovinformasjon.",
+                                "items": {
+                                    "$ref": "#/components/schemas/Dokref"
+                                }
+                            },
+                            "maritimeGrenser": {
+                                "$ref": "#/components/schemas/MaritimeGrenserMetadata"
+                            },
+                            "kommunenummer": {
+                                "$ref": "#/components/schemas/Kommunenummer"
+                            }
+                        }
+                    }
+                ]
+            },
+            "KodelisteEntry": {
+                "required": [
+                    "href"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id for kodeliste-innslaget."
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "Lenke til kodelista."
+                    }
+                },
+                "description": "Klassifikasjon av stedfestingsnøyaktighet på grenser, og er basert på dårligste nøyaktighet til grensepunktene til grensen."
+            },
+            "Kommunenummer": {
+                "required": [
+                    "id"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unik UUID for kommunenummeret"
+                    },
+                    "kodeverdi": {
+                        "type": "integer",
+                        "description": "Det faktiske kommunenummeret",
+                        "format": "int32"
+                    }
+                },
+                "description": "Representasjon av et kommunenummer"
+            },
+            "KontekstEgenskaper": {
+                "required": [
+                    "flateIndeks",
+                    "rekkefoelge",
+                    "retningMedKlokken"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id til objekt som det vises til i kontekst"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Hvilken kontekst geometrien skal sees i",
+                        "enum": [
+                            "GRUNNKRETS",
+                            "STEMMEKRETS"
+                        ]
+                    },
+                    "retningMedKlokken": {
+                        "type": "boolean",
+                        "description": "Angir om grensen skal leses med klokken for å danne flate."
+                    },
+                    "rekkefoelge": {
+                        "type": "integer",
+                        "description": "Angir rekkefølgen på gitt grenselinje i flatedanningen.",
+                        "format": "int32"
+                    },
+                    "flateIndeks": {
+                        "type": "integer",
+                        "description": "Angir hvilken flate for enheten grensen er en del av.",
+                        "format": "int32"
+                    },
+                    "hullIndeks": {
+                        "type": "integer",
+                        "description": "Angir om grensen er en del av et hull, og i så fall index på gitt hull.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Egenskaper som beskriver konteksten som grensen sees i."
+            },
+            "Landkoder": {
+                "required": [
+                    "href",
+                    "ids"
+                ],
+                "type": "object",
+                "properties": {
+                    "ids": {
+                        "type": "array",
+                        "description": "Liste av valgte landkode-ids.",
+                        "items": {
+                            "type": "string",
+                            "description": "Liste av valgte landkode-ids."
+                        }
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "Peker til landkoder-kodeliste."
+                    }
+                },
+                "description": "Angivelse av hvilke land grensa er knyttet til Merknad: Alfanumerisk kode (ISO 3166-1 alpha-2) for land som definert i ISO 3166."
+            },
+            "LineString": {
+                "required": [
+                    "coordinates",
+                    "srid",
+                    "type"
+                ],
+                "type": "object",
+                "description": "Wrapper-objekt rundt en JTS LineString.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/GeometryI"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "description": "Geometriens type. Diskriminator."
+                            },
+                            "srid": {
+                                "type": "string",
+                                "description": "Koordinatsystemet."
+                            },
+                            "coordinates": {
+                                "type": "array",
+                                "description": "Liste av (x og y som liste).",
+                                "items": {
+                                    "type": "array",
+                                    "description": "Liste av (x og y som liste).",
+                                    "items": {
+                                        "type": "number",
+                                        "description": "Liste av (x og y som liste).",
+                                        "format": "double"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "MaritimeGrenserMetadata": {
+                "required": [
+                    "ansvarligeMyndigheter",
+                    "land"
+                ],
+                "type": "object",
+                "properties": {
+                    "ansvarligeMyndigheter": {
+                        "type": "array",
+                        "description": "Organisasjon som er ansvarlig for opprettholdelse av grensa.",
+                        "items": {
+                            "$ref": "#/components/schemas/TekstHolder"
+                        }
+                    },
+                    "gjelderOmraade": {
+                        "type": "string",
+                        "description": "Navn på område som loven gjelder for, eller område som grensa er beregnet fra."
+                    },
+                    "transformasjonsdato": {
+                        "type": "string",
+                        "description": "Tidspunktet for når koordinatene er transformert fra originalt koordinatsystem.",
+                        "format": "date"
+                    },
+                    "virkeomraadenavn": {
+                        "type": "string",
+                        "description": "Begrep knyttet til yttergrensa for virkeområdet, som oftest angitt i lov eller forskrift."
+                    },
+                    "land": {
+                        "$ref": "#/components/schemas/Landkoder"
+                    }
+                },
+                "description": "Metadata-egenskaper for maritim grense."
+            },
+            "Metadata": {
+                "required": [
+                    "discriminator"
+                ],
+                "type": "object",
+                "properties": {
+                    "discriminator": {
+                        "type": "string"
+                    }
+                },
+                "description": "Diverse metadata-felter fra sosi-modellen.",
+                "discriminator": {
+                    "propertyName": "discriminator",
+                    "mapping": {
+                        "FlateMetadata": "#/components/schemas/FlateMetadata",
+                        "AdministrativGrenseMetadata": "#/components/schemas/AdministrativGrenseMetadata",
+                        "RiksgrenseMetadata": "#/components/schemas/RiksgrenseMetadata",
+                        "TerritorialgrenseMetadata": "#/components/schemas/TerritorialgrenseMetadata",
+                        "AvtaltAvgrensningslinjeMetadata": "#/components/schemas/AvtaltAvgrensningslinjeMetadata",
+                        "GrunnlinjeMetadata": "#/components/schemas/GrunnlinjeMetadata",
+                        "StatistiskgrenseMetadata": "#/components/schemas/StatistiskgrenseMetadata"
+                    }
+                }
+            },
+            "MultiPolygon": {
+                "required": [
+                    "coordinates",
+                    "srid",
+                    "type"
+                ],
+                "type": "object",
+                "description": "Wrapper-objekt rundt et JTS MultiPolygon.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/GeometryI"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "description": "Geometriens type. Diskriminator."
+                            },
+                            "srid": {
+                                "type": "string",
+                                "description": "Koordinatsystemet."
+                            },
+                            "coordinates": {
+                                "type": "array",
+                                "description": "Liste av polygonenes liste av LinearRings som igjen har liste av koordinater som er liste av x og y.",
+                                "items": {
+                                    "type": "array",
+                                    "description": "Liste av polygonenes liste av LinearRings som igjen har liste av koordinater som er liste av x og y.",
+                                    "items": {
+                                        "type": "array",
+                                        "description": "Liste av polygonenes liste av LinearRings som igjen har liste av koordinater som er liste av x og y.",
+                                        "items": {
+                                            "type": "array",
+                                            "description": "Liste av polygonenes liste av LinearRings som igjen har liste av koordinater som er liste av x og y.",
+                                            "items": {
+                                                "type": "number",
+                                                "description": "Liste av polygonenes liste av LinearRings som igjen har liste av koordinater som er liste av x og y.",
+                                                "format": "double"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "Point": {
+                "required": [
+                    "coordinates",
+                    "srid",
+                    "type"
+                ],
+                "type": "object",
+                "description": "Wrapper-objekt rundt en JTS Point.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/GeometryI"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "description": "Geometriens type. Diskriminator."
+                            },
+                            "srid": {
+                                "type": "string",
+                                "description": "Koordinatsystemet."
+                            },
+                            "coordinates": {
+                                "type": "array",
+                                "description": "X og y som liste.",
+                                "items": {
+                                    "type": "number",
+                                    "description": "X og y som liste.",
+                                    "format": "double"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "Posisjonskvalitet": {
+                "required": [
+                    "maalemetode"
+                ],
+                "type": "object",
+                "properties": {
+                    "maalemetode": {
+                        "$ref": "#/components/schemas/KodelisteEntry"
+                    },
+                    "noeyaktighet": {
+                        "type": "integer",
+                        "description": "Punktstandardavviket i grunnriss for punkter samt tverravvik for linjer. Merknad: Oppgitt i cm.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Beskrivelse av kvaliteten på stedfestingen"
+            },
+            "RiksgrenseMetadata": {
+                "required": [
+                    "ansvarligeMyndigheter",
+                    "common",
+                    "commonGrense",
+                    "dokumentasjonsreferanser",
+                    "foelgerTerrengdetalj"
+                ],
+                "type": "object",
+                "description": "Spesifikk metadata for en riksgrense. Beskrevet i SOSI-modellen her: https://objektkatalog.geonorge.no/Objekttype/Index/EAID_5C4B9E4D_05D7_4b2e_B467_9FCA428994F9",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Metadata"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "common": {
+                                "$ref": "#/components/schemas/CommonMetadata"
+                            },
+                            "commonGrense": {
+                                "$ref": "#/components/schemas/CommonGrenseMetadata"
+                            },
+                            "dokumentasjonsreferanser": {
+                                "type": "array",
+                                "description": "Henviser til fastsettings- eller lovinformasjon.",
+                                "items": {
+                                    "$ref": "#/components/schemas/Dokref"
+                                }
+                            },
+                            "foelgerTerrengdetalj": {
+                                "$ref": "#/components/schemas/KodelisteEntry"
+                            },
+                            "stedfestingVerifisert": {
+                                "type": "boolean",
+                                "description": "Angivelse om stedfestingen (koordinatene) er kontrollert og funnet i orden (verifisert)."
+                            },
+                            "ansvarligeMyndigheter": {
+                                "type": "array",
+                                "description": "Organisasjon(er) som er ansvarlig for opprettholdelse av grensa.",
+                                "items": {
+                                    "$ref": "#/components/schemas/TekstHolder"
+                                }
+                            },
+                            "grensegateBredde": {
+                                "type": "number",
+                                "description": "Bredde av området på begge sider av riksgrensen som er ryddet for vegetasjon høyere enn 0,5 m.",
+                                "format": "double"
+                            }
+                        }
+                    }
+                ]
+            },
+            "Sporingsinformasjon": {
+                "required": [
+                    "oppdateringsdato"
+                ],
+                "type": "object",
+                "properties": {
+                    "oppdateringsdato": {
+                        "type": "string",
+                        "description": "Dato for siste endring på objektdataene",
+                        "format": "date"
+                    },
+                    "endretAv": {
+                        "type": "string",
+                        "description": "Angir hvem som endret data på objektet sist."
+                    }
+                },
+                "description": "Holder på informasjon om endring av objektet."
+            },
+            "StatistiskgrenseMetadata": {
+                "required": [
+                    "common",
+                    "commonGrense",
+                    "foelgerTerrengdetalj",
+                    "noeyaktighetsklasse"
+                ],
+                "type": "object",
+                "description": "Spesifikk metadata for en statistisk grense (grunnkrets/delområde). Beskrevet i SOSI-modellen her: https://objektkatalog.geonorge.no/Objekttype/Index/EAID_374BE5B3_5F8B_498a_8F53_9CCA72619C36",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Metadata"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "common": {
+                                "$ref": "#/components/schemas/CommonMetadata"
+                            },
+                            "commonGrense": {
+                                "$ref": "#/components/schemas/CommonGrenseMetadata"
+                            },
+                            "foelgerTerrengdetalj": {
+                                "$ref": "#/components/schemas/KodelisteEntry"
+                            },
+                            "noeyaktighetsklasse": {
+                                "$ref": "#/components/schemas/KodelisteEntry"
+                            }
+                        }
+                    }
+                ]
+            },
+            "StemmekretsResponse": {
+                "required": [
+                    "features",
+                    "id",
+                    "identifikasjon",
+                    "kommunenummer",
+                    "stemmekretsnavn",
+                    "stemmekretsnummer"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til stemmekretsen"
+                    },
+                    "stemmekretsnavn": {
+                        "type": "string",
+                        "description": "Navnet på stemmekretsen"
+                    },
+                    "stemmekretsnummer": {
+                        "type": "string",
+                        "description": "Stemmekretsnummeret til stemmekretsen"
+                    },
+                    "identifikasjon": {
+                        "$ref": "#/components/schemas/Identifikasjon"
+                    },
+                    "kommunenummer": {
+                        "type": "string",
+                        "description": "Kommunenummeret til stemmekretsen"
+                    },
+                    "tellekretsnummer": {
+                        "type": "string",
+                        "description": "Tellekretsnummer til stemmekretsen"
+                    },
+                    "tellekretsnavn": {
+                        "type": "string",
+                        "description": "Tellekretsnavn til stemmekretsen"
+                    },
+                    "valgdistriktsnummer": {
+                        "type": "string",
+                        "description": "Valgdistriktsnummer til stemmekretsen"
+                    },
+                    "features": {
+                        "$ref": "#/components/schemas/FeatureCollection"
+                    }
+                },
+                "description": "Representasjon av en stemmekrets"
+            },
+            "TekstHolder": {
+                "required": [
+                    "beskrivelse"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID for elementet."
+                    },
+                    "beskrivelse": {
+                        "type": "string",
+                        "description": "Tekstfelt."
+                    }
+                },
+                "description": "Organisasjon som er ansvarlig for opprettholdelse av grensa."
+            },
+            "TerritorialgrenseMetadata": {
+                "required": [
+                    "common",
+                    "commonGrense",
+                    "dokumentasjonsreferanser",
+                    "maritimeGrenser"
+                ],
+                "type": "object",
+                "description": "Spesifikk metadata for en territorialgrense. Beskrevet i SOSI-modellen her: https://objektkatalog.geonorge.no/Diagram/Index/EAID_EEECEE48_B3FA_4807_AAE4_B30B63BC28E1",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Metadata"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "common": {
+                                "$ref": "#/components/schemas/CommonMetadata"
+                            },
+                            "commonGrense": {
+                                "$ref": "#/components/schemas/CommonGrenseMetadata"
+                            },
+                            "dokumentasjonsreferanser": {
+                                "type": "array",
+                                "description": "Henviser til fastsettings- eller lovinformasjon.",
+                                "items": {
+                                    "$ref": "#/components/schemas/Dokref"
+                                }
+                            },
+                            "maritimeGrenser": {
+                                "$ref": "#/components/schemas/MaritimeGrenserMetadata"
+                            },
+                            "beregningsdato": {
+                                "type": "string",
+                                "description": "Tidspunktet for når koordinatene er utregnet.",
+                                "format": "date"
+                            }
+                        }
+                    }
+                ]
+            },
+            "AdministrativEnhetNavn": {
+                "required": [
+                    "navn",
+                    "spraak"
+                ],
+                "type": "object",
+                "properties": {
+                    "navn": {
+                        "type": "string",
+                        "description": "Navnet på en administrativ enhet"
+                    },
+                    "spraak": {
+                        "type": "string",
+                        "description": "Språkkoden til det administrative navnet"
+                    }
+                },
+                "description": "Representasjon av et navn"
+            },
+            "NasjonRequest": {
+                "required": [
+                    "administrativenhetnavn",
+                    "lokalid",
+                    "navnerom"
+                ],
+                "type": "object",
+                "properties": {
+                    "administrativenhetnavn": {
+                        "type": "array",
+                        "description": "Navnene til nasjonen",
+                        "items": {
+                            "$ref": "#/components/schemas/AdministrativEnhetNavn"
+                        }
+                    },
+                    "lokalid": {
+                        "type": "string",
+                        "description": "LokalId for angitt nasjon"
+                    },
+                    "navnerom": {
+                        "type": "string",
+                        "description": "Navnerommet for nasjonen"
+                    }
+                }
+            },
+            "NasjonResponse": {
+                "required": [
+                    "administrativenhetnavn",
+                    "features",
+                    "id",
+                    "lokalid",
+                    "navnerom"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til nasjonen"
+                    },
+                    "administrativenhetnavn": {
+                        "type": "array",
+                        "description": "Liste over navn til nasjonen",
+                        "items": {
+                            "$ref": "#/components/schemas/AdministrativEnhetNavn"
+                        }
+                    },
+                    "lokalid": {
+                        "type": "string",
+                        "description": "LokalID til nasjonen"
+                    },
+                    "navnerom": {
+                        "type": "string",
+                        "description": "Navnerommet til nasjonen"
+                    },
+                    "features": {
+                        "$ref": "#/components/schemas/FeatureCollection"
+                    }
+                },
+                "description": "Representasjon av en nasjon"
+            },
+            "KommuneRequest": {
+                "required": [
+                    "administrativenhetnavn",
+                    "kommunenummerId",
+                    "lokalid",
+                    "samiskforvaltningsomraade"
+                ],
+                "type": "object",
+                "properties": {
+                    "administrativenhetnavn": {
+                        "type": "array",
+                        "description": "Navnene til kommunen",
+                        "items": {
+                            "$ref": "#/components/schemas/AdministrativEnhetNavn"
+                        }
+                    },
+                    "lokalid": {
+                        "type": "string",
+                        "description": "LokalId for angitt kommune"
+                    },
+                    "navnerom": {
+                        "type": "string",
+                        "description": "Navnerommet for kommunen"
+                    },
+                    "kommunenummerId": {
+                        "type": "string",
+                        "description": "UUID til kommunenummeret"
+                    },
+                    "samiskforvaltningsomraade": {
+                        "type": "boolean",
+                        "description": "Angir om kommunen er et samisk forvaltningsområde"
+                    }
+                },
+                "description": "Representasjon av en kommune"
+            },
+            "KommuneResponse": {
+                "required": [
+                    "administrativenhetnavn",
+                    "features",
+                    "id",
+                    "kommunenummer",
+                    "lokalid",
+                    "navnerom",
+                    "oppdateringsdato",
+                    "samiskforvaltningsomraade"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til kommunen"
+                    },
+                    "administrativenhetnavn": {
+                        "type": "array",
+                        "description": "Liste over navn til kommunen",
+                        "items": {
+                            "$ref": "#/components/schemas/AdministrativEnhetNavn"
+                        }
+                    },
+                    "lokalid": {
+                        "type": "string",
+                        "description": "LokalIDen til kommunen"
+                    },
+                    "navnerom": {
+                        "type": "string",
+                        "description": "Navnerommet til kommunen"
+                    },
+                    "kommunenummer": {
+                        "$ref": "#/components/schemas/Kommunenummer"
+                    },
+                    "samiskforvaltningsomraade": {
+                        "type": "boolean",
+                        "description": "Angir om kommunen er et samisk forvaltningsområde eller ikke"
+                    },
+                    "oppdateringsdato": {
+                        "type": "string",
+                        "description": "Angir når denne kommunen ble sist oppdatert",
+                        "format": "date"
+                    },
+                    "features": {
+                        "$ref": "#/components/schemas/FeatureCollection"
+                    }
+                }
+            },
+            "GrunnkretsRequest": {
+                "required": [
+                    "grunnkretsnummer",
+                    "identifikasjon",
+                    "navn"
+                ],
+                "type": "object",
+                "properties": {
+                    "navn": {
+                        "type": "string",
+                        "description": "Navnet på grunnkretsen"
+                    },
+                    "grunnkretsnummer": {
+                        "type": "string",
+                        "description": "Grunnkretsnummeret til grunnkretsen"
+                    },
+                    "identifikasjon": {
+                        "$ref": "#/components/schemas/Identifikasjon"
+                    }
+                },
+                "description": "Representasjon av en grunnkrets"
+            },
+            "GrunnkretsResponse": {
+                "required": [
+                    "features",
+                    "grunnkretsnummer",
+                    "id",
+                    "identifikasjon",
+                    "kommunenummer",
+                    "navn"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til grunnkretsen"
+                    },
+                    "navn": {
+                        "type": "string",
+                        "description": "Navnet på grunnkretsen"
+                    },
+                    "grunnkretsnummer": {
+                        "type": "string",
+                        "description": "Grunnkretsnummeret til grunnkretsen"
+                    },
+                    "identifikasjon": {
+                        "$ref": "#/components/schemas/Identifikasjon"
+                    },
+                    "kommunenummer": {
+                        "type": "string",
+                        "description": "Kommunenummeret til grunnkretsen"
+                    },
+                    "features": {
+                        "$ref": "#/components/schemas/FeatureCollection"
+                    }
+                },
+                "description": "Representasjon av en grunnkrets"
+            },
+            "FylkeRequest": {
+                "required": [
+                    "administrativenhetnavn",
+                    "fylkesnummerId",
+                    "lokalid",
+                    "navnerom",
+                    "samiskforvaltningsomraade"
+                ],
+                "type": "object",
+                "properties": {
+                    "administrativenhetnavn": {
+                        "type": "array",
+                        "description": "Navnene til fylket",
+                        "items": {
+                            "$ref": "#/components/schemas/AdministrativEnhetNavn"
+                        }
+                    },
+                    "lokalid": {
+                        "type": "string",
+                        "description": "LokalId for angitt fylke"
+                    },
+                    "navnerom": {
+                        "type": "string",
+                        "description": "Navnerommet for fylket"
+                    },
+                    "fylkesnummerId": {
+                        "type": "string",
+                        "description": "UUID til fylkesnummeret"
+                    },
+                    "samiskforvaltningsomraade": {
+                        "type": "boolean",
+                        "description": "Angir om fylket er et samisk forvaltningsområde"
+                    }
+                }
+            },
+            "FylkeResponse": {
+                "required": [
+                    "administrativenhetnavn",
+                    "features",
+                    "fylkesnummer",
+                    "id",
+                    "lokalid",
+                    "navnerom",
+                    "oppdateringsdato",
+                    "samiskforvaltningsomraade"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til fylket"
+                    },
+                    "administrativenhetnavn": {
+                        "type": "array",
+                        "description": "Liste over navn til fylket",
+                        "items": {
+                            "$ref": "#/components/schemas/AdministrativEnhetNavn"
+                        }
+                    },
+                    "lokalid": {
+                        "type": "string",
+                        "description": "LokalIDen til fylket"
+                    },
+                    "navnerom": {
+                        "type": "string",
+                        "description": "Navnerommet til fylket"
+                    },
+                    "fylkesnummer": {
+                        "$ref": "#/components/schemas/Fylkesnummer"
+                    },
+                    "samiskforvaltningsomraade": {
+                        "type": "boolean",
+                        "description": "Angir om fylket er et samisk forvaltningsområde eller ikke"
+                    },
+                    "oppdateringsdato": {
+                        "type": "string",
+                        "description": "Angir når dette fylket ble sist oppdatert",
+                        "format": "date"
+                    },
+                    "features": {
+                        "$ref": "#/components/schemas/FeatureCollection"
+                    }
+                },
+                "description": "Representasjon av et fylke"
+            },
+            "Fylkesnummer": {
+                "required": [
+                    "id",
+                    "kodeverdi"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unik UUID for fylkesnummeret"
+                    },
+                    "kodeverdi": {
+                        "type": "integer",
+                        "description": "Det faktiske fylkesnummeret",
+                        "format": "int32"
+                    }
+                },
+                "description": "Representasjon av et fylkesnummer"
+            },
+            "RevisjonRef": {
+                "required": [
+                    "href",
+                    "revisjonDato",
+                    "revisjonId",
+                    "revisjonStatus"
+                ],
+                "type": "object",
+                "properties": {
+                    "revisjonId": {
+                        "type": "integer",
+                        "description": "IDen til den historiske revisjonen",
+                        "format": "int32"
+                    },
+                    "revisjonDato": {
+                        "type": "string",
+                        "description": "Når revisjonen ble opprettet",
+                        "format": "date-time"
+                    },
+                    "revisjonStatus": {
+                        "type": "string",
+                        "description": "Angir status for hva som medførte en ny revisjon",
+                        "enum": [
+                            "NY",
+                            "ENDRET",
+                            "SLETTET"
+                        ]
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "Referanse til hvor den historiske revisjonen kan finnes"
+                    }
+                },
+                "description": "En referanse til en historisk revisjon av en administrativ enhet"
+            },
+            "NasjonRef": {
+                "required": [
+                    "href",
+                    "id",
+                    "navn"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til nasjonen"
+                    },
+                    "navn": {
+                        "type": "array",
+                        "description": "Liste over navn til nasjonen",
+                        "items": {
+                            "$ref": "#/components/schemas/AdministrativEnhetNavn"
+                        }
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "URL til full representasjon av nasjonen"
+                    }
+                },
+                "description": "En referanse til en nasjon"
+            },
+            "KommuneRef": {
+                "required": [
+                    "href",
+                    "id",
+                    "navn"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til kommunen"
+                    },
+                    "navn": {
+                        "type": "array",
+                        "description": "Liste over navn til kommunen",
+                        "items": {
+                            "$ref": "#/components/schemas/AdministrativEnhetNavn"
+                        }
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "URL til full representasjon av kommunen"
+                    }
+                },
+                "description": "En referanse til en kommune"
+            },
+            "StemmekretsRef": {
+                "required": [
+                    "href",
+                    "id",
+                    "navn"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til stemmekretsen"
+                    },
+                    "navn": {
+                        "type": "string",
+                        "description": "Navnet på stemmekretsen"
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "URL til full representasjon av stemmekrets"
+                    }
+                },
+                "description": "En referanse til en stemmekrets"
+            },
+            "GrunnkretsRef": {
+                "required": [
+                    "grunnkretsnummer",
+                    "href",
+                    "id",
+                    "navn"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til grunnkretser"
+                    },
+                    "navn": {
+                        "type": "string",
+                        "description": "Navnet på grunnkretser"
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "URL til full representasjon av grunnkretsen"
+                    },
+                    "grunnkretsnummer": {
+                        "type": "string",
+                        "description": "Nummeret til grunnkretsen"
+                    }
+                },
+                "description": "En referanse til en grunnkrets"
+            },
+            "KodelisteItem": {
+                "required": [
+                    "id",
+                    "label"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id til kodeliste-innslaget."
+                    },
+                    "label": {
+                        "type": "string",
+                        "description": "Beskrivelse av kodeliste-innslaget."
+                    }
+                },
+                "description": "Liste av kodeliste-elementer."
+            },
+            "KodelisteRespons": {
+                "required": [
+                    "items",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Angir typen av kodeliste.",
+                        "enum": [
+                            "KOMMUNENUMMER",
+                            "FYLKESNUMMER",
+                            "MAALEMETODE_KODE",
+                            "LAND",
+                            "TERRENGDETALJ",
+                            "NOEYAKTIGHETSKLASSE",
+                            "GRENSETYPE",
+                            "FASTSETTINGSTYPE",
+                            "GRENSESTATUS"
+                        ]
+                    },
+                    "items": {
+                        "type": "array",
+                        "description": "Liste av kodeliste-elementer.",
+                        "items": {
+                            "$ref": "#/components/schemas/KodelisteItem"
+                        }
+                    }
+                }
+            },
+            "FylkeRef": {
+                "required": [
+                    "href",
+                    "id",
+                    "navn"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID-en til fylket"
+                    },
+                    "navn": {
+                        "type": "array",
+                        "description": "Liste over navn til fylket",
+                        "items": {
+                            "$ref": "#/components/schemas/AdministrativEnhetNavn"
+                        }
+                    },
+                    "href": {
+                        "type": "string",
+                        "description": "URL til full representasjon av fylket"
+                    }
+                },
+                "description": "En referanse til et fylke"
+            }
+        }
+    }
+}

@@ -1,8 +1,9 @@
 plugins {
-  id 'java-library'
-  id 'idea'
-  id 'maven-publish'
-  id 'sktools.xjc' version '5.7'
+    id 'java-library'
+    id 'idea'
+    id 'maven-publish'
+    id 'sktools.xjc' version '5.7'
+    id 'org.openapi.generator' version '6.0.1'
 }
 
 group = 'no.statkart.wsclient'
@@ -18,11 +19,17 @@ def generatedSrcDir = file("${projectDir}/gen")
 def generatedMainJavaDir = file("${generatedSrcDir}/main/java")
 def WS_IMPORT_QUAL_NAME = 'com.sun.tools.ws.ant.WsImport'
 
+def nibasDir = "${buildDir}/nibas"
+def nibasSrcDir = "${nibasDir}/src/main"
+def nibasJavaSources = "${nibasSrcDir}/java"
+def nibasApiTmpFolder = "${nibasDir}/nibasApiTmp"
+def nibasEventsApiTmpFolder = "${nibasDir}/nibasEventsApiTmp"
+
 
 sourceSets {
     main {
         java {
-            srcDirs generatedMainJavaDir
+            srcDirs generatedMainJavaDir, nibasJavaSources
         }
         xjc {
             schema {
@@ -117,6 +124,11 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:3.10.0'
 
     testRuntimeOnly 'org.slf4j:slf4j-simple:'+slf4jVersion
+
+    // dependencies for koden OpenApi Generatoren genererer for Nibas API og Events API
+    implementation 'io.swagger:swagger-annotations:1.5.22'
+    implementation "org.openapitools:jackson-databind-nullable:0.2.3"
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.3'
 }
 
 task sourceJar(type: Jar) {
@@ -136,7 +148,6 @@ publishing {
     }
   }
 }
-
 
 def wsImportInnsendingService = tasks.register('wsImportInnsendingService') {
   def sourceWsdl = file('src/main/resources/innsending/InnsendingServiceWS.wsdl')
@@ -375,7 +386,6 @@ def wsImportGrunnbokv2 = tasks.register('wsImportGrunnbokv2') {
   }
 }
 
-
 def wsImport = tasks.register('wsImport', Sync) {
   dependsOn processResources
 
@@ -394,12 +404,70 @@ def wsImport = tasks.register('wsImport', Sync) {
   from wsImportGrunnbokv2
 }
 
+task generateNibasApiModel(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    generatorName = "java"
+    inputSpec = "${projectDir}/nibasApiDocs.json"
+    outputDir = nibasApiTmpFolder
+    packageName = "no.kartverket.nibas.api"
+    apiPackage = "no.kartverket.nibas.api.api"
+    invokerPackage = "no.kartverket.nibas.api.invoker"
+    modelPackage = "no.kartverket.nibas.api.model"
+    configOptions = [
+        library: "native",
+        openApiNullable: "true",
+    ]
+}
+
+def copyNibasApiFiles = tasks.register("copyNibasApiSrcFiles", Copy) {
+    dependsOn {
+        generateNibasApiModel
+    }
+    from "${nibasApiTmpFolder}/src/main/java"
+    into nibasJavaSources
+
+    doLast {
+        delete "${nibasApiTmpFolder}"
+    }
+}
+
+def nibasApiDocFile = file("src/main/resources/nibas/nibasEventsApiDoc.json")
+
+task generateNibasEventsApiModel(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    generatorName = "java"
+    inputSpec = "${projectDir}/nibasEventsApiDocs.json"
+    outputDir = nibasEventsApiTmpFolder
+    packageName = "no.kartverket.nibas.events"
+    apiPackage = "no.kartverket.nibas.events.api"
+    invokerPackage = "no.kartverket.nibas.events.invoker"
+    modelPackage = "no.kartverket.nibas.events.model"
+    configOptions = [
+        library: "native",
+        openApiNullable: "true",
+    ]
+}
+
+def copyNibasEventsApiFiles = tasks.register("copyNibasEventsApiSrcFiles", Copy) {
+    dependsOn {
+        generateNibasEventsApiModel
+    }
+    from "${nibasEventsApiTmpFolder}/src/main/java"
+    into nibasJavaSources
+
+    doLast {
+        delete "${nibasEventsApiTmpFolder}"
+    }
+}
+
+def generateNibasApiFiles = tasks.register("generateNibasApiFiles") {
+    dependsOn copyNibasApiFiles, copyNibasEventsApiFiles
+}
+
 tasks.named('clean') {
   delete generatedSrcDir
 }
 
 tasks.named('compileJava') {
-  dependsOn wsImport
+  dependsOn wsImport, generateNibasApiFiles
 }
 
 tasks.withType(JavaCompile).configureEach {
