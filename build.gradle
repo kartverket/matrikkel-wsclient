@@ -404,14 +404,16 @@ def wsImport = tasks.register('wsImport', Sync) {
   from wsImportGrunnbokv2
 }
 
+def inputFileNibasApi = file("src/main/resources/nibas/nibasApiV1.json").path
+
 task generateNibasApiModel(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     generatorName = "java"
-    inputSpec = "${projectDir}/nibasApiDocs.json"
+    inputSpec = inputFileNibasApi
     outputDir = nibasApiTmpFolder
-    packageName = "no.kartverket.nibas.api"
-    apiPackage = "no.kartverket.nibas.api.api"
-    invokerPackage = "no.kartverket.nibas.api.invoker"
-    modelPackage = "no.kartverket.nibas.api.model"
+    packageName = "no.kartverket.nibas.api.v1"
+    apiPackage = "no.kartverket.nibas.api.v1.api"
+    invokerPackage = "no.kartverket.nibas.api.v1.invoker"
+    modelPackage = "no.kartverket.nibas.api.v1.model"
     configOptions = [
         library: "native",
         openApiNullable: "true",
@@ -430,16 +432,16 @@ def copyNibasApiFiles = tasks.register("copyNibasApiSrcFiles", Copy) {
     }
 }
 
-def nibasApiDocFile = file("src/main/resources/nibas/nibasEventsApiDoc.json")
+def inputFileNibasEventsApi = file("src/main/resources/nibas/nibasEventsApiV1.json").path
 
 task generateNibasEventsApiModel(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     generatorName = "java"
-    inputSpec = "${projectDir}/nibasEventsApiDocs.json"
+    inputSpec = inputFileNibasEventsApi
     outputDir = nibasEventsApiTmpFolder
-    packageName = "no.kartverket.nibas.events"
-    apiPackage = "no.kartverket.nibas.events.api"
-    invokerPackage = "no.kartverket.nibas.events.invoker"
-    modelPackage = "no.kartverket.nibas.events.model"
+    packageName = "no.kartverket.nibas.events.v1"
+    apiPackage = "no.kartverket.nibas.events.v1.api"
+    invokerPackage = "no.kartverket.nibas.events.v1.invoker"
+    modelPackage = "no.kartverket.nibas.events.v1.model"
     configOptions = [
         library: "native",
         openApiNullable: "true",
