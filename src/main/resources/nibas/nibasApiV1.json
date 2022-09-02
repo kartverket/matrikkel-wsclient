@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080",
+            "url": "http://nibas-api.dev.skip.statkart.no",
             "description": "Generated server url"
         }
     ],
@@ -808,8 +808,8 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -818,8 +818,8 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1647,8 +1647,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1657,8 +1657,8 @@
                             }
                         }
                     },
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2089,7 +2089,7 @@
                         "$ref": "#/components/schemas/FeatureProperties"
                     },
                     "geometry": {
-                        "$ref": "#/components/schemas/GeometryI"
+                        "$ref": "#/components/schemas/Geometry"
                     }
                 },
                 "description": "Liste av features som holder på dataene"
@@ -2154,7 +2154,7 @@
                     }
                 ]
             },
-            "GeometryI": {
+            "Geometry": {
                 "required": [
                     "type"
                 ],
@@ -2322,7 +2322,7 @@
                 "description": "Wrapper-objekt rundt en JTS LineString.",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/GeometryI"
+                        "$ref": "#/components/schemas/Geometry"
                     },
                     {
                         "type": "object",
@@ -2333,7 +2333,7 @@
                             },
                             "srid": {
                                 "type": "string",
-                                "description": "Koordinatsystemet."
+                                "description": "Koordinatsystemet. Defaulter til 25833."
                             },
                             "coordinates": {
                                 "type": "array",
@@ -2419,7 +2419,7 @@
                 "description": "Wrapper-objekt rundt et JTS MultiPolygon.",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/GeometryI"
+                        "$ref": "#/components/schemas/Geometry"
                     },
                     {
                         "type": "object",
@@ -2430,7 +2430,7 @@
                             },
                             "srid": {
                                 "type": "string",
-                                "description": "Koordinatsystemet."
+                                "description": "Koordinatsystemet. Defaulter til 25833."
                             },
                             "coordinates": {
                                 "type": "array",
@@ -2467,7 +2467,7 @@
                 "description": "Wrapper-objekt rundt en JTS Point.",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/GeometryI"
+                        "$ref": "#/components/schemas/Geometry"
                     },
                     {
                         "type": "object",
@@ -2478,7 +2478,7 @@
                             },
                             "srid": {
                                 "type": "string",
-                                "description": "Koordinatsystemet."
+                                "description": "Koordinatsystemet. Defaulter til 25833."
                             },
                             "coordinates": {
                                 "type": "array",
