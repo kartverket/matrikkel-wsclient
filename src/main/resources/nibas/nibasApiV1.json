@@ -43,6 +43,10 @@
         {
             "name": "v1/nasjoner",
             "description": "Endepunkter for å hente informasjon om nasjoner i Nasjonal inndelingsbase"
+        },
+        {
+            "name": "v1/utkast",
+            "description": "Endepunkt for å utføre CRUD-operasjoner mot utkast."
         }
     ],
     "paths": {
@@ -53,7 +57,7 @@
                 ],
                 "summary": "Hent en stemmekrets med gitt id",
                 "description": "Henter stemmekrets med gitt id",
-                "operationId": "hentEn",
+                "operationId": "hentStemmekrets",
                 "parameters": [
                     {
                         "name": "id",
@@ -117,8 +121,8 @@
                     "required": true
                 },
                 "responses": {
-                    "200": {
-                        "description": "Successful operation",
+                    "400": {
+                        "description": "Bad request. Check the request body and path",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -127,8 +131,8 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request. Check the request body and path",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -147,7 +151,7 @@
                 ],
                 "summary": "Hent en nasjon med gitt id",
                 "description": "Henter nasjon med gitt id",
-                "operationId": "hentEn_1",
+                "operationId": "hentNasjon",
                 "parameters": [
                     {
                         "name": "id",
@@ -229,7 +233,7 @@
                 ],
                 "summary": "Hent en kommune med gitt id",
                 "description": "Henter kommune med gitt id",
-                "operationId": "hentEn_2",
+                "operationId": "hentKommune",
                 "parameters": [
                     {
                         "name": "id",
@@ -242,8 +246,8 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -252,8 +256,8 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -293,8 +297,8 @@
                     "required": true
                 },
                 "responses": {
-                    "400": {
-                        "description": "Bad request. Check the request body and path",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -303,8 +307,8 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "400": {
+                        "description": "Bad request. Check the request body and path",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -323,7 +327,7 @@
                 ],
                 "summary": "Hent en grunnkrets med gitt id",
                 "description": "Henter grunnkrets med gitt id",
-                "operationId": "hentEn_3",
+                "operationId": "hentGrunnkrets",
                 "parameters": [
                     {
                         "name": "id",
@@ -417,7 +421,7 @@
                 ],
                 "summary": "Hent et fylke med gitt id",
                 "description": "Henter fylke med gitt id",
-                "operationId": "hentEn_4",
+                "operationId": "hentFylke",
                 "parameters": [
                     {
                         "name": "id",
@@ -507,46 +511,27 @@
                 }
             }
         },
-        "/v1/import": {
+        "/v1/utkast": {
             "post": {
                 "tags": [
-                    "import-controller"
+                    "v1/utkast"
                 ],
-                "operationId": "importer",
-                "parameters": [
-                    {
-                        "name": "fylker",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
+                "summary": "Oppretter et utkast og returnerer id.",
+                "description": "Oppretter et utkast og returnerer id.",
+                "operationId": "opprettUtkast",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "file"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "file": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/UtkastRequest"
                             }
                         }
-                    }
+                    },
+                    "required": true
                 },
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -581,6 +566,49 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/v1/utkast/{id}": {
+            "get": {
+                "tags": [
+                    "v1/utkast"
+                ],
+                "summary": "Hent et utkast med gitt id",
+                "description": "Henter utkast med gitt id",
+                "operationId": "hentUtkast",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til utkastet man vil hente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UtkastResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UtkastResponse"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -681,7 +709,7 @@
                 ],
                 "summary": "Hent grensene til en gitt stemmekrets",
                 "description": "Henter grensene til en stemmekrets med gitt id",
-                "operationId": "hentGrenser",
+                "operationId": "hentGrenserForStemmekrets",
                 "parameters": [
                     {
                         "name": "id",
@@ -724,7 +752,7 @@
                 ],
                 "summary": "Hent alle nasjoner",
                 "description": "Henter alle nasjoner i Nasjonal inndelingsbase.",
-                "operationId": "hentAlle",
+                "operationId": "hentNasjoner",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -808,8 +836,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -818,8 +846,8 @@
                             }
                         }
                     },
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -838,7 +866,7 @@
                 ],
                 "summary": "Hent grensene til en gitt nasjon",
                 "description": "Henter grensene til en nasjon med gitt id",
-                "operationId": "hentGrenser_1",
+                "operationId": "hentGrenserForNasjon",
                 "parameters": [
                     {
                         "name": "id",
@@ -881,7 +909,7 @@
                 ],
                 "summary": "Hent alle kommuner",
                 "description": "Henter alle kommuner i Nasjonal inndelingsbase.",
-                "operationId": "hentAlle_1",
+                "operationId": "hentKommuner",
                 "parameters": [
                     {
                         "name": "fylkeid",
@@ -1010,8 +1038,8 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1020,8 +1048,8 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1076,7 +1104,7 @@
                 ],
                 "summary": "Hent grensene til en gitt kommune",
                 "description": "Henter grensene til en kommune med gitt id",
-                "operationId": "hentGrenser_2",
+                "operationId": "hentGrenserForKommune",
                 "parameters": [
                     {
                         "name": "id",
@@ -1388,7 +1416,7 @@
                 ],
                 "summary": "Hent grensene til en gitt grunnkrets",
                 "description": "Henter grensene til en grunnkrets med gitt id",
-                "operationId": "hentGrenser_3",
+                "operationId": "hentGrenserForGrunnkrets",
                 "parameters": [
                     {
                         "name": "id",
@@ -1563,7 +1591,7 @@
                 ],
                 "summary": "Hent alle fylker",
                 "description": "Henter alle fylker i Nasjonal inndelingsbase.",
-                "operationId": "hentAlle_2",
+                "operationId": "hentFylker",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -1677,7 +1705,7 @@
                 ],
                 "summary": "Hent grensene til et gitt fylke",
                 "description": "Henter grensene til et fylke med gitt id",
-                "operationId": "hentGrenser_4",
+                "operationId": "hentGrenserForFylke",
                 "parameters": [
                     {
                         "name": "id",
@@ -1766,6 +1794,104 @@
                 }
             }
         },
+        "/v1/ekstern/matrikkel/kommuner/{kommunenummer}/stemmekretser": {
+            "get": {
+                "tags": [
+                    "v1/ekstern/matrikkel"
+                ],
+                "summary": "Henter alle stemmekretser for gitt kommunenummer",
+                "description": "Henter alle stemmekretser for gitt kommunenummer",
+                "operationId": "hentAlleStemmekretserForKommune",
+                "parameters": [
+                    {
+                        "name": "kommunenummer",
+                        "in": "path",
+                        "description": "Kommunenummer for kommune man ønsker å hente stemmekretsene til",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StemmekretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StemmekretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/ekstern/matrikkel/kommuner/{kommunenummer}/grunnkretser": {
+            "get": {
+                "tags": [
+                    "v1/ekstern/matrikkel"
+                ],
+                "summary": "Henter alle grunnkretser for gitt kommunenummer",
+                "description": "Henter alle grunnkretser for gitt kommunenummer",
+                "operationId": "hentAlleGrunnkretserForKommune",
+                "parameters": [
+                    {
+                        "name": "kommunenummer",
+                        "in": "path",
+                        "description": "Kommunenummer for kommune man ønsker å hente grunnkretsene til",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GrunnkretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GrunnkretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v1/ekstern/matrikkel/grunnkretser": {
             "get": {
                 "tags": [
@@ -1790,8 +1916,8 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1803,8 +1929,8 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1842,7 +1968,7 @@
                         "description": "Identifikasjon av en spesiell versjon av et geografisk objekt (instans), maksimum lengde på 25 karakterer."
                     }
                 },
-                "description": "Unik identifikasjon av et objekt"
+                "description": "Angir om grensen følger grunnkretsgrense og i så fall hvilken grunnkretsgrense"
             },
             "StemmekretsRequest": {
                 "required": [
@@ -3042,6 +3168,189 @@
                     }
                 },
                 "description": "Representasjon av et fylkesnummer"
+            },
+            "UtkastRequest": {
+                "required": [
+                    "endredeFeatures",
+                    "endringstype",
+                    "fylkesendringer",
+                    "grunnkretsendringer",
+                    "gyldigFra",
+                    "kommuneendringer",
+                    "nasjonsendringer",
+                    "navn",
+                    "stemmekretsendringer"
+                ],
+                "type": "object",
+                "properties": {
+                    "navn": {
+                        "type": "string",
+                        "description": "Arbeidsnavnet til utkastet."
+                    },
+                    "endringstype": {
+                        "type": "string",
+                        "description": "Typen endring utkastet representerer."
+                    },
+                    "gyldigFra": {
+                        "type": "string",
+                        "description": "Tidspunktet utkastet skal være gyldig fra.",
+                        "format": "date"
+                    },
+                    "nasjonsendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på nasjon.",
+                        "items": {
+                            "$ref": "#/components/schemas/NasjonRequest"
+                        }
+                    },
+                    "fylkesendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på fylke.",
+                        "items": {
+                            "$ref": "#/components/schemas/FylkeRequest"
+                        }
+                    },
+                    "kommuneendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på kommune.",
+                        "items": {
+                            "$ref": "#/components/schemas/KommuneRequest"
+                        }
+                    },
+                    "grunnkretsendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på grunnkrets.",
+                        "items": {
+                            "$ref": "#/components/schemas/GrunnkretsRequest"
+                        }
+                    },
+                    "stemmekretsendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på stemmekrets.",
+                        "items": {
+                            "$ref": "#/components/schemas/StemmekretsRequest"
+                        }
+                    },
+                    "endredeFeatures": {
+                        "type": "array",
+                        "description": "Liste av endringer på grenser.",
+                        "items": {
+                            "$ref": "#/components/schemas/FeatureCollection"
+                        }
+                    }
+                },
+                "description": "Utkastet som ønskes opprettet"
+            },
+            "AuditInfoResponse": {
+                "required": [
+                    "endretAv",
+                    "oppdateringsdato"
+                ],
+                "type": "object",
+                "properties": {
+                    "oppdateringsdato": {
+                        "type": "string",
+                        "description": "Da objektet sist ble oppdatert.",
+                        "format": "date"
+                    },
+                    "endretAv": {
+                        "type": "string",
+                        "description": "Den som sist endret objektet."
+                    }
+                },
+                "description": "Representasjon av audit info for et objekt."
+            },
+            "UtkastResponse": {
+                "required": [
+                    "auditInfoResponse",
+                    "endredeFeatures",
+                    "endringstype",
+                    "fylkesendringer",
+                    "grunnkretsendringer",
+                    "gyldigFra",
+                    "id",
+                    "kommuneendringer",
+                    "nasjonsendringer",
+                    "navn",
+                    "opprettetDato",
+                    "status",
+                    "stemmekretsendringer"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unik uuid for utkastet"
+                    },
+                    "navn": {
+                        "type": "string",
+                        "description": "Arbeidsnavnet til utkastet."
+                    },
+                    "endringstype": {
+                        "type": "string",
+                        "description": "Typen endring utkastet representerer."
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status for utkastet."
+                    },
+                    "gyldigFra": {
+                        "type": "string",
+                        "description": "Tidspunktet utkastet skal være gyldig fra.",
+                        "format": "date"
+                    },
+                    "nasjonsendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på nasjon.",
+                        "items": {
+                            "$ref": "#/components/schemas/NasjonRequest"
+                        }
+                    },
+                    "fylkesendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på fylke.",
+                        "items": {
+                            "$ref": "#/components/schemas/FylkeRequest"
+                        }
+                    },
+                    "kommuneendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på kommune.",
+                        "items": {
+                            "$ref": "#/components/schemas/KommuneRequest"
+                        }
+                    },
+                    "grunnkretsendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på grunnkrets.",
+                        "items": {
+                            "$ref": "#/components/schemas/GrunnkretsRequest"
+                        }
+                    },
+                    "stemmekretsendringer": {
+                        "type": "array",
+                        "description": "Liste av endringer på stemmekrets.",
+                        "items": {
+                            "$ref": "#/components/schemas/StemmekretsRequest"
+                        }
+                    },
+                    "endredeFeatures": {
+                        "type": "array",
+                        "description": "Liste av endringer på grenser.",
+                        "items": {
+                            "$ref": "#/components/schemas/FeatureCollection"
+                        }
+                    },
+                    "opprettetDato": {
+                        "type": "string",
+                        "description": "Da utkastet ble opprettet.",
+                        "format": "date-time"
+                    },
+                    "auditInfoResponse": {
+                        "$ref": "#/components/schemas/AuditInfoResponse"
+                    }
+                },
+                "description": "Representasjon av utkast"
             },
             "RevisjonRef": {
                 "required": [
