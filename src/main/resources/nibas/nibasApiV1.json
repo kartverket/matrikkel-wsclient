@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://nibas-api.dev.skip.statkart.no",
+            "url": "https://nibas-api.dev.skip.statkart.no",
             "description": "Generated server url"
         }
     ],
@@ -41,12 +41,12 @@
             "description": "Endepunkter for å hente informasjon om stemmekretser i Nasjonal inndelingsbase"
         },
         {
-            "name": "v1/nasjoner",
-            "description": "Endepunkter for å hente informasjon om nasjoner i Nasjonal inndelingsbase"
-        },
-        {
             "name": "v1/utkast",
             "description": "Endepunkt for å utføre CRUD-operasjoner mot utkast."
+        },
+        {
+            "name": "v1/nasjoner",
+            "description": "Endepunkter for å hente informasjon om nasjoner i Nasjonal inndelingsbase"
         }
     ],
     "paths": {
@@ -70,22 +70,22 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ApiErrorResponse"
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/UtkastResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponse"
                                 }
                             }
                         }
@@ -121,15 +121,12 @@
                     "required": true
                 },
                 "responses": {
-                    "409": {
-                        "description": "Conflict",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/ConflictResponse"
-                                    }
+                                    "$ref": "#/components/schemas/UtkastResponse"
                                 }
                             }
                         }
@@ -144,12 +141,46 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "409": {
+                        "description": "Conflict",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UtkastResponse"
+                                    "$ref": "#/components/schemas/ConflictResponseWrapper"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "v1/utkast"
+                ],
+                "summary": "Forkast angitt utkast.",
+                "description": "Forkast angitt utkast.",
+                "operationId": "forkastUtkast",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID til utkastet man vil slette",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponse"
                                 }
                             }
                         }
@@ -227,38 +258,38 @@
                 }
             }
         },
-        "/v1/utkast/{id}/publiser": {
+        "/v1/utkast/{id}/resolved": {
             "post": {
                 "tags": [
                     "v1/utkast"
                 ],
-                "summary": "Publiserer utkastet med gitt id.",
-                "description": "Publiserer utkastet med gitt id.",
-                "operationId": "publiserUtkast",
+                "summary": "Publiserer utkastet for resolvet konflikt.",
+                "description": "Publiserer utkastet for resolvet konflikt.",
+                "operationId": "resolveConflictForFramtidigeVersjoner",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID-en til utkastet man vil publisere",
+                        "description": "ID-en til utkastet man har resolvet konflikt for og vil publisere",
                         "required": true,
                         "schema": {
                             "type": "string"
                         }
                     }
                 ],
-                "responses": {
-                    "409": {
-                        "description": "Conflict",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/ConflictResponse"
-                                    }
-                                }
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConflictResolved"
                             }
                         }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
                     },
                     "404": {
                         "description": "Not Found",
@@ -280,8 +311,71 @@
                             }
                         }
                     },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictResponseWrapper"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/utkast/{id}/publiser": {
+            "post": {
+                "tags": [
+                    "v1/utkast"
+                ],
+                "summary": "Publiserer utkastet med gitt id.",
+                "description": "Publiserer utkastet med gitt id.",
+                "operationId": "publiserUtkast",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID-en til utkastet man vil publisere",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
                     "200": {
                         "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request. Check the request body and path",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictResponseWrapper"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -306,8 +400,8 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -316,8 +410,8 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -395,8 +489,8 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -405,8 +499,8 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -506,22 +600,22 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/NasjonResponse"
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/NasjonRef"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NasjonResponse"
                                 }
                             }
                         }
@@ -1122,6 +1216,42 @@
                 }
             }
         },
+        "/v1/grunnkretser/{lokalid}/framtidigeversjoner": {
+            "get": {
+                "tags": [
+                    "v1/grunnkretser"
+                ],
+                "summary": "Hent framtidige versjoner for en grunnkrets.",
+                "description": "Returnerer en liste av nåværende Grunnkrets og eventuelt publiserte framtidige versjoner som matcher lokalid.",
+                "operationId": "hentFramtidigeVersjonerForGrunnkrets",
+                "parameters": [
+                    {
+                        "name": "lokalid",
+                        "in": "path",
+                        "description": "LokalID-en til grunnkretsen man vil hente versjoner for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GrunnkretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v1/grunnkretser/{id}": {
             "get": {
                 "tags": [
@@ -1139,110 +1269,31 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell Gyldig Dato for grunnkrets (default = datens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GrunnkretsResponse"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/GrunnkretsResponse"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/GrunnkretsResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/grunnkretser/{id}/revisjoner": {
-            "get": {
-                "tags": [
-                    "v1/grunnkretser"
-                ],
-                "summary": "Hent historiske revisjoner for en gitt grunnkrets",
-                "description": "Henter historiske revisjoner til en grunnkrets med gitt id",
-                "operationId": "hentGrunnkretsRevisjoner",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til grunnkretsen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/RevisjonRef"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/grunnkretser/{id}/revisjoner/{revisjon}": {
-            "get": {
-                "tags": [
-                    "v1/grunnkretser"
-                ],
-                "summary": "Hent en historisk revisjon av en grunnkrets",
-                "description": "Henter en gitt historisk revisjon av en grunnkrets",
-                "operationId": "hentGrunnkretsRevisjon",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til grunnkretsen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "revisjon",
-                        "in": "path",
-                        "description": "ID til revisjonen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/GrunnkretsResponse"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1270,6 +1321,16 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "gyldigDato",
+                        "in": "query",
+                        "description": "Eventuell Gyldig Dato for grunnkrets (default = datens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
                         }
                     }
                 ],
@@ -1317,20 +1378,20 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Feature"
                                 }
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
-                            "application/json": {
+                            "*/*": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Feature"
                                 }
@@ -1406,20 +1467,20 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Feature"
                                 }
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
-                            "application/json": {
+                            "*/*": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Feature"
                                 }
@@ -1474,22 +1535,22 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/FylkeResponse"
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/FylkeRef"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FylkeResponse"
                                 }
                             }
                         }
@@ -1563,8 +1624,8 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1573,8 +1634,8 @@
                             }
                         }
                     },
-                    "200": {
-                        "description": "Successful operation",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1653,19 +1714,6 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/StemmekretsResponse"
-                                    }
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successful operation",
                         "content": {
@@ -1673,7 +1721,20 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/StemmekretsResponse"
+                                        "$ref": "#/components/schemas/KretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/KretsResponse"
                                     }
                                 }
                             }
@@ -1702,19 +1763,6 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/StemmekretsResponse"
-                                    }
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successful operation",
                         "content": {
@@ -1722,7 +1770,20 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/StemmekretsResponse"
+                                        "$ref": "#/components/schemas/KretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/KretsResponse"
                                     }
                                 }
                             }
@@ -1751,19 +1812,6 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/GrunnkretsResponse"
-                                    }
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successful operation",
                         "content": {
@@ -1771,7 +1819,20 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/GrunnkretsResponse"
+                                        "$ref": "#/components/schemas/KretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/KretsResponse"
                                     }
                                 }
                             }
@@ -1804,19 +1865,6 @@
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/GrunnkretsResponse"
-                                    }
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successful operation",
                         "content": {
@@ -1824,7 +1872,20 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/GrunnkretsResponse"
+                                        "$ref": "#/components/schemas/KretsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/KretsResponse"
                                     }
                                 }
                             }
@@ -2131,7 +2192,6 @@
                     "administrativenhetnavn",
                     "fylkesnummerId",
                     "lokalid",
-                    "navnerom",
                     "samiskforvaltningsomraade",
                     "version"
                 ],
@@ -2147,10 +2207,6 @@
                     "lokalid": {
                         "type": "string",
                         "description": "LokalId for angitt fylke"
-                    },
-                    "navnerom": {
-                        "type": "string",
-                        "description": "Navnerommet for fylket"
                     },
                     "fylkesnummerId": {
                         "type": "string",
@@ -2273,22 +2329,13 @@
             },
             "Identifikasjon": {
                 "required": [
-                    "lokalid",
-                    "navnerom"
+                    "lokalid"
                 ],
                 "type": "object",
                 "properties": {
                     "lokalid": {
                         "type": "string",
                         "description": "Lokal id som identifiserer geometrien. Dette er en globalt unik id."
-                    },
-                    "navnerom": {
-                        "type": "string",
-                        "description": "Navnerom som unikt identifiserer datakilden til objektet, starter med to bokstavs kode jfr ISO 3166."
-                    },
-                    "versjonid": {
-                        "type": "string",
-                        "description": "Identifikasjon av en spesiell versjon av et geografisk objekt (instans), maksimum lengde på 25 karakterer."
                     }
                 },
                 "description": "Angir om grensen følger grunnkretsgrense og i så fall hvilken grunnkretsgrense"
@@ -2330,10 +2377,6 @@
                     "lokalid": {
                         "type": "string",
                         "description": "LokalId for angitt kommune"
-                    },
-                    "navnerom": {
-                        "type": "string",
-                        "description": "Navnerommet for kommunen"
                     },
                     "kommunenummerId": {
                         "type": "string",
@@ -2620,7 +2663,6 @@
                 "required": [
                     "administrativenhetnavn",
                     "lokalid",
-                    "navnerom",
                     "version"
                 ],
                 "type": "object",
@@ -2635,10 +2677,6 @@
                     "lokalid": {
                         "type": "string",
                         "description": "LokalId for angitt nasjon"
-                    },
-                    "navnerom": {
-                        "type": "string",
-                        "description": "Navnerommet for nasjonen"
                     },
                     "version": {
                         "type": "integer",
@@ -2948,114 +2986,6 @@
                     }
                 ]
             },
-            "ConflictResponse": {
-                "required": [
-                    "gjeldendeVersjon",
-                    "httpStatus",
-                    "id",
-                    "type",
-                    "versjon"
-                ],
-                "type": "object",
-                "properties": {
-                    "httpStatus": {
-                        "type": "string",
-                        "description": "HttpStatus for responsen.",
-                        "enum": [
-                            "100 CONTINUE",
-                            "101 SWITCHING_PROTOCOLS",
-                            "102 PROCESSING",
-                            "103 CHECKPOINT",
-                            "200 OK",
-                            "201 CREATED",
-                            "202 ACCEPTED",
-                            "203 NON_AUTHORITATIVE_INFORMATION",
-                            "204 NO_CONTENT",
-                            "205 RESET_CONTENT",
-                            "206 PARTIAL_CONTENT",
-                            "207 MULTI_STATUS",
-                            "208 ALREADY_REPORTED",
-                            "226 IM_USED",
-                            "300 MULTIPLE_CHOICES",
-                            "301 MOVED_PERMANENTLY",
-                            "302 FOUND",
-                            "302 MOVED_TEMPORARILY",
-                            "303 SEE_OTHER",
-                            "304 NOT_MODIFIED",
-                            "305 USE_PROXY",
-                            "307 TEMPORARY_REDIRECT",
-                            "308 PERMANENT_REDIRECT",
-                            "400 BAD_REQUEST",
-                            "401 UNAUTHORIZED",
-                            "402 PAYMENT_REQUIRED",
-                            "403 FORBIDDEN",
-                            "404 NOT_FOUND",
-                            "405 METHOD_NOT_ALLOWED",
-                            "406 NOT_ACCEPTABLE",
-                            "407 PROXY_AUTHENTICATION_REQUIRED",
-                            "408 REQUEST_TIMEOUT",
-                            "409 CONFLICT",
-                            "410 GONE",
-                            "411 LENGTH_REQUIRED",
-                            "412 PRECONDITION_FAILED",
-                            "413 PAYLOAD_TOO_LARGE",
-                            "413 REQUEST_ENTITY_TOO_LARGE",
-                            "414 URI_TOO_LONG",
-                            "414 REQUEST_URI_TOO_LONG",
-                            "415 UNSUPPORTED_MEDIA_TYPE",
-                            "416 REQUESTED_RANGE_NOT_SATISFIABLE",
-                            "417 EXPECTATION_FAILED",
-                            "418 I_AM_A_TEAPOT",
-                            "419 INSUFFICIENT_SPACE_ON_RESOURCE",
-                            "420 METHOD_FAILURE",
-                            "421 DESTINATION_LOCKED",
-                            "422 UNPROCESSABLE_ENTITY",
-                            "423 LOCKED",
-                            "424 FAILED_DEPENDENCY",
-                            "425 TOO_EARLY",
-                            "426 UPGRADE_REQUIRED",
-                            "428 PRECONDITION_REQUIRED",
-                            "429 TOO_MANY_REQUESTS",
-                            "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
-                            "451 UNAVAILABLE_FOR_LEGAL_REASONS",
-                            "500 INTERNAL_SERVER_ERROR",
-                            "501 NOT_IMPLEMENTED",
-                            "502 BAD_GATEWAY",
-                            "503 SERVICE_UNAVAILABLE",
-                            "504 GATEWAY_TIMEOUT",
-                            "505 HTTP_VERSION_NOT_SUPPORTED",
-                            "506 VARIANT_ALSO_NEGOTIATES",
-                            "507 INSUFFICIENT_STORAGE",
-                            "508 LOOP_DETECTED",
-                            "509 BANDWIDTH_LIMIT_EXCEEDED",
-                            "510 NOT_EXTENDED",
-                            "511 NETWORK_AUTHENTICATION_REQUIRED"
-                        ]
-                    },
-                    "id": {
-                        "type": "string",
-                        "description": "Identifikatoren til objektet som er utdatert."
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Typen til objektet som er utdatert."
-                    },
-                    "versjon": {
-                        "type": "integer",
-                        "description": "Versjon som prøves å oppdateres.",
-                        "format": "int32"
-                    },
-                    "gjeldendeVersjon": {
-                        "type": "integer",
-                        "description": "Versjon som er gjeldende for objektet nå.",
-                        "format": "int32"
-                    },
-                    "melding": {
-                        "type": "string",
-                        "description": "Beskrivelse av hva som har gått galt."
-                    }
-                }
-            },
             "ApiErrorResponse": {
                 "required": [
                     "httpStatus"
@@ -3141,6 +3071,190 @@
                         "description": "Beskrivelse av hva som har gått galt."
                     }
                 }
+            },
+            "ConflictResponse": {
+                "required": [
+                    "gjeldendeVersjon",
+                    "id",
+                    "type",
+                    "versjon"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Identifikatoren til objektet som er utdatert."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Typen til objektet som er utdatert."
+                    },
+                    "versjon": {
+                        "type": "integer",
+                        "description": "Versjon som prøves å oppdateres.",
+                        "format": "int32"
+                    },
+                    "gjeldendeVersjon": {
+                        "type": "integer",
+                        "description": "Versjon som er gjeldende for objektet nå.",
+                        "format": "int32"
+                    },
+                    "melding": {
+                        "type": "string",
+                        "description": "Beskrivelse av hva som har gått galt."
+                    }
+                },
+                "description": "Feil som har oppstått pga optimistisk lås."
+            },
+            "ConflictResponseWrapper": {
+                "required": [
+                    "httpStatus",
+                    "optimisticLockExceptions"
+                ],
+                "type": "object",
+                "properties": {
+                    "httpStatus": {
+                        "type": "string",
+                        "description": "HttpStatus for responsen.",
+                        "enum": [
+                            "100 CONTINUE",
+                            "101 SWITCHING_PROTOCOLS",
+                            "102 PROCESSING",
+                            "103 CHECKPOINT",
+                            "200 OK",
+                            "201 CREATED",
+                            "202 ACCEPTED",
+                            "203 NON_AUTHORITATIVE_INFORMATION",
+                            "204 NO_CONTENT",
+                            "205 RESET_CONTENT",
+                            "206 PARTIAL_CONTENT",
+                            "207 MULTI_STATUS",
+                            "208 ALREADY_REPORTED",
+                            "226 IM_USED",
+                            "300 MULTIPLE_CHOICES",
+                            "301 MOVED_PERMANENTLY",
+                            "302 FOUND",
+                            "302 MOVED_TEMPORARILY",
+                            "303 SEE_OTHER",
+                            "304 NOT_MODIFIED",
+                            "305 USE_PROXY",
+                            "307 TEMPORARY_REDIRECT",
+                            "308 PERMANENT_REDIRECT",
+                            "400 BAD_REQUEST",
+                            "401 UNAUTHORIZED",
+                            "402 PAYMENT_REQUIRED",
+                            "403 FORBIDDEN",
+                            "404 NOT_FOUND",
+                            "405 METHOD_NOT_ALLOWED",
+                            "406 NOT_ACCEPTABLE",
+                            "407 PROXY_AUTHENTICATION_REQUIRED",
+                            "408 REQUEST_TIMEOUT",
+                            "409 CONFLICT",
+                            "410 GONE",
+                            "411 LENGTH_REQUIRED",
+                            "412 PRECONDITION_FAILED",
+                            "413 PAYLOAD_TOO_LARGE",
+                            "413 REQUEST_ENTITY_TOO_LARGE",
+                            "414 URI_TOO_LONG",
+                            "414 REQUEST_URI_TOO_LONG",
+                            "415 UNSUPPORTED_MEDIA_TYPE",
+                            "416 REQUESTED_RANGE_NOT_SATISFIABLE",
+                            "417 EXPECTATION_FAILED",
+                            "418 I_AM_A_TEAPOT",
+                            "419 INSUFFICIENT_SPACE_ON_RESOURCE",
+                            "420 METHOD_FAILURE",
+                            "421 DESTINATION_LOCKED",
+                            "422 UNPROCESSABLE_ENTITY",
+                            "423 LOCKED",
+                            "424 FAILED_DEPENDENCY",
+                            "425 TOO_EARLY",
+                            "426 UPGRADE_REQUIRED",
+                            "428 PRECONDITION_REQUIRED",
+                            "429 TOO_MANY_REQUESTS",
+                            "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
+                            "451 UNAVAILABLE_FOR_LEGAL_REASONS",
+                            "500 INTERNAL_SERVER_ERROR",
+                            "501 NOT_IMPLEMENTED",
+                            "502 BAD_GATEWAY",
+                            "503 SERVICE_UNAVAILABLE",
+                            "504 GATEWAY_TIMEOUT",
+                            "505 HTTP_VERSION_NOT_SUPPORTED",
+                            "506 VARIANT_ALSO_NEGOTIATES",
+                            "507 INSUFFICIENT_STORAGE",
+                            "508 LOOP_DETECTED",
+                            "509 BANDWIDTH_LIMIT_EXCEEDED",
+                            "510 NOT_EXTENDED",
+                            "511 NETWORK_AUTHENTICATION_REQUIRED"
+                        ]
+                    },
+                    "optimisticLockExceptions": {
+                        "type": "array",
+                        "description": "Feil som har oppstått pga optimistisk lås.",
+                        "items": {
+                            "$ref": "#/components/schemas/ConflictResponse"
+                        }
+                    },
+                    "framtidigVersjonConflict": {
+                        "$ref": "#/components/schemas/FramtidigVersjonConflict"
+                    }
+                }
+            },
+            "FramtidigVersjonConflict": {
+                "required": [
+                    "affectedIds",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Typen til objektet som ble forsøkt oppdatert."
+                    },
+                    "affectedIds": {
+                        "type": "array",
+                        "description": "Identifikator til objekt(et/ene) som har en nyere gyldigFra-dato og er i konflikt med endringen.",
+                        "items": {
+                            "$ref": "#/components/schemas/ObjektIdentifikator"
+                        }
+                    },
+                    "melding": {
+                        "type": "string",
+                        "description": "Beskrivelse av hva som har gått galt."
+                    }
+                },
+                "description": "Feil som har oppstått pga at det fantes rader med nyere gyldighet."
+            },
+            "Lokalid": {
+                "required": [
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ObjektIdentifikator": {
+                "required": [
+                    "gyldigFra",
+                    "lokalid"
+                ],
+                "type": "object",
+                "properties": {
+                    "lokalid": {
+                        "$ref": "#/components/schemas/Lokalid"
+                    },
+                    "gyldigFra": {
+                        "type": "string",
+                        "format": "date"
+                    }
+                },
+                "description": "Identifikator til objekt(et/ene) som har en nyere gyldigFra-dato og er i konflikt med endringen."
             },
             "AuditInfoResponse": {
                 "required": [
@@ -3237,6 +3351,49 @@
                 },
                 "description": "Utkastet som ønskes opprettet"
             },
+            "ConflictResolved": {
+                "required": [
+                    "grunnkretsRequests",
+                    "lokalid"
+                ],
+                "type": "object",
+                "properties": {
+                    "lokalid": {
+                        "$ref": "#/components/schemas/Lokalid"
+                    },
+                    "grunnkretsRequests": {
+                        "type": "array",
+                        "description": "Resolvede endringer på grunnkrets.",
+                        "items": {
+                            "$ref": "#/components/schemas/GrunnkretsRequestResolved"
+                        }
+                    }
+                },
+                "description": "Representasjon for resolved konflikt."
+            },
+            "GrunnkretsRequestResolved": {
+                "required": [
+                    "endringstype",
+                    "grunnkretsRequest",
+                    "gyldigFra"
+                ],
+                "type": "object",
+                "properties": {
+                    "gyldigFra": {
+                        "type": "string",
+                        "description": "Tidspunktet utkastet skal være gyldig fra.",
+                        "format": "date"
+                    },
+                    "endringstype": {
+                        "type": "string",
+                        "description": "Typen endring utkastet representerer."
+                    },
+                    "grunnkretsRequest": {
+                        "$ref": "#/components/schemas/GrunnkretsRequest"
+                    }
+                },
+                "description": "Representasjon av en resolvet konflikt for en endring på Grunnkrets."
+            },
             "UtkastRef": {
                 "required": [
                     "href",
@@ -3279,7 +3436,7 @@
                         }
                     }
                 },
-                "description": "Geometrien til grunnkretsen, dvs representasjonspunkt og flaten"
+                "description": "Geometrien til kretsen, dvs representasjonspunkt og flaten"
             },
             "StemmekretsResponse": {
                 "required": [
@@ -3401,7 +3558,6 @@
                     "features",
                     "id",
                     "lokalid",
-                    "navnerom",
                     "version"
                 ],
                 "type": "object",
@@ -3420,10 +3576,6 @@
                     "lokalid": {
                         "type": "string",
                         "description": "LokalID til nasjonen"
-                    },
-                    "navnerom": {
-                        "type": "string",
-                        "description": "Navnerommet til nasjonen"
                     },
                     "features": {
                         "$ref": "#/components/schemas/FeatureCollection"
@@ -3469,7 +3621,6 @@
                     "id",
                     "kommunenummer",
                     "lokalid",
-                    "navnerom",
                     "oppdateringsdato",
                     "samiskforvaltningsomraade",
                     "version"
@@ -3490,10 +3641,6 @@
                     "lokalid": {
                         "type": "string",
                         "description": "LokalIDen til kommunen"
-                    },
-                    "navnerom": {
-                        "type": "string",
-                        "description": "Navnerommet til kommunen"
                     },
                     "kommunenummer": {
                         "$ref": "#/components/schemas/Kommunenummer"
@@ -3542,6 +3689,7 @@
             },
             "GrunnkretsRef": {
                 "required": [
+                    "antallFramtidigeVersjoner",
                     "grunnkretsnummer",
                     "href",
                     "id",
@@ -3564,6 +3712,11 @@
                     "grunnkretsnummer": {
                         "type": "string",
                         "description": "Nummeret til grunnkretsen"
+                    },
+                    "antallFramtidigeVersjoner": {
+                        "type": "integer",
+                        "description": "Antall publiserte framtidige gyldige versjoner.",
+                        "format": "int32"
                     }
                 },
                 "description": "En referanse til en grunnkrets"
@@ -3621,10 +3774,11 @@
                 "required": [
                     "features",
                     "grunnkretsnummer",
+                    "gyldighet",
                     "id",
                     "identifikasjon",
-                    "kommunenummer",
                     "navn",
+                    "oppdateringsdato",
                     "version"
                 ],
                 "type": "object",
@@ -3632,6 +3786,9 @@
                     "id": {
                         "type": "string",
                         "description": "ID-en til grunnkretsen"
+                    },
+                    "identifikasjon": {
+                        "$ref": "#/components/schemas/Identifikasjon"
                     },
                     "navn": {
                         "type": "string",
@@ -3641,11 +3798,17 @@
                         "type": "string",
                         "description": "Grunnkretsnummeret til grunnkretsen"
                     },
-                    "identifikasjon": {
-                        "$ref": "#/components/schemas/Identifikasjon"
+                    "gyldighet": {
+                        "$ref": "#/components/schemas/GyldighetResponse"
                     },
-                    "kommunenummer": {
-                        "$ref": "#/components/schemas/Kommunenummer"
+                    "oppdateringsdato": {
+                        "type": "string",
+                        "description": "Siste oppdateringstidspunkt for objektet",
+                        "format": "date"
+                    },
+                    "endringstype": {
+                        "type": "string",
+                        "description": "Typen endring som ble gjort på objektet"
                     },
                     "features": {
                         "$ref": "#/components/schemas/FeatureCollection"
@@ -3657,6 +3820,25 @@
                     }
                 },
                 "description": "Representasjon av en grunnkrets"
+            },
+            "GyldighetResponse": {
+                "required": [
+                    "gyldigFra"
+                ],
+                "type": "object",
+                "properties": {
+                    "gyldigFra": {
+                        "type": "string",
+                        "description": "Tidspunktet objektet er gyldig fra",
+                        "format": "date"
+                    },
+                    "gyldigTil": {
+                        "type": "string",
+                        "description": "Tidspunktet objektet er gyldig til. Kan være tomt/løpende.",
+                        "format": "date"
+                    }
+                },
+                "description": "Gyldighetsintervall for objektet"
             },
             "FylkeRef": {
                 "required": [
@@ -3691,7 +3873,6 @@
                     "fylkesnummer",
                     "id",
                     "lokalid",
-                    "navnerom",
                     "oppdateringsdato",
                     "samiskforvaltningsomraade",
                     "version"
@@ -3712,10 +3893,6 @@
                     "lokalid": {
                         "type": "string",
                         "description": "LokalIDen til fylket"
-                    },
-                    "navnerom": {
-                        "type": "string",
-                        "description": "Navnerommet til fylket"
                     },
                     "fylkesnummer": {
                         "$ref": "#/components/schemas/Fylkesnummer"
@@ -3758,6 +3935,37 @@
                     }
                 },
                 "description": "Representasjon av et fylkesnummer"
+            },
+            "KretsResponse": {
+                "required": [
+                    "features",
+                    "id",
+                    "kommunenummer",
+                    "navn",
+                    "nummer"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Lokalid-en til kretsen."
+                    },
+                    "navn": {
+                        "type": "string",
+                        "description": "Navnet på kretsen."
+                    },
+                    "nummer": {
+                        "type": "string",
+                        "description": "Nummeret til kretsen."
+                    },
+                    "kommunenummer": {
+                        "$ref": "#/components/schemas/Kommunenummer"
+                    },
+                    "features": {
+                        "$ref": "#/components/schemas/FeatureCollection"
+                    }
+                },
+                "description": "Representasjon av en krets. Response-type kun for Matrikkelen. Kan være grunnkrets, stemmekrets etc."
             }
         }
     }
