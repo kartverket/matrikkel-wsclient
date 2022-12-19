@@ -7,49 +7,17 @@
     },
     "servers": [
         {
-            "url": "http://nibas-events.dev.skip.statkart.no",
+            "url": "http://nibas-events.test.skip.statkart.no",
             "description": "Generated server url"
         }
     ],
     "tags": [
-        {
-            "name": "v1/admin",
-            "description": "Endepunkter for å gjøre administrative endringer i Nibas events"
-        },
         {
             "name": "v1/events",
             "description": "Endepunkter for events i Nasjonal inndelingsbase"
         }
     ],
     "paths": {
-        "/v1/admin/kafka/stop": {
-            "put": {
-                "tags": [
-                    "v1/admin"
-                ],
-                "summary": "Stopper å lytte på events fra nibas-backend",
-                "operationId": "stopKafkaListener",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    }
-                }
-            }
-        },
-        "/v1/admin/kafka/start": {
-            "put": {
-                "tags": [
-                    "v1/admin"
-                ],
-                "summary": "Starter å lytte på events fra nibas-backend",
-                "operationId": "startKafkaListener",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    }
-                }
-            }
-        },
         "/v1/events": {
             "get": {
                 "tags": [
@@ -182,7 +150,7 @@
                         "format": "int32"
                     },
                     "sort": {
-                        "$ref": "#/components/schemas/Sort"
+                        "$ref": "#/components/schemas/SortObject"
                     },
                     "pageable": {
                         "$ref": "#/components/schemas/PageableObject"
@@ -210,13 +178,7 @@
                         "format": "int64"
                     },
                     "sort": {
-                        "$ref": "#/components/schemas/Sort"
-                    },
-                    "paged": {
-                        "type": "boolean"
-                    },
-                    "unpaged": {
-                        "type": "boolean"
+                        "$ref": "#/components/schemas/SortObject"
                     },
                     "pageNumber": {
                         "type": "integer",
@@ -225,10 +187,16 @@
                     "pageSize": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "paged": {
+                        "type": "boolean"
+                    },
+                    "unpaged": {
+                        "type": "boolean"
                     }
                 }
             },
-            "Sort": {
+            "SortObject": {
                 "type": "object",
                 "properties": {
                     "empty": {
