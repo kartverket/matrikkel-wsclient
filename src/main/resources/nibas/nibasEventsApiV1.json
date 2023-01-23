@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://nibas-events.test.skip.statkart.no",
+            "url": "https://nibas-events.prod.skip.statkart.no",
             "description": "Generated server url"
         }
     ],
@@ -67,10 +67,10 @@
         "schemas": {
             "EventResponse": {
                 "required": [
+                    "gyldigfra",
                     "offset",
                     "target",
                     "targetId",
-                    "targetRevision",
                     "timestamp",
                     "type",
                     "uuid"
@@ -92,7 +92,8 @@
                         "enum": [
                             "ADDED",
                             "MODIFIED",
-                            "DELETED"
+                            "DELETED",
+                            "EXPIRED"
                         ]
                     },
                     "target": {
@@ -109,17 +110,22 @@
                     },
                     "targetId": {
                         "type": "string",
-                        "description": "Identifikatoren til objektet eventen peker på"
-                    },
-                    "targetRevision": {
-                        "type": "integer",
-                        "description": "Id til gjeldende revisjon av objektet",
-                        "format": "int32"
+                        "description": "Lokalid til objektet eventen peker på"
                     },
                     "timestamp": {
                         "type": "string",
                         "description": "Når eventen skjedde",
                         "format": "date-time"
+                    },
+                    "gyldigfra": {
+                        "type": "string",
+                        "description": "Når eventen er gyldig fra",
+                        "format": "date"
+                    },
+                    "gyldigtil": {
+                        "type": "string",
+                        "description": "Når eventen er gyldig til, kan være null",
+                        "format": "date"
                     }
                 },
                 "description": "En representasjon av en event"
@@ -180,6 +186,12 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
+                    "paged": {
+                        "type": "boolean"
+                    },
+                    "unpaged": {
+                        "type": "boolean"
+                    },
                     "pageNumber": {
                         "type": "integer",
                         "format": "int32"
@@ -187,12 +199,6 @@
                     "pageSize": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "paged": {
-                        "type": "boolean"
-                    },
-                    "unpaged": {
-                        "type": "boolean"
                     }
                 }
             },
