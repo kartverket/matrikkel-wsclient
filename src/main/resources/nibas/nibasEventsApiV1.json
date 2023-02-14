@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "https://nibas-events.prod.skip.statkart.no",
+            "url": "https://nibas-events.test.skip.statkart.no",
             "description": "Generated server url"
         }
     ],
@@ -60,72 +60,168 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "v1/events"
+                ],
+                "description": "Publiserer event til Nibas Event",
+                "operationId": "publiserEvent",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EventRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
             }
         }
     },
     "components": {
         "schemas": {
-            "EventResponse": {
+            "EventRadRequest": {
                 "required": [
-                    "gyldigfra",
-                    "offset",
-                    "target",
-                    "targetId",
-                    "timestamp",
-                    "type",
+                    "eventType",
+                    "flateType",
+                    "lokalid",
                     "uuid"
                 ],
                 "type": "object",
                 "properties": {
                     "uuid": {
                         "type": "string",
-                        "description": "Unik identifikator til event"
+                        "description": "Objektradens id"
                     },
-                    "offset": {
-                        "type": "integer",
-                        "description": "Rekkefølge på eventen",
-                        "format": "int64"
-                    },
-                    "type": {
+                    "eventType": {
                         "type": "string",
                         "description": "Hvilken event har inntruffet",
                         "enum": [
                             "ADDED",
                             "MODIFIED",
-                            "DELETED",
                             "EXPIRED"
                         ]
                     },
-                    "target": {
+                    "flateType": {
                         "type": "string",
                         "description": "Hvilket type objekt har event skjedd for",
                         "enum": [
                             "STEMMEKRETS",
                             "GRUNNKRETS",
-                            "SKOLEKRETS",
                             "KOMMUNE",
                             "FYLKE",
                             "NASJON"
                         ]
                     },
-                    "targetId": {
+                    "lokalid": {
                         "type": "string",
-                        "description": "Lokalid til objektet eventen peker på"
+                        "description": "Lokalid for objektet"
+                    }
+                },
+                "description": "Liste med relaterte rader"
+            },
+            "EventRequest": {
+                "required": [
+                    "eventRader",
+                    "inntreffer"
+                ],
+                "type": "object",
+                "properties": {
+                    "inntreffer": {
+                        "type": "string",
+                        "description": "Når eventen er gyldig fra",
+                        "format": "date"
+                    },
+                    "eventRader": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Liste med relaterte rader",
+                        "items": {
+                            "$ref": "#/components/schemas/EventRadRequest"
+                        }
+                    }
+                },
+                "description": "event"
+            },
+            "EventRadResponse": {
+                "required": [
+                    "eventId",
+                    "flateType",
+                    "lokalId",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Hvilket event har inntruffet",
+                        "enum": [
+                            "ADDED",
+                            "MODIFIED",
+                            "EXPIRED"
+                        ]
+                    },
+                    "flateType": {
+                        "type": "string",
+                        "description": "Hvilket type objekt har event skjedd for",
+                        "enum": [
+                            "STEMMEKRETS",
+                            "GRUNNKRETS",
+                            "KOMMUNE",
+                            "FYLKE",
+                            "NASJON"
+                        ]
+                    },
+                    "lokalId": {
+                        "type": "string",
+                        "description": "Lokalid til objektet. Brukes mot Nibas-API"
+                    },
+                    "eventId": {
+                        "type": "integer",
+                        "description": "Hvilket event hører raden til",
+                        "format": "int32"
+                    }
+                },
+                "description": "Rad med data om endringen"
+            },
+            "EventResponse": {
+                "required": [
+                    "id",
+                    "inntreffer",
+                    "rader",
+                    "timestamp"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Eventnummer (løpenummer)",
+                        "format": "int32"
+                    },
+                    "inntreffer": {
+                        "type": "string",
+                        "description": "Når eventen inntreffer",
+                        "format": "date"
                     },
                     "timestamp": {
                         "type": "string",
                         "description": "Når eventen skjedde",
                         "format": "date-time"
                     },
-                    "gyldigfra": {
-                        "type": "string",
-                        "description": "Når eventen er gyldig fra",
-                        "format": "date"
-                    },
-                    "gyldigtil": {
-                        "type": "string",
-                        "description": "Når eventen er gyldig til, kan være null",
-                        "format": "date"
+                    "rader": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Radene eventet består av",
+                        "items": {
+                            "$ref": "#/components/schemas/EventRadResponse"
+                        }
                     }
                 },
                 "description": "En representasjon av en event"
@@ -158,12 +254,12 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
-                    "pageable": {
-                        "$ref": "#/components/schemas/PageableObject"
-                    },
                     "numberOfElements": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
                     },
                     "first": {
                         "type": "boolean"

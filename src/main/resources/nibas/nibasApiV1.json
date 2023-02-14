@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "https://nibas-api.test.skip.statkart.no",
+            "url": "http://nibas-api.test.skip.statkart.no",
             "description": "Generated server url"
         }
     ],
@@ -305,8 +305,8 @@
                             }
                         }
                     },
-                    "404": {
-                        "description": "Not Found",
+                    "400": {
+                        "description": "Bad request. Check the request body and path",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -315,8 +315,8 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request. Check the request body and path",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -361,6 +361,16 @@
                             }
                         }
                     },
+                    "400": {
+                        "description": "Bad request. Check the request body and path",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiErrorResponse"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -370,13 +380,49 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/v1/stemmekretser/{lokalid}/framtidigeversjoner": {
+            "get": {
+                "tags": [
+                    "v1/stemmekretser"
+                ],
+                "summary": "Hent framtidige versjoner for en stemmekrets.",
+                "description": "Returnerer en liste av nåværende Stemmekrets og eventuelt publiserte framtidige versjoner som matcher lokalid.",
+                "operationId": "hentFramtidigeVersjonerForStemmekrets",
+                "parameters": [
+                    {
+                        "name": "lokalid",
+                        "in": "path",
+                        "description": "LokalID-en til stemmekretsen man vil hente versjoner for",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
-                    "400": {
-                        "description": "Bad request. Check the request body and path",
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for stemmekrets (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ApiErrorResponse"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StemmekretsResponse"
+                                    }
                                 }
                             }
                         }
@@ -401,110 +447,31 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for stemmekrets (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StemmekretsResponse"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/StemmekretsResponse"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/StemmekretsResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/stemmekretser/{id}/revisjoner": {
-            "get": {
-                "tags": [
-                    "v1/stemmekretser"
-                ],
-                "summary": "Hent historiske revisjoner for en gitt stemmekrets",
-                "description": "Henter historiske revisjoner til en stemmekrets med gitt id",
-                "operationId": "hentStemmekretsRevisjoner",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til stemmekretsen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/RevisjonRef"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/stemmekretser/{id}/revisjoner/{revisjon}": {
-            "get": {
-                "tags": [
-                    "v1/stemmekretser"
-                ],
-                "summary": "Hent en historisk revisjon av en stemmekrets",
-                "description": "Henter en gitt historisk revisjon av en stemmekrets",
-                "operationId": "hentStemmekretsRevisjon",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til stemmekrets man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "revisjon",
-                        "in": "path",
-                        "description": "ID til revisjonen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/StemmekretsResponse"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -532,6 +499,16 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for stemmekrets (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
                         }
                     }
                 ],
@@ -567,6 +544,18 @@
                 "summary": "Hent alle nasjoner",
                 "description": "Henter alle nasjoner i Nasjonal inndelingsbase.",
                 "operationId": "hentNasjoner",
+                "parameters": [
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for nasjonene (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -601,104 +590,25 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for nasjon (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
                     }
                 ],
                 "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/NasjonResponse"
-                                }
-                            }
-                        }
-                    },
                     "200": {
                         "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/NasjonRef"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/nasjoner/{id}/revisjoner": {
-            "get": {
-                "tags": [
-                    "v1/nasjoner"
-                ],
-                "summary": "Hent historiske revisjoner for en gitt nasjon",
-                "description": "Henter historiske revisjoner til en nasjon med gitt id",
-                "operationId": "hentNasjonRevisjoner",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til nasjonen man vil hente historiske revisjoner for",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/RevisjonRef"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/nasjoner/{id}/revisjoner/{revisjon}": {
-            "get": {
-                "tags": [
-                    "v1/nasjoner"
-                ],
-                "summary": "Hent en historisk versjon av en nasjon",
-                "description": "Henter en gitt historisk revisjon av en nasjon",
-                "operationId": "hentNasjonRevisjon",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Id til nasjonen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "revisjon",
-                        "in": "path",
-                        "description": "Id til revisjonen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/NasjonResponse"
                                 }
                             }
                         }
@@ -732,6 +642,16 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for nasjon (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
                         }
                     }
                 ],
@@ -776,6 +696,16 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for kommune (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
                     }
                 ],
                 "responses": {
@@ -811,6 +741,16 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for kommune (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
                         }
                     }
                 ],
@@ -853,6 +793,16 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for kommune (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
                     }
                 ],
                 "responses": {
@@ -865,95 +815,6 @@
                                     "items": {
                                         "$ref": "#/components/schemas/StemmekretsRef"
                                     }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/kommuner/{id}/revisjoner": {
-            "get": {
-                "tags": [
-                    "v1/kommuner"
-                ],
-                "summary": "Hent historiske revisjoner for en gitt kommune",
-                "description": "Henter historiske revisjoner til en kommune med gitt id",
-                "operationId": "hentKommuneRevisjoner",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til kommunen man vil hente historiske revisjoner for",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/RevisjonRef"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/kommuner/{id}/revisjoner/{revisjon}": {
-            "get": {
-                "tags": [
-                    "v1/kommuner"
-                ],
-                "summary": "Hent en historisk revisjon av en kommune",
-                "description": "Henter en gitt historisk revisjon av en kommune",
-                "operationId": "hentKommuneRevisjon",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til kommunen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "revisjon",
-                        "in": "path",
-                        "description": "ID til revisjonen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/KommuneResponse"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/KommuneResponse"
                                 }
                             }
                         }
@@ -977,6 +838,16 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for kommune (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
                         }
                     }
                 ],
@@ -1013,6 +884,16 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for kommune (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
                         }
                     }
                 ],
@@ -1157,6 +1038,16 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for grunnkrets (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
                     }
                 ],
                 "responses": {
@@ -1197,7 +1088,7 @@
                     {
                         "name": "gyldighetsdato",
                         "in": "query",
-                        "description": "Eventuell Gyldig Dato for grunnkrets (default = datens dato",
+                        "description": "Eventuell gyldighetsdato for grunnkrets (default = dagens dato",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -1248,9 +1139,9 @@
                         }
                     },
                     {
-                        "name": "gyldigDato",
+                        "name": "gyldighetsdato",
                         "in": "query",
-                        "description": "Eventuell Gyldig Dato for grunnkrets (default = datens dato",
+                        "description": "Eventuell gyldighetsdato for grunnkrets (default = dagens dato",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -1299,112 +1190,33 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for grense (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Feature"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
                             "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Feature"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Feature"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/grenser/{id}/revisjoner": {
-            "get": {
-                "tags": [
-                    "v1/grenser"
-                ],
-                "summary": "Hent historiske revisjoner for grense",
-                "description": "Henter historiske revisjoner for grense med gitt id",
-                "operationId": "hentGrenseRevisjoner",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til grensen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/RevisjonRef"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/grenser/{id}/revisjoner/{revisjon}": {
-            "get": {
-                "tags": [
-                    "v1/grenser"
-                ],
-                "summary": "Hent en historisk revisjon for grense",
-                "description": "Henter gitt historisk revisjon for gitt grense",
-                "operationId": "hentGrenseRevisjon",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID til grensen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "revisjon",
-                        "in": "path",
-                        "description": "ID til revisjonen man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32"
-                        }
-                    }
-                ],
-                "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Feature"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Feature"
                                 }
@@ -1422,6 +1234,18 @@
                 "summary": "Hent alle fylker",
                 "description": "Henter alle fylker i Nasjonal inndelingsbase.",
                 "operationId": "hentFylker",
+                "parameters": [
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for fylkene (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -1456,94 +1280,15 @@
                         "schema": {
                             "type": "string"
                         }
-                    }
-                ],
-                "responses": {
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/FylkeResponse"
-                                }
-                            }
-                        }
-                    },
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/FylkeRef"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/fylker/{id}/revisjoner": {
-            "get": {
-                "tags": [
-                    "v1/fylker"
-                ],
-                "summary": "Hent historiske revisjoner for et gitt fylke",
-                "description": "Henter historiske revisjoner til et fylke med gitt id",
-                "operationId": "hentFylkesRevisjoner",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til fylket man vil hente historiske revisjoner for",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/RevisjonRef"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/fylker/{id}/revisjoner/{revisjon}": {
-            "get": {
-                "tags": [
-                    "v1/fylker"
-                ],
-                "summary": "Hent en historisk revisjon av et fylke",
-                "description": "Henter en gitt historisk revisjon av et fylke",
-                "operationId": "hentFylkesRevisjon",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID-en til fylket man vil hente",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
                     },
                     {
-                        "name": "revisjon",
-                        "in": "path",
-                        "description": "ID til revisjonen man vil hente",
-                        "required": true,
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for fylke (default = dagens dato",
+                        "required": false,
                         "schema": {
-                            "type": "integer",
-                            "format": "int32"
+                            "type": "string",
+                            "format": "date"
                         }
                     }
                 ],
@@ -1587,6 +1332,16 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "gyldighetsdato",
+                        "in": "query",
+                        "description": "Eventuell gyldighetsdato for fylke (default = dagens dato",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
                         }
                     }
                 ],
@@ -2325,8 +2080,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "Id til objekt som det vises til i kontekst"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "type": {
                         "type": "string",
@@ -2392,6 +2146,17 @@
                         }
                     }
                 ]
+            },
+            "Lokalid": {
+                "required": [
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                }
             },
             "Metadata": {
                 "required": [
@@ -2535,6 +2300,23 @@
                 },
                 "description": "Endringer på nasjon."
             },
+            "ObjektIdentifikator": {
+                "required": [
+                    "gyldighetsdato",
+                    "lokalid"
+                ],
+                "type": "object",
+                "properties": {
+                    "lokalid": {
+                        "$ref": "#/components/schemas/Lokalid"
+                    },
+                    "gyldighetsdato": {
+                        "type": "string",
+                        "format": "date"
+                    }
+                },
+                "description": "Id til objekt som det vises til i kontekst"
+            },
             "Operasjoner": {
                 "required": [
                     "grenseendringer",
@@ -2547,6 +2329,9 @@
                     },
                     "grenseendringer": {
                         "$ref": "#/components/schemas/Grenseendringer"
+                    },
+                    "stemmekretsSammenslaaingsendring": {
+                        "$ref": "#/components/schemas/StemmekretsSammenslaaingsendring"
                     }
                 },
                 "description": "Representasjon av operasjoner/handlinger som er utført i klienten."
@@ -2743,6 +2528,38 @@
                     }
                 },
                 "description": "Representasjon av en stemmekrets"
+            },
+            "StemmekretsSammenslaaingsendring": {
+                "required": [
+                    "stemmekretsNavn",
+                    "stemmekretsNummer",
+                    "stemmekretserTilSammenslaaing",
+                    "viderefoertStemmekrets"
+                ],
+                "type": "object",
+                "properties": {
+                    "viderefoertStemmekrets": {
+                        "type": "string",
+                        "description": "LokalIden til den stemmekretsen som skal videreføres"
+                    },
+                    "stemmekretserTilSammenslaaing": {
+                        "type": "array",
+                        "description": "Liste av LokalIder som skal bli del av den videreførte stemmekretsen",
+                        "items": {
+                            "type": "string",
+                            "description": "Liste av LokalIder som skal bli del av den videreførte stemmekretsen"
+                        }
+                    },
+                    "stemmekretsNavn": {
+                        "type": "string",
+                        "description": "Navnet til den sammenslåtte stemmekretsen"
+                    },
+                    "stemmekretsNummer": {
+                        "type": "string",
+                        "description": "Stemmekretsnummeret til den sammenslåtte stemmekretsen"
+                    }
+                },
+                "description": "Representasjon av sammenslåing av en stemmekrets med 1 eller flere andre stemmekretser i samme kommune"
             },
             "TekstHolder": {
                 "required": [
@@ -2949,34 +2766,6 @@
                 },
                 "description": "Feil som har oppstått pga at det fantes rader med nyere gyldighet."
             },
-            "Lokalid": {
-                "required": [
-                    "value"
-                ],
-                "type": "object",
-                "properties": {
-                    "value": {
-                        "type": "string"
-                    }
-                }
-            },
-            "ObjektIdentifikator": {
-                "required": [
-                    "gyldigFra",
-                    "lokalid"
-                ],
-                "type": "object",
-                "properties": {
-                    "lokalid": {
-                        "$ref": "#/components/schemas/Lokalid"
-                    },
-                    "gyldigFra": {
-                        "type": "string",
-                        "format": "date"
-                    }
-                },
-                "description": "Identifikator til objekt(et/ene) som har en nyere gyldigFra-dato og er i konflikt med endringen."
-            },
             "ApiErrorResponse": {
                 "required": [
                     "httpStatus"
@@ -3156,7 +2945,8 @@
             "ConflictResolved": {
                 "required": [
                     "grunnkretsRequests",
-                    "lokalid"
+                    "lokalid",
+                    "stemmekretsRequests"
                 ],
                 "type": "object",
                 "properties": {
@@ -3168,6 +2958,13 @@
                         "description": "Resolvede endringer på grunnkrets.",
                         "items": {
                             "$ref": "#/components/schemas/GrunnkretsRequestResolved"
+                        }
+                    },
+                    "stemmekretsRequests": {
+                        "type": "array",
+                        "description": "Resolvede endringer på stemmekrets.",
+                        "items": {
+                            "$ref": "#/components/schemas/StemmekretsRequestResolved"
                         }
                     }
                 },
@@ -3195,6 +2992,29 @@
                     }
                 },
                 "description": "Representasjon av en resolvet konflikt for en endring på Grunnkrets."
+            },
+            "StemmekretsRequestResolved": {
+                "required": [
+                    "endringstype",
+                    "gyldigFra",
+                    "stemmekretsRequest"
+                ],
+                "type": "object",
+                "properties": {
+                    "gyldigFra": {
+                        "type": "string",
+                        "description": "Tidspunktet utkastet skal være gyldig fra.",
+                        "format": "date"
+                    },
+                    "endringstype": {
+                        "type": "string",
+                        "description": "Typen endring utkastet representerer."
+                    },
+                    "stemmekretsRequest": {
+                        "$ref": "#/components/schemas/StemmekretsRequest"
+                    }
+                },
+                "description": "Representasjon av en resolvet konflikt for en endring på Stemmekrets."
             },
             "UtkastRef": {
                 "required": [
@@ -3240,6 +3060,25 @@
                 },
                 "description": "Geometrien til kretsen, dvs representasjonspunkt og flaten"
             },
+            "GyldighetResponse": {
+                "required": [
+                    "gyldigFra"
+                ],
+                "type": "object",
+                "properties": {
+                    "gyldigFra": {
+                        "type": "string",
+                        "description": "Tidspunktet objektet er gyldig fra",
+                        "format": "date"
+                    },
+                    "gyldigTil": {
+                        "type": "string",
+                        "description": "Tidspunktet objektet er gyldig til. Kan være tomt/løpende.",
+                        "format": "date"
+                    }
+                },
+                "description": "Gyldighetsintervall for objektet"
+            },
             "Kommunenummer": {
                 "required": [
                     "id",
@@ -3261,9 +3100,10 @@
             "StemmekretsResponse": {
                 "required": [
                     "features",
+                    "gyldighet",
                     "id",
-                    "identifikasjon",
                     "kommunenummer",
+                    "oppdateringsdato",
                     "stemmekretsnavn",
                     "stemmekretsnummer",
                     "version"
@@ -3271,8 +3111,19 @@
                 "type": "object",
                 "properties": {
                     "id": {
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
+                    },
+                    "gyldighet": {
+                        "$ref": "#/components/schemas/GyldighetResponse"
+                    },
+                    "endringstype": {
                         "type": "string",
-                        "description": "ID-en til stemmekretsen"
+                        "description": "Typen endring som ble gjort på objektet"
+                    },
+                    "oppdateringsdato": {
+                        "type": "string",
+                        "description": "Siste oppdateringstidspunkt for objektet",
+                        "format": "date-time"
                     },
                     "stemmekretsnavn": {
                         "type": "string",
@@ -3281,9 +3132,6 @@
                     "stemmekretsnummer": {
                         "type": "string",
                         "description": "Stemmekretsnummeret til stemmekretsen"
-                    },
-                    "identifikasjon": {
-                        "$ref": "#/components/schemas/Identifikasjon"
                     },
                     "kommunenummer": {
                         "$ref": "#/components/schemas/Kommunenummer"
@@ -3311,43 +3159,9 @@
                 },
                 "description": "Representasjon av en stemmekrets"
             },
-            "RevisjonRef": {
-                "required": [
-                    "href",
-                    "revisjonDato",
-                    "revisjonId",
-                    "revisjonStatus"
-                ],
-                "type": "object",
-                "properties": {
-                    "revisjonId": {
-                        "type": "integer",
-                        "description": "IDen til den historiske revisjonen",
-                        "format": "int32"
-                    },
-                    "revisjonDato": {
-                        "type": "string",
-                        "description": "Når revisjonen ble opprettet",
-                        "format": "date-time"
-                    },
-                    "revisjonStatus": {
-                        "type": "string",
-                        "description": "Angir status for hva som medførte en ny revisjon",
-                        "enum": [
-                            "NY",
-                            "ENDRET",
-                            "SLETTET"
-                        ]
-                    },
-                    "href": {
-                        "type": "string",
-                        "description": "Referanse til hvor den historiske revisjonen kan finnes"
-                    }
-                },
-                "description": "En referanse til en historisk revisjon av en administrativ enhet"
-            },
             "NasjonRef": {
                 "required": [
+                    "antallFramtidigeVersjoner",
                     "href",
                     "id",
                     "navn"
@@ -3355,8 +3169,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "ID-en til nasjonen"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "navn": {
                         "type": "array",
@@ -3368,6 +3181,11 @@
                     "href": {
                         "type": "string",
                         "description": "URL til full representasjon av nasjonen"
+                    },
+                    "antallFramtidigeVersjoner": {
+                        "type": "integer",
+                        "description": "Antall publiserte framtidige gyldige versjoner.",
+                        "format": "int32"
                     }
                 },
                 "description": "En referanse til en nasjon"
@@ -3377,14 +3195,12 @@
                     "administrativenhetnavn",
                     "features",
                     "id",
-                    "lokalid",
                     "version"
                 ],
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "ID-en til nasjonen"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "administrativenhetnavn": {
                         "type": "array",
@@ -3392,10 +3208,6 @@
                         "items": {
                             "$ref": "#/components/schemas/AdministrativEnhetNavn"
                         }
-                    },
-                    "lokalid": {
-                        "type": "string",
-                        "description": "LokalID til nasjonen"
                     },
                     "features": {
                         "$ref": "#/components/schemas/FeatureCollection"
@@ -3410,6 +3222,7 @@
             },
             "KommuneRef": {
                 "required": [
+                    "antallFramtidigeVersjoner",
                     "href",
                     "id",
                     "navn"
@@ -3417,8 +3230,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "ID-en til kommunen"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "navn": {
                         "type": "array",
@@ -3430,6 +3242,11 @@
                     "href": {
                         "type": "string",
                         "description": "URL til full representasjon av kommunen"
+                    },
+                    "antallFramtidigeVersjoner": {
+                        "type": "integer",
+                        "description": "Antall publiserte framtidige gyldige versjoner.",
+                        "format": "int32"
                     }
                 },
                 "description": "En referanse til en kommune"
@@ -3440,7 +3257,6 @@
                     "features",
                     "id",
                     "kommunenummer",
-                    "lokalid",
                     "oppdateringsdato",
                     "samiskforvaltningsomraade",
                     "version"
@@ -3448,8 +3264,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "ID-en til kommunen"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "administrativenhetnavn": {
                         "type": "array",
@@ -3457,10 +3272,6 @@
                         "items": {
                             "$ref": "#/components/schemas/AdministrativEnhetNavn"
                         }
-                    },
-                    "lokalid": {
-                        "type": "string",
-                        "description": "LokalIDen til kommunen"
                     },
                     "kommunenummer": {
                         "$ref": "#/components/schemas/Kommunenummer"
@@ -3482,27 +3293,38 @@
                         "description": "Teknisk versjon for å støtte samhandling og redigering",
                         "format": "int32"
                     }
-                }
+                },
+                "description": "Representasjon av en kommune"
             },
             "StemmekretsRef": {
                 "required": [
+                    "antallFramtidigeVersjoner",
                     "href",
                     "id",
-                    "navn"
+                    "navn",
+                    "nummer"
                 ],
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "ID-en til stemmekretsen"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "navn": {
                         "type": "string",
                         "description": "Navnet på stemmekretsen"
                     },
+                    "nummer": {
+                        "type": "string",
+                        "description": "Nummeret til stemmekretsen"
+                    },
                     "href": {
                         "type": "string",
                         "description": "URL til full representasjon av stemmekrets"
+                    },
+                    "antallFramtidigeVersjoner": {
+                        "type": "integer",
+                        "description": "Antall publiserte framtidige gyldige versjoner.",
+                        "format": "int32"
                     }
                 },
                 "description": "En referanse til en stemmekrets"
@@ -3518,8 +3340,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "ID-en til grunnkretser"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "navn": {
                         "type": "string",
@@ -3596,7 +3417,6 @@
                     "grunnkretsnummer",
                     "gyldighet",
                     "id",
-                    "identifikasjon",
                     "navn",
                     "oppdateringsdato",
                     "version"
@@ -3604,11 +3424,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "ID-en til grunnkretsen"
-                    },
-                    "identifikasjon": {
-                        "$ref": "#/components/schemas/Identifikasjon"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "navn": {
                         "type": "string",
@@ -3641,27 +3457,9 @@
                 },
                 "description": "Representasjon av en grunnkrets"
             },
-            "GyldighetResponse": {
-                "required": [
-                    "gyldigFra"
-                ],
-                "type": "object",
-                "properties": {
-                    "gyldigFra": {
-                        "type": "string",
-                        "description": "Tidspunktet objektet er gyldig fra",
-                        "format": "date"
-                    },
-                    "gyldigTil": {
-                        "type": "string",
-                        "description": "Tidspunktet objektet er gyldig til. Kan være tomt/løpende.",
-                        "format": "date"
-                    }
-                },
-                "description": "Gyldighetsintervall for objektet"
-            },
             "FylkeRef": {
                 "required": [
+                    "antallFramtidigeVersjoner",
                     "href",
                     "id",
                     "navn"
@@ -3669,8 +3467,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "ID-en til fylket"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "navn": {
                         "type": "array",
@@ -3682,6 +3479,11 @@
                     "href": {
                         "type": "string",
                         "description": "URL til full representasjon av fylket"
+                    },
+                    "antallFramtidigeVersjoner": {
+                        "type": "integer",
+                        "description": "Antall publiserte framtidige gyldige versjoner.",
+                        "format": "int32"
                     }
                 },
                 "description": "En referanse til et fylke"
@@ -3692,7 +3494,6 @@
                     "features",
                     "fylkesnummer",
                     "id",
-                    "lokalid",
                     "oppdateringsdato",
                     "samiskforvaltningsomraade",
                     "version"
@@ -3700,8 +3501,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "ID-en til fylket"
+                        "$ref": "#/components/schemas/ObjektIdentifikator"
                     },
                     "administrativenhetnavn": {
                         "type": "array",
@@ -3709,10 +3509,6 @@
                         "items": {
                             "$ref": "#/components/schemas/AdministrativEnhetNavn"
                         }
-                    },
-                    "lokalid": {
-                        "type": "string",
-                        "description": "LokalIDen til fylket"
                     },
                     "fylkesnummer": {
                         "$ref": "#/components/schemas/Fylkesnummer"
