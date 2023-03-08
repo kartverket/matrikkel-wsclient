@@ -31,19 +31,19 @@ public class LandmalerregisterServiceMockTest {
     @Test
     public void testService1() {
         Set<LandmalerFraAAL> landmalere = landmalerregisterServiceWS.findLandmalerWS("1", null, null);
-        assertThat(landmalere.size()).isEqualTo(6);
+        assertThat(landmalere).hasSize(6);
     }
 
     @Test
     public void testService2() {
         Set<LandmalerFraAAL> landmalere = landmalerregisterServiceWS.findLandmalerWS(null, "Kari", null);
-        assertThat(landmalere.size()).isEqualTo(1);
+        assertThat(landmalere).hasSize(1);
     }
 
     @Test
     public void testService3() {
         Set<LandmalerFraAAL> landmalere = landmalerregisterServiceWS.findLandmalerWS(null, null, "Nordmann");
-        assertThat(landmalere.size()).isEqualTo(2);
+        assertThat(landmalere).hasSize(2);
     }
 
     @Test

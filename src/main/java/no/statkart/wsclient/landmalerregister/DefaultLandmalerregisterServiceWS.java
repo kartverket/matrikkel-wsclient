@@ -7,8 +7,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -51,10 +49,7 @@ public class DefaultLandmalerregisterServiceWS implements LandmalerregisterServi
             // respons fra tjener er et jsonObject, med en liste
             String responseJson = EntityUtils.toString(response.getEntity());
 
-            JSONObject landmalereJson = new JSONObject(responseJson);
-            JSONArray landmaalere = landmalereJson.getJSONArray("landmaalere");
-
-            return LandmalerregisterUtil.lagSetLandmalereFraAALFraJsonResponse(landmaalere);
+            return LandmalerregisterUtil.lagSetLandmalereFraAALFraJsonResponse(responseJson);
 
         } catch (IOException e) {
             String msg = "Feil i kall til Landmålerregisteret: " + e;

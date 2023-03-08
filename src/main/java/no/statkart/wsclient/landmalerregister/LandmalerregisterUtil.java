@@ -1,15 +1,15 @@
 package no.statkart.wsclient.landmalerregister;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import no.statkart.skif.exception.ImplementationException;
 import no.statkart.skif.exception.ValidationException;
 import org.apache.http.client.utils.URIBuilder;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -22,29 +22,26 @@ public class LandmalerregisterUtil {
         //Dette er en util-klasse, og skal ikke kunne initieres
     }
 
+    public static final String URL_LANDMALERE_ARRAY = "landmaalere";
     public static final String URL_LANDMALERNUMMER_PARAMETER = "landmaalernummer";
     public static final String URL_NAVN_PARAMETER = "navn";
 
     /**
-     * Henter ut landmålere fra JSONObjectet som returneres fra AAL
+     * Henter ut landmålere fra JSON-listen som returneres fra AAL
      *
-     * @param landmalerArray Listen av av treff fra webservice (rest)
+     * @param responseJson JSON-respons fra AAL
      * @return Et set av den interne objekttypen LandmalerFraAAL
      */
-    public static Set<LandmalerFraAAL> lagSetLandmalereFraAALFraJsonResponse(JSONArray landmalerArray) {
-        Set<LandmalerFraAAL> landmalere = new HashSet<>();
-
-        // opprett LandmalerDTO-objekter pr landmåler som returneres
-        landmalerArray.toList().stream()
-            .map(o -> new JSONObject((Map) o))
-            .map(o -> new LandmalerFraAAL(
-                o.getString(URL_LANDMALERNUMMER_PARAMETER),
-                o.getString(URL_NAVN_PARAMETER)
-                )
-            )
-            .forEach(landmalere::add);
-
-        return landmalere;
+    public static Set<LandmalerFraAAL> lagSetLandmalereFraAALFraJsonResponse(String responseJson) {
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try {
+            final ArrayNode arrayNode = (ArrayNode) mapper.readTree(responseJson).get(URL_LANDMALERE_ARRAY);
+            // opprett LandmalerDTO-objekter pr landmåler som returneres
+            return Set.of(mapper.readValue(arrayNode.toString(), LandmalerFraAAL[].class));
+        } catch (JsonProcessingException e) {
+            throw new ImplementationException("Noe gikk galt med prosessering av landmåler-JSON", e);
+        }
     }
 
     /**
