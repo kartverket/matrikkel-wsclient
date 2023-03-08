@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "https://nibas-events.test.skip.statkart.no",
+            "url": "https://nibas-events.prod.skip.statkart.no",
             "description": "Generated server url"
         }
     ],
@@ -254,12 +254,12 @@
                     "sort": {
                         "$ref": "#/components/schemas/SortObject"
                     },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
                     "numberOfElements": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "pageable": {
-                        "$ref": "#/components/schemas/PageableObject"
                     },
                     "first": {
                         "type": "boolean"
