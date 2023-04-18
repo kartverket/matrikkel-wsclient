@@ -132,49 +132,49 @@ public class GrunnboksutskriftIntegrationTest {
                 .contains("HJEMMELSOPPLYSNINGER")
                 .contains("Rettighetshavere til eiendomsrett");
 
-        String expectedString = "" +
-                "1948/911568-1/105         HJEMMEL TIL EIENDOMSRETT                                              \r\n" +
-                "            09.11.1948                VEDERLAG: NOK 0\r\n" +
+        String expectedString = "[\\S\\s]*" +
+                "1948\\/911568-1\\/105         HJEMMEL TIL EIENDOMSRETT                                              \r\n" +
+                "            09\\.11\\.1948                VEDERLAG: NOK 0\r\n" +
                 "                                      KJØPER: DEN NORSKE STAT\r\n" +
                 "                                      LØPENR: 1176505\r\n" +
                 "\r\n" +
-                "            1991/68981-1/105          HJEMMEL TIL EIENDOMSRETT                                              \r\n" +
-                "            19.12.1991                VEDERLAG: NOK 1 800 000\r\n" +
+                "            1991\\/68981-1\\/105          HJEMMEL TIL EIENDOMSRETT                                              \r\n" +
+                "            19\\.12\\.1991                VEDERLAG: NOK 1 800 000\r\n" +
                 "                                      SELGER: DEN NORSKE STAT\r\n" +
                 "                                      LØPENR: 1176505\r\n" +
-                "                                      KJØPER: ***REMOVED***                     IDEELL: 1/2\r\n" +
-                "                                      F.NR: ***REMOVED***\r\n" +
-                "                                      KJØPER: ***REMOVED***             IDEELL: 1/2\r\n" +
-                "                                      F.NR: ***REMOVED***\r\n" +
+                "                                      KJØPER: [a-zA-ZøæåØÆÅ\\-\\s]+                     IDEELL: 1\\/2\r\n" +
+                "                                      F\\.NR: \\d+ \\d+\r\n" +
+                "                                      KJØPER: [a-zA-ZøæåØÆÅ\\-\\s]+             IDEELL: 1\\/2\r\n" +
+                "                                      F\\.NR: \\d+ \\d+\r\n" +
                 "\r\n" +
-                "            1993/15855-1/105          HJEMMEL TIL EIENDOMSRETT                                              \r\n" +
-                "            15.04.1993                VEDERLAG: NOK 400 000\r\n" +
-                "                                      SELGER: ***REMOVED***                     IDEELL: 1/2\r\n" +
-                "                                      F.NR: ***REMOVED***\r\n" +
-                "                                      SELGER: ***REMOVED***             IDEELL: 1/2\r\n" +
-                "                                      F.NR: ***REMOVED***\r\n" +
-                "                                      KJØPER: ***REMOVED***\r\n" +
-                "                                      F.NR: ***REMOVED***\r\n" +
+                "            1993\\/15855-1\\/105          HJEMMEL TIL EIENDOMSRETT                                              \r\n" +
+                "            15\\.04\\.1993                VEDERLAG: NOK 400 000\r\n" +
+                "                                      SELGER: [a-zA-ZøæåØÆÅ\\-\\s]+                     IDEELL: 1\\/2\r\n" +
+                "                                      F\\.NR: \\d+ \\d+\r\n" +
+                "                                      SELGER: [a-zA-ZøæåØÆÅ\\-\\s]+             IDEELL: 1\\/2\r\n" +
+                "                                      F\\.NR: \\d+ \\d+\r\n" +
+                "                                      KJØPER: [a-zA-ZøæåØÆÅ\\-\\s]+\r\n" +
+                "                                      F\\.NR: \\d+ \\d+\r\n" +
                 "\r\n" +
-                "            2001/32146-1/105          HJEMMEL TIL EIENDOMSRETT                                              \r\n" +
-                "            11.06.2001                VEDERLAG: NOK 0\r\n" +
-                "                                      SELGER: ***REMOVED***\r\n" +
-                "                                      F.NR: ***REMOVED***\r\n" +
-                "                                      KJØPER: ***REMOVED***\r\n" +
-                "                                      F.NR: ***REMOVED***\r\n" +
+                "            2001\\/32146-1\\/105          HJEMMEL TIL EIENDOMSRETT                                              \r\n" +
+                "            11\\.06\\.2001                VEDERLAG: NOK 0\r\n" +
+                "                                      SELGER: [a-zA-ZøæåØÆÅ\\-\\s]+\r\n" +
+                "                                      F\\.NR: \\d+ \\d+\r\n" +
+                "                                      KJØPER: [a-zA-ZøæåØÆÅ\\-\\s]+\r\n" +
+                "                                      F\\.NR: \\d+ \\d+\r\n" +
                 "\r\n" +
                 "\r\n" +
                 "            Påtegning til hjemmelsdokumenter\r\n" +
                 "\r\n" +
-                "            2001/34270-1/105       ** EKTEPAKT U/HJ.OVERGANG                                                \r\n" +
-                "            19.06.2001                GJELDER: HJEMMEL TIL EIENDOMSRETT       2001/32146-1/105\r\n" +
-                "                                      GJELDER: ***REMOVED***\r\n" +
-                "                                      F.NR: ***REMOVED***\r\n" +
-                "                                      Bestemmelser om særeie iflg. ektepakt";
+                "            2001\\/34270-1\\/105       \\*\\* EKTEPAKT U\\/HJ\\.OVERGANG                                                \r\n" +
+                "            19\\.06\\.2001                GJELDER: HJEMMEL TIL EIENDOMSRETT       2001\\/32146-1\\/105\r\n" +
+                "                                      GJELDER: [a-zA-ZøæåØÆÅ\\-\\s]+\r\n" +
+                "                                      F\\.NR: \\d+ \\d+\r\n" +
+                "                                      Bestemmelser om særeie iflg\\. ektepakt";
 
         assertThat(ignoreUnicodeNoBreakSpace(overdragelserInfo))
                 .describedAs("har forventede data")
-                .contains(ignoreUnicodeNoBreakSpace(expectedString));
+                .matches(ignoreUnicodeNoBreakSpace(expectedString));
     }
 
     // Bruker blank streng for Unicode Character 'NO-BREAK SPACE' (U+00A0) som ligger i returverdi fra Grunnboka
@@ -195,102 +195,103 @@ public class GrunnboksutskriftIntegrationTest {
                 .isNotEmpty()
                 .contains("HEFTELSER");
 
-        assertThat(pengeheftelserInfo)
+        String expectedString = "[\\S\\s]*" +
+            "1991\\/68982-1\\/105          OBLIGASJON                                                            \r\n" +
+            "            19\\.12\\.1991                STATUS: HISTORISK\r\n" +
+            "                                      BELØP: NOK 2 000 000\r\n" +
+            "                                      PANTHAVER: ELCON FINANS AS\r\n" +
+            "                                      LØPENR: 1087075\r\n" +
+            "\r\n" +
+            "            1993\\/60191-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            26\\.11\\.1993                \r\n" +
+            "\r\n" +
+            "            1993\\/54205-1\\/105          OBLIGASJON                                                            \r\n" +
+            "            02\\.11\\.1993                STATUS: HISTORISK\r\n" +
+            "                                      BELØP: NOK 1 000 000\r\n" +
+            "                                      PANTHAVER: DNB BOLIGKREDITT AS\r\n" +
+            "                                      LØPENR: 1137964\r\n" +
+            "\r\n" +
+            "            1999\\/23787-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            12\\.05\\.1999                \r\n" +
+            "\r\n" +
+            "            1994\\/16171-1\\/105          OBLIGASJON                                                            \r\n" +
+            "            24\\.03\\.1994                STATUS: HISTORISK\r\n" +
+            "                                      BELØP: NOK 2 000 000\r\n" +
+            "                                      PANTHAVER: DNB BOLIGKREDITT AS\r\n" +
+            "                                      LØPENR: 1138135\r\n" +
+            "\r\n" +
+            "            1999\\/23785-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            12\\.05\\.1999                \r\n" +
+            "\r\n" +
+            "            1996\\/45584-1\\/105          OBLIGASJON                                                            \r\n" +
+            "            20\\.08\\.1996                STATUS: HISTORISK\r\n" +
+            "                                      BELØP: NOK 1 500 000\r\n" +
+            "                                      PANTHAVER: FINANSBANKEN AS\r\n" +
+            "                                      LØPENR: 1087067\r\n" +
+            "\r\n" +
+            "            2002\\/45980-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            11\\.07\\.2002                \r\n" +
+            "\r\n" +
+            "            1997\\/63322-1\\/105          OBLIGASJON                                                            \r\n" +
+            "            13\\.10\\.1997                STATUS: HISTORISK\r\n" +
+            "                                      BELØP: NOK 2 000 000\r\n" +
+            "                                      PANTHAVER: FINANSBANKEN ASA\r\n" +
+            "                                      LØPENR: 1158123\r\n" +
+            "\r\n" +
+            "            2002\\/45982-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            11\\.07\\.2002                \r\n" +
+            "\r\n" +
+            "            1999\\/19270-1\\/105          OBLIGASJON                                                            \r\n" +
+            "            20\\.04\\.1999                STATUS: HISTORISK\r\n" +
+            "                                      BELØP: NOK 1 300 000\r\n" +
+            "                                      PANTHAVER: FINANSBANKEN AS\r\n" +
+            "                                      LØPENR: 1087067\r\n" +
+            "\r\n" +
+            "            2002\\/45981-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            11\\.07\\.2002                \r\n" +
+            "\r\n" +
+            "            1999\\/73869-1\\/105          OBLIGASJON                                                            \r\n" +
+            "            15\\.12\\.1999                STATUS: HISTORISK\r\n" +
+            "                                      BELØP: NOK 3 000 000\r\n" +
+            "                                      PANTHAVER: FINANSBANKEN AS\r\n" +
+            "                                      LØPENR: 1087067\r\n" +
+            "\r\n" +
+            "            2002\\/45984-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            11\\.07\\.2002                \r\n" +
+            "\r\n" +
+            "            2001\\/32146-2\\/105          LIVSVARIG BORETT                                                      \r\n" +
+            "            11\\.06\\.2001                STATUS: HISTORISK\r\n" +
+            "                                      Rettighetshaver [a-zA-ZøæåØÆÅ\\-\\s]+, f\\. \\d+\\.\r\n" +
+            "\r\n" +
+            "            2002\\/41810-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            26\\.06\\.2002                \r\n" +
+            "\r\n" +
+            "            2001\\/34270-2\\/105          BRUKSRETT                                                             \r\n" +
+            "            19\\.06\\.2001                STATUS: HISTORISK\r\n" +
+            "                                      Rettighetshaver [a-zA-ZøæåØÆÅ\\-\\s]+\\.\r\n" +
+            "\r\n" +
+            "            2002\\/41810-2\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            26\\.06\\.2002                \r\n" +
+            "\r\n" +
+            "            2002\\/34688-1\\/105          OBLIGASJON                                                            \r\n" +
+            "            30\\.05\\.2002                STATUS: HISTORISK\r\n" +
+            "                                      BELØP: NOK 19 000 000\r\n" +
+            "                                      PANTHAVER: M2 EIENDOMSMEGLING AS\r\n" +
+            "                                      LØPENR: 1087099\r\n" +
+            "\r\n" +
+            "            2002\\/68833-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            21\\.10\\.2002                \r\n" +
+            "\r\n" +
+            "            2002\\/34688-2\\/105          URÅDIGHET                                                             \r\n" +
+            "            30\\.05\\.2002                STATUS: HISTORISK\r\n" +
+            "                                      Eiendommen kan ikke disponeres m\\.v\\. over uten samtykke\r\n" +
+            "                                      fra M2 Eiendomsmegling AS\\.\r\n" +
+            "\r\n" +
+            "            2002\\/68833-1\\/105       \\*\\* SLETTING                                                              \r\n" +
+            "            21\\.10\\.2002";
+        assertThat(ignoreUnicodeNoBreakSpace(pengeheftelserInfo))
                 .describedAs("har forventede data")
-                .contains("" +
-                        "1991/68982-1/105          OBLIGASJON                                                            \r\n" +
-                        "            19.12.1991                STATUS: HISTORISK\r\n" +
-                        "                                      BELØP: NOK 2 000 000\r\n" +
-                        "                                      PANTHAVER: ELCON FINANS AS\r\n" +
-                        "                                      LØPENR: 1087075\r\n" +
-                        "\r\n" +
-                        "            1993/60191-1/105       ** SLETTING                                                              \r\n" +
-                        "            26.11.1993                \r\n" +
-                        "\r\n" +
-                        "            1993/54205-1/105          OBLIGASJON                                                            \r\n" +
-                        "            02.11.1993                STATUS: HISTORISK\r\n" +
-                        "                                      BELØP: NOK 1 000 000\r\n" +
-                        "                                      PANTHAVER: DNB BOLIGKREDITT AS\r\n" +
-                        "                                      LØPENR: 1137964\r\n" +
-                        "\r\n" +
-                        "            1999/23787-1/105       ** SLETTING                                                              \r\n" +
-                        "            12.05.1999                \r\n" +
-                        "\r\n" +
-                        "            1994/16171-1/105          OBLIGASJON                                                            \r\n" +
-                        "            24.03.1994                STATUS: HISTORISK\r\n" +
-                        "                                      BELØP: NOK 2 000 000\r\n" +
-                        "                                      PANTHAVER: DNB BOLIGKREDITT AS\r\n" +
-                        "                                      LØPENR: 1138135\r\n" +
-                        "\r\n" +
-                        "            1999/23785-1/105       ** SLETTING                                                              \r\n" +
-                        "            12.05.1999                \r\n" +
-                        "\r\n" +
-                        "            1996/45584-1/105          OBLIGASJON                                                            \r\n" +
-                        "            20.08.1996                STATUS: HISTORISK\r\n" +
-                        "                                      BELØP: NOK 1 500 000\r\n" +
-                        "                                      PANTHAVER: FINANSBANKEN AS\r\n" +
-                        "                                      LØPENR: 1087067\r\n" +
-                        "\r\n" +
-                        "            2002/45980-1/105       ** SLETTING                                                              \r\n" +
-                        "            11.07.2002                \r\n" +
-                        "\r\n" +
-                        "            1997/63322-1/105          OBLIGASJON                                                            \r\n" +
-                        "            13.10.1997                STATUS: HISTORISK\r\n" +
-                        "                                      BELØP: NOK 2 000 000\r\n" +
-                        "                                      PANTHAVER: FINANSBANKEN ASA\r\n" +
-                        "                                      LØPENR: 1158123\r\n" +
-                        "\r\n" +
-                        "            2002/45982-1/105       ** SLETTING                                                              \r\n" +
-                        "            11.07.2002                \r\n" +
-                        "\r\n" +
-                        "            1999/19270-1/105          OBLIGASJON                                                            \r\n" +
-                        "            20.04.1999                STATUS: HISTORISK\r\n" +
-                        "                                      BELØP: NOK 1 300 000\r\n" +
-                        "                                      PANTHAVER: FINANSBANKEN AS\r\n" +
-                        "                                      LØPENR: 1087067\r\n" +
-                        "\r\n" +
-                        "            2002/45981-1/105       ** SLETTING                                                              \r\n" +
-                        "            11.07.2002                \r\n" +
-                        "\r\n" +
-                        "            1999/73869-1/105          OBLIGASJON                                                            \r\n" +
-                        "            15.12.1999                STATUS: HISTORISK\r\n" +
-                        "                                      BELØP: NOK 3 000 000\r\n" +
-                        "                                      PANTHAVER: FINANSBANKEN AS\r\n" +
-                        "                                      LØPENR: 1087067\r\n" +
-                        "\r\n" +
-                        "            2002/45984-1/105       ** SLETTING                                                              \r\n" +
-                        "            11.07.2002                \r\n" +
-                        "\r\n" +
-                        "            2001/32146-2/105          LIVSVARIG BORETT                                                      \r\n" +
-                        "            11.06.2001                STATUS: HISTORISK\r\n" +
-                        "                                      Rettighetshaver ***REMOVED***, f. ***REMOVED***.\r\n" +
-                        "\r\n" +
-                        "            2002/41810-1/105       ** SLETTING                                                              \r\n" +
-                        "            26.06.2002                \r\n" +
-                        "\r\n" +
-                        "            2001/34270-2/105          BRUKSRETT                                                             \r\n" +
-                        "            19.06.2001                STATUS: HISTORISK\r\n" +
-                        "                                      Rettighetshaver ***REMOVED***.\r\n" +
-                        "\r\n" +
-                        "            2002/41810-2/105       ** SLETTING                                                              \r\n" +
-                        "            26.06.2002                \r\n" +
-                        "\r\n" +
-                        "            2002/34688-1/105          OBLIGASJON                                                            \r\n" +
-                        "            30.05.2002                STATUS: HISTORISK\r\n" +
-                        "                                      BELØP: NOK 19 000 000\r\n" +
-                        "                                      PANTHAVER: M2 EIENDOMSMEGLING AS\r\n" +
-                        "                                      LØPENR: 1087099\r\n" +
-                        "\r\n" +
-                        "            2002/68833-1/105       ** SLETTING                                                              \r\n" +
-                        "            21.10.2002                \r\n" +
-                        "\r\n" +
-                        "            2002/34688-2/105          URÅDIGHET                                                             \r\n" +
-                        "            30.05.2002                STATUS: HISTORISK\r\n" +
-                        "                                      Eiendommen kan ikke disponeres m.v. over uten samtykke\r\n" +
-                        "                                      fra M2 Eiendomsmegling AS.\r\n" +
-                        "\r\n" +
-                        "            2002/68833-1/105       ** SLETTING                                                              \r\n" +
-                        "            21.10.2002");
+                .matches(ignoreUnicodeNoBreakSpace(expectedString));
     }
 
     @BeforeTest
