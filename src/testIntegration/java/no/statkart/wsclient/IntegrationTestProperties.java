@@ -20,15 +20,6 @@ public class IntegrationTestProperties {
         this.configuration.addConfiguration(configuration);
     }
 
-
-    public String getGrunnbokUser() {
-        return configuration.getString("grunnbok_brukernavn");
-    }
-
-    public String getGrunnbokPassword() {
-        return configuration.getString("grunnbok_passord");
-    }
-
     String getGrunnbokServerUrl() {
         return configuration.getString("grunnbok_server_url");
     }
@@ -70,17 +61,35 @@ public class IntegrationTestProperties {
         return String.format("%s/grunnbok/wsapi/v2/InnsendingServiceWS", getGrunnbokServerUrl());
     }
 
-    public String getLandbruksregisterUser() {
-        return configuration.getString("landbruksregister_brukernavn");
+    public String getLandbruksregisterUsername() {
+        return System.getProperty("landbruksregister.username");
     }
 
     public String getLandbruksregisterPassword() {
-        return configuration.getString("landbruksregister_passord");
+        return System.getProperty("landbruksregister.password");
     }
 
     public String getLandbruksregisterUrl() {
         return configuration.getString("landbruksregister_url");
     }
 
-    public String getLandmalerregisterUrl() { return configuration.getString("landmalerregister_url"); }
+    public String getLandmalerregisterUrl() {
+        return configuration.getString("landmalerregister_url");
+    }
+
+    public String getGrunnbokMatFnUsername() {
+        return System.getProperty("grunnbok.mat.username");
+    }
+
+    public String getGrunnbokMatFnPassword() {
+        return System.getProperty("grunnbok.mat.password");
+    }
+
+    public String getGrunnbokTinglysingUsername() {
+        return System.getProperty("grunnbok.tinglysing.username");
+    }
+
+    public String getGrunnbokTinglysingPassword() {
+        return System.getProperty("grunnbok.tinglysing.password");
+    }
 }

@@ -76,8 +76,8 @@ public class GrunnbokHelper {
    }
 
    private void setup() {
-      final String grunnbokUser = config.getGrunnbokUser();
-      final String grunnbokPassword = config.getGrunnbokPassword();
+      final String grunnbokUser = config.getGrunnbokMatFnUsername();
+      final String grunnbokPassword = config.getGrunnbokMatFnPassword();
 
       if (identService == null) {
          identService = new DefaultIdentWS(grunnbokUser, grunnbokPassword, config.getIdentServiceServiceUrl());

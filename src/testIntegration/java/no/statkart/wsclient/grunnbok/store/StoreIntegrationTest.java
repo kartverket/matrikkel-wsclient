@@ -1,27 +1,14 @@
 package no.statkart.wsclient.grunnbok.store;
 
-import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObject;
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObjectIdList;
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObjectList;
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
-import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.DokumentIdent;
-import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.DokumentIdentList;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdent;
-import no.kartverket.grunnbok.wsapi.v2.domain.register.dokument.DokumentId;
-import no.kartverket.grunnbok.wsapi.v2.domain.register.koder.RettsstiftelsestypeKode;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.Matrikkelenhet;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.MatrikkelenhetId;
-import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.RettsstiftelseId;
-import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.RettsstiftelseIdList;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
-import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.DokumentIdentTilDokumentIdMap;
 import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbok.GrunnbokHelper;
-import no.statkart.wsclient.grunnbok.rettsstiftelse.RettsstiftelseIntegrationTest;
-import no.statkart.wsclient.grunnbokv2.ident.DefaultIdentWS;
-import no.statkart.wsclient.grunnbokv2.ident.IdentWS;
-import no.statkart.wsclient.grunnbokv2.rettsstiftelse.DefaultRettsstiftelseWS;
-import no.statkart.wsclient.grunnbokv2.rettsstiftelse.RettsstiftelseWS;
 import no.statkart.wsclient.grunnbokv2.store.DefaultStoreWS;
 import no.statkart.wsclient.grunnbokv2.store.StoreWS;
 import org.testng.Assert;
@@ -61,8 +48,8 @@ public class StoreIntegrationTest {
     class WSHelper {
         final GrunnbokHelper grunnbokHelper = new GrunnbokHelper();
         private final IntegrationTestProperties config = new IntegrationTestProperties();
-        String grunnbokUser = config.getGrunnbokUser();
-        String grunnbokPassword = config.getGrunnbokPassword();
+        String grunnbokUser = config.getGrunnbokMatFnUsername();
+        String grunnbokPassword = config.getGrunnbokMatFnPassword();
         GrunnbokContext context = grunnbokHelper.context();
 
         /**

@@ -103,8 +103,8 @@ public class RettsstiftelseIntegrationTest {
     class WSHelper {
         final GrunnbokHelper grunnbokHelper = new GrunnbokHelper();
         private final IntegrationTestProperties config = new IntegrationTestProperties();
-        String grunnbokUser = config.getGrunnbokUser();
-        String grunnbokPassword = config.getGrunnbokPassword();
+        String grunnbokUser = config.getGrunnbokMatFnUsername();
+        String grunnbokPassword = config.getGrunnbokMatFnPassword();
         GrunnbokContext context = grunnbokHelper.context();
 
         /**

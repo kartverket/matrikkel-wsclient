@@ -26,8 +26,8 @@ public class InnsendingIntegrationTest {
     @BeforeTest
     public void setUp() {
         final IntegrationTestProperties config = new IntegrationTestProperties();
-        final String grunnbokUser = "***REMOVED***";
-        final String grunnbokPassword = "***REMOVED***";
+        final String grunnbokUser = config.getGrunnbokTinglysingUsername();
+        final String grunnbokPassword = config.getGrunnbokTinglysingPassword();
         if (innsendingServiceWS == null) {
             try {
                 innsendingServiceWS = new DefaultInnsendingServiceWS(grunnbokUser, grunnbokPassword,

@@ -23,6 +23,17 @@ pipeline { //declarative pipeline syntax
         GRADLE_USER_HOME = "$WORKSPACE/.gradle" // Forhindre samtidighetsproblemer
         GRADLE_OPTS = '-Dorg.gradle.daemon=false' +
             " -Dmaven.repo.local=$WORKSPACE/.m2/repository" // Forhindre samtidighetsproblemer
+
+       GRUNNBOK            = credentials('matirkkel-wsclient-grunnbok-mat')
+       GRUNNBOK_TINGLYSING = credentials('matrikkel-wsclient-tinglysing')
+       LANDBRUKSREGISTER   = credentials('matrikkel-wsclient-landbruksregister')
+
+       SECRETES_FOR_TESTING = " -Dgrunnbok.mat.username=$GRUNNBOK_USR" +
+                      " -Dgrunnbok.mat.password=$GRUNNBOK_PSW" +
+                      " -Dgrunnbok.tinglysing.username=$GRUNNBOK_TINGLYSING_USR" +
+                      " -Dgrunnbok.tinglysing.password=$GRUNNBOK_TINGLYSING_PSW" +
+                      " -Dlandbruksregister.username=$LANDBRUKSREGISTER_USR" +
+                      " -Dlandbruksregister.password=$LANDBRUKSREGISTER_PSW"
     }
 
     stages {
@@ -33,7 +44,7 @@ pipeline { //declarative pipeline syntax
         }
         stage('Unit test') {
             steps {
-                sh "./gradlew check -DignoreFailures=true ${gradleOptions(this)}"
+                sh "./gradlew check -DignoreFailures=true ${SECRETES_FOR_TESTING} ${gradleOptions(this)}"
             }
             post {
                 always {

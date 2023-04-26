@@ -50,7 +50,7 @@ public class LandbruksregisterIntegrationTest {
    @BeforeTest
    public void setUp() {
       final IntegrationTestProperties config = new IntegrationTestProperties();
-      final String uername = config.getLandbruksregisterUser();
+      final String uername = config.getLandbruksregisterUsername();
       final String password = config.getLandbruksregisterPassword();
       if (landbruksregister == null) {
          try {

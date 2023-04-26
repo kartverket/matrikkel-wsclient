@@ -48,8 +48,8 @@ public class SaksinformasjonIntegrationTest {
    @BeforeTest
    public void setUp() throws ServiceException {
       final IntegrationTestProperties config = new IntegrationTestProperties();
-      final String grunnbokUser = config.getGrunnbokUser();
-      final String grunnbokPassword = config.getGrunnbokPassword();
+      final String grunnbokUser = config.getGrunnbokMatFnUsername();
+      final String grunnbokPassword = config.getGrunnbokMatFnPassword();
       if (saksinformasjon == null) {
          final NullHostnameVerifier hostnameVerifier = new NullHostnameVerifier();
          try {

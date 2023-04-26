@@ -484,6 +484,16 @@ tasks.withType(AbstractPublishToMaven).configureEach {
     }
 }
 
+tasks.named('testIntegration') {
+    it.systemProperties += System.properties.subMap([
+        'grunnbok.mat.username',
+        'grunnbok.mat.password',
+        'grunnbok.tinglysing.username',
+        'grunnbok.tinglysing.password',
+        'landbruksregister.username',
+        'landbruksregister.password',
+    ])
+}
 manifest {
   attributes([
           'Specification-Title'   : project.name,
