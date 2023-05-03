@@ -13,34 +13,34 @@ import javax.xml.xpath.XPathFactory;
 import java.io.InputStream;
 
 public class SeidSDOv1_0Parser extends SDOParser {
-   final XPath xpath = XPathFactory.newInstance().newXPath();
-   final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+    final XPath xpath = XPathFactory.newInstance().newXPath();
+    final DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 
-   public SeidSDOv1_0Parser() {
-      domFactory.setNamespaceAware(false);
-   }
+    public SeidSDOv1_0Parser() {
+        domFactory.setNamespaceAware(false);
+    }
 
-   public boolean parse(ByteSource source) throws Exception {
-      matched = false;
+    public boolean parse(ByteSource source) throws Exception {
+        matched = false;
 
-      final DocumentBuilder builder = domFactory.newDocumentBuilder();
+        final DocumentBuilder builder = domFactory.newDocumentBuilder();
 
-      try (InputStream inputStream = source.openStream()) {
-         final Document document = builder.parse(new InputSource(inputStream));
-         try {
-            String signersDocument = (String) xpath.evaluate("SDOList/SDO/SignedObject/SignersDocument", document, XPathConstants.STRING);
-            utskrift = DatatypeConverter.parseBase64Binary(signersDocument);
+        try (InputStream inputStream = source.openStream()) {
+            final Document document = builder.parse(new InputSource(inputStream));
+            try {
+                String signersDocument = (String) xpath.evaluate("SDOList/SDO/SignedObject/SignersDocument", document, XPathConstants.STRING);
+                utskrift = DatatypeConverter.parseBase64Binary(signersDocument);
 
-            mimeType = (String) xpath.evaluate("SDOList/SDO/SDODataPart/SignatureElement/CMSSignatureElement/SignersDocumentFormat/MimeType", document, XPathConstants.STRING);
+                mimeType = (String) xpath.evaluate("SDOList/SDO/SDODataPart/SignatureElement/CMSSignatureElement/SignersDocumentFormat/MimeType", document, XPathConstants.STRING);
 
-            matched = true;
-         } catch (NullPointerException e) {
-            return false;
-         }
-      }
+                matched = true;
+            } catch (NullPointerException e) {
+                return false;
+            }
+        }
 
-      return matched;
-   }
+        return matched;
+    }
 
 
 }

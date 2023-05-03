@@ -17,42 +17,42 @@ import no.statkart.wsclient.WebServiceBuilder;
 
 public class DefaultIdentWS implements IdentWS {
 
-   private static IdentServiceWS identServiceWS;
+    private static IdentServiceWS identServiceWS;
 
-   private final IdentService identService;
+    private final IdentService identService;
 
-   public DefaultIdentWS(String brukernavn, String passord, String endpointUrl) {
-      if(identServiceWS == null) {
-         synchronized (this) {
-            if(identServiceWS == null) {
-               identServiceWS = new IdentServiceWS();
+    public DefaultIdentWS(String brukernavn, String passord, String endpointUrl) {
+        if (identServiceWS == null) {
+            synchronized (this) {
+                if (identServiceWS == null) {
+                    identServiceWS = new IdentServiceWS();
+                }
             }
-         }
-      }
+        }
 
 
-      identService = WebServiceBuilder.builderv2(identServiceWS.getIdentServicePort(), IdentService.class)
+        identService = WebServiceBuilder.builderv2(identServiceWS.getIdentServicePort(), IdentService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
             .doCreateProxy()
             .build();
-   }
+    }
 
-   @Override
-   public MatrikkelenhetIdentTilMatrikkelenhetIdMap findMatrikkelenhetIdsForIdents(MatrikkelenhetIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException {
-      return identService.findMatrikkelenhetIdsForIdents(idents, grunnbokContext);
-   }
+    @Override
+    public MatrikkelenhetIdentTilMatrikkelenhetIdMap findMatrikkelenhetIdsForIdents(MatrikkelenhetIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException {
+        return identService.findMatrikkelenhetIdsForIdents(idents, grunnbokContext);
+    }
 
-   @Override
-   public BorettslagsandelIdentTilBorettslagsandelIdMap findBorettslagsandelIdsForIdents(BorettslagsandelIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException {
-      return identService.findBorettslagsandelIdsForIdents(idents, grunnbokContext);
-   }
+    @Override
+    public BorettslagsandelIdentTilBorettslagsandelIdMap findBorettslagsandelIdsForIdents(BorettslagsandelIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException {
+        return identService.findBorettslagsandelIdsForIdents(idents, grunnbokContext);
+    }
 
-   @Override
-   public KommuneIdentTilKommuneIdMap findKommuneIdsForIdents(KommuneIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException {
-      return identService.findKommuneIdsForIdents(idents, grunnbokContext);
-   }
+    @Override
+    public KommuneIdentTilKommuneIdMap findKommuneIdsForIdents(KommuneIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException {
+        return identService.findKommuneIdsForIdents(idents, grunnbokContext);
+    }
 
     @Override
     public DokumentIdentTilDokumentIdMap findDokumentIdsForIdents(DokumentIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException {

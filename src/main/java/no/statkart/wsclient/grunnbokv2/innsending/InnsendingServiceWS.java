@@ -5,8 +5,8 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus;
 
 public interface InnsendingServiceWS {
 
-   Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse);
+    Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse);
 
-   Forsendelsesstatus hentStatus(String innsendingId);
+    Forsendelsesstatus hentStatus(String innsendingId);
 
 }

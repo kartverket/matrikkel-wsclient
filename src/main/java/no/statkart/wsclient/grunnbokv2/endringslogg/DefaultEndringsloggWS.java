@@ -13,36 +13,36 @@ import no.statkart.wsclient.WebServiceBuilder;
 
 public class DefaultEndringsloggWS implements EndringsloggWS {
 
-   private static EndringsloggServiceWS endringsloggServiceWS;
+    private static EndringsloggServiceWS endringsloggServiceWS;
 
-   private final EndringsloggService endringsloggService;
+    private final EndringsloggService endringsloggService;
 
-   public DefaultEndringsloggWS(final String brukernavn, final String passord, final String endpointUrl) {
+    public DefaultEndringsloggWS(final String brukernavn, final String passord, final String endpointUrl) {
 
-      if(endringsloggServiceWS == null) {
-         synchronized (this) {
-            if(endringsloggServiceWS == null) {
-               endringsloggServiceWS = new EndringsloggServiceWS();
+        if (endringsloggServiceWS == null) {
+            synchronized (this) {
+                if (endringsloggServiceWS == null) {
+                    endringsloggServiceWS = new EndringsloggServiceWS();
+                }
             }
-         }
-      }
+        }
 
-      endringsloggService = WebServiceBuilder.builderv2(endringsloggServiceWS.getEndringsloggServicePort(), EndringsloggService.class)
+        endringsloggService = WebServiceBuilder.builderv2(endringsloggServiceWS.getEndringsloggServicePort(), EndringsloggService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
             .doCreateProxy()
             .build();
-   }
+    }
 
-   @Override
-   public EndringId findSisteEndringId(GrunnbokContext grunnbokContext) throws ServiceException {
-      return endringsloggService.findSisteEndringId(grunnbokContext);
-   }
+    @Override
+    public EndringId findSisteEndringId(GrunnbokContext grunnbokContext) throws ServiceException {
+        return endringsloggService.findSisteEndringId(grunnbokContext);
+    }
 
-   @Override
-   public Endringer findEndringer(EndringId id, Domainklasse domainklasse, String filter, ReturnerBobler returnerBobler, int maksAntall, GrunnbokContext grunnbokContext) throws ServiceException {
-      return endringsloggService.findEndringer(id, domainklasse, filter, returnerBobler, maksAntall, grunnbokContext);
-   }
+    @Override
+    public Endringer findEndringer(EndringId id, Domainklasse domainklasse, String filter, ReturnerBobler returnerBobler, int maksAntall, GrunnbokContext grunnbokContext) throws ServiceException {
+        return endringsloggService.findEndringer(id, domainklasse, filter, returnerBobler, maksAntall, grunnbokContext);
+    }
 
 }

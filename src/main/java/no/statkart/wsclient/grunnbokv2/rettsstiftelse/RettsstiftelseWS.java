@@ -13,21 +13,21 @@ import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RettsstiftelseIdList
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.TransferMode;
 
 public interface RettsstiftelseWS {
-   RegisterenhetsendringIdListTransfer findRegisterenhetsendringer(RegisterenhetId registerenhetId, TransferMode transferMode,
-                                                                   GrunnbokContext grunnbokContext) throws ServiceException;
+    RegisterenhetsendringIdListTransfer findRegisterenhetsendringer(RegisterenhetId registerenhetId, TransferMode transferMode,
+                                                                    GrunnbokContext grunnbokContext) throws ServiceException;
 
-   HeftelseIdListTransfer findHeftelser(RegisterenhetId registerenhetId, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException;
+    HeftelseIdListTransfer findHeftelser(RegisterenhetId registerenhetId, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException;
 
-   RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findOverdragelserMedAktiveAndelerIRegisterenhet(RegisterenhetId registerenhetId,
-                                                                                                                      GrunnbokContext grunnbokContext) throws ServiceException;
+    RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findOverdragelserMedAktiveAndelerIRegisterenhet(RegisterenhetId registerenhetId,
+                                                                                                                       GrunnbokContext grunnbokContext) throws ServiceException;
 
-   RettsstiftelseIdList findRettsstiftelserForDokument(DokumentId dokumentId, GrunnbokContext grunnbokContext) throws ServiceException;
+    RettsstiftelseIdList findRettsstiftelserForDokument(DokumentId dokumentId, GrunnbokContext grunnbokContext) throws ServiceException;
 
-   RettsstiftelseIdListTransfer findRettsstiftelserForDokumentNummerOgAar(long dokumentNr, int dokumentAar, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException;
+    RettsstiftelseIdListTransfer findRettsstiftelserForDokumentNummerOgAar(long dokumentNr, int dokumentAar, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException;
 
-   RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findRettsstiftelserMedNyeAndeler(RegisterenhetsrettsandelIdList andeler,
-                                                                                                       GrunnbokContext grunnbokContext) throws ServiceException;
+    RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findRettsstiftelserMedNyeAndeler(RegisterenhetsrettsandelIdList andeler,
+                                                                                                        GrunnbokContext grunnbokContext) throws ServiceException;
 
-   RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findRettsstiftelserMedUtgaatteAndeler(RegisterenhetsrettsandelIdList andeler,
-                                                                                                            GrunnbokContext grunnbokContext) throws ServiceException;
+    RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findRettsstiftelserMedUtgaatteAndeler(RegisterenhetsrettsandelIdList andeler,
+                                                                                                             GrunnbokContext grunnbokContext) throws ServiceException;
 }

@@ -4,34 +4,34 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingssta
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelsesinformasjon;
 
 public class RettsstiftelsesinformasjonBuilder {
-   protected Integer rettsstiftelsesnummer;
-   protected String rettsstiftelsesreferanse;
+    protected Integer rettsstiftelsesnummer;
+    protected String rettsstiftelsesreferanse;
 
-   private RettsstiftelsesinformasjonBuilder() {
-   }
+    private RettsstiftelsesinformasjonBuilder() {
+    }
 
-   public static RettsstiftelsesinformasjonBuilder aRettsstiftelsesinformasjon() {
-      return new RettsstiftelsesinformasjonBuilder();
-   }
+    public static RettsstiftelsesinformasjonBuilder aRettsstiftelsesinformasjon() {
+        return new RettsstiftelsesinformasjonBuilder();
+    }
 
-   public RettsstiftelsesinformasjonBuilder withRettsstiftelsesnummer(Integer rettsstiftelsesnummer) {
-      this.rettsstiftelsesnummer = rettsstiftelsesnummer;
-      return this;
-   }
+    public RettsstiftelsesinformasjonBuilder withRettsstiftelsesnummer(Integer rettsstiftelsesnummer) {
+        this.rettsstiftelsesnummer = rettsstiftelsesnummer;
+        return this;
+    }
 
-   public RettsstiftelsesinformasjonBuilder withRettsstiftelsesreferanse(String rettsstiftelsesreferanse) {
-      this.rettsstiftelsesreferanse = rettsstiftelsesreferanse;
-      return this;
-   }
+    public RettsstiftelsesinformasjonBuilder withRettsstiftelsesreferanse(String rettsstiftelsesreferanse) {
+        this.rettsstiftelsesreferanse = rettsstiftelsesreferanse;
+        return this;
+    }
 
-   public RettsstiftelsesinformasjonBuilder but() {
-      return aRettsstiftelsesinformasjon().withRettsstiftelsesnummer(rettsstiftelsesnummer).withRettsstiftelsesreferanse(rettsstiftelsesreferanse);
-   }
+    public RettsstiftelsesinformasjonBuilder but() {
+        return aRettsstiftelsesinformasjon().withRettsstiftelsesnummer(rettsstiftelsesnummer).withRettsstiftelsesreferanse(rettsstiftelsesreferanse);
+    }
 
-   public Rettsstiftelsesinformasjon build() {
-      Rettsstiftelsesinformasjon rettsstiftelsesinformasjon = new Rettsstiftelsesinformasjon();
-      rettsstiftelsesinformasjon.setRettsstiftelsesnummer(rettsstiftelsesnummer);
-      rettsstiftelsesinformasjon.setRettsstiftelsesreferanse(rettsstiftelsesreferanse);
-      return rettsstiftelsesinformasjon;
-   }
+    public Rettsstiftelsesinformasjon build() {
+        Rettsstiftelsesinformasjon rettsstiftelsesinformasjon = new Rettsstiftelsesinformasjon();
+        rettsstiftelsesinformasjon.setRettsstiftelsesnummer(rettsstiftelsesnummer);
+        rettsstiftelsesinformasjon.setRettsstiftelsesreferanse(rettsstiftelsesreferanse);
+        return rettsstiftelsesinformasjon;
+    }
 }

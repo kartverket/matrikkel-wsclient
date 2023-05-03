@@ -22,6 +22,7 @@ public class SignertGrunnboksutskrift {
     private List<String> getDokumentreferanser() {
         return null;
     }
+
     @SuppressWarnings("unused") //SKIF mapping
     private void setDokumentreferanser(List<String> dokumentreferanser) {
     }

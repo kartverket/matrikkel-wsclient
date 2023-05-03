@@ -10,193 +10,194 @@ import java.util.function.Function;
  */
 public class ByggesakBruksenhetDTO {
 
-   // bruksenhetsnummer - required
-   Integer lopenr = null;
-   Integer etasjenr = null;
-   String etasjeplanKode = null;
+    // bruksenhetsnummer - required
+    Integer lopenr = null;
+    Integer etasjenr = null;
+    String etasjeplanKode = null;
 
-   // generell info
-   Double bruksAreal;
-   Integer antallRom;
-   Integer antallBad;
-   Integer antallWC;
+    // generell info
+    Double bruksAreal;
+    Integer antallRom;
+    Integer antallBad;
+    Integer antallWC;
 
-   // matrikkelenhet
-   String kommunenr;
-   Integer gardsnr;
-   Integer bruksnr;
-   Integer festenr;
-   Integer seksjonsnr;
+    // matrikkelenhet
+    String kommunenr;
+    Integer gardsnr;
+    Integer bruksnr;
+    Integer festenr;
+    Integer seksjonsnr;
 
-   // adresse
-   Integer adressekode;
-   Integer adressenummer;
-   String adressebokstav;
+    // adresse
+    Integer adressekode;
+    Integer adressenummer;
+    String adressebokstav;
 
-   // koder
-   String bruksenhetstypeKode;
-   String kjokkentilgangKode;
+    // koder
+    String bruksenhetstypeKode;
+    String kjokkentilgangKode;
 
-   List<String> feilkoder = new ArrayList<>();
+    List<String> feilkoder = new ArrayList<>();
 
-   public ByggesakBruksenhetDTO() {}
+    public ByggesakBruksenhetDTO() {
+    }
 
-   public Double getBruksAreal() {
-      return bruksAreal;
-   }
+    public Double getBruksAreal() {
+        return bruksAreal;
+    }
 
-   public void setBruksAreal(Double bruksAreal) {
-      this.bruksAreal = bruksAreal;
-   }
+    public void setBruksAreal(Double bruksAreal) {
+        this.bruksAreal = bruksAreal;
+    }
 
-   public String getKommunenr() {
-      return kommunenr;
-   }
+    public String getKommunenr() {
+        return kommunenr;
+    }
 
-   public void setKommunenr(String kommunenr) {
-      this.kommunenr = kommunenr;
-   }
+    public void setKommunenr(String kommunenr) {
+        this.kommunenr = kommunenr;
+    }
 
-   public Integer getGardsnr() {
-      return gardsnr;
-   }
+    public Integer getGardsnr() {
+        return gardsnr;
+    }
 
-   public void setGardsnr(BigInteger gardsnr) {
-      this.gardsnr = gardsnr != null ? gardsnr.intValue() : 0;
-   }
+    public void setGardsnr(BigInteger gardsnr) {
+        this.gardsnr = gardsnr != null ? gardsnr.intValue() : 0;
+    }
 
-   public Integer getBruksnr() {
-      return bruksnr;
-   }
+    public Integer getBruksnr() {
+        return bruksnr;
+    }
 
-   public void setBruksnr(BigInteger bruksnr) {
-      this.bruksnr = bruksnr != null ? bruksnr.intValue() : 0;
-   }
+    public void setBruksnr(BigInteger bruksnr) {
+        this.bruksnr = bruksnr != null ? bruksnr.intValue() : 0;
+    }
 
-   public Integer getFestenr() {
-      return festenr;
-   }
+    public Integer getFestenr() {
+        return festenr;
+    }
 
-   public void setFestenr(BigInteger festenr) {
-      this.festenr = festenr != null ? festenr.intValue() : 0;
-   }
+    public void setFestenr(BigInteger festenr) {
+        this.festenr = festenr != null ? festenr.intValue() : 0;
+    }
 
-   public Integer getSeksjonsnr() {
-      return seksjonsnr;
-   }
+    public Integer getSeksjonsnr() {
+        return seksjonsnr;
+    }
 
-   public void setSeksjonsnr(BigInteger seksjonsnr) {
-      this.seksjonsnr = seksjonsnr != null ? seksjonsnr.intValue() : 0;
-   }
+    public void setSeksjonsnr(BigInteger seksjonsnr) {
+        this.seksjonsnr = seksjonsnr != null ? seksjonsnr.intValue() : 0;
+    }
 
-   public Integer getAdressekode() {
-      return adressekode;
-   }
+    public Integer getAdressekode() {
+        return adressekode;
+    }
 
-   public void setAdressekode(String adressekode) {
-      this.adressekode = setVerdi(Integer::valueOf, adressekode);
-   }
+    public void setAdressekode(String adressekode) {
+        this.adressekode = setVerdi(Integer::valueOf, adressekode);
+    }
 
-   public Integer getAdressenummer() {
-      return adressenummer;
-   }
+    public Integer getAdressenummer() {
+        return adressenummer;
+    }
 
-   public void setAdressenummer(String adressenummer) {
-      this.adressenummer = setVerdi(Integer::valueOf, adressenummer);
-   }
+    public void setAdressenummer(String adressenummer) {
+        this.adressenummer = setVerdi(Integer::valueOf, adressenummer);
+    }
 
-   public String getAdressebokstav() {
-      return adressebokstav;
-   }
+    public String getAdressebokstav() {
+        return adressebokstav;
+    }
 
-   public void setAdressebokstav(String adressebokstav) {
-      this.adressebokstav = adressebokstav;
-   }
+    public void setAdressebokstav(String adressebokstav) {
+        this.adressebokstav = adressebokstav;
+    }
 
-   public Integer getEtasjenr() {
-      return etasjenr;
-   }
+    public Integer getEtasjenr() {
+        return etasjenr;
+    }
 
-   public void setEtasjenr(BigInteger etasjenr) {
-      this.etasjenr = etasjenr.intValue();
-   }
+    public void setEtasjenr(BigInteger etasjenr) {
+        this.etasjenr = etasjenr.intValue();
+    }
 
-   public Integer getLopenr() {
-      return lopenr;
-   }
+    public Integer getLopenr() {
+        return lopenr;
+    }
 
-   public void setLopenr(BigInteger lopenr) {
-      this.lopenr = lopenr != null ? lopenr.intValue() : null;
-   }
+    public void setLopenr(BigInteger lopenr) {
+        this.lopenr = lopenr != null ? lopenr.intValue() : null;
+    }
 
-   public Integer getAntallRom() {
-      return antallRom;
-   }
+    public Integer getAntallRom() {
+        return antallRom;
+    }
 
-   public void setAntallRom(BigInteger antallRom) {
-      this.antallRom = antallRom != null ? antallRom.intValue() : null;
-   }
+    public void setAntallRom(BigInteger antallRom) {
+        this.antallRom = antallRom != null ? antallRom.intValue() : null;
+    }
 
-   public Integer getAntallBad() {
-      return antallBad;
-   }
+    public Integer getAntallBad() {
+        return antallBad;
+    }
 
-   public void setAntallBad(BigInteger antallBad) {
-      this.antallBad = antallBad != null ? antallBad.intValue() : null;
-   }
+    public void setAntallBad(BigInteger antallBad) {
+        this.antallBad = antallBad != null ? antallBad.intValue() : null;
+    }
 
-   public Integer getAntallWC() {
-      return antallWC;
-   }
+    public Integer getAntallWC() {
+        return antallWC;
+    }
 
-   public void setAntallWC(BigInteger antallWC) {
-      this.antallWC = antallWC != null ? antallWC.intValue() : null;
-   }
+    public void setAntallWC(BigInteger antallWC) {
+        this.antallWC = antallWC != null ? antallWC.intValue() : null;
+    }
 
-   public String getEtasjeplanKode() {
-      return etasjeplanKode;
-   }
+    public String getEtasjeplanKode() {
+        return etasjeplanKode;
+    }
 
-   public void setEtasjeplanKode(String etasjeplanKode) {
-      this.etasjeplanKode = etasjeplanKode;
-   }
+    public void setEtasjeplanKode(String etasjeplanKode) {
+        this.etasjeplanKode = etasjeplanKode;
+    }
 
-   public String getBruksenhetstypeKode() {
-      return bruksenhetstypeKode;
-   }
+    public String getBruksenhetstypeKode() {
+        return bruksenhetstypeKode;
+    }
 
-   public void setBruksenhetstypeKode(String bruksenhetstypeKode) {
-      this.bruksenhetstypeKode = bruksenhetstypeKode;
-   }
+    public void setBruksenhetstypeKode(String bruksenhetstypeKode) {
+        this.bruksenhetstypeKode = bruksenhetstypeKode;
+    }
 
-   public String getKjokkentilgangKode() {
-      return kjokkentilgangKode;
-   }
+    public String getKjokkentilgangKode() {
+        return kjokkentilgangKode;
+    }
 
-   public void setKjokkentilgangKode(String kjokkentilgangKode) {
-      this.kjokkentilgangKode = kjokkentilgangKode;
-   }
+    public void setKjokkentilgangKode(String kjokkentilgangKode) {
+        this.kjokkentilgangKode = kjokkentilgangKode;
+    }
 
-   private <T, V> V setVerdi(Function<T, V> function, T verdi) {
-      try {
-         return verdi != null ? function.apply(verdi) : null;
-      } catch (Exception e) {
-         return null;
-      }
-   }
+    private <T, V> V setVerdi(Function<T, V> function, T verdi) {
+        try {
+            return verdi != null ? function.apply(verdi) : null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
-   /**
-    * Obligatoriske felt i modellen.
-    *
-    * @return Liste med feil.
-    */
-   public List<String> validerBruksenhetInfo() {
-      feilkoder.clear();
+    /**
+     * Obligatoriske felt i modellen.
+     *
+     * @return Liste med feil.
+     */
+    public List<String> validerBruksenhetInfo() {
+        feilkoder.clear();
 
-      if(lopenr == null) feilkoder.add("Løpenummer ikke satt på BruksenhetInfo");
-      if(etasjenr == null) feilkoder.add("Etasjenummer ikke satt på BruksenhetInfo");
-      if(etasjeplanKode == null) feilkoder.add("Etasjeplankode ikke satt på BruksenhetInfo");
+        if (lopenr == null) feilkoder.add("Løpenummer ikke satt på BruksenhetInfo");
+        if (etasjenr == null) feilkoder.add("Etasjenummer ikke satt på BruksenhetInfo");
+        if (etasjeplanKode == null) feilkoder.add("Etasjeplankode ikke satt på BruksenhetInfo");
 
-      return feilkoder;
-   }
+        return feilkoder;
+    }
 }

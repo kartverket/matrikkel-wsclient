@@ -5,44 +5,44 @@ import org.slf4j.LoggerFactory;
 
 public final class InnsendingServiceWSProvider {
 
-   private static final Logger logger = LoggerFactory.getLogger(InnsendingServiceWSProvider.class);
+    private static final Logger logger = LoggerFactory.getLogger(InnsendingServiceWSProvider.class);
 
-   private InnsendingServiceWSProvider() {
-   }
+    private InnsendingServiceWSProvider() {
+    }
 
-   public interface InitRequirements {
+    public interface InitRequirements {
 
-      boolean inProductionMode();
+        boolean inProductionMode();
 
-      boolean inProductionDeployment();
+        boolean inProductionDeployment();
 
-      /**
-       * Only relevant if inProductionDeployment returns false
-       *
-       * @return true if a stubbed version is wanted
-       */
-      boolean doReturnStub();
+        /**
+         * Only relevant if inProductionDeployment returns false
+         *
+         * @return true if a stubbed version is wanted
+         */
+        boolean doReturnStub();
 
-      String getBruker();
+        String getBruker();
 
-      String getPassord();
+        String getPassord();
 
-      String getEndpointUrl();
-   }
+        String getEndpointUrl();
+    }
 
-   public static InnsendingServiceWS getInnsendingServiceImplementation(InitRequirements initRequirements) {
-      if (initRequirements.inProductionDeployment()) {
-         logger.info("In production mode: Returning default implementation " + DefaultInnsendingServiceWS.class);
-         return new DefaultInnsendingServiceWS(initRequirements.getBruker(), initRequirements.getPassord(), initRequirements.getEndpointUrl());
-      } else {
-         if (initRequirements.doReturnStub()) {
-            logger.info("Not in production mode and configured to return stub: " + InnsendingServiceWSStub.class);
-            return new InnsendingServiceWSStub();
-         } else {
-            logger.info("Not in production mode and returning default implementation " + DefaultInnsendingServiceWS.class);
+    public static InnsendingServiceWS getInnsendingServiceImplementation(InitRequirements initRequirements) {
+        if (initRequirements.inProductionDeployment()) {
+            logger.info("In production mode: Returning default implementation " + DefaultInnsendingServiceWS.class);
             return new DefaultInnsendingServiceWS(initRequirements.getBruker(), initRequirements.getPassord(), initRequirements.getEndpointUrl());
-         }
-      }
-   }
+        } else {
+            if (initRequirements.doReturnStub()) {
+                logger.info("Not in production mode and configured to return stub: " + InnsendingServiceWSStub.class);
+                return new InnsendingServiceWSStub();
+            } else {
+                logger.info("Not in production mode and returning default implementation " + DefaultInnsendingServiceWS.class);
+                return new DefaultInnsendingServiceWS(initRequirements.getBruker(), initRequirements.getPassord(), initRequirements.getEndpointUrl());
+            }
+        }
+    }
 
 }

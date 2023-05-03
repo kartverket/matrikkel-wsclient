@@ -9,13 +9,13 @@ import static org.testng.Assert.assertEquals;
  */
 public class ProjectEncodingTest {
 
-   @Test
-   public void spesialtegnErLikEscapedeSpesialtegn() {
+    @Test
+    public void spesialtegnErLikEscapedeSpesialtegn() {
 
-      final String spesialtegn = "æøå";
-      System.out.println("Spesialtegn: " + spesialtegn);
+        final String spesialtegn = "æøå";
+        System.out.println("Spesialtegn: " + spesialtegn);
 
-      assertEquals(spesialtegn, "\u00E6\u00F8\u00E5");
-   }
+        assertEquals(spesialtegn, "\u00E6\u00F8\u00E5");
+    }
 
 }

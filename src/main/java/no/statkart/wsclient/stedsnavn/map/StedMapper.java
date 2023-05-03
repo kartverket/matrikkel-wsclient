@@ -2,7 +2,11 @@ package no.statkart.wsclient.stedsnavn.map;
 
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.Timestamp;
 import no.statkart.stedsnavn.ssr.wsapi.v1.domain.kommune.KommuneIdList;
-import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.*;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.NavneobjekttypeHistorikkList;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.StedInternMerknadList;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.StedTilleggsopplysningList;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.StedstatusHistorikkList;
+import no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.VedtaksmyndighetHistorikkList;
 import no.statkart.wsclient.DateHjelper;
 import no.statkart.wsclient.stedsnavn.Matrikkelenhetreferanse;
 import no.statkart.wsclient.stedsnavn.Matrikkelreferanse;
@@ -97,57 +101,57 @@ class StedMapper {
 
     private static List<StedInternMerknad> toDomeneInterneMerknader(StedInternMerknadList interneMerknader) {
         return interneMerknader.getItem().stream()
-                .map(ws -> {
-                    StedInternMerknad stedInternMerknad = new StedInternMerknad(ws.getId(), regDato(ws), ws.getTekst(),
-                            new StedsnavnBobleId.StedMerknadstypeKodeId(ws.getMerknadstypeId().getValue()), ws.getFellesarkiv().getItem());
-                    setFellesFelterForHistoriskKomponent(ws, stedInternMerknad);
-                    return stedInternMerknad;
-                })
-                .collect(Collectors.toList());
+            .map(ws -> {
+                StedInternMerknad stedInternMerknad = new StedInternMerknad(ws.getId(), regDato(ws), ws.getTekst(),
+                    new StedsnavnBobleId.StedMerknadstypeKodeId(ws.getMerknadstypeId().getValue()), ws.getFellesarkiv().getItem());
+                setFellesFelterForHistoriskKomponent(ws, stedInternMerknad);
+                return stedInternMerknad;
+            })
+            .collect(Collectors.toList());
     }
 
     private static List<StedTilleggsopplysning> toDomeneTilleggsopplysninger(StedTilleggsopplysningList tilleggsopplysninger) {
         return tilleggsopplysninger.getItem().stream()
-                .map(ws -> {
-                    StedTilleggsopplysning domene = new StedTilleggsopplysning(ws.getId(), regDato(ws), ws.getTekst(),
-                            ws.getEksterneOpplysninger().getItem(), new StedsnavnBobleId.StedTilleggsopplysningstypeKodeId(ws.getTilleggsopplysningstypeId().getValue()));
-                    setFellesFelterForHistoriskKomponent(ws, domene);
-                    return domene;
-                })
-                .collect(toList());
+            .map(ws -> {
+                StedTilleggsopplysning domene = new StedTilleggsopplysning(ws.getId(), regDato(ws), ws.getTekst(),
+                    ws.getEksterneOpplysninger().getItem(), new StedsnavnBobleId.StedTilleggsopplysningstypeKodeId(ws.getTilleggsopplysningstypeId().getValue()));
+                setFellesFelterForHistoriskKomponent(ws, domene);
+                return domene;
+            })
+            .collect(toList());
     }
 
     private static Sortering toDomeneSortering(no.statkart.stedsnavn.ssr.wsapi.v1.domain.sted.Sortering sortering) {
         return new Sortering(
-                new StedsnavnBobleId.Sortering1KodeId(sortering.getSortering1KodeId().getValue()),
-                new StedsnavnBobleId.Sortering2KodeId(sortering.getSortering2KodeId().getValue()));
+            new StedsnavnBobleId.Sortering1KodeId(sortering.getSortering1KodeId().getValue()),
+            new StedsnavnBobleId.Sortering2KodeId(sortering.getSortering2KodeId().getValue()));
     }
 
     private static List<VedtaksmyndighetHistorikk> toDomeneVedtaksmyndighetHistorikk(VedtaksmyndighetHistorikkList vedtaksmyndighetHistorikker) {
         return vedtaksmyndighetHistorikker.getItem().stream()
-                .map(ws -> new VedtaksmyndighetHistorikk(ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
-                      new StedsnavnBobleId.VedtaksmyndighetKodeId(ws.getVedtaksmyndighetId().getValue())))
-                .collect(toList());
+            .map(ws -> new VedtaksmyndighetHistorikk(ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
+                new StedsnavnBobleId.VedtaksmyndighetKodeId(ws.getVedtaksmyndighetId().getValue())))
+            .collect(toList());
     }
 
     private static List<StedstatusHistorikk> toDomeneStedstatusHistorikk(StedstatusHistorikkList stedstatusHistorikker) {
         return stedstatusHistorikker.getItem().stream()
-                .map(ws -> new StedstatusHistorikk(ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
-                      new StedsnavnBobleId.StedstatusKodeId(ws.getStedstatusId().getValue())))
-                .collect(toList());
+            .map(ws -> new StedstatusHistorikk(ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
+                new StedsnavnBobleId.StedstatusKodeId(ws.getStedstatusId().getValue())))
+            .collect(toList());
     }
 
     private static List<NavneobjekttypeHistorikk> toDomeneNavneObjekttypeHistorikk(NavneobjekttypeHistorikkList navneobjekttypeHistorikker) {
         return navneobjekttypeHistorikker.getItem().stream()
-                .map(ws -> new NavneobjekttypeHistorikk(ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
-                      new StedsnavnBobleId.NavneobjekttypeKodeId(ws.getNavneobjekttypeKodeId().getValue())))
-                .collect(toList());
+            .map(ws -> new NavneobjekttypeHistorikk(ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
+                new StedsnavnBobleId.NavneobjekttypeKodeId(ws.getNavneobjekttypeKodeId().getValue())))
+            .collect(toList());
     }
 
     private static List<StedsnavnBobleId.KommuneId> toDomeneKommuner(KommuneIdList kommunerIds) {
         return kommunerIds.getItem().stream()
-                .map(kommuneId -> new StedsnavnBobleId.KommuneId(kommuneId.getValue()))
-                .collect(toList());
+            .map(kommuneId -> new StedsnavnBobleId.KommuneId(kommuneId.getValue()))
+            .collect(toList());
     }
 
 

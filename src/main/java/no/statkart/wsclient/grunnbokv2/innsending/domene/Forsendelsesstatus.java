@@ -12,128 +12,128 @@ import java.util.Objects;
 @SuppressWarnings("InstanceVariableMayNotBeInitialized")
 public class Forsendelsesstatus {
 
-   private String innsendingId;
-   private String forsendelsesreferanse;
-   private LocalDateTime registreringstidspunkt;
-   private String behandlingsutfall;
-   private String saksstatus;
-   private Long saksnummer;
-   private Tinglysingsinformasjon tinglysingsinformasjon;
-   private Behandlingsinformasjon behandlingsinformasjon;
+    private String innsendingId;
+    private String forsendelsesreferanse;
+    private LocalDateTime registreringstidspunkt;
+    private String behandlingsutfall;
+    private String saksstatus;
+    private Long saksnummer;
+    private Tinglysingsinformasjon tinglysingsinformasjon;
+    private Behandlingsinformasjon behandlingsinformasjon;
 
-   public enum Behandlingsutfall {
-      UAVKLART,
-      TINGLYST,
-      FORELOEPIG_NEKTET,
-      ANKET,
-      NEKTET,
-      AVVIST;
+    public enum Behandlingsutfall {
+        UAVKLART,
+        TINGLYST,
+        FORELOEPIG_NEKTET,
+        ANKET,
+        NEKTET,
+        AVVIST;
 
-      public boolean erSluttUtfall() {
-         return EnumSet.of(TINGLYST, AVVIST, NEKTET).contains(this);
-      }
+        public boolean erSluttUtfall() {
+            return EnumSet.of(TINGLYST, AVVIST, NEKTET).contains(this);
+        }
 
-      public static Behandlingsutfall parse(String behandlingsutfall) {
-         try {
-            return valueOf(behandlingsutfall);
-         } catch (IllegalArgumentException iae) {
-            throw new RuntimeException("Unknown value received for behandlingsutfall: " + behandlingsutfall, iae);
-         }
-      }
-   }
+        public static Behandlingsutfall parse(String behandlingsutfall) {
+            try {
+                return valueOf(behandlingsutfall);
+            } catch (IllegalArgumentException iae) {
+                throw new RuntimeException("Unknown value received for behandlingsutfall: " + behandlingsutfall, iae);
+            }
+        }
+    }
 
-   // TODO MAT-18022 Public-metode som kun finnes i test internt i wsclient
-   public UsignertGrunnboksutskrift findUbekreftetGrunnboksutskriftForMatrikkelenhet(final Matrikkelenhet matrikkelenhet) {
-      if (tinglysingsinformasjon != null) {
-         Collection<UsignertGrunnboksutskrift> utskrifterForMatrikkelenhet = Collections2.filter(
+    // TODO MAT-18022 Public-metode som kun finnes i test internt i wsclient
+    public UsignertGrunnboksutskrift findUbekreftetGrunnboksutskriftForMatrikkelenhet(final Matrikkelenhet matrikkelenhet) {
+        if (tinglysingsinformasjon != null) {
+            Collection<UsignertGrunnboksutskrift> utskrifterForMatrikkelenhet = Collections2.filter(
 
-             tinglysingsinformasjon.getGrunnboksutskrifter(), usignertGrunnboksutskrift -> {
-                 Matrikkelenhet matrikkelenhetForGrunnboksutskrift = usignertGrunnboksutskrift.getGjelderFor().getMatrikkelenhet();
-                 return Objects.equals(matrikkelenhet.getKommunenummer(), matrikkelenhetForGrunnboksutskrift.getKommunenummer())
-                     && Objects.equals(matrikkelenhet.getGaardsnummer(), matrikkelenhetForGrunnboksutskrift.getGaardsnummer())
-                     && Objects.equals(matrikkelenhet.getBruksnummer(), matrikkelenhetForGrunnboksutskrift.getBruksnummer())
-                     && Objects.equals(matrikkelenhet.getFestenummer(), matrikkelenhetForGrunnboksutskrift.getFestenummer())
-                     && Objects.equals(matrikkelenhet.getSeksjonsnummer(), matrikkelenhetForGrunnboksutskrift.getSeksjonsnummer());
-             }
-         );
+                tinglysingsinformasjon.getGrunnboksutskrifter(), usignertGrunnboksutskrift -> {
+                    Matrikkelenhet matrikkelenhetForGrunnboksutskrift = usignertGrunnboksutskrift.getGjelderFor().getMatrikkelenhet();
+                    return Objects.equals(matrikkelenhet.getKommunenummer(), matrikkelenhetForGrunnboksutskrift.getKommunenummer())
+                        && Objects.equals(matrikkelenhet.getGaardsnummer(), matrikkelenhetForGrunnboksutskrift.getGaardsnummer())
+                        && Objects.equals(matrikkelenhet.getBruksnummer(), matrikkelenhetForGrunnboksutskrift.getBruksnummer())
+                        && Objects.equals(matrikkelenhet.getFestenummer(), matrikkelenhetForGrunnboksutskrift.getFestenummer())
+                        && Objects.equals(matrikkelenhet.getSeksjonsnummer(), matrikkelenhetForGrunnboksutskrift.getSeksjonsnummer());
+                }
+            );
 
-          if (utskrifterForMatrikkelenhet.size() == 1) {
-              return utskrifterForMatrikkelenhet.iterator().next();
-          }
-      }
-       return null;
-   }
+            if (utskrifterForMatrikkelenhet.size() == 1) {
+                return utskrifterForMatrikkelenhet.iterator().next();
+            }
+        }
+        return null;
+    }
 
-   public boolean erFerdigbehandlet() {
-      String behandlingsutfall = getBehandlingsutfall();
-      return behandlingsutfall != null && Behandlingsutfall.parse(behandlingsutfall).erSluttUtfall();
-   }
+    public boolean erFerdigbehandlet() {
+        String behandlingsutfall = getBehandlingsutfall();
+        return behandlingsutfall != null && Behandlingsutfall.parse(behandlingsutfall).erSluttUtfall();
+    }
 
-   public Behandlingsinformasjon getBehandlingsinformasjon() {
-      return behandlingsinformasjon;
-   }
+    public Behandlingsinformasjon getBehandlingsinformasjon() {
+        return behandlingsinformasjon;
+    }
 
-   public void setBehandlingsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {
-      this.behandlingsinformasjon = behandlingsinformasjon;
-   }
+    public void setBehandlingsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {
+        this.behandlingsinformasjon = behandlingsinformasjon;
+    }
 
-   public String getInnsendingId() {
-      return innsendingId;
-   }
+    public String getInnsendingId() {
+        return innsendingId;
+    }
 
-   public void setInnsendingId(String innsendingId) {
-      this.innsendingId = innsendingId;
-   }
+    public void setInnsendingId(String innsendingId) {
+        this.innsendingId = innsendingId;
+    }
 
-   public String getForsendelsesreferanse() {
-      return forsendelsesreferanse;
-   }
+    public String getForsendelsesreferanse() {
+        return forsendelsesreferanse;
+    }
 
-   public void setForsendelsesreferanse(String forsendelsesreferanse) {
-      this.forsendelsesreferanse = forsendelsesreferanse;
-   }
+    public void setForsendelsesreferanse(String forsendelsesreferanse) {
+        this.forsendelsesreferanse = forsendelsesreferanse;
+    }
 
-   public Behandlingsutfall getBehandlingsutfallAsEnum() {
-      return behandlingsutfall != null ? Behandlingsutfall.parse(behandlingsutfall) : null;
-   }
+    public Behandlingsutfall getBehandlingsutfallAsEnum() {
+        return behandlingsutfall != null ? Behandlingsutfall.parse(behandlingsutfall) : null;
+    }
 
-   public String getBehandlingsutfall() {
-      return behandlingsutfall;
-   }
+    public String getBehandlingsutfall() {
+        return behandlingsutfall;
+    }
 
-   public void setBehandlingsutfall(String behandlingsutfall) {
-      this.behandlingsutfall = behandlingsutfall;
-   }
+    public void setBehandlingsutfall(String behandlingsutfall) {
+        this.behandlingsutfall = behandlingsutfall;
+    }
 
-   public LocalDateTime getRegistreringstidspunkt() {
-      return registreringstidspunkt;
-   }
+    public LocalDateTime getRegistreringstidspunkt() {
+        return registreringstidspunkt;
+    }
 
-   public void setRegistreringstidspunkt(LocalDateTime registreringstidspunkt) {
-      this.registreringstidspunkt = registreringstidspunkt;
-   }
+    public void setRegistreringstidspunkt(LocalDateTime registreringstidspunkt) {
+        this.registreringstidspunkt = registreringstidspunkt;
+    }
 
-   public String getSaksstatus() {
-      return saksstatus;
-   }
+    public String getSaksstatus() {
+        return saksstatus;
+    }
 
-   public void setSaksstatus(String saksstatus) {
-      this.saksstatus = saksstatus;
-   }
+    public void setSaksstatus(String saksstatus) {
+        this.saksstatus = saksstatus;
+    }
 
-   public Long getSaksnummer() {
-      return saksnummer;
-   }
+    public Long getSaksnummer() {
+        return saksnummer;
+    }
 
-   public void setSaksnummer(Long saksnummer) {
-      this.saksnummer = saksnummer;
-   }
+    public void setSaksnummer(Long saksnummer) {
+        this.saksnummer = saksnummer;
+    }
 
-   public Tinglysingsinformasjon getTinglysingsinformasjon() {
-      return tinglysingsinformasjon;
-   }
+    public Tinglysingsinformasjon getTinglysingsinformasjon() {
+        return tinglysingsinformasjon;
+    }
 
-   public void setTinglysingsinformasjon(Tinglysingsinformasjon tinglysingsinformasjon) {
-      this.tinglysingsinformasjon = tinglysingsinformasjon;
-   }
+    public void setTinglysingsinformasjon(Tinglysingsinformasjon tinglysingsinformasjon) {
+        this.tinglysingsinformasjon = tinglysingsinformasjon;
+    }
 }

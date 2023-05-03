@@ -5,12 +5,12 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.builder.forsendelse.Mat
 
 public class MatrikkelenhetFactory {
 
-   public static Matrikkelenhet createMatrikkelenhet(String kommunenummer, String kommunenavn, int gardsnummer, int bruksnummer) {
-      return MatrikkelenhetBuilder.aMatrikkelenhet()
+    public static Matrikkelenhet createMatrikkelenhet(String kommunenummer, String kommunenavn, int gardsnummer, int bruksnummer) {
+        return MatrikkelenhetBuilder.aMatrikkelenhet()
             .withKommunenavn(kommunenavn)
             .withKommunenummer(kommunenummer)
             .withGaardsnummer(gardsnummer)
             .withBruksnummer(bruksnummer)
             .build();
-   }
+    }
 }

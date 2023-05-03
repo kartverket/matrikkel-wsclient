@@ -10,49 +10,49 @@ import java.util.List;
 
 public class ForsendelseBuilder {
 
-   private List<Signatur> ikkeDigitaleSignaturer = new ArrayList<>();
+    private List<Signatur> ikkeDigitaleSignaturer = new ArrayList<>();
     private String forsendelsesreferanse;
-   private SignertMelding signertMelding;
-   private UsignertMelding usignertMelding;
+    private SignertMelding signertMelding;
+    private UsignertMelding usignertMelding;
 
-   private ForsendelseBuilder() {
-   }
+    private ForsendelseBuilder() {
+    }
 
-   public static ForsendelseBuilder aForsendelse() {
-      return new ForsendelseBuilder();
-   }
+    public static ForsendelseBuilder aForsendelse() {
+        return new ForsendelseBuilder();
+    }
 
-   public ForsendelseBuilder withIkkeDigitaleSignaturer(List<Signatur> ikkeDigitaleSignaturer) {
-      this.ikkeDigitaleSignaturer = ikkeDigitaleSignaturer;
-      return this;
-   }
+    public ForsendelseBuilder withIkkeDigitaleSignaturer(List<Signatur> ikkeDigitaleSignaturer) {
+        this.ikkeDigitaleSignaturer = ikkeDigitaleSignaturer;
+        return this;
+    }
 
-   public ForsendelseBuilder withForsendelsesReferanse(String forsendelsesreferanse) {
-      this.forsendelsesreferanse = forsendelsesreferanse;
-      return this;
-   }
+    public ForsendelseBuilder withForsendelsesReferanse(String forsendelsesreferanse) {
+        this.forsendelsesreferanse = forsendelsesreferanse;
+        return this;
+    }
 
-   public ForsendelseBuilder withSignertMelding(SignertMelding signertMelding) {
-      this.signertMelding = signertMelding;
-      return this;
-   }
+    public ForsendelseBuilder withSignertMelding(SignertMelding signertMelding) {
+        this.signertMelding = signertMelding;
+        return this;
+    }
 
-   public ForsendelseBuilder withUsignertMelding(UsignertMelding usignertMelding) {
-      this.usignertMelding = usignertMelding;
-      return this;
-   }
+    public ForsendelseBuilder withUsignertMelding(UsignertMelding usignertMelding) {
+        this.usignertMelding = usignertMelding;
+        return this;
+    }
 
-   public ForsendelseBuilder but() {
-      return aForsendelse().withIkkeDigitaleSignaturer(ikkeDigitaleSignaturer).withForsendelsesReferanse(forsendelsesreferanse).withSignertMelding(signertMelding).withUsignertMelding(usignertMelding);
-   }
+    public ForsendelseBuilder but() {
+        return aForsendelse().withIkkeDigitaleSignaturer(ikkeDigitaleSignaturer).withForsendelsesReferanse(forsendelsesreferanse).withSignertMelding(signertMelding).withUsignertMelding(usignertMelding);
+    }
 
-   public Forsendelse build() {
-      Forsendelse forsendelse = new Forsendelse();
-      forsendelse.setIkkeDigitaleSignaturer(ikkeDigitaleSignaturer);
-      forsendelse.setForsendelsesreferanse(forsendelsesreferanse);
-      forsendelse.setSignertMelding(signertMelding);
-      forsendelse.setUsignertMelding(usignertMelding);
-      return forsendelse;
-   }
+    public Forsendelse build() {
+        Forsendelse forsendelse = new Forsendelse();
+        forsendelse.setIkkeDigitaleSignaturer(ikkeDigitaleSignaturer);
+        forsendelse.setForsendelsesreferanse(forsendelsesreferanse);
+        forsendelse.setSignertMelding(signertMelding);
+        forsendelse.setUsignertMelding(usignertMelding);
+        return forsendelse;
+    }
 
 }

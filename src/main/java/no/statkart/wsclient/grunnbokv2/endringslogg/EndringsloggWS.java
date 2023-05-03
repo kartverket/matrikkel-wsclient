@@ -9,8 +9,8 @@ import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 
 public interface EndringsloggWS {
 
-   EndringId findSisteEndringId(GrunnbokContext grunnbokContext) throws ServiceException;
+    EndringId findSisteEndringId(GrunnbokContext grunnbokContext) throws ServiceException;
 
-   Endringer findEndringer(EndringId id, Domainklasse domainklasse, String filter, ReturnerBobler returnerBobler, int maksAntall,
-                           GrunnbokContext grunnbokContext) throws ServiceException;
+    Endringer findEndringer(EndringId id, Domainklasse domainklasse, String filter, ReturnerBobler returnerBobler, int maksAntall,
+                            GrunnbokContext grunnbokContext) throws ServiceException;
 }

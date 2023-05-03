@@ -12,36 +12,36 @@ import no.statkart.wsclient.WebServiceBuilder;
 
 public class DefaultRegisterenhetsrettsandelWS implements RegisterenhetsrettsandelWS {
 
-   private static RegisterenhetsrettsandelServiceWS registerenhetsrettsandelServiceWS;
+    private static RegisterenhetsrettsandelServiceWS registerenhetsrettsandelServiceWS;
 
-   private final RegisterenhetsrettsandelService registerenhetsrettsandelService;
+    private final RegisterenhetsrettsandelService registerenhetsrettsandelService;
 
-   public DefaultRegisterenhetsrettsandelWS(String brukernavn, String passord, String endpointUrl) {
-      if (registerenhetsrettsandelServiceWS == null) {
-         synchronized (this) {
-            if (registerenhetsrettsandelServiceWS == null) {
-               registerenhetsrettsandelServiceWS = new RegisterenhetsrettsandelServiceWS();
+    public DefaultRegisterenhetsrettsandelWS(String brukernavn, String passord, String endpointUrl) {
+        if (registerenhetsrettsandelServiceWS == null) {
+            synchronized (this) {
+                if (registerenhetsrettsandelServiceWS == null) {
+                    registerenhetsrettsandelServiceWS = new RegisterenhetsrettsandelServiceWS();
+                }
             }
-         }
-      }
+        }
 
-      registerenhetsrettsandelService = WebServiceBuilder.builderv2(
-            registerenhetsrettsandelServiceWS.getRegisterenhetsrettsandelServicePort(), RegisterenhetsrettsandelService.class)
+        registerenhetsrettsandelService = WebServiceBuilder.builderv2(
+                registerenhetsrettsandelServiceWS.getRegisterenhetsrettsandelServicePort(), RegisterenhetsrettsandelService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
             .doCreateProxy()
             .build();
-   }
+    }
 
 
-   @Override
-   public PersonIdTilRegisterenhetsrettsandelIdsMap findAndelerForRettighetshavere(PersonIdList personIds, GrunnbokContext grunnbokContext) throws ServiceException {
-      return registerenhetsrettsandelService.findAndelerForRettighetshavere(personIds, grunnbokContext);
-   }
+    @Override
+    public PersonIdTilRegisterenhetsrettsandelIdsMap findAndelerForRettighetshavere(PersonIdList personIds, GrunnbokContext grunnbokContext) throws ServiceException {
+        return registerenhetsrettsandelService.findAndelerForRettighetshavere(personIds, grunnbokContext);
+    }
 
-   @Override
-   public RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap findAndelerIRetter(RegisterenhetsrettIdList rettIds, GrunnbokContext grunnbokContext) throws ServiceException {
-      return registerenhetsrettsandelService.findAndelerIRetter(rettIds, grunnbokContext);
-   }
+    @Override
+    public RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap findAndelerIRetter(RegisterenhetsrettIdList rettIds, GrunnbokContext grunnbokContext) throws ServiceException {
+        return registerenhetsrettsandelService.findAndelerIRetter(rettIds, grunnbokContext);
+    }
 }

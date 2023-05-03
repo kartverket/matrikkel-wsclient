@@ -6,7 +6,8 @@ public class UsignertPDFDokumentBuilder {
 
     private byte[] usignertDokument;
 
-    private UsignertPDFDokumentBuilder() {}
+    private UsignertPDFDokumentBuilder() {
+    }
 
     public static UsignertPDFDokumentBuilder aUsignertPDFDokument() {
         return new UsignertPDFDokumentBuilder();

@@ -15,8 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Test
 public class EndretVegRequestTest {
 
-   public void nyEndretReq() {
-      EndretVegRequest request = EndretVegRequest.Builder.builder()
+    public void nyEndretReq() {
+        EndretVegRequest request = EndretVegRequest.Builder.builder()
             .tidsstempel(LocalDateTime.of(2019, Month.APRIL, 4, 16, 33, 28, 200))
             .vegId(1L)
             .adressekode(2)
@@ -30,10 +30,10 @@ public class EndretVegRequestTest {
             .aarsakTilEndring(RETTELSE_AV_FEILFOERING)
             .build();
 
-      assertThat(request).isNotNull();
-      assertThat(request.getVegId()).isEqualTo(1L);
-      assertThat(request.getAarsakTilEndring()).isEqualTo(RETTELSE_AV_FEILFOERING);
-      assertThat(request.getOst()).isNull();
-   }
+        assertThat(request).isNotNull();
+        assertThat(request.getVegId()).isEqualTo(1L);
+        assertThat(request.getAarsakTilEndring()).isEqualTo(RETTELSE_AV_FEILFOERING);
+        assertThat(request.getOst()).isNull();
+    }
 
 }

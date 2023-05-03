@@ -11,13 +11,13 @@ import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandli
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.builder.behandlingsstatus.ForsendelsesstatusBuilder.aBehandlingsstatus;
 
 public class MockValideringServiceWS implements ValideringServiceWS {
-   @Override
-   public Forsendelsesstatus valider(Forsendelse forsendelse) {
-      List<Kontrollresultat> kontrollResultater = Collections.emptyList();
-      return aBehandlingsstatus()
+    @Override
+    public Forsendelsesstatus valider(Forsendelse forsendelse) {
+        List<Kontrollresultat> kontrollResultater = Collections.emptyList();
+        return aBehandlingsstatus()
             .withAvvisningsinformasjon(anAvvisningsinformasjon()
-                  .withKontrollresultater(kontrollResultater).build())
+                .withKontrollresultater(kontrollResultater).build())
             .withBehandlingsutfall("UAVKLART")
             .build();
-   }
+    }
 }

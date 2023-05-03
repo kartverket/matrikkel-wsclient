@@ -53,7 +53,7 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
             try {
                 this.landmaalereArray = (ArrayNode) mapper.readTree(jsonString).get(LandmalerregisterUtil.URL_LANDMALERE_ARRAY);
             } catch (JsonProcessingException e) {
-                throw new ImplementationException("Noe gikk galt under prosessering av JSON" , e);
+                throw new ImplementationException("Noe gikk galt under prosessering av JSON", e);
             }
         }
 
@@ -65,10 +65,10 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
             List<String> resultat = new ArrayList<>();
             // søker gjennom arrayNoden og vurderer om gjeldende node skal legges til i svarArray.
             landmaalereArray.forEach(node -> {
-                    if (treffPaSok(node, landmaalernummer, fornavn, etternavn)) {
-                        resultat.add(node.toString());
-                    }
-                });
+                if (treffPaSok(node, landmaalernummer, fornavn, etternavn)) {
+                    resultat.add(node.toString());
+                }
+            });
             sokeresultat.append(String.join(",", resultat));
             sokeresultat.append("]}");
             return sokeresultat.toString();
@@ -97,7 +97,7 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
             // hvis fornavn er fylt ut
             if (fornavn != null) {
                 // navn inneholder fornavn (usikker på hva AAL egentlig gjør, men er ikke så farlig) - sett treff til true
-                if(navn.contains(fornavn)) {
+                if (navn.contains(fornavn)) {
                     treff = true;
                 } else {
                     // hvis fylt ut, men stemmer ikke = ikke treff
@@ -108,7 +108,7 @@ public class MockLandmalerregisterServiceWS implements LandmalerregisterServiceW
             // hvis etternavn er fylt ut
             if (etternavn != null) {
                 // navn inneholder etternavn, sett treff = true
-                if(navn.contains(etternavn)) {
+                if (navn.contains(etternavn)) {
                     treff = true;
                 } else {
                     // hvis fylt ut, men ikke stemmer = ikke treff

@@ -8,34 +8,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsignertMeldingBuilder {
-   private List<Dokument> dokumenter = new ArrayList<>();
+    private List<Dokument> dokumenter = new ArrayList<>();
     private Foelgebrev foelgebrev;
 
-   private UsignertMeldingBuilder() {
-   }
+    private UsignertMeldingBuilder() {
+    }
 
-   public static UsignertMeldingBuilder anUsignertMelding() {
-      return new UsignertMeldingBuilder();
-   }
+    public static UsignertMeldingBuilder anUsignertMelding() {
+        return new UsignertMeldingBuilder();
+    }
 
-   public UsignertMeldingBuilder withDokumenter(List<Dokument> dokumenter) {
-      this.dokumenter = dokumenter;
-      return this;
-   }
+    public UsignertMeldingBuilder withDokumenter(List<Dokument> dokumenter) {
+        this.dokumenter = dokumenter;
+        return this;
+    }
 
-   public UsignertMeldingBuilder withFoelgebrev(Foelgebrev foelgebrev) {
-      this.foelgebrev = foelgebrev;
-      return this;
-   }
+    public UsignertMeldingBuilder withFoelgebrev(Foelgebrev foelgebrev) {
+        this.foelgebrev = foelgebrev;
+        return this;
+    }
 
-   public UsignertMeldingBuilder but() {
-      return anUsignertMelding().withDokumenter(dokumenter).withFoelgebrev(foelgebrev);
-   }
+    public UsignertMeldingBuilder but() {
+        return anUsignertMelding().withDokumenter(dokumenter).withFoelgebrev(foelgebrev);
+    }
 
-   public UsignertMelding build() {
-      UsignertMelding usignertMelding = new UsignertMelding();
-      usignertMelding.getDokumenter().addAll(dokumenter);
-      usignertMelding.setFoelgebrev(foelgebrev);
-      return usignertMelding;
-   }
+    public UsignertMelding build() {
+        UsignertMelding usignertMelding = new UsignertMelding();
+        usignertMelding.getDokumenter().addAll(dokumenter);
+        usignertMelding.setFoelgebrev(foelgebrev);
+        return usignertMelding;
+    }
 }

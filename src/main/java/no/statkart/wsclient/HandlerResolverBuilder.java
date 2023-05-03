@@ -35,8 +35,8 @@ public class HandlerResolverBuilder {
 
     public static HandlerResolver handlerResolverMedLogging() {
         return HandlerResolverBuilder.builder()
-                .enableLogging()
-                .build();
+            .enableLogging()
+            .build();
     }
 
     public HandlerResolver build() {

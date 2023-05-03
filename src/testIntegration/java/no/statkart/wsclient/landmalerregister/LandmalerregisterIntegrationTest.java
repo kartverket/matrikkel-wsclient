@@ -22,7 +22,9 @@ public class LandmalerregisterIntegrationTest {
     }
 
     @AfterTest
-    public void tearDown() { landmalerregisterServiceWS = null; }
+    public void tearDown() {
+        landmalerregisterServiceWS = null;
+    }
 
     @Test
     public void testHentLandmalerMedLandmalernummer() {

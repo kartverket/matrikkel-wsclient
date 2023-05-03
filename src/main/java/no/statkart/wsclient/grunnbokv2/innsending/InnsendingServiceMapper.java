@@ -149,16 +149,16 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
         @Override
         public java.time.LocalTime mapDomainObject(LocalTime source) {
             return java.time.LocalTime.of(source.getHourOfDay(), source.getMinuteOfHour(), source.getSecondOfMinute(),
-                    source.getMillisOfSecond() * milliToNanoConst);
+                source.getMillisOfSecond() * milliToNanoConst);
         }
 
         @Override
         public LocalTime mapWsapiObject(java.time.LocalTime source) {
             return new LocalTime(
-                    source.getHour(),
-                    source.getMinute(),
-                    source.getSecond(),
-                    source.getNano() / milliToNanoConst);
+                source.getHour(),
+                source.getMinute(),
+                source.getSecond(),
+                source.getNano() / milliToNanoConst);
         }
     }
 
@@ -274,7 +274,7 @@ public class InnsendingServiceMapper extends AbstractMapper<Mapping> {
         public SignertGrunnboksutskriftListMapper() {
             super(InnsendingServiceMapper.this.getMapping(), SignertGrunnboksutskriftList.class,
                 (Class<List<SignertGrunnboksutskrift>>) new TypeToken<List<SignertGrunnboksutskrift>>() {
-            }.getRawType());
+                }.getRawType());
         }
 
         // MAT-18022 Det vil ikke returneres signerte utskrifter fra Grunnboken

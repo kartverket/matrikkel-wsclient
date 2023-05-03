@@ -5,7 +5,8 @@ import no.kartverket.grunnbok.wsapi.v2.domain.innsending.UsignertPDFDokument;
 public class UsignertPDFDokumentBuilder {
     private byte[] usignertDokument;
 
-    private UsignertPDFDokumentBuilder() {}
+    private UsignertPDFDokumentBuilder() {
+    }
 
     public static UsignertPDFDokumentBuilder aUsignertPDFDokument() {
         return new UsignertPDFDokumentBuilder();
