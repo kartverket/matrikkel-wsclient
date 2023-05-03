@@ -69,9 +69,6 @@ def testIntegration = tasks.register('testIntegration', Test) {
 }
 
 tasks.withType(Test).configureEach {
-    // Jenkins setter denne til true slik at bygget feiler på testrapporten.
-    ignoreFailures = System.getProperty('ignoreFailures', 'false') == 'true'
-
     useTestNG() {
         useDefaultListeners = true
     }
