@@ -41,7 +41,7 @@ pipeline { //declarative pipeline syntax
         }
         stage('Integration test') {
             steps {
-                sh "./gradlew testIntegration --continue ${SECRETES_FOR_TESTING} --stacktrace}"
+                sh "./gradlew testIntegration --continue ${SECRETES_FOR_TESTING} --stacktrace"
             }
             post {
                 always {
