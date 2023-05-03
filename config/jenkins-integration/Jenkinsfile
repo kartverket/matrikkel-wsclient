@@ -36,7 +36,7 @@ pipeline { //declarative pipeline syntax
     stages {
         stage('Prepare') {
             steps {
-                sh "./gradlew clean assemble --refresh-dependencies --profile --stacktrace}"
+                sh "./gradlew clean assemble --refresh-dependencies --profile --stacktrace"
             }
         }
         stage('Integration test') {
