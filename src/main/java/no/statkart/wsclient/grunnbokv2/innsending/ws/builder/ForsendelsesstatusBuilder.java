@@ -13,171 +13,171 @@ import java.util.List;
 import java.util.TimeZone;
 
 public class ForsendelsesstatusBuilder {
-   public static final int DOKUMENTNUMMER = 22;
-   public static final String DEFAULT_INNSENDING_ID = "1";
-   public static final String DEFAULT_FORSENDELSESREFERANSE = "16UNO";
-   public static final LocalDateTime DEFAULT_REGISTRERINGS_TIDSPUNKT = new LocalDateTime(2015, DateTimeConstants.OCTOBER, 16, 12, 5, 6, 178);
-   public static final String DEFAULT_BEHANDLINGSUTFALL = "TINGLYST";
-   public static final String DEFAULT_SAKS_STATUS = "Prosessert";
-   public static final String EMBETENUMMER = "34";
-   public static final int DOKUMENTAAR = 2015;
-   public static final String DOKUMENTREFERANSE = "Referanse1";
-   public static final int RETTSSTIFTELSESNUMMER = 235;
-   public static final String RETTSSTIFTELSESREFERANSE = "Xyz";
-   public static final byte[] USIGNERT_DOKUMENT_BYTES = psedudoPDF();
-   public static final String KOMMUNENUMMER = "1301";
-   public static final String KOMMUNENAVN = "OSLO";
-   public static final int GAARDSNUMMER = 1;
-   public static final int BRUKSNUMMER = 2;
-   public static final int FESTENUMMER = 3;
-   public static final int SEKSJONSNUMMER = 1;
-   public static final String BEGRUNNELSE_KODEVERDI = "B03";
-   public static final String BEGRUNNELSE_ELEMENTNAVN = "Areal";
-   public static final String BEGRUNNELSE_TEKST = "Manglende areal.";
-   public static final int KONTROLL_RESULTAT_DOKUMENTINDEKS = 1;
-   public static final String KONTROLL_RESULTAT_KODEVERDI = "Kontrollert";
-   public static final String KONTROLL_RESULTAT_NAVN = "Resultat 1";
-   public static final int KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS = 2;
-   public static final String KONTROLL_RESULTAT_UTFALL = "Ikke tinglyst";
-   public static final String BEGRUNNELSE_UTFALL = "UAVKLART";
+    public static final int DOKUMENTNUMMER = 22;
+    public static final String DEFAULT_INNSENDING_ID = "1";
+    public static final String DEFAULT_FORSENDELSESREFERANSE = "16UNO";
+    public static final LocalDateTime DEFAULT_REGISTRERINGS_TIDSPUNKT = new LocalDateTime(2015, DateTimeConstants.OCTOBER, 16, 12, 5, 6, 178);
+    public static final String DEFAULT_BEHANDLINGSUTFALL = "TINGLYST";
+    public static final String DEFAULT_SAKS_STATUS = "Prosessert";
+    public static final String EMBETENUMMER = "34";
+    public static final int DOKUMENTAAR = 2015;
+    public static final String DOKUMENTREFERANSE = "Referanse1";
+    public static final int RETTSSTIFTELSESNUMMER = 235;
+    public static final String RETTSSTIFTELSESREFERANSE = "Xyz";
+    public static final byte[] USIGNERT_DOKUMENT_BYTES = psedudoPDF();
+    public static final String KOMMUNENUMMER = "1301";
+    public static final String KOMMUNENAVN = "OSLO";
+    public static final int GAARDSNUMMER = 1;
+    public static final int BRUKSNUMMER = 2;
+    public static final int FESTENUMMER = 3;
+    public static final int SEKSJONSNUMMER = 1;
+    public static final String BEGRUNNELSE_KODEVERDI = "B03";
+    public static final String BEGRUNNELSE_ELEMENTNAVN = "Areal";
+    public static final String BEGRUNNELSE_TEKST = "Manglende areal.";
+    public static final int KONTROLL_RESULTAT_DOKUMENTINDEKS = 1;
+    public static final String KONTROLL_RESULTAT_KODEVERDI = "Kontrollert";
+    public static final String KONTROLL_RESULTAT_NAVN = "Resultat 1";
+    public static final int KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS = 2;
+    public static final String KONTROLL_RESULTAT_UTFALL = "Ikke tinglyst";
+    public static final String BEGRUNNELSE_UTFALL = "UAVKLART";
 
-   protected Behandlingsinformasjon behandlingsinformasjon;
-   protected String innsendingId;
-   private String forsendelsesreferanse;
-   protected LocalDateTime registreringstidspunkt;
-   protected String behandlingsutfall;
-   protected String saksstatus;
-   protected Tinglysingsinformasjon tinglysingsinformasjon;
+    protected Behandlingsinformasjon behandlingsinformasjon;
+    protected String innsendingId;
+    private String forsendelsesreferanse;
+    protected LocalDateTime registreringstidspunkt;
+    protected String behandlingsutfall;
+    protected String saksstatus;
+    protected Tinglysingsinformasjon tinglysingsinformasjon;
 
-   private ForsendelsesstatusBuilder() {
-   }
+    private ForsendelsesstatusBuilder() {
+    }
 
-   public static ForsendelsesstatusBuilder aBehandlingsstatus() {
-      return new ForsendelsesstatusBuilder();
-   }
+    public static ForsendelsesstatusBuilder aBehandlingsstatus() {
+        return new ForsendelsesstatusBuilder();
+    }
 
-   public ForsendelsesstatusBuilder withBehandlingsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {
-      this.behandlingsinformasjon = behandlingsinformasjon;
-      return this;
-   }
+    public ForsendelsesstatusBuilder withBehandlingsinformasjon(Behandlingsinformasjon behandlingsinformasjon) {
+        this.behandlingsinformasjon = behandlingsinformasjon;
+        return this;
+    }
 
-   public ForsendelsesstatusBuilder withInnsendingId(String innsendingId) {
-      this.innsendingId = innsendingId;
-      return this;
-   }
+    public ForsendelsesstatusBuilder withInnsendingId(String innsendingId) {
+        this.innsendingId = innsendingId;
+        return this;
+    }
 
-   public ForsendelsesstatusBuilder withForsendelsesreferanse(String forsendelsesreferanse) {
-      this.forsendelsesreferanse = forsendelsesreferanse;
-      return this;
-   }
+    public ForsendelsesstatusBuilder withForsendelsesreferanse(String forsendelsesreferanse) {
+        this.forsendelsesreferanse = forsendelsesreferanse;
+        return this;
+    }
 
-   public ForsendelsesstatusBuilder withRegistreringstidspunkt(LocalDateTime registreringstidspunkt) {
-      this.registreringstidspunkt = registreringstidspunkt;
-      return this;
-   }
+    public ForsendelsesstatusBuilder withRegistreringstidspunkt(LocalDateTime registreringstidspunkt) {
+        this.registreringstidspunkt = registreringstidspunkt;
+        return this;
+    }
 
-   public ForsendelsesstatusBuilder withBehandlingsutfall(String behandlingsutfall) {
-      this.behandlingsutfall = behandlingsutfall;
-      return this;
-   }
+    public ForsendelsesstatusBuilder withBehandlingsutfall(String behandlingsutfall) {
+        this.behandlingsutfall = behandlingsutfall;
+        return this;
+    }
 
-   public ForsendelsesstatusBuilder withSaksstatus(String saksstatus) {
-      this.saksstatus = saksstatus;
-      return this;
-   }
+    public ForsendelsesstatusBuilder withSaksstatus(String saksstatus) {
+        this.saksstatus = saksstatus;
+        return this;
+    }
 
-   public ForsendelsesstatusBuilder withTinglysingsinformasjon(Tinglysingsinformasjon tinglysingsinformasjon) {
-      this.tinglysingsinformasjon = tinglysingsinformasjon;
-      return this;
-   }
+    public ForsendelsesstatusBuilder withTinglysingsinformasjon(Tinglysingsinformasjon tinglysingsinformasjon) {
+        this.tinglysingsinformasjon = tinglysingsinformasjon;
+        return this;
+    }
 
-   public ForsendelsesstatusBuilder but() {
-      return aBehandlingsstatus().withBehandlingsinformasjon(behandlingsinformasjon).withInnsendingId(innsendingId)
+    public ForsendelsesstatusBuilder but() {
+        return aBehandlingsstatus().withBehandlingsinformasjon(behandlingsinformasjon).withInnsendingId(innsendingId)
             .withForsendelsesreferanse(forsendelsesreferanse)
             .withRegistreringstidspunkt(registreringstidspunkt).withBehandlingsutfall(behandlingsutfall)
             .withSaksstatus(saksstatus).withTinglysingsinformasjon(tinglysingsinformasjon);
-   }
+    }
 
-   public Forsendelsesstatus build() {
-      Forsendelsesstatus forsendelsesstatus = new Forsendelsesstatus();
-      forsendelsesstatus.setBehandlingsinformasjon(behandlingsinformasjon);
-      forsendelsesstatus.setInnsendingId(innsendingId);
-      forsendelsesstatus.setForsendelsesreferanse(forsendelsesreferanse);
-      forsendelsesstatus.setRegistreringstidspunkt(java.time.LocalDateTime.ofInstant(registreringstidspunkt.toDate().toInstant(), TimeZone.getDefault().toZoneId()));
-      forsendelsesstatus.setBehandlingsutfall(behandlingsutfall);
-      forsendelsesstatus.setSaksstatus(saksstatus);
-      forsendelsesstatus.setTinglysingsinformasjon(tinglysingsinformasjon);
-      return forsendelsesstatus;
-   }
+    public Forsendelsesstatus build() {
+        Forsendelsesstatus forsendelsesstatus = new Forsendelsesstatus();
+        forsendelsesstatus.setBehandlingsinformasjon(behandlingsinformasjon);
+        forsendelsesstatus.setInnsendingId(innsendingId);
+        forsendelsesstatus.setForsendelsesreferanse(forsendelsesreferanse);
+        forsendelsesstatus.setRegistreringstidspunkt(java.time.LocalDateTime.ofInstant(registreringstidspunkt.toDate().toInstant(), TimeZone.getDefault().toZoneId()));
+        forsendelsesstatus.setBehandlingsutfall(behandlingsutfall);
+        forsendelsesstatus.setSaksstatus(saksstatus);
+        forsendelsesstatus.setTinglysingsinformasjon(tinglysingsinformasjon);
+        return forsendelsesstatus;
+    }
 
-   public static ForsendelsesstatusBuilder defaultForsendelsesstatus() {
-      return aBehandlingsstatus()
+    public static ForsendelsesstatusBuilder defaultForsendelsesstatus() {
+        return aBehandlingsstatus()
             .withInnsendingId(DEFAULT_INNSENDING_ID)
             .withForsendelsesreferanse(DEFAULT_FORSENDELSESREFERANSE)
             .withRegistreringstidspunkt(DEFAULT_REGISTRERINGS_TIDSPUNKT)
             .withBehandlingsutfall(DEFAULT_BEHANDLINGSUTFALL)
             .withSaksstatus(DEFAULT_SAKS_STATUS)
             .withTinglysingsinformasjon(TinglysingsinformasjonBuilder.aTinglysingsinformasjon()
-                  .withDokumentinformasjon(List.of(DokumentinformasjonBuilder.aDokumentinformasjon()
-                        .withDokumentnummer(DOKUMENTNUMMER)
-                        .withEmbetenummer(EMBETENUMMER)
-                        .withDokumentaar(DOKUMENTAAR)
-                        .withDokumentreferanse(DOKUMENTREFERANSE)
-                        .withRettsstiftelsesinformasjonList(List.of(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
-                              .withRettsstiftelsesnummer(RETTSSTIFTELSESNUMMER)
-                              .withRettsstiftelsesreferanse(RETTSSTIFTELSESREFERANSE)
-                              .build()))
-                        .withPaavirkerRegisterenheter(List.of(RegisterenhetBuilder.aRegisterenhet()
-                              .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
-                                    .withKommunenummer("0233")
-                                    .withGaardsnummer(12)
-                                    .withBruksnummer(13)
-                                    .build())
-                              .build()))
+                .withDokumentinformasjon(List.of(DokumentinformasjonBuilder.aDokumentinformasjon()
+                    .withDokumentnummer(DOKUMENTNUMMER)
+                    .withEmbetenummer(EMBETENUMMER)
+                    .withDokumentaar(DOKUMENTAAR)
+                    .withDokumentreferanse(DOKUMENTREFERANSE)
+                    .withRettsstiftelsesinformasjonList(List.of(RettsstiftelsesinformasjonBuilder.aRettsstiftelsesinformasjon()
+                        .withRettsstiftelsesnummer(RETTSSTIFTELSESNUMMER)
+                        .withRettsstiftelsesreferanse(RETTSSTIFTELSESREFERANSE)
                         .build()))
-                  .withUsignerteGrunnboksutskrifter(List.of(UsignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
-                        .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
-                              .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
-                                    .withKommunenummer(KOMMUNENUMMER)
-                                    .withKommunenavn(KOMMUNENAVN)
-                                    .withGaardsnummer(GAARDSNUMMER)
-                                    .withBruksnummer(BRUKSNUMMER)
-                                    .withFestenummer(FESTENUMMER)
-                                    .withSeksjonsnummer(SEKSJONSNUMMER)
-                                    .build())
-                              .build())
-                        .withLink("https://www.test.no/")
-                        .withUsignertUtskrift(UsignertPDFDokumentBuilder.aUsignertPDFDokument()
-                              .withUsignertDokument(USIGNERT_DOKUMENT_BYTES)
-                              .build())
+                    .withPaavirkerRegisterenheter(List.of(RegisterenhetBuilder.aRegisterenhet()
+                        .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
+                            .withKommunenummer("0233")
+                            .withGaardsnummer(12)
+                            .withBruksnummer(13)
+                            .build())
                         .build()))
-                  .build())
+                    .build()))
+                .withUsignerteGrunnboksutskrifter(List.of(UsignertGrunnboksutskriftBuilder.aSignertGrunnboksutskrift()
+                    .withGjelderFor(RegisterenhetBuilder.aRegisterenhet()
+                        .withMatrikkelenhet(MatrikkelenhetBuilder.aMatrikkelenhet()
+                            .withKommunenummer(KOMMUNENUMMER)
+                            .withKommunenavn(KOMMUNENAVN)
+                            .withGaardsnummer(GAARDSNUMMER)
+                            .withBruksnummer(BRUKSNUMMER)
+                            .withFestenummer(FESTENUMMER)
+                            .withSeksjonsnummer(SEKSJONSNUMMER)
+                            .build())
+                        .build())
+                    .withLink("https://www.test.no/")
+                    .withUsignertUtskrift(UsignertPDFDokumentBuilder.aUsignertPDFDokument()
+                        .withUsignertDokument(USIGNERT_DOKUMENT_BYTES)
+                        .build())
+                    .build()))
+                .build())
             .withBehandlingsinformasjon(BehandlingsinformasjonBuilder.anAvvisningsinformasjon()
-                  .withKontrollresultater(List.of(KontrollresultatBuilder.aKontrollresultat()
-                        .withBegrunnelser(List.of(BegrunnelseBuilder.aBegrunnelse()
-                              .withKodeverdi(BEGRUNNELSE_KODEVERDI)
-                              .withElementnavn(BEGRUNNELSE_ELEMENTNAVN)
-                              .withTekst(BEGRUNNELSE_TEKST)
-                              .withUtfall(BEGRUNNELSE_UTFALL)
-                              .build()))
-                        .withDokumentindeks(KONTROLL_RESULTAT_DOKUMENTINDEKS)
-                        .withKodeverdi(KONTROLL_RESULTAT_KODEVERDI)
-                        .withNavn(KONTROLL_RESULTAT_NAVN)
-                        .withRettsstiftelsesindeks(KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS)
-                        .withUtfall(KONTROLL_RESULTAT_UTFALL)
+                .withKontrollresultater(List.of(KontrollresultatBuilder.aKontrollresultat()
+                    .withBegrunnelser(List.of(BegrunnelseBuilder.aBegrunnelse()
+                        .withKodeverdi(BEGRUNNELSE_KODEVERDI)
+                        .withElementnavn(BEGRUNNELSE_ELEMENTNAVN)
+                        .withTekst(BEGRUNNELSE_TEKST)
+                        .withUtfall(BEGRUNNELSE_UTFALL)
                         .build()))
-                  .build());
-   }
+                    .withDokumentindeks(KONTROLL_RESULTAT_DOKUMENTINDEKS)
+                    .withKodeverdi(KONTROLL_RESULTAT_KODEVERDI)
+                    .withNavn(KONTROLL_RESULTAT_NAVN)
+                    .withRettsstiftelsesindeks(KONTROLL_RESULTAT_RETTSSTIFTELSESINDEKS)
+                    .withUtfall(KONTROLL_RESULTAT_UTFALL)
+                    .build()))
+                .build());
+    }
 
-   /**
-    * eksempel-pdf
-    */
-   static byte[] psedudoPDF() {
-      try {
-         final byte[] bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream("sdo/eksempel-SDOv1.0.pdf"));
-         return bytes;
-      } catch (IOException e) {
-         throw new RuntimeException(e);
-      }
-   }
+    /**
+     * eksempel-pdf
+     */
+    static byte[] psedudoPDF() {
+        try {
+            final byte[] bytes = ByteStreams.toByteArray(InnsendingServiceWSStub.class.getClassLoader().getResourceAsStream("sdo/eksempel-SDOv1.0.pdf"));
+            return bytes;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -94,27 +94,27 @@ public class DefaultStedsnavnEndringsloggService implements StedsnavnEndringslog
         String passord = initParams.passord;
 
         endringsloggWebservice = WebServiceBuilder.builderv2(endringsloggWebserviceClient.getEndringsloggServicePort(), EndringsloggService.class)
-                .withBruker(brukernavn)
-                .withPassord(passord)
-                .withEndpointUrl(initParams.endringsloggEndpointUrl)
-                .build();
+            .withBruker(brukernavn)
+            .withPassord(passord)
+            .withEndpointUrl(initParams.endringsloggEndpointUrl)
+            .build();
 
         stedsnavnWebService = WebServiceBuilder.builderv2(stedsnavnWebServiceClient.getStedsnavnServicePort(), StedsnavnService.class)
-                .withBruker(brukernavn)
-                .withPassord(passord)
-                .withEndpointUrl(initParams.stedsnavnEndpointUrl)
-                .build();
+            .withBruker(brukernavn)
+            .withPassord(passord)
+            .withEndpointUrl(initParams.stedsnavnEndpointUrl)
+            .build();
 
         skrivemaateWebService = WebServiceBuilder.builderv2(skrivemaateWebServiceClient.getSkrivemaateServicePort(), SkrivemaateService.class)
-                .withBruker(brukernavn)
-                .withPassord(passord)
-                .withEndpointUrl(initParams.skrivemaateEndpointUrl)
-                .build();
+            .withBruker(brukernavn)
+            .withPassord(passord)
+            .withEndpointUrl(initParams.skrivemaateEndpointUrl)
+            .build();
         storeServiceWebservice = WebServiceBuilder.builderv2(storeServiceWebserviceClient.getStoreServicePort(), StoreService.class)
-                .withBruker(brukernavn)
-                .withPassord(passord)
-                .withEndpointUrl(initParams.storeServiceEndpointUrl)
-                .build();
+            .withBruker(brukernavn)
+            .withPassord(passord)
+            .withEndpointUrl(initParams.storeServiceEndpointUrl)
+            .build();
     }
 
     @Override
@@ -130,14 +130,14 @@ public class DefaultStedsnavnEndringsloggService implements StedsnavnEndringslog
     public EndringerRespons findEndringerForSted(EndringId id, int maksAntall, StedsnavnContext stedsnavnContext) {
         try {
             Endringer endringer = endringsloggWebservice.findEndringer(Mapper.toWsEndringId(id),
-                  Mapper.toWsDomainklasse(Domainklasse.STEDSNAVN_BUBBLE_OBJECT), "",
-                  Mapper.toWsReturnerBobler(ReturnerBobler.ALDRI), maksAntall, Mapper.toWsCtx(stedsnavnContext));
+                Mapper.toWsDomainklasse(Domainklasse.STEDSNAVN_BUBBLE_OBJECT), "",
+                Mapper.toWsReturnerBobler(ReturnerBobler.ALDRI), maksAntall, Mapper.toWsCtx(stedsnavnContext));
 
             EndringList relevantEndringList = new EndringList();
             relevantEndringList.getItem().addAll(endringer.getEndringList().getItem().stream()
-                  .filter(wsEndring -> Mapper.bobleErStedStedsnavnEllerSkrivemaate(wsEndring.getEndretBubbleId()))
-                  .filter(wsEndring -> Endringstype.erNyopprettingEllerOppdatering(wsEndring.getEndringstype().value()))
-                  .collect(Collectors.toList()));
+                .filter(wsEndring -> Mapper.bobleErStedStedsnavnEllerSkrivemaate(wsEndring.getEndretBubbleId()))
+                .filter(wsEndring -> Endringstype.erNyopprettingEllerOppdatering(wsEndring.getEndringstype().value()))
+                .collect(Collectors.toList()));
             endringer.setEndringList(relevantEndringList);
 
             return Mapper.mapEndringerRespons(endringer);
@@ -153,13 +153,13 @@ public class DefaultStedsnavnEndringsloggService implements StedsnavnEndringslog
             stedIdList.getItem().addAll(toWsStedIds(stedIds));
             StedIdTilStedsnavnIdsMap stedsnavnForSteder = stedsnavnWebService.findStedsnavnForSteder(stedIdList, Mapper.toWsCtx(stedsnavnContext));
             stedsnavnForSteder.getEntry().forEach(entry -> {
-                        StedId stedId = entry.getKey();
-                        List<StedsnavnBobleId.StedsnavnId> stedsnavnIds = entry.getValue().getItem().stream()
-                                .map(stedsnavnId -> new StedsnavnBobleId.StedsnavnId(stedsnavnId.getValue()))
-                                .collect(Collectors.toList());
+                    StedId stedId = entry.getKey();
+                    List<StedsnavnBobleId.StedsnavnId> stedsnavnIds = entry.getValue().getItem().stream()
+                        .map(stedsnavnId -> new StedsnavnBobleId.StedsnavnId(stedsnavnId.getValue()))
+                        .collect(Collectors.toList());
 
-                        respons.put(new StedsnavnBobleId.StedId(stedId.getValue()), stedsnavnIds);
-                    }
+                    respons.put(new StedsnavnBobleId.StedId(stedId.getValue()), stedsnavnIds);
+                }
             );
         } catch (no.statkart.stedsnavn.ssr.wsapi.v1.service.stedsnavn.ServiceException e) {
             throw new RuntimeException(e);
@@ -176,8 +176,8 @@ public class DefaultStedsnavnEndringsloggService implements StedsnavnEndringslog
             skrivemaaterForStedsnavn.getEntry().forEach(entry -> {
                 StedsnavnId stedsnavnId = entry.getKey();
                 List<StedsnavnBobleId.SkrivemaateId> skrivemaateIds = entry.getValue().getItem().stream()
-                        .map(skrivemaateId -> new StedsnavnBobleId.SkrivemaateId(skrivemaateId.getValue()))
-                        .collect(Collectors.toList());
+                    .map(skrivemaateId -> new StedsnavnBobleId.SkrivemaateId(skrivemaateId.getValue()))
+                    .collect(Collectors.toList());
 
                 respons.put(new StedsnavnBobleId.StedsnavnId(stedsnavnId.getValue()), skrivemaateIds);
             });
@@ -208,20 +208,20 @@ public class DefaultStedsnavnEndringsloggService implements StedsnavnEndringslog
 
     private List<StedId> toWsStedIds(List<StedsnavnBobleId.StedId> stedIds) {
         return stedIds.stream()
-                .map(domainId -> {
-                    StedId wsId = new StedId();
-                    wsId.setValue(domainId.getValue());
-                    return wsId;
-                }).collect(Collectors.toList());
+            .map(domainId -> {
+                StedId wsId = new StedId();
+                wsId.setValue(domainId.getValue());
+                return wsId;
+            }).collect(Collectors.toList());
     }
 
     private List<StedsnavnId> toWsStedsnavnIds(List<StedsnavnBobleId.StedsnavnId> stedsnavnIds) {
         return stedsnavnIds.stream()
-                .map(domainId -> {
-                    StedsnavnId wsId = new StedsnavnId();
-                    wsId.setValue(domainId.getValue());
-                    return wsId;
-                }).collect(Collectors.toList());
+            .map(domainId -> {
+                StedsnavnId wsId = new StedsnavnId();
+                wsId.setValue(domainId.getValue());
+                return wsId;
+            }).collect(Collectors.toList());
     }
 
 }

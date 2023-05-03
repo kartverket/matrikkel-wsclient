@@ -37,6 +37,7 @@ public class UsignertGrunnboksutskrift {
     private List<String> getDokumentreferanser() {
         return Collections.emptyList();
     }
+
     @SuppressWarnings("unused") //SKIF mapping
     private void setDokumentreferanser(List<String> dokumentreferanser) {
     }

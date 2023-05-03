@@ -5,19 +5,19 @@ import java.time.LocalDate;
 
 public class NavnestatusHistorikk {
 
-   private LocalDate fraDato;
-   private StedsnavnBobleId.NavnestatusKodeId navnestatusId;
+    private LocalDate fraDato;
+    private StedsnavnBobleId.NavnestatusKodeId navnestatusId;
 
-   public NavnestatusHistorikk(LocalDate fraDato, StedsnavnBobleId.NavnestatusKodeId navnestatusId) {
-      this.fraDato = fraDato;
-      this.navnestatusId = navnestatusId;
-   }
+    public NavnestatusHistorikk(LocalDate fraDato, StedsnavnBobleId.NavnestatusKodeId navnestatusId) {
+        this.fraDato = fraDato;
+        this.navnestatusId = navnestatusId;
+    }
 
-   public LocalDate getFraDato() {
-      return fraDato;
-   }
+    public LocalDate getFraDato() {
+        return fraDato;
+    }
 
-   public StedsnavnBobleId.NavnestatusKodeId getNavnestatusId() {
-      return navnestatusId;
-   }
+    public StedsnavnBobleId.NavnestatusKodeId getNavnestatusId() {
+        return navnestatusId;
+    }
 }

@@ -10,29 +10,29 @@ import no.statkart.wsclient.WebServiceBuilder;
 
 public class DefaultRegisterenhetsrettWS implements RegisterenhetsrettWS {
 
-   private static RegisterenhetsrettServiceWS registerenhetsrettServiceWS;
+    private static RegisterenhetsrettServiceWS registerenhetsrettServiceWS;
 
-   private final RegisterenhetsrettService registerenhetsrettService;
+    private final RegisterenhetsrettService registerenhetsrettService;
 
-   public DefaultRegisterenhetsrettWS(String brukernavn, String passord, String endpointUrl) {
-      if (registerenhetsrettServiceWS == null) {
-         synchronized (this) {
-            if (registerenhetsrettServiceWS == null) {
-               registerenhetsrettServiceWS = new RegisterenhetsrettServiceWS();
+    public DefaultRegisterenhetsrettWS(String brukernavn, String passord, String endpointUrl) {
+        if (registerenhetsrettServiceWS == null) {
+            synchronized (this) {
+                if (registerenhetsrettServiceWS == null) {
+                    registerenhetsrettServiceWS = new RegisterenhetsrettServiceWS();
+                }
             }
-         }
-      }
+        }
 
-      registerenhetsrettService = WebServiceBuilder.builderv2(registerenhetsrettServiceWS.getRegisterenhetsrettServicePort(), RegisterenhetsrettService.class)
+        registerenhetsrettService = WebServiceBuilder.builderv2(registerenhetsrettServiceWS.getRegisterenhetsrettServicePort(), RegisterenhetsrettService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
             .doCreateProxy()
             .build();
-   }
+    }
 
-   @Override
-   public RegisterenhetIdTilRegisterenhetsrettIdsMap findRetterForEnheter(RegisterenhetIdList registerenhetIds, GrunnbokContext grunnbokContext) throws ServiceException {
-      return registerenhetsrettService.findRetterForEnheter(registerenhetIds, grunnbokContext);
-   }
+    @Override
+    public RegisterenhetIdTilRegisterenhetsrettIdsMap findRetterForEnheter(RegisterenhetIdList registerenhetIds, GrunnbokContext grunnbokContext) throws ServiceException {
+        return registerenhetsrettService.findRetterForEnheter(registerenhetIds, grunnbokContext);
+    }
 }

@@ -9,98 +9,98 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatrikkelenhetsendringBuilder {
-   private List<Matrikkelenhet> fra = new ArrayList<>();
+    private List<Matrikkelenhet> fra = new ArrayList<>();
     private List<Matrikkelenhet> til = new ArrayList<>();
     private List<Person> rekvirenterAvForretning = new ArrayList<>();
     private String rettsstiftelsesreferanse;
-   private Kode rettsstiftelsestype;
+    private Kode rettsstiftelsestype;
 
-   private Matrikkelenhetsendring.TypeMatrikkelenhetsendring typeMatrikkelenhetsendring;
+    private Matrikkelenhetsendring.TypeMatrikkelenhetsendring typeMatrikkelenhetsendring;
 
-   private MatrikkelenhetsendringBuilder() {
-   }
+    private MatrikkelenhetsendringBuilder() {
+    }
 
-   public static MatrikkelenhetsendringBuilder aFradeling() {
-      MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
-      matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FRADELING);
-      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
-      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("FR_REG").withNavn("REGISTRERING AV GRUNN").build());
-      return matrikkelenhetsendringBuilder;
-   }
+    public static MatrikkelenhetsendringBuilder aFradeling() {
+        MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
+        matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FRADELING);
+        matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
+        matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("FR_REG").withNavn("REGISTRERING AV GRUNN").build());
+        return matrikkelenhetsendringBuilder;
+    }
 
-   public static MatrikkelenhetsendringBuilder aSammenslaaingAvMatrikkelenheter() {
-      MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
-      matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.SAMMENSLAAING_AV_MATRIKKELENHETER);
-      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1");
-      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("SA_SAM").withNavn("SAMMENSLÅING").build());
-      return matrikkelenhetsendringBuilder;
-   }
+    public static MatrikkelenhetsendringBuilder aSammenslaaingAvMatrikkelenheter() {
+        MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
+        matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.SAMMENSLAAING_AV_MATRIKKELENHETER);
+        matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1");
+        matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("SA_SAM").withNavn("SAMMENSLÅING").build());
+        return matrikkelenhetsendringBuilder;
+    }
 
-   public static MatrikkelenhetsendringBuilder anOverfoeringFraTidligereFestenummer() {
-      MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
-      matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FESTENUMMER_GITT_BRUKSNUMMER);
-      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1");
-      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("FB_FGB").withNavn("FESTENUMMER GITT BRUKSNUMMER").build());
-      return matrikkelenhetsendringBuilder;
-   }
+    public static MatrikkelenhetsendringBuilder anOverfoeringFraTidligereFestenummer() {
+        MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
+        matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FESTENUMMER_GITT_BRUKSNUMMER);
+        matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1");
+        matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("FB_FGB").withNavn("FESTENUMMER GITT BRUKSNUMMER").build());
+        return matrikkelenhetsendringBuilder;
+    }
 
-   public static MatrikkelenhetsendringBuilder aOpprettFestegrunn() {
-      MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
-      matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OPPRETT_FESTEGRUNN);
-      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
-      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("FR_RFE").withNavn("REGISTRERING AV FESTENR.").build());
-      return matrikkelenhetsendringBuilder;
-   }
+    public static MatrikkelenhetsendringBuilder aOpprettFestegrunn() {
+        MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
+        matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OPPRETT_FESTEGRUNN);
+        matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
+        matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("FR_RFE").withNavn("REGISTRERING AV FESTENR.").build());
+        return matrikkelenhetsendringBuilder;
+    }
 
 
-   public static MatrikkelenhetsendringBuilder aOmnummererMatrikkelenhet() {
-      MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
-      matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OMNUMMERER_MATRIKKELENHETER);
-      matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
-      matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("OM_OMN").withNavn("OMNUMMERERING").build());
-      return matrikkelenhetsendringBuilder;
-   }
+    public static MatrikkelenhetsendringBuilder aOmnummererMatrikkelenhet() {
+        MatrikkelenhetsendringBuilder matrikkelenhetsendringBuilder = new MatrikkelenhetsendringBuilder();
+        matrikkelenhetsendringBuilder.ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring.OMNUMMERER_MATRIKKELENHETER);
+        matrikkelenhetsendringBuilder.withRettsstiftelsesreferanse("1"); //ved fradeling vil vi kun ha en rettstiftelsereferanse og kan dermed hardkode denne verdien.
+        matrikkelenhetsendringBuilder.withRettsstiftelsestype(KodeBuilder.aKode().withKodeverdi("OM_OMN").withNavn("OMNUMMERERING").build());
+        return matrikkelenhetsendringBuilder;
+    }
 
-   public MatrikkelenhetsendringBuilder withFra(List<Matrikkelenhet> fra) {
-      this.fra = fra;
-      return this;
-   }
+    public MatrikkelenhetsendringBuilder withFra(List<Matrikkelenhet> fra) {
+        this.fra = fra;
+        return this;
+    }
 
-   public MatrikkelenhetsendringBuilder withTil(List<Matrikkelenhet> til) {
-      this.til = til;
-      return this;
-   }
+    public MatrikkelenhetsendringBuilder withTil(List<Matrikkelenhet> til) {
+        this.til = til;
+        return this;
+    }
 
-   public MatrikkelenhetsendringBuilder withRekvirenterAvForretning(List<Person> rekvirenterAvForretning) {
-      this.rekvirenterAvForretning = rekvirenterAvForretning;
-      return this;
-   }
+    public MatrikkelenhetsendringBuilder withRekvirenterAvForretning(List<Person> rekvirenterAvForretning) {
+        this.rekvirenterAvForretning = rekvirenterAvForretning;
+        return this;
+    }
 
-   public MatrikkelenhetsendringBuilder ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring typeMatrikkelenhetsendring) {
-      this.typeMatrikkelenhetsendring = typeMatrikkelenhetsendring;
-      return this;
-   }
+    public MatrikkelenhetsendringBuilder ofType(Matrikkelenhetsendring.TypeMatrikkelenhetsendring typeMatrikkelenhetsendring) {
+        this.typeMatrikkelenhetsendring = typeMatrikkelenhetsendring;
+        return this;
+    }
 
-   public MatrikkelenhetsendringBuilder withRettsstiftelsesreferanse(String rettsstiftelsesreferanse) {
-      this.rettsstiftelsesreferanse = rettsstiftelsesreferanse;
-      return this;
-   }
+    public MatrikkelenhetsendringBuilder withRettsstiftelsesreferanse(String rettsstiftelsesreferanse) {
+        this.rettsstiftelsesreferanse = rettsstiftelsesreferanse;
+        return this;
+    }
 
-   public MatrikkelenhetsendringBuilder withRettsstiftelsestype(Kode rettsstiftelsestype) {
-      this.rettsstiftelsestype = rettsstiftelsestype;
-      return this;
-   }
+    public MatrikkelenhetsendringBuilder withRettsstiftelsestype(Kode rettsstiftelsestype) {
+        this.rettsstiftelsestype = rettsstiftelsestype;
+        return this;
+    }
 
-   public Matrikkelenhetsendring build() {
-      if(typeMatrikkelenhetsendring==null) {
-         throw new RuntimeException("typeMatrikkelenhetsendring is required");
-      }
-      Matrikkelenhetsendring matrikkelenhetsendring = new Matrikkelenhetsendring(typeMatrikkelenhetsendring);
-      matrikkelenhetsendring.getFra().addAll(fra);
-      matrikkelenhetsendring.getTil().addAll(til);
-      matrikkelenhetsendring.setRettsstiftelsesreferanse(rettsstiftelsesreferanse);
-      matrikkelenhetsendring.setRettsstiftelsestype(rettsstiftelsestype);
-      matrikkelenhetsendring.getRekvirenterAvForretning().addAll(rekvirenterAvForretning);
-      return matrikkelenhetsendring;
-   }
+    public Matrikkelenhetsendring build() {
+        if (typeMatrikkelenhetsendring == null) {
+            throw new RuntimeException("typeMatrikkelenhetsendring is required");
+        }
+        Matrikkelenhetsendring matrikkelenhetsendring = new Matrikkelenhetsendring(typeMatrikkelenhetsendring);
+        matrikkelenhetsendring.getFra().addAll(fra);
+        matrikkelenhetsendring.getTil().addAll(til);
+        matrikkelenhetsendring.setRettsstiftelsesreferanse(rettsstiftelsesreferanse);
+        matrikkelenhetsendring.setRettsstiftelsestype(rettsstiftelsestype);
+        matrikkelenhetsendring.getRekvirenterAvForretning().addAll(rekvirenterAvForretning);
+        return matrikkelenhetsendring;
+    }
 }

@@ -32,17 +32,17 @@ class StedsnavnMapper {
         stedsnavn.setNavnestatusHistorikker(toDomeneStatusHistorikk(wsStedsnavn.getNavnestatusHistorikker()));
         stedsnavn.setNavnesakstatusHistorikker(toDomeneSaksStatusHistorikk(wsStedsnavn.getNavnesakstatusHistorikker()));
         if (wsStedsnavn.getPrimaerfunksjonId() != null) {
-           stedsnavn.setPrimaerfunksjonId(new StedsnavnBobleId.StedsnavnId(wsStedsnavn.getPrimaerfunksjonId().getValue()));
+            stedsnavn.setPrimaerfunksjonId(new StedsnavnBobleId.StedsnavnId(wsStedsnavn.getPrimaerfunksjonId().getValue()));
         }
         if (wsStedsnavn.getGruppetilhoerighetId() != null) {
-           stedsnavn.setGruppetilhoerighetId(new StedsnavnBobleId.StedsnavnId(wsStedsnavn.getGruppetilhoerighetId().getValue()));
+            stedsnavn.setGruppetilhoerighetId(new StedsnavnBobleId.StedsnavnId(wsStedsnavn.getGruppetilhoerighetId().getValue()));
         }
         stedsnavn.setEksonym(wsStedsnavn.isEksonym());
         if (wsStedsnavn.getSpraakId() != null) {
-           stedsnavn.setSpraakId(new StedsnavnBobleId.SpraakKodeId(wsStedsnavn.getSpraakId().getValue()));
+            stedsnavn.setSpraakId(new StedsnavnBobleId.SpraakKodeId(wsStedsnavn.getSpraakId().getValue()));
         }
         if (wsStedsnavn.getOpphavsspraakId() != null) {
-           stedsnavn.setOpphavsspraakId(new StedsnavnBobleId.SpraakKodeId(wsStedsnavn.getOpphavsspraakId().getValue()));
+            stedsnavn.setOpphavsspraakId(new StedsnavnBobleId.SpraakKodeId(wsStedsnavn.getOpphavsspraakId().getValue()));
         }
         stedsnavn.setHoeyesteSkrivemaatenummer(wsStedsnavn.getHoeyesteSkrivemaatenummer());
         stedsnavn.setTilleggsopplysninger(toDomeneTilleggsopplysninger(wsStedsnavn.getTilleggsopplysninger()));
@@ -53,39 +53,39 @@ class StedsnavnMapper {
 
     private static List<StedsnavnInternMerknad> toDomeneInterneMerknader(StedsnavnInternMerknadList interneMerknader) {
         return interneMerknader.getItem().stream()
-                .map(ws -> {
-                    StedsnavnInternMerknad stedsnavnInternMerknad = new StedsnavnInternMerknad(ws.getId(), regDato(ws), ws.getTekst(),
-                            new StedsnavnBobleId.StedsnavnMerknadstypeKodeId(ws.getMerknadstypeId().getValue()), ws.getFellesarkiv().getItem());
-                    setFellesFelterForHistoriskKomponent(ws, stedsnavnInternMerknad);
-                    return stedsnavnInternMerknad;
-                })
-                .collect(Collectors.toList());
+            .map(ws -> {
+                StedsnavnInternMerknad stedsnavnInternMerknad = new StedsnavnInternMerknad(ws.getId(), regDato(ws), ws.getTekst(),
+                    new StedsnavnBobleId.StedsnavnMerknadstypeKodeId(ws.getMerknadstypeId().getValue()), ws.getFellesarkiv().getItem());
+                setFellesFelterForHistoriskKomponent(ws, stedsnavnInternMerknad);
+                return stedsnavnInternMerknad;
+            })
+            .collect(Collectors.toList());
     }
 
     private static List<StedsnavnTilleggsopplysning> toDomeneTilleggsopplysninger(StedsnavnTilleggsopplysningList tilleggsopplysninger) {
         return tilleggsopplysninger.getItem().stream()
-                .map(ws -> {
-                    StedsnavnTilleggsopplysning domene = new StedsnavnTilleggsopplysning(ws.getId(), regDato(ws), ws.getTekst(),
-                            new StedsnavnBobleId.StedsnavnTilleggsopplysningstypeKodeId(ws.getTilleggsopplysningstypeId().getValue()),
-                            ws.getEksterneOpplysninger().getItem());
-                    setFellesFelterForHistoriskKomponent(ws, domene);
-                    return domene;
-                })
-                .collect(toList());
+            .map(ws -> {
+                StedsnavnTilleggsopplysning domene = new StedsnavnTilleggsopplysning(ws.getId(), regDato(ws), ws.getTekst(),
+                    new StedsnavnBobleId.StedsnavnTilleggsopplysningstypeKodeId(ws.getTilleggsopplysningstypeId().getValue()),
+                    ws.getEksterneOpplysninger().getItem());
+                setFellesFelterForHistoriskKomponent(ws, domene);
+                return domene;
+            })
+            .collect(toList());
     }
 
     private static List<NavnesakstatusHistorikk> toDomeneSaksStatusHistorikk(NavnesakstatusHistorikkList navnesakstatusHistorikker) {
         return navnesakstatusHistorikker.getItem().stream()
-                .map(nsh -> new NavnesakstatusHistorikk(nsh.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(nsh.getFraDato().getDate()) : null,
-                      new StedsnavnBobleId.NavnesakstatusKodeId(nsh.getNavnesakstatusId().getValue())))
-                .collect(Collectors.toList());
+            .map(nsh -> new NavnesakstatusHistorikk(nsh.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(nsh.getFraDato().getDate()) : null,
+                new StedsnavnBobleId.NavnesakstatusKodeId(nsh.getNavnesakstatusId().getValue())))
+            .collect(Collectors.toList());
     }
 
     private static List<NavnestatusHistorikk> toDomeneStatusHistorikk(NavnestatusHistorikkList navnestatusHistorikker) {
         return navnestatusHistorikker.getItem().stream()
-                .map(nsh -> new NavnestatusHistorikk(nsh.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(nsh.getFraDato().getDate()) : null,
-                      new StedsnavnBobleId.NavnestatusKodeId(nsh.getNavnestatusId().getValue())))
-                .collect(Collectors.toList());
+            .map(nsh -> new NavnestatusHistorikk(nsh.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(nsh.getFraDato().getDate()) : null,
+                new StedsnavnBobleId.NavnestatusKodeId(nsh.getNavnestatusId().getValue())))
+            .collect(Collectors.toList());
     }
 
 }

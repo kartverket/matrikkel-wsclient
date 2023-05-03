@@ -8,29 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BehandlingsinformasjonBuilder {
-   protected List<Kontrollresultat> kontrollresultater = new ArrayList<>();
+    protected List<Kontrollresultat> kontrollresultater = new ArrayList<>();
 
     private BehandlingsinformasjonBuilder() {
-   }
+    }
 
-   public static BehandlingsinformasjonBuilder anAvvisningsinformasjon() {
-      return new BehandlingsinformasjonBuilder();
-   }
+    public static BehandlingsinformasjonBuilder anAvvisningsinformasjon() {
+        return new BehandlingsinformasjonBuilder();
+    }
 
-   public BehandlingsinformasjonBuilder withKontrollresultater(List<Kontrollresultat> kontrollresultater) {
-      this.kontrollresultater = kontrollresultater;
-      return this;
-   }
+    public BehandlingsinformasjonBuilder withKontrollresultater(List<Kontrollresultat> kontrollresultater) {
+        this.kontrollresultater = kontrollresultater;
+        return this;
+    }
 
-   public BehandlingsinformasjonBuilder but() {
-      return anAvvisningsinformasjon().withKontrollresultater(kontrollresultater);
-   }
+    public BehandlingsinformasjonBuilder but() {
+        return anAvvisningsinformasjon().withKontrollresultater(kontrollresultater);
+    }
 
-   public Behandlingsinformasjon build() {
-      Behandlingsinformasjon avvisningsinformasjon = new Behandlingsinformasjon();
-      KontrollresultatList kontrollresultatList = new KontrollresultatList();
-      kontrollresultatList.getKontrollresultat().addAll(kontrollresultater);
-      avvisningsinformasjon.setKontrollresultater(kontrollresultatList);
-      return avvisningsinformasjon;
-   }
+    public Behandlingsinformasjon build() {
+        Behandlingsinformasjon avvisningsinformasjon = new Behandlingsinformasjon();
+        KontrollresultatList kontrollresultatList = new KontrollresultatList();
+        kontrollresultatList.getKontrollresultat().addAll(kontrollresultater);
+        avvisningsinformasjon.setKontrollresultater(kontrollresultatList);
+        return avvisningsinformasjon;
+    }
 }

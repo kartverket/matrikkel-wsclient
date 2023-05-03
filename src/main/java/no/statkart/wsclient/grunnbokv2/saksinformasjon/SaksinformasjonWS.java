@@ -5,6 +5,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.register.saksinformasjon.Saksinfor
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 
 public interface SaksinformasjonWS {
-   SaksinformasjonId findSaksinformasjonIdForInnsendingId(String innsendingId,
-                                                          GrunnbokContext grunnbokContext) throws ServiceException;
+    SaksinformasjonId findSaksinformasjonIdForInnsendingId(String innsendingId,
+                                                           GrunnbokContext grunnbokContext) throws ServiceException;
 }

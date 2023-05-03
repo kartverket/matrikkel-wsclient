@@ -29,10 +29,10 @@ class SkrivemaateMapper {
         skrivemaate.setSkrivemaatenummer(wsSkrivemaate.getSkrivemaatenummer());
         skrivemaate.setStedsnavnId(new StedsnavnBobleId.StedsnavnId(wsSkrivemaate.getStedsnavnId().getValue()));
         if (wsSkrivemaate.getNormertFraId() != null) {
-           skrivemaate.setNormertFraId(new StedsnavnBobleId.SkrivemaateId(wsSkrivemaate.getNormertFraId().getValue()));
+            skrivemaate.setNormertFraId(new StedsnavnBobleId.SkrivemaateId(wsSkrivemaate.getNormertFraId().getValue()));
         }
         if (wsSkrivemaate.getRekkefoelgeId() != null) {
-           skrivemaate.setRekkefoelgeId(new StedsnavnBobleId.RekkefoelgeKodeId(wsSkrivemaate.getRekkefoelgeId().getValue()));
+            skrivemaate.setRekkefoelgeId(new StedsnavnBobleId.RekkefoelgeKodeId(wsSkrivemaate.getRekkefoelgeId().getValue()));
         }
         skrivemaate.setKasuser(toDomeneKasuser(wsSkrivemaate.getKasuser()));
         skrivemaate.setKortnavn(wsSkrivemaate.getKortnavn());
@@ -45,42 +45,42 @@ class SkrivemaateMapper {
 
     private static List<SkrivemaateInternMerknad> toDomeneInterneMerknader(SkrivemaateInternMerknadList interneMerknader) {
         return interneMerknader.getItem().stream()
-                .map(ws -> {
-                    SkrivemaateInternMerknad stedsnavnInternMerknad = new SkrivemaateInternMerknad(ws.getId(), regDato(ws), ws.getTekst(),
-                            new StedsnavnBobleId.SkrivemaateMerknadstypeKodeId(ws.getMerknadstypeId().getValue()), ws.getFellesarkiv().getItem());
-                    setFellesFelterForHistoriskKomponent(ws, stedsnavnInternMerknad);
-                    return stedsnavnInternMerknad;
-                })
-                .collect(Collectors.toList());
+            .map(ws -> {
+                SkrivemaateInternMerknad stedsnavnInternMerknad = new SkrivemaateInternMerknad(ws.getId(), regDato(ws), ws.getTekst(),
+                    new StedsnavnBobleId.SkrivemaateMerknadstypeKodeId(ws.getMerknadstypeId().getValue()), ws.getFellesarkiv().getItem());
+                setFellesFelterForHistoriskKomponent(ws, stedsnavnInternMerknad);
+                return stedsnavnInternMerknad;
+            })
+            .collect(Collectors.toList());
     }
 
     private static List<SkrivemaatestatusHistorikk> toDomeneStatusHistorikker(SkrivemaatestatusHistorikkList skrivemaatestatusHistorikker) {
         return skrivemaatestatusHistorikker.getItem().stream()
-                .map(ws -> {
-                    SkrivemaatestatusHistorikk domene = new SkrivemaatestatusHistorikk(
-                            ws.getId(),
-                            regDato(ws),
-                            ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
-                            new StedsnavnBobleId.SkrivemaatestatusKodeId(ws.getSkrivemaatestatusId().getValue()));
-                    setFellesFelterForHistoriskKomponent(ws, domene);
-                    domene.setPrioritertSkrivemaate(ws.isPrioritertSkrivemaate());
-                    return domene;
-                }).collect(Collectors.toList());
+            .map(ws -> {
+                SkrivemaatestatusHistorikk domene = new SkrivemaatestatusHistorikk(
+                    ws.getId(),
+                    regDato(ws),
+                    ws.getFraDato() != null ? DateHjelper.dateFromXMLGregorianCalendar(ws.getFraDato().getDate()) : null,
+                    new StedsnavnBobleId.SkrivemaatestatusKodeId(ws.getSkrivemaatestatusId().getValue()));
+                setFellesFelterForHistoriskKomponent(ws, domene);
+                domene.setPrioritertSkrivemaate(ws.isPrioritertSkrivemaate());
+                return domene;
+            }).collect(Collectors.toList());
     }
 
     private static List<KasusForSkrivemaate> toDomeneKasuser(KasusForSkrivemaateList kasusList) {
         return kasusList.getItem().stream()
-                .map(ws -> {
-                    KasusForSkrivemaate domene = new KasusForSkrivemaate(ws.getId(), regDato(ws),
-                            new StedsnavnBobleId.KasustypeKodeId(ws.getKasusTilKjernenavnId().getValue()), ws.getKjernenavn());
-                    setFellesFelterForHistoriskKomponent(ws, domene);
+            .map(ws -> {
+                KasusForSkrivemaate domene = new KasusForSkrivemaate(ws.getId(), regDato(ws),
+                    new StedsnavnBobleId.KasustypeKodeId(ws.getKasusTilKjernenavnId().getValue()), ws.getKjernenavn());
+                setFellesFelterForHistoriskKomponent(ws, domene);
 
-                    domene.setVariasjonstillegg(ws.getVariasjonstillegg());
-                    domene.setFunksjonstillegg(ws.getFunksjonstillegg());
+                domene.setVariasjonstillegg(ws.getVariasjonstillegg());
+                domene.setFunksjonstillegg(ws.getFunksjonstillegg());
 
-                    return domene;
-                })
-                .collect(toList());
+                return domene;
+            })
+            .collect(toList());
     }
 
 }

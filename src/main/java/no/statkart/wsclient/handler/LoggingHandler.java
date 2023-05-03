@@ -13,41 +13,41 @@ import java.util.Collections;
 import java.util.Set;
 
 public class LoggingHandler implements SOAPHandler<SOAPMessageContext> {
-   private static final Logger logger = LoggerFactory.getLogger(LoggingHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggingHandler.class);
 
-   public Set<QName> getHeaders() {
-      return Collections.emptySet();
-   }
+    public Set<QName> getHeaders() {
+        return Collections.emptySet();
+    }
 
-   @Override
-   public boolean handleMessage(SOAPMessageContext context) {
-      logToSystemOut(context);
-      return true;
-   }
+    @Override
+    public boolean handleMessage(SOAPMessageContext context) {
+        logToSystemOut(context);
+        return true;
+    }
 
-   @Override
-   public boolean handleFault(SOAPMessageContext context) {
-      logToSystemOut(context);
-      return true;
-   }
+    @Override
+    public boolean handleFault(SOAPMessageContext context) {
+        logToSystemOut(context);
+        return true;
+    }
 
-   public void close(MessageContext messageContext) {
-   }
+    public void close(MessageContext messageContext) {
+    }
 
-   private void logToSystemOut(SOAPMessageContext smc) {
-      Boolean outboundProperty = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+    private void logToSystemOut(SOAPMessageContext smc) {
+        Boolean outboundProperty = (Boolean) smc.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 
-      SOAPMessage message = smc.getMessage();
-      try {
-         ByteArrayOutputStream os = new ByteArrayOutputStream();
-         message.writeTo(os);
-         if( outboundProperty ) {
-            logger.info("\nOutbound message:" + os.toString());
-         } else {
-            logger.info("\nInbound message:" + os.toString());
-         }
-      } catch( Exception e ) {
-         logger.error("Exception in handler: " + e.getMessage(), e);
-      }
-   }
+        SOAPMessage message = smc.getMessage();
+        try {
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            message.writeTo(os);
+            if (outboundProperty) {
+                logger.info("\nOutbound message:" + os.toString());
+            } else {
+                logger.info("\nInbound message:" + os.toString());
+            }
+        } catch (Exception e) {
+            logger.error("Exception in handler: " + e.getMessage(), e);
+        }
+    }
 }

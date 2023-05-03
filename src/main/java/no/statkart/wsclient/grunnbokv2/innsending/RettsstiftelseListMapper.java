@@ -22,69 +22,69 @@ import static no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.R
 
 class RettsstiftelseListMapper implements TypeMapper<RettsstiftelseList, List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse>> {
 
-   private Mapping mapping;
+    private Mapping mapping;
 
-   @Override
-   public RettsstiftelseList mapDomainObject(List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse> listOfDomainObjects) {
-      RettsstiftelseList wsObject = new RettsstiftelseList();
-      List<JAXBElement<? extends Rettsstiftelse>> rettsstiftelser = wsObject.getEierskifteMatrikkelenhetOrOverdragelseAvFesterettOrEierskifteBorettslagsandel();
+    @Override
+    public RettsstiftelseList mapDomainObject(List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse> listOfDomainObjects) {
+        RettsstiftelseList wsObject = new RettsstiftelseList();
+        List<JAXBElement<? extends Rettsstiftelse>> rettsstiftelser = wsObject.getEierskifteMatrikkelenhetOrOverdragelseAvFesterettOrEierskifteBorettslagsandel();
 
-      ObjectFactory objectFactory = new ObjectFactory();
-      for (no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse rettsstiftelse : listOfDomainObjects) {
-         Rettsstiftelsestype rettstiftelsestype = rettsstiftelse.getRettstiftelsestype();
+        ObjectFactory objectFactory = new ObjectFactory();
+        for (no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse rettsstiftelse : listOfDomainObjects) {
+            Rettsstiftelsestype rettstiftelsestype = rettsstiftelse.getRettstiftelsestype();
 
-         JAXBElement<? extends Rettsstiftelse> jaxbElement = null;
-         if (rettstiftelsestype == MATRIKKELENHETSENDRING) {
-            Matrikkelenhetsendring matrikkelenhetsendringWsObject = mapToWebServiceObject(rettsstiftelse, Matrikkelenhetsendring.class);
-            TypeMatrikkelenhetsendring typeMatrikkelenhetsendring = ((no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring) rettsstiftelse).getTypeMatrikkelenhetsendring();
+            JAXBElement<? extends Rettsstiftelse> jaxbElement = null;
+            if (rettstiftelsestype == MATRIKKELENHETSENDRING) {
+                Matrikkelenhetsendring matrikkelenhetsendringWsObject = mapToWebServiceObject(rettsstiftelse, Matrikkelenhetsendring.class);
+                TypeMatrikkelenhetsendring typeMatrikkelenhetsendring = ((no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring) rettsstiftelse).getTypeMatrikkelenhetsendring();
 
-            if (typeMatrikkelenhetsendring == FRADELING) {
-               jaxbElement = objectFactory.createRettsstiftelseListFradeling(matrikkelenhetsendringWsObject);
-            } else if (typeMatrikkelenhetsendring == SAMMENSLAAING_AV_MATRIKKELENHETER) {
-               jaxbElement = objectFactory.createRettsstiftelseListSammenslaaingAvMatrikkelenheter(matrikkelenhetsendringWsObject);
-            } else if (typeMatrikkelenhetsendring == FESTENUMMER_GITT_BRUKSNUMMER) {
-               jaxbElement = objectFactory.createRettsstiftelseListFestenummerGittBruksnummer(matrikkelenhetsendringWsObject);
-            } else if (typeMatrikkelenhetsendring == OPPRETT_FESTEGRUNN) {
-               jaxbElement = objectFactory.createRettsstiftelseListFradeling(matrikkelenhetsendringWsObject);
-            } else if (typeMatrikkelenhetsendring == OMNUMMERER_MATRIKKELENHETER) {
-               jaxbElement = objectFactory.createRettsstiftelseListOmnummereringAvMatrikkelenheter(matrikkelenhetsendringWsObject);
+                if (typeMatrikkelenhetsendring == FRADELING) {
+                    jaxbElement = objectFactory.createRettsstiftelseListFradeling(matrikkelenhetsendringWsObject);
+                } else if (typeMatrikkelenhetsendring == SAMMENSLAAING_AV_MATRIKKELENHETER) {
+                    jaxbElement = objectFactory.createRettsstiftelseListSammenslaaingAvMatrikkelenheter(matrikkelenhetsendringWsObject);
+                } else if (typeMatrikkelenhetsendring == FESTENUMMER_GITT_BRUKSNUMMER) {
+                    jaxbElement = objectFactory.createRettsstiftelseListFestenummerGittBruksnummer(matrikkelenhetsendringWsObject);
+                } else if (typeMatrikkelenhetsendring == OPPRETT_FESTEGRUNN) {
+                    jaxbElement = objectFactory.createRettsstiftelseListFradeling(matrikkelenhetsendringWsObject);
+                } else if (typeMatrikkelenhetsendring == OMNUMMERER_MATRIKKELENHETER) {
+                    jaxbElement = objectFactory.createRettsstiftelseListOmnummereringAvMatrikkelenheter(matrikkelenhetsendringWsObject);
+                }
             }
-         }
 
-         rettsstiftelser.add(jaxbElement);
-      }
-      return wsObject;
-   }
+            rettsstiftelser.add(jaxbElement);
+        }
+        return wsObject;
+    }
 
-   private <T extends Rettsstiftelse> T mapToWebServiceObject(no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse rettsstiftelse, Class<T> typeOfRettsstiftelseClazz) {
-      return getMapping().d2w(rettsstiftelse, typeOfRettsstiftelseClazz);
-   }
+    private <T extends Rettsstiftelse> T mapToWebServiceObject(no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse rettsstiftelse, Class<T> typeOfRettsstiftelseClazz) {
+        return getMapping().d2w(rettsstiftelse, typeOfRettsstiftelseClazz);
+    }
 
-   @Override
-   public List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse> mapWsapiObject(RettsstiftelseList source) {
-      throw new UnsupportedOperationException("No need to map this way.");
-   }
+    @Override
+    public List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse> mapWsapiObject(RettsstiftelseList source) {
+        throw new UnsupportedOperationException("No need to map this way.");
+    }
 
-   @Override
-   public Mapping getMapping() {
-      return mapping;
-   }
+    @Override
+    public Mapping getMapping() {
+        return mapping;
+    }
 
-   @Override
-   public void setMapping(Mapping mapping) {
-      this.mapping = mapping;
-   }
+    @Override
+    public void setMapping(Mapping mapping) {
+        this.mapping = mapping;
+    }
 
-   @Override
-   public Class<RettsstiftelseList> getWsapiClass() {
-      return RettsstiftelseList.class;
-   }
+    @Override
+    public Class<RettsstiftelseList> getWsapiClass() {
+        return RettsstiftelseList.class;
+    }
 
-   @SuppressWarnings("unchecked")
-   @Override
-   public Class<List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse>> getDomainClass() {
-      return (Class<List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse>>) new TypeToken<List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse>>() {
-      }.getRawType();
-   }
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse>> getDomainClass() {
+        return (Class<List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse>>) new TypeToken<List<no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse>>() {
+        }.getRawType();
+    }
 
 }

@@ -9,7 +9,7 @@ import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetsrettId
 
 public interface RegisterenhetsrettsandelWS {
 
-   PersonIdTilRegisterenhetsrettsandelIdsMap findAndelerForRettighetshavere(PersonIdList personIds, GrunnbokContext grunnbokContext) throws ServiceException;
+    PersonIdTilRegisterenhetsrettsandelIdsMap findAndelerForRettighetshavere(PersonIdList personIds, GrunnbokContext grunnbokContext) throws ServiceException;
 
-   RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap findAndelerIRetter(RegisterenhetsrettIdList rettIds, GrunnbokContext grunnbokContext) throws ServiceException;
+    RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap findAndelerIRetter(RegisterenhetsrettIdList rettIds, GrunnbokContext grunnbokContext) throws ServiceException;
 }

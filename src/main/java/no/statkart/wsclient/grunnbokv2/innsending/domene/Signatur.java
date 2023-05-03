@@ -2,22 +2,22 @@ package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 public class Signatur {
 
-   private String gjelderDokumentreferanse;
-   private String personidentifikasjonsnummer;
+    private String gjelderDokumentreferanse;
+    private String personidentifikasjonsnummer;
 
-   public String getGjelderDokumentreferanse() {
-      return gjelderDokumentreferanse;
-   }
+    public String getGjelderDokumentreferanse() {
+        return gjelderDokumentreferanse;
+    }
 
-   public void setGjelderDokumentreferanse(String gjelderDokumentreferanse) {
-      this.gjelderDokumentreferanse = gjelderDokumentreferanse;
-   }
+    public void setGjelderDokumentreferanse(String gjelderDokumentreferanse) {
+        this.gjelderDokumentreferanse = gjelderDokumentreferanse;
+    }
 
-   public String getPersonidentifikasjonsnummer() {
-      return personidentifikasjonsnummer;
-   }
+    public String getPersonidentifikasjonsnummer() {
+        return personidentifikasjonsnummer;
+    }
 
-   public void setPersonidentifikasjonsnummer(String personidentifikasjonsnummer) {
-      this.personidentifikasjonsnummer = personidentifikasjonsnummer;
-   }
+    public void setPersonidentifikasjonsnummer(String personidentifikasjonsnummer) {
+        this.personidentifikasjonsnummer = personidentifikasjonsnummer;
+    }
 }

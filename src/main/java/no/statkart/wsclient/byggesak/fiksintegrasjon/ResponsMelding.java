@@ -13,109 +13,114 @@ import java.util.List;
  * Lagrer metadata fra forsendelsen.
  */
 class ResponsMelding {
-   private static final Logger logger = LoggerFactory.getLogger(ResponsMelding.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResponsMelding.class);
 
-   /**
-    * ForsendelsesId på (JSON) forsendelsen som hentes via FIKS.
-    */
-   String forsendelseId = null;
-   /**
-    * Kommunen meldingen gjelder
-    */
-   String kommunenr = null;
-   /**
-    * Dato på (JSON) forsendelsen.
-    */
-   Date date;
-   /**
-    * Filnavnet på xml-filen som inneholder byggesakdata.
-    */
-   String xmlFilnavn;
+    /**
+     * ForsendelsesId på (JSON) forsendelsen som hentes via FIKS.
+     */
+    String forsendelseId = null;
+    /**
+     * Kommunen meldingen gjelder
+     */
+    String kommunenr = null;
+    /**
+     * Dato på (JSON) forsendelsen.
+     */
+    Date date;
+    /**
+     * Filnavnet på xml-filen som inneholder byggesakdata.
+     */
+    String xmlFilnavn;
 
-   /**
-    * Hvis det finnes vedlegg, og det finnes en xml. Denne kan inneholde flere bygninger (flere brukstilfeller)
-    */
-   String byggesakXml = null;
-   /**
-    * Hvis forsendelsen har vedlegg, vil disse kunne lastes ned via denne URL. Vedlegget kan være pdf eller zip, men vi vil bare motta zip-filer.
-    */
-   String downloadUrl = null;
+    /**
+     * Hvis det finnes vedlegg, og det finnes en xml. Denne kan inneholde flere bygninger (flere brukstilfeller)
+     */
+    String byggesakXml = null;
+    /**
+     * Hvis forsendelsen har vedlegg, vil disse kunne lastes ned via denne URL. Vedlegget kan være pdf eller zip, men vi vil bare motta zip-filer.
+     */
+    String downloadUrl = null;
 
-   /**
-    * Tittel på forsendelsen.
-    */
-   String tittel;
+    /**
+     * Tittel på forsendelsen.
+     */
+    String tittel;
 
 
-   ResponsMelding() { }
+    ResponsMelding() {
+    }
 
-   ResponsMelding(String xml) {
+    ResponsMelding(String xml) {
 
-      this.byggesakXml = xml;
-   }
+        this.byggesakXml = xml;
+    }
 
-   void setKommunenr(String kommunenr) { this.kommunenr = kommunenr; }
+    void setKommunenr(String kommunenr) {
+        this.kommunenr = kommunenr;
+    }
 
-   String getKommunenr() { return kommunenr; }
+    String getKommunenr() {
+        return kommunenr;
+    }
 
-   String getTittel() {
-      return tittel;
-   }
+    String getTittel() {
+        return tittel;
+    }
 
-   void setTittel(String tittel) {
-      this.tittel = tittel;
-   }
+    void setTittel(String tittel) {
+        this.tittel = tittel;
+    }
 
-   void setDownloadUrl(String downloadUrl) {
-      this.downloadUrl = downloadUrl;
-   }
+    void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
 
-   String getDownloadUrl() {
-      return downloadUrl;
-   }
+    String getDownloadUrl() {
+        return downloadUrl;
+    }
 
-   void setForsendelseId(String forsendelseId) {
-      this.forsendelseId = forsendelseId;
-   }
+    void setForsendelseId(String forsendelseId) {
+        this.forsendelseId = forsendelseId;
+    }
 
-   String getForsendelseId() {
-      return forsendelseId;
-   }
+    String getForsendelseId() {
+        return forsendelseId;
+    }
 
-   void setDate(Date date) {
-      this.date = date;
-   }
+    void setDate(Date date) {
+        this.date = date;
+    }
 
-   Date getDate() {
-      return date;
-   }
+    Date getDate() {
+        return date;
+    }
 
-   void setByggesakXml(String byggesakXml) {
-      this.byggesakXml = byggesakXml;
-   }
+    void setByggesakXml(String byggesakXml) {
+        this.byggesakXml = byggesakXml;
+    }
 
-   String getByggesakXml() {
-      return byggesakXml;
-   }
+    String getByggesakXml() {
+        return byggesakXml;
+    }
 
-   void setXmlFilnavn(String xmlFilnavn) {
-      this.xmlFilnavn = xmlFilnavn;
-   }
+    void setXmlFilnavn(String xmlFilnavn) {
+        this.xmlFilnavn = xmlFilnavn;
+    }
 
-   String getXmlFilnavn() {
-      return xmlFilnavn;
-   }
+    String getXmlFilnavn() {
+        return xmlFilnavn;
+    }
 
-   List<String> validerResponsMelding() throws ValidationException {
-      List<String> feilmeldinger = new ArrayList<>(0);
+    List<String> validerResponsMelding() throws ValidationException {
+        List<String> feilmeldinger = new ArrayList<>(0);
 
-      if(this.forsendelseId == null) feilmeldinger.add("Mangler forsendelseId");
-      if(this.byggesakXml == null) feilmeldinger.add("Mangler XML");
-      if(this.downloadUrl == null) feilmeldinger.add("Mangler URL til vedlegg");
+        if (this.forsendelseId == null) feilmeldinger.add("Mangler forsendelseId");
+        if (this.byggesakXml == null) feilmeldinger.add("Mangler XML");
+        if (this.downloadUrl == null) feilmeldinger.add("Mangler URL til vedlegg");
 
-      if (!feilmeldinger.isEmpty()) {
-         logger.debug("Responsmelding validerer ikke: {}", forsendelseId);
-      }
-      return feilmeldinger;
-   }
+        if (!feilmeldinger.isEmpty()) {
+            logger.debug("Responsmelding validerer ikke: {}", forsendelseId);
+        }
+        return feilmeldinger;
+    }
 }

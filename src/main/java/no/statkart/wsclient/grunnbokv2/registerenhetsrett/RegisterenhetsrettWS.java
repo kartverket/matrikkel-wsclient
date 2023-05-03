@@ -7,6 +7,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetIdTilRe
 
 public interface RegisterenhetsrettWS {
 
-   RegisterenhetIdTilRegisterenhetsrettIdsMap findRetterForEnheter(RegisterenhetIdList registerenhetIds,
-                                                                   GrunnbokContext grunnbokContext) throws ServiceException;
+    RegisterenhetIdTilRegisterenhetsrettIdsMap findRetterForEnheter(RegisterenhetIdList registerenhetIds,
+                                                                    GrunnbokContext grunnbokContext) throws ServiceException;
 }

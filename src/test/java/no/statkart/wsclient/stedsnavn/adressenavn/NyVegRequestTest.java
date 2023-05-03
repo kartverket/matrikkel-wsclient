@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Test
 public class NyVegRequestTest {
 
-   public void nyReq() {
-      NyVegRequest request = NyVegRequest.Builder.builder()
+    public void nyReq() {
+        NyVegRequest request = NyVegRequest.Builder.builder()
             .tidsstempel(LocalDateTime.of(2019, Month.APRIL, 4, 16, 33, 28, 200))
             .vegId(2L)
             .adressekode(2)
@@ -25,9 +25,9 @@ public class NyVegRequestTest {
             .vedtaksdato(LocalDate.of(2019, Month.APRIL, 17))
             .build();
 
-      assertThat(request).isNotNull();
-      assertThat(request.getVegId()).isEqualTo(2L);
-      assertThat(request.getVedtaksdato()).isEqualTo(LocalDate.of(2019, Month.APRIL, 17));
-   }
+        assertThat(request).isNotNull();
+        assertThat(request.getVegId()).isEqualTo(2L);
+        assertThat(request.getVedtaksdato()).isEqualTo(LocalDate.of(2019, Month.APRIL, 17));
+    }
 
 }

@@ -136,8 +136,8 @@ public class Mapper {
 
     public static EndringerRespons mapEndringerRespons(Endringer endringer) {
         EndringerRespons respons = new EndringerRespons(
-                toDomainEndringer(endringer.getEndringList()),
-                toDomainEndringId(endringer.getSisteEndringIdProsessert()));
+            toDomainEndringer(endringer.getEndringList()),
+            toDomainEndringId(endringer.getSisteEndringIdProsessert()));
         respons.setAlleEndringerFunnet(endringer.isAlleEndringerFunnet());
 
         return respons;
@@ -164,8 +164,8 @@ public class Mapper {
     public static StedsnavnBubbleObjectIdList toWsBobleIds(List<StedsnavnBobleId> ids) {
         StedsnavnBubbleObjectIdList stedsnavnBubbleObjectIdList = new StedsnavnBubbleObjectIdList();
         stedsnavnBubbleObjectIdList.getItem().addAll(ids.stream()
-                .map(Mapper::toWsBobleId)
-                .collect(Collectors.toList()));
+            .map(Mapper::toWsBobleId)
+            .collect(Collectors.toList()));
         return stedsnavnBubbleObjectIdList;
     }
 
@@ -192,9 +192,9 @@ public class Mapper {
 
     public static List<StedsnavnBoble> toDomainObjects(StedsnavnBubbleObjectList wsBubbleObjects) {
         return wsBubbleObjects.getItem().stream()
-                .map(Mapper::toDomainObject)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+            .map(Mapper::toDomainObject)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
     }
 
     public static StedsnavnBoble toDomainObject(StedsnavnBubbleObject stedsnavnBubbleObject) {
@@ -223,7 +223,7 @@ public class Mapper {
     private static void setHistoriskeFelter(KanSetteHistoriskeFelter domeneType, Timestamp oppdateringsdato, String oppdatertAv, Timestamp sluttdato, String avsluttetAv) {
         domeneType.setOppdateringsdato(DateHjelper.dateTimeFromXMLGregorianCalendar(oppdateringsdato.getTimestamp()));
         domeneType.setOppdatertAv(oppdatertAv);
-        if(sluttdato !=null) {
+        if (sluttdato != null) {
             domeneType.setSluttdato(DateHjelper.dateTimeFromXMLGregorianCalendar(sluttdato.getTimestamp()));
         }
         domeneType.setAvsluttetAv(avsluttetAv);
@@ -312,9 +312,9 @@ public class Mapper {
 
     private static List<Endring> toDomainEndringer(EndringList endringList) {
         return endringList.getItem()
-                .stream()
-                .map(Mapper::toDomainEndring)
-                .collect(Collectors.toList());
+            .stream()
+            .map(Mapper::toDomainEndring)
+            .collect(Collectors.toList());
     }
 
     private static Endring toDomainEndring(no.statkart.stedsnavn.ssr.wsapi.v1.domain.endringslogg.Endring wsEndring) {

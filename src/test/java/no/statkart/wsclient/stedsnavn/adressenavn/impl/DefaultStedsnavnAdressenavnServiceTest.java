@@ -19,20 +19,20 @@ import static no.statkart.wsclient.stedsnavn.adressenavn.AarsakTilEndringFraMatr
 @Test
 public class DefaultStedsnavnAdressenavnServiceTest {
 
-   @Spy
-   private AdressenavnInndata webservice;
-   private StedsnavnAdressenavnService stedsnavnAdressenavnService;
+    @Spy
+    private AdressenavnInndata webservice;
+    private StedsnavnAdressenavnService stedsnavnAdressenavnService;
 
-   @BeforeMethod
-   public void before() {
-      MockitoAnnotations.initMocks(this);
-      stedsnavnAdressenavnService = new DefaultStedsnavnAdressenavnService(webservice);
-   }
+    @BeforeMethod
+    public void before() {
+        MockitoAnnotations.initMocks(this);
+        stedsnavnAdressenavnService = new DefaultStedsnavnAdressenavnService(webservice);
+    }
 
-   public void sendEndretVeg() throws Exception {
-      LocalDate vedtaksdato = LocalDate.of(2019, Month.APRIL, 2);
-      LocalDateTime tidsstempel = LocalDateTime.of(2019, Month.APRIL, 4, 16, 33, 28, 200);
-      stedsnavnAdressenavnService.sendEndretVegTilStedsnavn(EndretVegRequest.Builder.builder()
+    public void sendEndretVeg() throws Exception {
+        LocalDate vedtaksdato = LocalDate.of(2019, Month.APRIL, 2);
+        LocalDateTime tidsstempel = LocalDateTime.of(2019, Month.APRIL, 4, 16, 33, 28, 200);
+        stedsnavnAdressenavnService.sendEndretVegTilStedsnavn(EndretVegRequest.Builder.builder()
             .tidsstempel(tidsstempel)
             .vegId(1L)
             .adressekode(2)
@@ -46,8 +46,8 @@ public class DefaultStedsnavnAdressenavnServiceTest {
             .aarsakTilEndring(RETTELSE_AV_FEILFOERING)
             .build());
 
-      Mockito.verify(webservice).sendEndretVegTilStedsnavn(tidsstempel, 1L, "0301", 9.8, 23.3, "KOORD", 2,
+        Mockito.verify(webservice).sendEndretVegTilStedsnavn(tidsstempel, 1L, "0301", 9.8, 23.3, "KOORD", 2,
             "Navn", "kort", vedtaksdato, AarsakTilEndringFraMatrikkelenKode.RETTELSE_AV_FEILFOERING);
-   }
+    }
 
 }

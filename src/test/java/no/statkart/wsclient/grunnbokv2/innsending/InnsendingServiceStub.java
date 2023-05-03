@@ -13,21 +13,21 @@ import javax.jws.WebService;
  * PS: Denne er kun tiltenkt brukt for interne tester!
  */
 @WebService(
-      serviceName = "InnsendingServiceWS",
-      portName = "InnsendingServicePort",
-      targetNamespace = "http://kartverket.no/grunnbok/wsapi/v2/service/innsending",
-      wsdlLocation = "innsending/InnsendingServiceWS.wsdl",
-      endpointInterface = "no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingService")
+    serviceName = "InnsendingServiceWS",
+    portName = "InnsendingServicePort",
+    targetNamespace = "http://kartverket.no/grunnbok/wsapi/v2/service/innsending",
+    wsdlLocation = "innsending/InnsendingServiceWS.wsdl",
+    endpointInterface = "no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingService")
 public class InnsendingServiceStub implements InnsendingService {
 
-   @Override
-   public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) throws ServiceException {
-      return ForsendelsesstatusBuilder.defaultForsendelsesstatus().build();
-   }
+    @Override
+    public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) throws ServiceException {
+        return ForsendelsesstatusBuilder.defaultForsendelsesstatus().build();
+    }
 
-   @Override
-   public Forsendelsesstatus hentStatus(String innsendingId) throws ServiceException {
-      return ForsendelsesstatusBuilder.defaultForsendelsesstatus().build();
-   }
+    @Override
+    public Forsendelsesstatus hentStatus(String innsendingId) throws ServiceException {
+        return ForsendelsesstatusBuilder.defaultForsendelsesstatus().build();
+    }
 
 }

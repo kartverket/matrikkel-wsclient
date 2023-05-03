@@ -6,26 +6,26 @@ import java.util.Objects;
 
 public class SkrivemaateInternMerknad extends StedsnavnEntityComponentWithHistory {
 
-   private String tekst;
-   private StedsnavnBobleId.SkrivemaateMerknadstypeKodeId merknadstypeId;
-   private List<String> fellesarkiv;
+    private String tekst;
+    private StedsnavnBobleId.SkrivemaateMerknadstypeKodeId merknadstypeId;
+    private List<String> fellesarkiv;
 
-   public SkrivemaateInternMerknad(Long id, LocalDateTime registreringsdato, String tekst, StedsnavnBobleId.SkrivemaateMerknadstypeKodeId merknadstypeId, List<String> fellesarkiv) {
-      super(id, registreringsdato);
-      this.tekst = tekst;
-      this.merknadstypeId = merknadstypeId;
-      this.fellesarkiv = Objects.requireNonNull(fellesarkiv);
-   }
+    public SkrivemaateInternMerknad(Long id, LocalDateTime registreringsdato, String tekst, StedsnavnBobleId.SkrivemaateMerknadstypeKodeId merknadstypeId, List<String> fellesarkiv) {
+        super(id, registreringsdato);
+        this.tekst = tekst;
+        this.merknadstypeId = merknadstypeId;
+        this.fellesarkiv = Objects.requireNonNull(fellesarkiv);
+    }
 
-   public String getTekst() {
-      return tekst;
-   }
+    public String getTekst() {
+        return tekst;
+    }
 
-   public StedsnavnBobleId.SkrivemaateMerknadstypeKodeId getMerknadstypeId() {
-      return merknadstypeId;
-   }
+    public StedsnavnBobleId.SkrivemaateMerknadstypeKodeId getMerknadstypeId() {
+        return merknadstypeId;
+    }
 
-   public List<String> getFellesarkiv() {
-      return fellesarkiv;
-   }
+    public List<String> getFellesarkiv() {
+        return fellesarkiv;
+    }
 }

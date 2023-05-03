@@ -45,283 +45,289 @@ import java.util.stream.Collectors;
  * En forsendelse kan ha flere byggesaker.
  */
 class ByggesakmeldingerDTOBuilder {
-   private static final Logger logger = LoggerFactory.getLogger(ByggesakmeldingerDTOBuilder.class);
-   /**
-    * Bygger et set med infomeldinger basert på responsmeldingene.
-    * Deserialiserer xml-filen med bygginfo.
-    * @param responsMeldinger ResponsMeldinger som har data meldingen skal bygges fra.
-    * @return Sett med ferdig behandlede objekter.
-    */
-   static Set<ByggesakmeldingDTO> build(Set<ResponsMelding> responsMeldinger) {
+    private static final Logger logger = LoggerFactory.getLogger(ByggesakmeldingerDTOBuilder.class);
 
-      Set<ByggesakmeldingDTO> byggesakmeldingDTOS = new HashSet<>();
+    /**
+     * Bygger et set med infomeldinger basert på responsmeldingene.
+     * Deserialiserer xml-filen med bygginfo.
+     *
+     * @param responsMeldinger ResponsMeldinger som har data meldingen skal bygges fra.
+     * @return Sett med ferdig behandlede objekter.
+     */
+    static Set<ByggesakmeldingDTO> build(Set<ResponsMelding> responsMeldinger) {
 
-      for(ResponsMelding responsMelding : responsMeldinger) {
-         // fellesinfo pr. bygning i forsendelse
-         String tittel = responsMelding.getTittel();
-         String forsendelseId = responsMelding.getForsendelseId();
+        Set<ByggesakmeldingDTO> byggesakmeldingDTOS = new HashSet<>();
 
-         // de-serialiser xml (ByggesakType er rot-noden)
-         String byggesakXml = responsMelding.getByggesakXml();
-         ByggesakType byggesakType = lagObjekterFraXML(byggesakXml);
-         if(byggesakType == null) continue;
+        for (ResponsMelding responsMelding : responsMeldinger) {
+            // fellesinfo pr. bygning i forsendelse
+            String tittel = responsMelding.getTittel();
+            String forsendelseId = responsMelding.getForsendelseId();
 
-         String kommunenr = responsMelding.getKommunenr() != null ?
-               responsMelding.getKommunenr() : finnKommuneNr(byggesakType.getMatrikkelopplysninger().getValue());
-         /*
-          * Hvis det ikke finnes noe informasjon om tilhørende kommune, skal ikke info lages
-          */
-         if(kommunenr != null) {
-            // hent ut listen med bygninger
-            MatrikkelopplysningerType matrikkelopplysningerType = Objects.requireNonNull(
-                  evaluateObject(byggesakType.getMatrikkelopplysninger()), "Finner ikke matrikkelopplysninger");
+            // de-serialiser xml (ByggesakType er rot-noden)
+            String byggesakXml = responsMelding.getByggesakXml();
+            ByggesakType byggesakType = lagObjekterFraXML(byggesakXml);
+            if (byggesakType == null) continue;
 
-            List<BygningType> bygningsliste = Objects.requireNonNull(
-                  evaluateObject(matrikkelopplysningerType.getBygning()).getBygning(), "Finner ingen bygningsliste");
+            String kommunenr = responsMelding.getKommunenr() != null ?
+                responsMelding.getKommunenr() : finnKommuneNr(byggesakType.getMatrikkelopplysninger().getValue());
+            /*
+             * Hvis det ikke finnes noe informasjon om tilhørende kommune, skal ikke info lages
+             */
+            if (kommunenr != null) {
+                // hent ut listen med bygninger
+                MatrikkelopplysningerType matrikkelopplysningerType = Objects.requireNonNull(
+                    evaluateObject(byggesakType.getMatrikkelopplysninger()), "Finner ikke matrikkelopplysninger");
 
-            int lopenr = 1;
+                List<BygningType> bygningsliste = Objects.requireNonNull(
+                    evaluateObject(matrikkelopplysningerType.getBygning()).getBygning(), "Finner ingen bygningsliste");
 
-            // opprett en info-melding pr. bygning.
-            for (BygningType bygningType : bygningsliste) {
-               // løpenummer pr bygning (for visning i aktivitetslisten)
-               ByggesakmeldingDTO byggesakmeldingDTO = new ByggesakmeldingDTO();
+                int lopenr = 1;
 
-               // metadata om forsendelsen
-               byggesakmeldingDTO.setForsendelsesId(forsendelseId);
-               byggesakmeldingDTO.setInfo(tittel + " " + byggesakType.getTittel() + " " + lopenr++);
+                // opprett en info-melding pr. bygning.
+                for (BygningType bygningType : bygningsliste) {
+                    // løpenummer pr bygning (for visning i aktivitetslisten)
+                    ByggesakmeldingDTO byggesakmeldingDTO = new ByggesakmeldingDTO();
 
-               VedtakType vedtakType = evaluateObject(byggesakType.getVedtak());
-               if(vedtakType != null) {
-                  byggesakmeldingDTO.setCreatedAt(vedtakType.getVedtaksdato().toGregorianCalendar().toInstant());
-               }
-               byggesakmeldingDTO.setKommuneNummer(kommunenr);
-               // hvilket brukstilfelle meldingen skal høre til
-               byggesakmeldingDTO.setBrukstilfelleKode(byggesakType.getKategori().getKode());
+                    // metadata om forsendelsen
+                    byggesakmeldingDTO.setForsendelsesId(forsendelseId);
+                    byggesakmeldingDTO.setInfo(tittel + " " + byggesakType.getTittel() + " " + lopenr++);
 
-               // BYGNINGSDATA
-               ByggesakDTO byggesakDTO = new ByggesakDTO();
+                    VedtakType vedtakType = evaluateObject(byggesakType.getVedtak());
+                    if (vedtakType != null) {
+                        byggesakmeldingDTO.setCreatedAt(vedtakType.getVedtaksdato().toGregorianCalendar().toInstant());
+                    }
+                    byggesakmeldingDTO.setKommuneNummer(kommunenr);
+                    // hvilket brukstilfelle meldingen skal høre til
+                    byggesakmeldingDTO.setBrukstilfelleKode(byggesakType.getKategori().getKode());
 
-               // metadata byggesak
-               byggesakDTO.setTittel(tittel);
+                    // BYGNINGSDATA
+                    ByggesakDTO byggesakDTO = new ByggesakDTO();
 
-               // tiltakshaver
-               PartType tiltakshaver = evaluateObject(byggesakType.getTiltakshaver());
-               if(tiltakshaver != null) {
-                  String tiltakshaverIdNummer = Optional.ofNullable(evaluateObject(tiltakshaver.getFoedselsnummer()))
-                        .orElse(evaluateObject(tiltakshaver.getOrganisasjonsnummer()));
-                  byggesakDTO.setTiltakshaverIdNummer(tiltakshaverIdNummer);
-               }
+                    // metadata byggesak
+                    byggesakDTO.setTittel(tittel);
 
-               // ansvarlig søker
-               PartType ansvarligSoker = evaluateObject(byggesakType.getAnsvarligSoeker());
-               if(ansvarligSoker != null) {
-                  String ansvarligSokerIdNr = Optional.ofNullable(evaluateObject(ansvarligSoker.getFoedselsnummer()))
-                        .orElse(evaluateObject(ansvarligSoker.getOrganisasjonsnummer()));
-                  byggesakDTO.setAnsvarligSokerIdNummer(ansvarligSokerIdNr);
-               }
+                    // tiltakshaver
+                    PartType tiltakshaver = evaluateObject(byggesakType.getTiltakshaver());
+                    if (tiltakshaver != null) {
+                        String tiltakshaverIdNummer = Optional.ofNullable(evaluateObject(tiltakshaver.getFoedselsnummer()))
+                            .orElse(evaluateObject(tiltakshaver.getOrganisasjonsnummer()));
+                        byggesakDTO.setTiltakshaverIdNummer(tiltakshaverIdNummer);
+                    }
 
-               // Bygningsinformasjon
-               byggesakmeldingDTO.setByggesakDTO(buildByggesakDTO(byggesakDTO, bygningType));
-               byggesakmeldingDTOS.add(byggesakmeldingDTO);
+                    // ansvarlig søker
+                    PartType ansvarligSoker = evaluateObject(byggesakType.getAnsvarligSoeker());
+                    if (ansvarligSoker != null) {
+                        String ansvarligSokerIdNr = Optional.ofNullable(evaluateObject(ansvarligSoker.getFoedselsnummer()))
+                            .orElse(evaluateObject(ansvarligSoker.getOrganisasjonsnummer()));
+                        byggesakDTO.setAnsvarligSokerIdNummer(ansvarligSokerIdNr);
+                    }
+
+                    // Bygningsinformasjon
+                    byggesakmeldingDTO.setByggesakDTO(buildByggesakDTO(byggesakDTO, bygningType));
+                    byggesakmeldingDTOS.add(byggesakmeldingDTO);
+                }
             }
-         }
-      }
-      return byggesakmeldingDTOS;
-   }
+        }
+        return byggesakmeldingDTOS;
+    }
 
-   /*
-    * Info om 1 bygning i byggesak-xml
-    */
-   private static ByggesakDTO buildByggesakDTO(ByggesakDTO byggesakDTO, BygningType bygningType) {
+    /*
+     * Info om 1 bygning i byggesak-xml
+     */
+    private static ByggesakDTO buildByggesakDTO(ByggesakDTO byggesakDTO, BygningType bygningType) {
 
-      // BYGNINGSDATA
-      byggesakDTO.setBygningsnr(evaluateObject(bygningType.getBygningsnummer()));
-      byggesakDTO.setBebygdAreal(evaluateObject(bygningType.getBebygdAreal()));
-      byggesakDTO.setHarHeis(evaluateObject(bygningType.getHarHeis()));
+        // BYGNINGSDATA
+        byggesakDTO.setBygningsnr(evaluateObject(bygningType.getBygningsnummer()));
+        byggesakDTO.setBebygdAreal(evaluateObject(bygningType.getBebygdAreal()));
+        byggesakDTO.setHarHeis(evaluateObject(bygningType.getHarHeis()));
 
-      // KODER
-      byggesakDTO.setAvlopsKode(getKodeOrNull(evaluateObject(bygningType.getAvlop())));
-      byggesakDTO.setNaringsgruppeKode(getKodeOrNull(evaluateObject(bygningType.getNaeringsgruppe())));
-      byggesakDTO.setVannforsyningsKode(getKodeOrNull(evaluateObject(bygningType.getVannforsyning())));
-      byggesakDTO.setBygningstypeKode(getKodeOrNull(evaluateObject(bygningType.getBygningstype())));
+        // KODER
+        byggesakDTO.setAvlopsKode(getKodeOrNull(evaluateObject(bygningType.getAvlop())));
+        byggesakDTO.setNaringsgruppeKode(getKodeOrNull(evaluateObject(bygningType.getNaeringsgruppe())));
+        byggesakDTO.setVannforsyningsKode(getKodeOrNull(evaluateObject(bygningType.getVannforsyning())));
+        byggesakDTO.setBygningstypeKode(getKodeOrNull(evaluateObject(bygningType.getBygningstype())));
 
-      // flere koder i liste
-      EnergiforsyningType energiforsyningType = evaluateObject(bygningType.getEnergiforsyning());
-      // oppvarmingskoder
-      try{
-         List<VarmefordelingType> varmefordelingListe = evaluateObject(energiforsyningType.getVarmefordeling()).getVarmefordeling();
+        // flere koder i liste
+        EnergiforsyningType energiforsyningType = evaluateObject(bygningType.getEnergiforsyning());
+        // oppvarmingskoder
+        try {
+            List<VarmefordelingType> varmefordelingListe = evaluateObject(energiforsyningType.getVarmefordeling()).getVarmefordeling();
 
-         byggesakDTO.getOppvarmingsKoder().addAll(
-               varmefordelingListe.stream()
-                     .map(VarmefordelingType::getKode)
-                     .collect(Collectors.toSet())
-         );
-      } catch (NullPointerException ignored) { }
+            byggesakDTO.getOppvarmingsKoder().addAll(
+                varmefordelingListe.stream()
+                    .map(VarmefordelingType::getKode)
+                    .collect(Collectors.toSet())
+            );
+        } catch (NullPointerException ignored) {
+        }
 
-      // energikildekoder
-      try {
-         List<EnergiforsyningTypeType> energiforsyningTypeTypeListe
-               = evaluateObject(energiforsyningType.getEnergiforsyning()).getEnergiforsyningType();
+        // energikildekoder
+        try {
+            List<EnergiforsyningTypeType> energiforsyningTypeTypeListe
+                = evaluateObject(energiforsyningType.getEnergiforsyning()).getEnergiforsyningType();
 
-         byggesakDTO.getEnergikildeKoder().addAll(
-               energiforsyningTypeTypeListe.stream()
-                     .map(EnergiforsyningTypeType::getKode)
-                     .collect(Collectors.toSet())
-         );
+            byggesakDTO.getEnergikildeKoder().addAll(
+                energiforsyningTypeTypeListe.stream()
+                    .map(EnergiforsyningTypeType::getKode)
+                    .collect(Collectors.toSet())
+            );
 
-      } catch (NullPointerException ignored) { }
+        } catch (NullPointerException ignored) {
+        }
 
-      // ETASJER
-      EtasjeListe etasjeListe = evaluateObject(bygningType.getEtasjer());
-      if(etasjeListe != null) {
-         byggesakDTO.getEtasjer().addAll(buildByggesakEtasjeDTOs(etasjeListe.getEtasje()));
-      }
+        // ETASJER
+        EtasjeListe etasjeListe = evaluateObject(bygningType.getEtasjer());
+        if (etasjeListe != null) {
+            byggesakDTO.getEtasjer().addAll(buildByggesakEtasjeDTOs(etasjeListe.getEtasje()));
+        }
 
-      // BRUKSENHETER
-      BruksenhetListe bruksenhetListe = evaluateObject(bygningType.getBruksenheter());
-      if(bruksenhetListe != null) {
-         byggesakDTO.getBruksenheter().addAll(buildByggesakBruksenhetDTOs(bruksenhetListe.getBruksenhet()));
-      }
+        // BRUKSENHETER
+        BruksenhetListe bruksenhetListe = evaluateObject(bygningType.getBruksenheter());
+        if (bruksenhetListe != null) {
+            byggesakDTO.getBruksenheter().addAll(buildByggesakBruksenhetDTOs(bruksenhetListe.getBruksenhet()));
+        }
 
-      return byggesakDTO;
-   }
+        return byggesakDTO;
+    }
 
-   /*
-    * Info om 1 bruksenhet på 1 bygning
-    */
-   private static Set<ByggesakBruksenhetDTO> buildByggesakBruksenhetDTOs(List<BruksenhetType> bruksenhetListe) {
-      Set<ByggesakBruksenhetDTO> bruksenhetDTOs = new HashSet<>();
+    /*
+     * Info om 1 bruksenhet på 1 bygning
+     */
+    private static Set<ByggesakBruksenhetDTO> buildByggesakBruksenhetDTOs(List<BruksenhetType> bruksenhetListe) {
+        Set<ByggesakBruksenhetDTO> bruksenhetDTOs = new HashSet<>();
 
-      for (BruksenhetType bruksenhetType : bruksenhetListe) {
-         ByggesakBruksenhetDTO bruksenhetDTO = new ByggesakBruksenhetDTO();
+        for (BruksenhetType bruksenhetType : bruksenhetListe) {
+            ByggesakBruksenhetDTO bruksenhetDTO = new ByggesakBruksenhetDTO();
 
-         // required
-         bruksenhetDTO.setLopenr(bruksenhetType.getBruksenhetsnummer().getLoepenummer());
-         bruksenhetDTO.setEtasjenr(bruksenhetType.getBruksenhetsnummer().getEtasjenummer());
-         bruksenhetDTO.setEtasjeplanKode(bruksenhetType.getBruksenhetsnummer().getEtasjeplan().getKode());
+            // required
+            bruksenhetDTO.setLopenr(bruksenhetType.getBruksenhetsnummer().getLoepenummer());
+            bruksenhetDTO.setEtasjenr(bruksenhetType.getBruksenhetsnummer().getEtasjenummer());
+            bruksenhetDTO.setEtasjeplanKode(bruksenhetType.getBruksenhetsnummer().getEtasjeplan().getKode());
 
-         // generell info
-         bruksenhetDTO.setBruksAreal(evaluateObject(bruksenhetType.getBruksareal()));
-         bruksenhetDTO.setAntallRom(evaluateObject(bruksenhetType.getAntallRom()));
-         bruksenhetDTO.setAntallBad(evaluateObject(bruksenhetType.getAntallBad()));
-         bruksenhetDTO.setAntallWC(evaluateObject(bruksenhetType.getAntallWC()));
+            // generell info
+            bruksenhetDTO.setBruksAreal(evaluateObject(bruksenhetType.getBruksareal()));
+            bruksenhetDTO.setAntallRom(evaluateObject(bruksenhetType.getAntallRom()));
+            bruksenhetDTO.setAntallBad(evaluateObject(bruksenhetType.getAntallBad()));
+            bruksenhetDTO.setAntallWC(evaluateObject(bruksenhetType.getAntallWC()));
 
-         bruksenhetDTO.setBruksenhetstypeKode(getKodeOrNull(evaluateObject(bruksenhetType.getBruksenhetstype())));
-         bruksenhetDTO.setKjokkentilgangKode(getKodeOrNull(evaluateObject(bruksenhetType.getKjoekkentilgang())));
+            bruksenhetDTO.setBruksenhetstypeKode(getKodeOrNull(evaluateObject(bruksenhetType.getBruksenhetstype())));
+            bruksenhetDTO.setKjokkentilgangKode(getKodeOrNull(evaluateObject(bruksenhetType.getKjoekkentilgang())));
 
-         // matrikkelnummer
-         MatrikkelnummerType matrikkelnummerType = evaluateObject(bruksenhetType.getMatrikkelnummer());
-         if(matrikkelnummerType != null) {
-            bruksenhetDTO.setKommunenr(evaluateObject(matrikkelnummerType.getKommunenummer()));
-            bruksenhetDTO.setGardsnr(evaluateObject(matrikkelnummerType.getGaardsnummer()));
-            bruksenhetDTO.setBruksnr(evaluateObject(matrikkelnummerType.getBruksnummer()));
-            bruksenhetDTO.setFestenr(evaluateObject(matrikkelnummerType.getFestenummer()));
-            bruksenhetDTO.setSeksjonsnr(evaluateObject(matrikkelnummerType.getSeksjonsnummer()));
-         }
-         // adresse
-         AdresseType adresseType = evaluateObject(bruksenhetType.getAdresse());
-         if(adresseType != null) {
-            bruksenhetDTO.setAdressekode(evaluateObject(adresseType.getAdressekode()));
-            bruksenhetDTO.setAdressenummer(evaluateObject(adresseType.getAdressenummer()));
-            bruksenhetDTO.setAdressebokstav(evaluateObject(adresseType.getAdressebokstav()));
-         }
+            // matrikkelnummer
+            MatrikkelnummerType matrikkelnummerType = evaluateObject(bruksenhetType.getMatrikkelnummer());
+            if (matrikkelnummerType != null) {
+                bruksenhetDTO.setKommunenr(evaluateObject(matrikkelnummerType.getKommunenummer()));
+                bruksenhetDTO.setGardsnr(evaluateObject(matrikkelnummerType.getGaardsnummer()));
+                bruksenhetDTO.setBruksnr(evaluateObject(matrikkelnummerType.getBruksnummer()));
+                bruksenhetDTO.setFestenr(evaluateObject(matrikkelnummerType.getFestenummer()));
+                bruksenhetDTO.setSeksjonsnr(evaluateObject(matrikkelnummerType.getSeksjonsnummer()));
+            }
+            // adresse
+            AdresseType adresseType = evaluateObject(bruksenhetType.getAdresse());
+            if (adresseType != null) {
+                bruksenhetDTO.setAdressekode(evaluateObject(adresseType.getAdressekode()));
+                bruksenhetDTO.setAdressenummer(evaluateObject(adresseType.getAdressenummer()));
+                bruksenhetDTO.setAdressebokstav(evaluateObject(adresseType.getAdressebokstav()));
+            }
 
-         final List<String> feilkoder = bruksenhetDTO.validerBruksenhetInfo();
-         if(feilkoder.isEmpty()) bruksenhetDTOs.add(bruksenhetDTO);
-      }
+            final List<String> feilkoder = bruksenhetDTO.validerBruksenhetInfo();
+            if (feilkoder.isEmpty()) bruksenhetDTOs.add(bruksenhetDTO);
+        }
 
-      return bruksenhetDTOs;
-   }
+        return bruksenhetDTOs;
+    }
 
-   /*
-    * Info om 1 etasje på 1 bygning
-    */
-   private static Set<ByggesakEtasjeDTO> buildByggesakEtasjeDTOs(List<EtasjeType> etasjeListe) {
-      Set<ByggesakEtasjeDTO> etasjer = new HashSet<>();
+    /*
+     * Info om 1 etasje på 1 bygning
+     */
+    private static Set<ByggesakEtasjeDTO> buildByggesakEtasjeDTOs(List<EtasjeType> etasjeListe) {
+        Set<ByggesakEtasjeDTO> etasjer = new HashSet<>();
 
-      for (EtasjeType etasjeType : etasjeListe) {
-         ByggesakEtasjeDTO etasjeDTO = new ByggesakEtasjeDTO();
+        for (EtasjeType etasjeType : etasjeListe) {
+            ByggesakEtasjeDTO etasjeDTO = new ByggesakEtasjeDTO();
 
-         // required - informasjon som skal være med hvis det finnes EtasjeType-objekter
-         etasjeDTO.setEtasjenr(etasjeType.getEtasjenummer());
-         etasjeDTO.setEtasjeplanKode(etasjeType.getEtasjeplan().getKode());
+            // required - informasjon som skal være med hvis det finnes EtasjeType-objekter
+            etasjeDTO.setEtasjenr(etasjeType.getEtasjenummer());
+            etasjeDTO.setEtasjeplanKode(etasjeType.getEtasjeplan().getKode());
 
-         // diverse etasje-info
-         etasjeDTO.setAntallBoenheter(evaluateObject(etasjeType.getAntallBoenheter()));
+            // diverse etasje-info
+            etasjeDTO.setAntallBoenheter(evaluateObject(etasjeType.getAntallBoenheter()));
 
-         etasjeDTO.setBruksarealTilAnnet(evaluateObject(etasjeType.getBruksarealTilAnnet()));
-         etasjeDTO.setBruksarealTilBolig(evaluateObject(etasjeType.getBruksarealTilBolig()));
-         etasjeDTO.setBruksarealTotalt(evaluateObject(etasjeType.getBruksarealTotalt()));
+            etasjeDTO.setBruksarealTilAnnet(evaluateObject(etasjeType.getBruksarealTilAnnet()));
+            etasjeDTO.setBruksarealTilBolig(evaluateObject(etasjeType.getBruksarealTilBolig()));
+            etasjeDTO.setBruksarealTotalt(evaluateObject(etasjeType.getBruksarealTotalt()));
 
-         etasjeDTO.setBruttoarealTilAnnet(evaluateObject(etasjeType.getBruttoarealTilAnnet()));
-         etasjeDTO.setBruttoarealTilBolig(evaluateObject(etasjeType.getBruttoarealTilBolig()));
-         etasjeDTO.setBruttoarealTotalt(evaluateObject(etasjeType.getBruksarealTotalt()));
+            etasjeDTO.setBruttoarealTilAnnet(evaluateObject(etasjeType.getBruttoarealTilAnnet()));
+            etasjeDTO.setBruttoarealTilBolig(evaluateObject(etasjeType.getBruttoarealTilBolig()));
+            etasjeDTO.setBruttoarealTotalt(evaluateObject(etasjeType.getBruksarealTotalt()));
 
-         final List<String> feilkoder = etasjeDTO.validerEtasjeInfo();
-         if(feilkoder.isEmpty()) etasjer.add(etasjeDTO);
-      }
+            final List<String> feilkoder = etasjeDTO.validerEtasjeInfo();
+            if (feilkoder.isEmpty()) etasjer.add(etasjeDTO);
+        }
 
-      return etasjer;
-   }
+        return etasjer;
+    }
 
-   /*
-    * Hvis det ikke finnes kommunetilhørighet i forsendelsens metadata,
-    * prøv å finne kommunetilhørighet fra bruksenheter eller matrikkelnummerlisten
-    */
-   private static String finnKommuneNr(MatrikkelopplysningerType matrikkelopplysninger) {
-      Set<String> potensielleKommunenr = new HashSet<>();
-      BygningListe bygningListe = evaluateObject(matrikkelopplysninger.getBygning());
+    /*
+     * Hvis det ikke finnes kommunetilhørighet i forsendelsens metadata,
+     * prøv å finne kommunetilhørighet fra bruksenheter eller matrikkelnummerlisten
+     */
+    private static String finnKommuneNr(MatrikkelopplysningerType matrikkelopplysninger) {
+        Set<String> potensielleKommunenr = new HashSet<>();
+        BygningListe bygningListe = evaluateObject(matrikkelopplysninger.getBygning());
 
-      // prøv fra bruksenhet
-      if(bygningListe != null) {
-         bygningListe.getBygning().stream()
-               .filter(bygningType -> evaluateObject(bygningType.getBruksenheter()) != null)
-               .flatMap(bygningType -> bygningType.getBruksenheter().getValue().getBruksenhet().stream())
-               .map(bruksenhetType -> evaluateObject(bruksenhetType.getMatrikkelnummer()))
-               .filter(Objects::nonNull)
-               .map(matrikkelnummerType -> evaluateObject(matrikkelnummerType.getKommunenummer()))
-               .filter(Objects::nonNull)
-               .forEach(potensielleKommunenr::add);
-      }
-      // har vi funnet et kommunenummer
-      if(!potensielleKommunenr.isEmpty()) return potensielleKommunenr.iterator().next();
+        // prøv fra bruksenhet
+        if (bygningListe != null) {
+            bygningListe.getBygning().stream()
+                .filter(bygningType -> evaluateObject(bygningType.getBruksenheter()) != null)
+                .flatMap(bygningType -> bygningType.getBruksenheter().getValue().getBruksenhet().stream())
+                .map(bruksenhetType -> evaluateObject(bruksenhetType.getMatrikkelnummer()))
+                .filter(Objects::nonNull)
+                .map(matrikkelnummerType -> evaluateObject(matrikkelnummerType.getKommunenummer()))
+                .filter(Objects::nonNull)
+                .forEach(potensielleKommunenr::add);
+        }
+        // har vi funnet et kommunenummer
+        if (!potensielleKommunenr.isEmpty()) return potensielleKommunenr.iterator().next();
 
-      // sjekk matrikkelnummerliste
-      MatrikkelnummerListe matrikkelnummerListe = evaluateObject(matrikkelopplysninger.getEiendomsidentifikasjon());
-      if(matrikkelnummerListe != null) {
-         matrikkelnummerListe.getMatrikkelnummer().stream()
-               .map(matrikkelnummerType -> evaluateObject(matrikkelnummerType.getKommunenummer()))
-               .filter(Objects::isNull)
-               .forEach(potensielleKommunenr::add);
-      }
-      return potensielleKommunenr.isEmpty() ? null : potensielleKommunenr.iterator().next();
-   }
+        // sjekk matrikkelnummerliste
+        MatrikkelnummerListe matrikkelnummerListe = evaluateObject(matrikkelopplysninger.getEiendomsidentifikasjon());
+        if (matrikkelnummerListe != null) {
+            matrikkelnummerListe.getMatrikkelnummer().stream()
+                .map(matrikkelnummerType -> evaluateObject(matrikkelnummerType.getKommunenummer()))
+                .filter(Objects::isNull)
+                .forEach(potensielleKommunenr::add);
+        }
+        return potensielleKommunenr.isEmpty() ? null : potensielleKommunenr.iterator().next();
+    }
 
-   // lag objekter av xml basert på matrikkelfoering.xsd (modellen)
-   private static ByggesakType lagObjekterFraXML(String xml) {
-      try {
-         JAXBContext jaxbContext = JAXBContext.newInstance("no.statkart.wsclient.byggesak.fiksintegrasjon.generated");
-         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+    // lag objekter av xml basert på matrikkelfoering.xsd (modellen)
+    private static ByggesakType lagObjekterFraXML(String xml) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance("no.statkart.wsclient.byggesak.fiksintegrasjon.generated");
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-         XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(xml));
-         JAXBElement<ByggesakType> rootElement = unmarshaller.unmarshal(reader, ByggesakType.class);
+            XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(new StringReader(xml));
+            JAXBElement<ByggesakType> rootElement = unmarshaller.unmarshal(reader, ByggesakType.class);
 
-         return rootElement.getValue();
-      } catch (JAXBException | XMLStreamException e) {
-         logger.error("Feil oppstått i deserialisering av XML data: "+e.getMessage());
-         return null;
-      }
-   }
+            return rootElement.getValue();
+        } catch (JAXBException | XMLStreamException e) {
+            logger.error("Feil oppstått i deserialisering av XML data: " + e.getMessage());
+            return null;
+        }
+    }
 
-   // siden et jaxbelement kan være null, og value også kan være null
-   private static <T> T evaluateObject(JAXBElement<T> element) {
-      return element == null ? null : element.getValue();
-   }
+    // siden et jaxbelement kan være null, og value også kan være null
+    private static <T> T evaluateObject(JAXBElement<T> element) {
+        return element == null ? null : element.getValue();
+    }
 
-   // for å unngå nullpointer
-   private static <T> String getKodeOrNull(T element) {
-      try {
-         return element != null ? (String) element.getClass().getMethod("getKode").invoke(element) : null;
-      } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) { return null; }
-   }
+    // for å unngå nullpointer
+    private static <T> String getKodeOrNull(T element) {
+        try {
+            return element != null ? (String) element.getClass().getMethod("getKode").invoke(element) : null;
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) {
+            return null;
+        }
+    }
 }

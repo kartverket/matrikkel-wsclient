@@ -17,65 +17,65 @@ import java.io.InputStream;
 import java.util.Map;
 
 public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
-   private static no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS webServiceClient;
+    private static no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS webServiceClient;
 
-   private final InnsendingService innsendingWebService;
-   private final InnsendingServiceMapper innsendingServiceMapper = new InnsendingServiceMapper();
+    private final InnsendingService innsendingWebService;
+    private final InnsendingServiceMapper innsendingServiceMapper = new InnsendingServiceMapper();
 
-   public DefaultInnsendingServiceWS(String brukernavn, String passord, String endpointUrl, boolean enableSchemaValidation) {
-      if(webServiceClient == null){
-         synchronized (this) {
-            if(webServiceClient == null){
-               webServiceClient = new no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS();
-               webServiceClient.setHandlerResolver(HandlerResolverBuilder.builder()
-                     .enableLogging().build());
+    public DefaultInnsendingServiceWS(String brukernavn, String passord, String endpointUrl, boolean enableSchemaValidation) {
+        if (webServiceClient == null) {
+            synchronized (this) {
+                if (webServiceClient == null) {
+                    webServiceClient = new no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS();
+                    webServiceClient.setHandlerResolver(HandlerResolverBuilder.builder()
+                        .enableLogging().build());
+                }
             }
-         }
-      }
+        }
 
-      InnsendingService innsendingServicePort = enableSchemaValidation
+        InnsendingService innsendingServicePort = enableSchemaValidation
             ? webServiceClient.getInnsendingServicePort(new SchemaValidationFeature())
             : webServiceClient.getInnsendingServicePort();
 
-      int timeoutMillis = 150000;
-      innsendingWebService = WebServiceBuilder.builderv2(innsendingServicePort, InnsendingService.class)
+        int timeoutMillis = 150000;
+        innsendingWebService = WebServiceBuilder.builderv2(innsendingServicePort, InnsendingService.class)
             .withBruker(brukernavn)
             .withPassord(passord)
             .withEndpointUrl(endpointUrl)
             .withTimeout(timeoutMillis)
             .build();
-   }
+    }
 
-   public DefaultInnsendingServiceWS(final String brukernavn, final String passord, final String endpointUrl) {
-      this(brukernavn, passord, endpointUrl, false);
-   }
+    public DefaultInnsendingServiceWS(final String brukernavn, final String passord, final String endpointUrl) {
+        this(brukernavn, passord, endpointUrl, false);
+    }
 
-   @Override
-   public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
-      try {
-         final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs = innsendingServiceMapper.mapForsendelse(forsendelse);
-         //noinspection UnnecessaryLocalVariable
-         final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
-               innsendingWebService.sendTilTinglysing(mappedArgs));
-          pakkUtBekreftetGrunnboksutskrift(returnvalue);
-          return returnvalue;
-      } catch( ServiceException e ) {
-         throw new RuntimeException(e);
-      }
-   }
+    @Override
+    public Forsendelsesstatus sendTilTinglysing(Forsendelse forsendelse) {
+        try {
+            final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs = innsendingServiceMapper.mapForsendelse(forsendelse);
+            //noinspection UnnecessaryLocalVariable
+            final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
+                innsendingWebService.sendTilTinglysing(mappedArgs));
+            pakkUtBekreftetGrunnboksutskrift(returnvalue);
+            return returnvalue;
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-   @Override
-   public Forsendelsesstatus hentStatus(final String innsendingId) {
-      try {
-         //noinspection UnnecessaryLocalVariable
-         final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
-               innsendingWebService.hentStatus(innsendingId));
-          pakkUtBekreftetGrunnboksutskrift(returnvalue);
-          return returnvalue;
-      } catch( ServiceException e ) {
-         throw new RuntimeException(e);
-      }
-   }
+    @Override
+    public Forsendelsesstatus hentStatus(final String innsendingId) {
+        try {
+            //noinspection UnnecessaryLocalVariable
+            final Forsendelsesstatus returnvalue = innsendingServiceMapper.mapForsendelsesstatus(
+                innsendingWebService.hentStatus(innsendingId));
+            pakkUtBekreftetGrunnboksutskrift(returnvalue);
+            return returnvalue;
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Ekstraherer bekreftet grunnboksutskrift for visning [MAT-12695]

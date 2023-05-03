@@ -13,51 +13,51 @@ import no.statkart.wsclient.grunnbokv2.innsending.domene.Forsendelsesstatus;
 
 
 public class DefaultValideringServiceWS implements ValideringServiceWS {
-   private static volatile no.kartverket.grunnbok.wsapi.v2.service.validering.ValideringServiceWS webServiceClient;
-   private final ValideringService valideringWebService;
-   private final InnsendingServiceMapper innsendingServiceMapper = new InnsendingServiceMapper();
+    private static volatile no.kartverket.grunnbok.wsapi.v2.service.validering.ValideringServiceWS webServiceClient;
+    private final ValideringService valideringWebService;
+    private final InnsendingServiceMapper innsendingServiceMapper = new InnsendingServiceMapper();
 
-   public DefaultValideringServiceWS(String brukernavn, String passord, String endpointUrl, boolean enableSchemaValidation) {
-      if(webServiceClient == null){
-         synchronized (this) {
-            if(webServiceClient == null){
-               webServiceClient = new no.kartverket.grunnbok.wsapi.v2.service.validering.ValideringServiceWS();
-               webServiceClient.setHandlerResolver(HandlerResolverBuilder.builder()
-                                                                         .enableLogging().build());
+    public DefaultValideringServiceWS(String brukernavn, String passord, String endpointUrl, boolean enableSchemaValidation) {
+        if (webServiceClient == null) {
+            synchronized (this) {
+                if (webServiceClient == null) {
+                    webServiceClient = new no.kartverket.grunnbok.wsapi.v2.service.validering.ValideringServiceWS();
+                    webServiceClient.setHandlerResolver(HandlerResolverBuilder.builder()
+                        .enableLogging().build());
+                }
             }
-         }
-      }
+        }
 
-      ValideringService valideringServicePort = enableSchemaValidation
-                                                ? webServiceClient.getValideringServicePort(new SchemaValidationFeature())
-                                                : webServiceClient.getValideringServicePort();
+        ValideringService valideringServicePort = enableSchemaValidation
+            ? webServiceClient.getValideringServicePort(new SchemaValidationFeature())
+            : webServiceClient.getValideringServicePort();
 
-      int timeoutMillis = 150000;
-      valideringWebService = WebServiceBuilder.builderv2(valideringServicePort, ValideringService.class)
-                                              .withBruker(brukernavn)
-                                              .withPassord(passord)
-                                              .withEndpointUrl(endpointUrl)
-                                              .withTimeout(timeoutMillis)
-                                              .build();
-   }
+        int timeoutMillis = 150000;
+        valideringWebService = WebServiceBuilder.builderv2(valideringServicePort, ValideringService.class)
+            .withBruker(brukernavn)
+            .withPassord(passord)
+            .withEndpointUrl(endpointUrl)
+            .withTimeout(timeoutMillis)
+            .build();
+    }
 
-   @Override
-   public Forsendelsesstatus valider(Forsendelse forsendelse) {
-      try {
-         final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs =
-               innsendingServiceMapper.mapForsendelse(forsendelse);
-         return innsendingServiceMapper.mapForsendelsesstatus(
-                 valideringWebService.valider(mappedArgs));
-      } catch (ServiceException se) {
-         OperationalException oe = new OperationalException(
-               se.getClass().getName() + ": " + se.getMessage());
-         ValideringServiceFaultInfo faultInfo = se.getFaultInfo();
-         if (faultInfo != null) {
-            oe.setFeilkode(faultInfo.getFeiltype());
-            oe.setFeilkodebeskrivelse(faultInfo.getFeilbeskrivelse());
-         }
-         oe.setStackTrace(se.getStackTrace());
-         throw oe;
-      }
-   }
+    @Override
+    public Forsendelsesstatus valider(Forsendelse forsendelse) {
+        try {
+            final no.kartverket.grunnbok.wsapi.v2.domain.innsending.Forsendelse mappedArgs =
+                innsendingServiceMapper.mapForsendelse(forsendelse);
+            return innsendingServiceMapper.mapForsendelsesstatus(
+                valideringWebService.valider(mappedArgs));
+        } catch (ServiceException se) {
+            OperationalException oe = new OperationalException(
+                se.getClass().getName() + ": " + se.getMessage());
+            ValideringServiceFaultInfo faultInfo = se.getFaultInfo();
+            if (faultInfo != null) {
+                oe.setFeilkode(faultInfo.getFeiltype());
+                oe.setFeilkodebeskrivelse(faultInfo.getFeilbeskrivelse());
+            }
+            oe.setStackTrace(se.getStackTrace());
+            throw oe;
+        }
+    }
 }

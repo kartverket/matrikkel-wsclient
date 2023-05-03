@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
  */
 public class BuildString {
 
-   public static String buildStringFromStream(InputStream inputStream, Charset charset) {
-      BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, charset));
-      return bufferedReader.lines().collect(Collectors.joining("\n"));
-   }
+    public static String buildStringFromStream(InputStream inputStream, Charset charset) {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, charset));
+        return bufferedReader.lines().collect(Collectors.joining("\n"));
+    }
 }

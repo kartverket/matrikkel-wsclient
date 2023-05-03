@@ -19,9 +19,9 @@ public enum Endringstype {
 
     public static Endringstype fromValue(String v) {
         return Arrays.stream(values())
-                .filter(endringstype -> endringstype.value.equals(v))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Fant ingen match for value: " + v));
+            .filter(endringstype -> endringstype.value.equals(v))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Fant ingen match for value: " + v));
     }
 
     public static boolean erNyopprettingEllerOppdatering(String value) {

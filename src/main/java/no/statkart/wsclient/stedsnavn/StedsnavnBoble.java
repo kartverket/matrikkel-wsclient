@@ -2,17 +2,17 @@ package no.statkart.wsclient.stedsnavn;
 
 public class StedsnavnBoble {
 
-   private StedsnavnBobleId id;
+    private StedsnavnBobleId id;
 
-   public StedsnavnBoble(StedsnavnBobleId id) {
-      this.id = id;
-   }
+    public StedsnavnBoble(StedsnavnBobleId id) {
+        this.id = id;
+    }
 
-   public StedsnavnBobleId getId() {
-      return id;
-   }
+    public StedsnavnBobleId getId() {
+        return id;
+    }
 
-   public long getIdAsLong() {
-      return Long.valueOf(getId().getValue());
-   }
+    public long getIdAsLong() {
+        return Long.valueOf(getId().getValue());
+    }
 }

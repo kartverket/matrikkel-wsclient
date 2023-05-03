@@ -91,7 +91,7 @@ public class KontaktinformasjonClient {
             String error = null;
             if (conn != null) {
                 try (InputStream errorStream = conn.getErrorStream()) {
-                    if(errorStream != null) {
+                    if (errorStream != null) {
                         error = CharStreams.toString(new InputStreamReader(errorStream, StandardCharsets.UTF_8));
                     }
                 } catch (IOException ioException) {
