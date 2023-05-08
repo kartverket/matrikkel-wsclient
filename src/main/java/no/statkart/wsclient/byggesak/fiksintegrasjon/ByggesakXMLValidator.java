@@ -31,7 +31,7 @@ class ByggesakXMLValidator {
 
    static {
             try {
-               jaxbContext = JAXBContext.newInstance("no.geointegrasjon.rep.matrikkel.foering.v1");
+               jaxbContext = JAXBContext.newInstance("no.statkart.wsclient.byggesak.fiksintegrasjon.generated");
                unmarshaller = jaxbContext.createUnmarshaller();
                SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
                schema =
