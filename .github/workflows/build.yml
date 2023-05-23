@@ -22,10 +22,10 @@ jobs:
           arguments: clean assemble |
             --refresh-dependencies
             --profile
-          gradle-executable: ../../
+          gradle-executable: ${{ github.workspace }}
 
       - uses: gradle/gradle-build-action@v2
         with:
             arguments: check |
               --continue
-            gradle-executable: ../../
+            gradle-executable: ${{ github.workspace }}
