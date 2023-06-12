@@ -12,11 +12,6 @@ pipeline { //declarative pipeline syntax
         label 'matrikkelen'
     }
 
-    triggers {
-        cron('H H * * 7') //hver søndag
-    }
-
-
     tools {
         jdk 'Java 11 Latest'
     }
