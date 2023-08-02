@@ -9,7 +9,6 @@ import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.HeftelseIdListTransfer;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetsendringIdListTransfer;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap;
-import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RettsstiftelseIdListTransfer;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.TransferMode;
 
 public interface RettsstiftelseWS {
@@ -22,8 +21,6 @@ public interface RettsstiftelseWS {
                                                                                                                        GrunnbokContext grunnbokContext) throws ServiceException;
 
     RettsstiftelseIdList findRettsstiftelserForDokument(DokumentId dokumentId, GrunnbokContext grunnbokContext) throws ServiceException;
-
-    RettsstiftelseIdListTransfer findRettsstiftelserForDokumentNummerOgAar(long dokumentNr, int dokumentAar, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException;
 
     RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap findRettsstiftelserMedNyeAndeler(RegisterenhetsrettsandelIdList andeler,
                                                                                                         GrunnbokContext grunnbokContext) throws ServiceException;

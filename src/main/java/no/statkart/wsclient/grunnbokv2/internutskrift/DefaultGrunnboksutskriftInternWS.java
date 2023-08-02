@@ -31,16 +31,6 @@ public class DefaultGrunnboksutskriftInternWS implements GrunnboksutskriftIntern
     }
 
     @Override
-    public String ubekreftetHistoriskGrunnboksutskrift(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {
-        return service.ubekreftetHistoriskGrunnboksutskrift(registerenhetId, grunnbokContext);
-    }
-
-    @Override
-    public String ubekreftetGrunnboksutskrift(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {
-        return service.ubekreftetGrunnboksutskrift(registerenhetId, grunnbokContext);
-    }
-
-    @Override
     public String grunnboksutskriftInfo(RegisterenhetId registerenhetId, GrunnbokContext grunnbokContext) throws ServiceException {
         return service.grunnboksutskriftInfo(registerenhetId, grunnbokContext);
     }

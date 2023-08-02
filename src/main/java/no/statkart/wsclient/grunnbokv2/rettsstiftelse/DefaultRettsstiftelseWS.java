@@ -11,7 +11,6 @@ import no.kartverket.grunnbok.wsapi.v2.service.rettsstiftelse.RettsstiftelseServ
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.HeftelseIdListTransfer;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetsendringIdListTransfer;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetsrettsandelIdTilOverdragelseAvRegisterenhetsrettIdMap;
-import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RettsstiftelseIdListTransfer;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.TransferMode;
 import no.statkart.wsclient.WebServiceBuilder;
 
@@ -57,11 +56,6 @@ public class DefaultRettsstiftelseWS implements RettsstiftelseWS {
     @Override
     public RettsstiftelseIdList findRettsstiftelserForDokument(DokumentId dokumentId, GrunnbokContext grunnbokContext) throws ServiceException {
         return rettsstiftelseService.findRettsstiftelserForDokument(dokumentId, grunnbokContext);
-    }
-
-    @Override
-    public RettsstiftelseIdListTransfer findRettsstiftelserForDokumentNummerOgAar(long dokumentNr, int dokumentAar, TransferMode transferMode, GrunnbokContext grunnbokContext) throws ServiceException {
-        return rettsstiftelseService.findRettsstiftelserForDokumentNummerOgAar(dokumentNr, dokumentAar, transferMode, grunnbokContext);
     }
 
     @Override
