@@ -36,7 +36,7 @@ public class GrunnbokHelper {
         return matrikkelenhetIdent;
     }
 
-    private static MatrikkelenhetIdentList matrikkelenhetIdentList(MatrikkelenhetIdent idents) {
+    private static MatrikkelenhetIdentList matrikkelenhetIdentList(MatrikkelenhetIdent... idents) {
         final MatrikkelenhetIdentList identList = new MatrikkelenhetIdentList();
         Collections.addAll(identList.getItem(), idents);
         return identList;
