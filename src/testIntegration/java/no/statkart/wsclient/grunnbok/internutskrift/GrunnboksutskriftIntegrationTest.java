@@ -3,7 +3,6 @@ package no.statkart.wsclient.grunnbok.internutskrift;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdent;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.MatrikkelenhetId;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
-import no.statkart.skif.util.NullHostnameVerifier;
 import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbok.GrunnbokHelper;
 import no.statkart.wsclient.grunnbokv2.internutskrift.DefaultGrunnboksutskriftInternWS;
@@ -295,12 +294,11 @@ public class GrunnboksutskriftIntegrationTest {
     }
 
     @BeforeTest
-    public void setUp() throws ServiceException {
+    public void setUp() {
         final IntegrationTestProperties config = new IntegrationTestProperties();
         final String grunnbokUser = config.getGrunnbokMatFnUsername();
         final String grunnbokPassword = config.getGrunnbokMatFnPassword();
         if (grunnboksutskriftIntern == null) {
-            final NullHostnameVerifier hostnameVerifier = new NullHostnameVerifier();
             try {
                 grunnboksutskriftIntern = new DefaultGrunnboksutskriftInternWS(grunnbokUser, grunnbokPassword, config.getGrunnbokGrunnboksutskriftInternServiceUrl());
             } catch (Throwable t) {
@@ -311,7 +309,7 @@ public class GrunnboksutskriftIntegrationTest {
     }
 
     @AfterTest
-    public void teardown() throws ServiceException {
+    public void teardown() {
         grunnboksutskriftIntern = null;
         grunnbokHelper = null;
     }

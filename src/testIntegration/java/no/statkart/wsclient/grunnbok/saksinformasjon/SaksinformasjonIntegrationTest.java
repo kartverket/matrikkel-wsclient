@@ -3,8 +3,6 @@ package no.statkart.wsclient.grunnbok.saksinformasjon;
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.saksinformasjon.Saksinformasjon;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.saksinformasjon.SaksinformasjonId;
-import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
-import no.statkart.skif.util.NullHostnameVerifier;
 import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbok.GrunnbokHelper;
 import no.statkart.wsclient.grunnbokv2.saksinformasjon.DefaultSaksinformasjonWS;
@@ -45,12 +43,11 @@ public class SaksinformasjonIntegrationTest {
 
 
     @BeforeTest
-    public void setUp() throws ServiceException {
+    public void setUp() {
         final IntegrationTestProperties config = new IntegrationTestProperties();
         final String grunnbokUser = config.getGrunnbokMatFnUsername();
         final String grunnbokPassword = config.getGrunnbokMatFnPassword();
         if (saksinformasjon == null) {
-            final NullHostnameVerifier hostnameVerifier = new NullHostnameVerifier();
             try {
                 saksinformasjon = new DefaultSaksinformasjonWS(grunnbokUser, grunnbokPassword, config.getGrunnbokSaksinformasjonServiceUrl());
             } catch (Throwable t) {
@@ -58,7 +55,6 @@ public class SaksinformasjonIntegrationTest {
             }
         }
         if (store == null) {
-            final NullHostnameVerifier hostnameVerifier = new NullHostnameVerifier();
             try {
                 store = new DefaultStoreWS(grunnbokUser, grunnbokPassword, config.getGrunnbokStoreServiceUrl());
             } catch (Throwable t) {
@@ -69,7 +65,7 @@ public class SaksinformasjonIntegrationTest {
     }
 
     @AfterTest
-    public void teardown() throws ServiceException {
+    public void teardown() {
         store = null;
         saksinformasjon = null;
         grunnbokHelper = null;
