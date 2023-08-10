@@ -35,10 +35,7 @@ public class RettsstiftelseIntegrationTest {
         DokumentIdentList dokumentIdentList = new DokumentIdentList();
 
         //Oppgi dokumentnr
-        DokumentIdent dokumentIdent = new DokumentIdent();
-        dokumentIdent.setDokumentaar(2019);
-        dokumentIdent.setDokumentnummer(517475);
-        dokumentIdent.setEmbetenummer("200");
+        DokumentIdent dokumentIdent = IdentWS.dokumentIdent(2019, 517475L, "200");
         dokumentIdentList.getItem().add(dokumentIdent);
 
         //Finn dokumentId
@@ -64,10 +61,7 @@ public class RettsstiftelseIntegrationTest {
 
         //Oppgi dokumentnr med rettsstiftelsesnr
         int rettsstiftelsenr = 3;
-        DokumentIdent dokumentIdent = new DokumentIdent();
-        dokumentIdent.setDokumentaar(2019);
-        dokumentIdent.setDokumentnummer(517475);
-        dokumentIdent.setEmbetenummer("200");
+        DokumentIdent dokumentIdent = IdentWS.dokumentIdent(2019, 517475L, "200");
         dokumentIdentList.getItem().add(dokumentIdent);
 
         //Finn dokumentId

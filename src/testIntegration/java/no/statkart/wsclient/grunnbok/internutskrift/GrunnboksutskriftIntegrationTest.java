@@ -5,6 +5,7 @@ import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.Matrikkelen
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbok.GrunnbokHelper;
+import no.statkart.wsclient.grunnbokv2.ident.IdentWS;
 import no.statkart.wsclient.grunnbokv2.internutskrift.DefaultGrunnboksutskriftInternWS;
 import no.statkart.wsclient.grunnbokv2.internutskrift.GrunnboksutskriftInternWS;
 import org.testng.annotations.AfterTest;
@@ -27,7 +28,7 @@ public class GrunnboksutskriftIntegrationTest {
      */
     @Test
     public void grunnboksutskriftInfo() throws Exception {
-        final MatrikkelenhetIdent matrikkelenhetIdent = GrunnbokHelper.matrikkelenhetIdent("0301", 2, 1);
+        final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
         final MatrikkelenhetId matrikkelenhetId = grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
 
         final String grunnboksutskriftInfo = grunnboksutskriftIntern.grunnboksutskriftInfo(matrikkelenhetId, grunnbokHelper.context());
@@ -45,7 +46,7 @@ public class GrunnboksutskriftIntegrationTest {
      */
     @Test
     public void delAvGrunnboksutskriftOverdragelser() throws ServiceException {
-        final MatrikkelenhetIdent matrikkelenhetIdent = GrunnbokHelper.matrikkelenhetIdent("0301", 2, 1);
+        final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
         final MatrikkelenhetId matrikkelenhetId = grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
 
         final String overdragelserInfo = grunnboksutskriftIntern.delAvGrunnboksutskriftOverdragelser(matrikkelenhetId, grunnbokHelper.context());
@@ -64,7 +65,7 @@ public class GrunnboksutskriftIntegrationTest {
      */
     @Test
     public void delAvGrunnboksutskriftPengeheftelser() throws ServiceException {
-        final MatrikkelenhetIdent matrikkelenhetIdent = GrunnbokHelper.matrikkelenhetIdent("0301", 2, 1);
+        final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
         final MatrikkelenhetId matrikkelenhetId = grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
 
         final String pengeheftelserInfo = grunnboksutskriftIntern.delAvGrunnboksutskriftHeftelser(matrikkelenhetId, grunnbokHelper.context());
@@ -85,7 +86,7 @@ public class GrunnboksutskriftIntegrationTest {
      */
     @Test
     public void delAvGrunnboksutskriftRegisterenhetsendringer() throws ServiceException {
-        final MatrikkelenhetIdent matrikkelenhetIdent = GrunnbokHelper.matrikkelenhetIdent("0301", 2, 1);
+        final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
         final MatrikkelenhetId matrikkelenhetId = grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
 
         final String registerenhetsendringerInfo = grunnboksutskriftIntern.delAvGrunnboksutskriftRegisterenhetsendringer(matrikkelenhetId, grunnbokHelper.context());
@@ -122,7 +123,7 @@ public class GrunnboksutskriftIntegrationTest {
      */
     @Test
     public void delAvGrunnboksutskriftTidligereOverdragelser() throws ServiceException {
-        final MatrikkelenhetIdent matrikkelenhetIdent = GrunnbokHelper.matrikkelenhetIdent("0301", 2, 1);
+        final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
         final MatrikkelenhetId matrikkelenhetId = grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
 
         final String overdragelserInfo = grunnboksutskriftIntern.delAvGrunnboksutskriftTidligereOverdragelser(matrikkelenhetId, grunnbokHelper.context());
@@ -186,7 +187,7 @@ public class GrunnboksutskriftIntegrationTest {
      */
     @Test
     public void delAvGrunnboksutskriftTidligerePengeheftelser() throws ServiceException {
-        final MatrikkelenhetIdent matrikkelenhetIdent = GrunnbokHelper.matrikkelenhetIdent("0301", 2, 1);
+        final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
         final MatrikkelenhetId matrikkelenhetId = grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
 
         final String pengeheftelserInfo = grunnboksutskriftIntern.delAvGrunnboksutskriftTidligereHeftelser(matrikkelenhetId, grunnbokHelper.context());

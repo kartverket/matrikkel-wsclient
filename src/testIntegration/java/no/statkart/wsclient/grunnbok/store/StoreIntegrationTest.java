@@ -9,11 +9,14 @@ import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.Matrikkelen
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbok.GrunnbokHelper;
+import no.statkart.wsclient.grunnbokv2.ident.IdentWS;
 import no.statkart.wsclient.grunnbokv2.store.DefaultStoreWS;
 import no.statkart.wsclient.grunnbokv2.store.StoreWS;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +26,7 @@ public class StoreIntegrationTest {
     @Test
     public void getObjects_returnerBobleObjekt() throws Exception {
         GrunnbokBubbleObjectIdList grunnbokBubbleObjectIdList = new GrunnbokBubbleObjectIdList();
-        final MatrikkelenhetIdent matrikkelenhetIdent = GrunnbokHelper.matrikkelenhetIdent("0301", 2, 1);
+        final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
         final MatrikkelenhetId matrikkelenhetId = ws.grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
 
         //Hent ut bobla til matrikkelenhetId
@@ -42,6 +45,24 @@ public class StoreIntegrationTest {
         assertThat(matrikkelenhet.getFestenummer()).isEqualTo(0);
         assertThat(matrikkelenhet.getSeksjonsnummer()).isEqualTo(0);
     }
+
+    /**
+     * Implementasjon til grunnboka returnerer samme objekt kun en gang ved spørring av samme id
+     */
+    @Test
+    public void getObjects_duplikate_ids_ignoreres() throws Exception {
+        GrunnbokBubbleObjectIdList grunnbokBubbleObjectIdList = new GrunnbokBubbleObjectIdList();
+        final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
+        final MatrikkelenhetId matrikkelenhet1Id = ws.grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
+        final MatrikkelenhetId matrikkelenhet2Id = ws.grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
+
+        //Hent ut bobla til matrikkelenhetId
+        grunnbokBubbleObjectIdList.getItem().addAll(List.of(matrikkelenhet1Id, matrikkelenhet2Id));
+        GrunnbokBubbleObjectList objects = ws.getObjects(grunnbokBubbleObjectIdList);
+
+        assertThat(objects.getItem()).hasSize(1);
+    }
+
 
     static class WSHelper {
         final GrunnbokHelper grunnbokHelper = new GrunnbokHelper();
