@@ -100,42 +100,42 @@ public class RettsstiftelseIntegrationTest {
             .isEqualTo(rettsstiftelsenr);
     }
 
-    class WSHelper {
+    static class WSHelper {
         final GrunnbokHelper grunnbokHelper = new GrunnbokHelper();
         private final IntegrationTestProperties config = new IntegrationTestProperties();
-        String grunnbokUser = config.getGrunnbokMatFnUsername();
-        String grunnbokPassword = config.getGrunnbokMatFnPassword();
-        GrunnbokContext context = grunnbokHelper.context();
 
         /**
          * @see RettsstiftelseWS#findRettsstiftelserForDokument(DokumentId, GrunnbokContext)
          */
         public RettsstiftelseIdList findRettsstiftelserForDokument(DokumentId dokumentId) throws ServiceException {
-            RettsstiftelseWS ws = new DefaultRettsstiftelseWS(grunnbokUser, grunnbokPassword, config.getRettsstiftelseServiceUrl());
-            return ws.findRettsstiftelserForDokument(dokumentId, context);
+            RettsstiftelseWS ws = new DefaultRettsstiftelseWS(
+                config.getGrunnbokMatFnUsername(),
+                config.getGrunnbokMatFnPassword(),
+                config.getRettsstiftelseServiceUrl());
+            return ws.findRettsstiftelserForDokument(dokumentId, grunnbokHelper.context());
         }
 
         /**
          * @see IdentWS#findDokumentIdsForIdents(DokumentIdentList, GrunnbokContext)
          */
         public DokumentIdentTilDokumentIdMap findDokumentIdsForIdents(DokumentIdentList dokumentIdentList) throws ServiceException {
-            IdentWS ws = new DefaultIdentWS(grunnbokUser, grunnbokPassword, config.getIdentServiceServiceUrl());
-            return ws.findDokumentIdsForIdents(dokumentIdentList, context);
+            IdentWS ws = new DefaultIdentWS(config.getGrunnbokMatFnUsername(), config.getGrunnbokMatFnPassword(), config.getIdentServiceServiceUrl());
+            return ws.findDokumentIdsForIdents(dokumentIdentList, grunnbokHelper.context());
         }
 
         /**
          * @see StoreWS#getObjects(GrunnbokBubbleObjectIdList, GrunnbokContext)
          */
         public GrunnbokBubbleObjectList getObjects(GrunnbokBubbleObjectIdList ids) throws ServiceException {
-            StoreWS ws = new DefaultStoreWS(grunnbokUser, grunnbokPassword, config.getGrunnbokStoreServiceUrl());
-            return ws.getObjects(ids, context);
+            StoreWS ws = new DefaultStoreWS(config.getGrunnbokMatFnUsername(), config.getGrunnbokMatFnPassword(), config.getGrunnbokStoreServiceUrl());
+            return ws.getObjects(ids, grunnbokHelper.context());
         }
 
     }
 
     @BeforeTest
     public void setUp() {
-        ws = new RettsstiftelseIntegrationTest.WSHelper();
+        ws = new WSHelper();
     }
 
     @AfterTest

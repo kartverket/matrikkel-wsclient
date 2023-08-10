@@ -17,11 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class IdentIntegrationTest {
     IdentIntegrationTest.WSHelper ws;
-    DokumentIdentList dokumentIdentList;
 
     @Test
     public void findDokumentIdsForIdents_medGyldigDokumentIdent() throws Exception {
-        dokumentIdentList = new DokumentIdentList();
+        DokumentIdentList dokumentIdentList = new DokumentIdentList();
 
         //Oppgi gyldig dokumentnr
         DokumentIdent dokumentIdent = new DokumentIdent();
@@ -40,7 +39,7 @@ public class IdentIntegrationTest {
 
     @Test
     public void findDokumentIdsForIdents_medUgyldigDokumentIdent() throws Exception {
-        dokumentIdentList = new DokumentIdentList();
+        DokumentIdentList dokumentIdentList = new DokumentIdentList();
 
         //Oppgi ugyldig dokumentnr
         DokumentIdent dokumentIdent = new DokumentIdent();
@@ -57,25 +56,25 @@ public class IdentIntegrationTest {
         }
     }
 
-    class WSHelper {
+    static class WSHelper {
         final GrunnbokHelper grunnbokHelper = new GrunnbokHelper();
         private final IntegrationTestProperties config = new IntegrationTestProperties();
-        String grunnbokUser = config.getGrunnbokMatFnUsername();
-        String grunnbokPassword = config.getGrunnbokMatFnPassword();
-        GrunnbokContext context = grunnbokHelper.context();
 
         /**
          * @see IdentWS#findDokumentIdsForIdents(DokumentIdentList, GrunnbokContext)
          */
         public DokumentIdentTilDokumentIdMap findDokumentIdsForIdents(DokumentIdentList dokumentIdentList) throws ServiceException {
-            IdentWS ws = new DefaultIdentWS(grunnbokUser, grunnbokPassword, config.getIdentServiceServiceUrl());
-            return ws.findDokumentIdsForIdents(dokumentIdentList, context);
+            IdentWS ws = new DefaultIdentWS(
+                config.getGrunnbokMatFnUsername(),
+                config.getGrunnbokMatFnPassword(),
+                config.getIdentServiceServiceUrl());
+            return ws.findDokumentIdsForIdents(dokumentIdentList, grunnbokHelper.context());
         }
     }
 
     @BeforeTest
     public void setUp() {
-        ws = new IdentIntegrationTest.WSHelper();
+        ws = new WSHelper();
     }
 
     @AfterTest
