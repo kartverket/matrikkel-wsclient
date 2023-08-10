@@ -28,14 +28,6 @@ public class GrunnbokHelper {
         setup();
     }
 
-    public static MatrikkelenhetIdent matrikkelenhetIdent(String kommunenummer, Number gardsnummer, Number bruksnummer) {
-        final MatrikkelenhetIdent matrikkelenhetIdent = new MatrikkelenhetIdent();
-        matrikkelenhetIdent.setKommunenummer(kommunenummer);
-        matrikkelenhetIdent.setGaardsnummer(gardsnummer != null ? gardsnummer.intValue() : 0);
-        matrikkelenhetIdent.setBruksnummer(bruksnummer != null ? bruksnummer.intValue() : 0);
-        return matrikkelenhetIdent;
-    }
-
     private static MatrikkelenhetIdentList matrikkelenhetIdentList(MatrikkelenhetIdent... idents) {
         final MatrikkelenhetIdentList identList = new MatrikkelenhetIdentList();
         Collections.addAll(identList.getItem(), idents);
