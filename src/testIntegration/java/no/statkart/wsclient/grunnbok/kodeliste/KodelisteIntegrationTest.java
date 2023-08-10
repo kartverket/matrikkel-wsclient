@@ -1,6 +1,5 @@
 package no.statkart.wsclient.grunnbok.kodeliste;
 
-import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.Timestamp;
 import no.kartverket.grunnbok.wsapi.v2.domain.kodeliste.KodelisteTransfer;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.koder.RettsstiftelsestypeKode;
@@ -21,7 +20,7 @@ public class KodelisteIntegrationTest {
 
     @Test
     public void getKodelister_returnererTransfer() throws Exception {
-        KodelisteTransfer kodelister = ws.getKodelister(ws.context.getSnapshotVersion());
+        KodelisteTransfer kodelister = ws.getKodelister(ws.grunnbokHelper.context().getSnapshotVersion());
 
         assertThat(kodelister).isNotNull();
         assertThat(kodelister.getBubbleObjects().getItem())
@@ -31,7 +30,7 @@ public class KodelisteIntegrationTest {
 
     @Test
     public void getKodelister_harKoderMedFelterUtfyllt() throws Exception {
-        KodelisteTransfer kodelister = ws.getKodelister(ws.context.getSnapshotVersion());
+        KodelisteTransfer kodelister = ws.getKodelister(ws.grunnbokHelper.context().getSnapshotVersion());
 
         RettsstiftelsestypeKode rettsstiftelsestype = kodelister.getBubbleObjects().getItem().stream()
             .filter(RettsstiftelsestypeKode.class::isInstance)
@@ -45,19 +44,19 @@ public class KodelisteIntegrationTest {
         assertThat(rettsstiftelsestype.getKodeverdi()).isNotBlank().isEqualTo("OB_REF");
     }
 
-    class WSHelper {
+    static class WSHelper {
         final GrunnbokHelper grunnbokHelper = new GrunnbokHelper();
         private final IntegrationTestProperties config = new IntegrationTestProperties();
-        String grunnbokUser = config.getGrunnbokMatFnUsername();
-        String grunnbokPassword = config.getGrunnbokMatFnPassword();
-        GrunnbokContext context = grunnbokHelper.context();
 
         /**
          * @see KodelisteWS#getKodelister
          */
         public KodelisteTransfer getKodelister(Timestamp timestamp) throws ServiceException {
-            KodelisteWS ws = new DefaultKodelisteWS(grunnbokUser, grunnbokPassword, config.getGrunnbokKodelisteServiceUrl());
-            return ws.getKodelister(timestamp, context);
+            KodelisteWS ws = new DefaultKodelisteWS(
+                config.getGrunnbokMatFnUsername(),
+                config.getGrunnbokMatFnPassword(),
+                config.getGrunnbokKodelisteServiceUrl());
+            return ws.getKodelister(timestamp, grunnbokHelper.context());
         }
 
     }

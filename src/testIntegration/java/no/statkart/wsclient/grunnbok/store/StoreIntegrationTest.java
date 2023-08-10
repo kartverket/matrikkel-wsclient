@@ -11,7 +11,6 @@ import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbok.GrunnbokHelper;
 import no.statkart.wsclient.grunnbokv2.store.DefaultStoreWS;
 import no.statkart.wsclient.grunnbokv2.store.StoreWS;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -32,39 +31,38 @@ public class StoreIntegrationTest {
         GrunnbokBubbleObjectList objects = ws.getObjects(grunnbokBubbleObjectIdList);
 
         assertThat(objects.getItem())
-            .isNotNull()
             .flatExtracting(Object::getClass)
-            .contains(Matrikkelenhet.class);
+            .containsExactly(Matrikkelenhet.class);
 
-        Matrikkelenhet matrikkelenhet = objects.getItem().stream()
-            .map(Matrikkelenhet.class::cast)
-            .findFirst().orElse(null);
+        Matrikkelenhet matrikkelenhet = (Matrikkelenhet) objects.getItem().get(0);
 
         assertThat(matrikkelenhet).isNotNull();
-        Assert.assertEquals(matrikkelenhetIdent.getGaardsnummer(), matrikkelenhet.getGaardsnummer());
-        Assert.assertEquals(matrikkelenhetIdent.getBruksnummer(), matrikkelenhet.getBruksnummer());
+        assertThat(matrikkelenhet.getGaardsnummer()).isEqualTo(2);
+        assertThat(matrikkelenhet.getBruksnummer()).isEqualTo(1);
+        assertThat(matrikkelenhet.getFestenummer()).isEqualTo(0);
+        assertThat(matrikkelenhet.getSeksjonsnummer()).isEqualTo(0);
     }
 
-    class WSHelper {
+    static class WSHelper {
         final GrunnbokHelper grunnbokHelper = new GrunnbokHelper();
         private final IntegrationTestProperties config = new IntegrationTestProperties();
-        String grunnbokUser = config.getGrunnbokMatFnUsername();
-        String grunnbokPassword = config.getGrunnbokMatFnPassword();
-        GrunnbokContext context = grunnbokHelper.context();
 
         /**
          * @see StoreWS#getObjects(GrunnbokBubbleObjectIdList, GrunnbokContext)
          */
         public GrunnbokBubbleObjectList getObjects(GrunnbokBubbleObjectIdList ids) throws ServiceException {
-            StoreWS ws = new DefaultStoreWS(grunnbokUser, grunnbokPassword, config.getGrunnbokStoreServiceUrl());
-            return ws.getObjects(ids, context);
+            StoreWS ws = new DefaultStoreWS(
+                config.getGrunnbokMatFnUsername(),
+                config.getGrunnbokMatFnPassword(),
+                config.getGrunnbokStoreServiceUrl());
+            return ws.getObjects(ids, grunnbokHelper.context());
         }
 
     }
 
     @BeforeTest
     public void setUp() {
-        ws = new StoreIntegrationTest.WSHelper();
+        ws = new WSHelper();
     }
 
     @AfterTest
