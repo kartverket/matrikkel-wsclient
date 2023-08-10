@@ -10,6 +10,9 @@ import no.kartverket.grunnbok.wsapi.v2.service.store.StoreService;
 import no.kartverket.grunnbok.wsapi.v2.service.store.StoreServiceWS;
 import no.statkart.wsclient.WebServiceBuilder;
 
+import java.util.Collection;
+import java.util.List;
+
 
 public class DefaultStoreWS implements StoreWS {
 
@@ -40,13 +43,19 @@ public class DefaultStoreWS implements StoreWS {
     }
 
     @Override
-    public GrunnbokBubbleObjectList getObjects(GrunnbokBubbleObjectIdList ids, GrunnbokContext grunnbokContext) throws ServiceException {
-        return storeService.getObjects(ids, grunnbokContext);
+    public List<GrunnbokBubbleObject> getObjects(Collection<? extends GrunnbokBubbleObjectId> ids, GrunnbokContext grunnbokContext) throws ServiceException {
+        GrunnbokBubbleObjectIdList idList = new GrunnbokBubbleObjectIdList();
+        idList.getItem().addAll(ids);
+        GrunnbokBubbleObjectList objectList = storeService.getObjects(idList, grunnbokContext);
+        return objectList.getItem();
     }
 
     @Override
-    public GrunnbokBubbleObjectList getObjectsIgnoreMissing(GrunnbokBubbleObjectIdList ids, GrunnbokContext grunnbokContext) throws ServiceException {
-        return storeService.getObjectsIgnoreMissing(ids, grunnbokContext);
+    public List<GrunnbokBubbleObject> getObjectsIgnoreMissing(Collection<? extends GrunnbokBubbleObjectId> ids, GrunnbokContext grunnbokContext) throws ServiceException {
+        GrunnbokBubbleObjectIdList idList = new GrunnbokBubbleObjectIdList();
+        idList.getItem().addAll(ids);
+        GrunnbokBubbleObjectList objectList = storeService.getObjectsIgnoreMissing(idList, grunnbokContext);
+        return objectList.getItem();
     }
 
 }

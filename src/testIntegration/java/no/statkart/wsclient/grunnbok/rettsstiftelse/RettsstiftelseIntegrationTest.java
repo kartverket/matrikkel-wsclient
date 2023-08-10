@@ -1,18 +1,15 @@
 package no.statkart.wsclient.grunnbok.rettsstiftelse;
 
-import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObjectIdList;
-import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObjectList;
+import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObject;
+import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObjectId;
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.DokumentIdent;
-import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.DokumentIdentList;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.dokument.DokumentId;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.Rettsstiftelse;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.RettsstiftelseId;
-import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.RettsstiftelseIdList;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.heftelse.AnnenHeftelse;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.rettsstiftelse.heftelse.HeftelseIRegisterenhetsrett;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
-import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.DokumentIdentTilDokumentIdMap;
 import no.statkart.wsclient.IntegrationTestProperties;
 import no.statkart.wsclient.grunnbok.GrunnbokHelper;
 import no.statkart.wsclient.grunnbokv2.ident.DefaultIdentWS;
@@ -25,6 +22,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RettsstiftelseIntegrationTest {
@@ -32,58 +31,37 @@ public class RettsstiftelseIntegrationTest {
 
     @Test
     public void findRettsstiftelserForDokument_returnerIdList() throws Exception {
-        DokumentIdentList dokumentIdentList = new DokumentIdentList();
-
         //Oppgi dokumentnr
         DokumentIdent dokumentIdent = IdentWS.dokumentIdent(2019, 517475L, "200");
-        dokumentIdentList.getItem().add(dokumentIdent);
 
         //Finn dokumentId
-        DokumentIdentTilDokumentIdMap dokumentIdsForIdents = ws.findDokumentIdsForIdents(dokumentIdentList);
-        for (DokumentIdentTilDokumentIdMap.Entry dokumentIdsForIdent : dokumentIdsForIdents.getEntry()) {
-            assertThat(dokumentIdsForIdent.getValue())
-                .isNotNull();
-        }
+        DokumentId dokumentId = ws.findDokumentIdForIdent(dokumentIdent);
+        assertThat(dokumentId).isNotNull();
 
         //Finn rettsstiftelser fra dokumentId
-        DokumentId dokumentId = dokumentIdsForIdents.getEntry().get(0).getValue();
-        RettsstiftelseIdList rettsstiftelserForDokument = ws.findRettsstiftelserForDokument(dokumentId);
-        assertThat(rettsstiftelserForDokument).isNotNull();
-        assertThat(rettsstiftelserForDokument.getItem())
-            .flatExtracting(Object::getClass)
-            .contains(RettsstiftelseId.class);
+        List<RettsstiftelseId> rettsstiftelseIds = ws.findRettsstiftelserForDokument(dokumentId);
+        assertThat(rettsstiftelseIds).doesNotContainNull().isNotEmpty();
     }
 
 
     @Test
     public void findRettsstiftelserForDokument_returnerIdListMedRettsstiftelsesnr() throws Exception {
-        DokumentIdentList dokumentIdentList = new DokumentIdentList();
-
         //Oppgi dokumentnr med rettsstiftelsesnr
         int rettsstiftelsenr = 3;
         DokumentIdent dokumentIdent = IdentWS.dokumentIdent(2019, 517475L, "200");
-        dokumentIdentList.getItem().add(dokumentIdent);
 
         //Finn dokumentId
-        DokumentIdentTilDokumentIdMap dokumentIdsForIdents = ws.findDokumentIdsForIdents(dokumentIdentList);
-
-        //Finn rettsstiftelser fra dokumentId
-        DokumentId dokumentId = dokumentIdsForIdents.getEntry().get(0).getValue();
+        DokumentId dokumentId = ws.findDokumentIdForIdent(dokumentIdent);
         assertThat(dokumentId).isNotNull();
 
-        RettsstiftelseIdList rettsstiftelseIdList = ws.findRettsstiftelserForDokument(dokumentId);
-        assertThat(rettsstiftelseIdList).isNotNull();
-        assertThat(rettsstiftelseIdList.getItem())
-            .flatExtracting(Object::getClass)
-            .contains(RettsstiftelseId.class);
+        List<RettsstiftelseId> rettsstiftelseIds = ws.findRettsstiftelserForDokument(dokumentId);
+        assertThat(rettsstiftelseIds).doesNotContainNull().isNotEmpty();
 
         //Lag et boble-objekt av rettsstiftelseIdList
-        GrunnbokBubbleObjectIdList grunnbokBubbleObjectIdRettsstiftelse = new GrunnbokBubbleObjectIdList();
-        grunnbokBubbleObjectIdRettsstiftelse.getItem().addAll(rettsstiftelseIdList.getItem());
-        GrunnbokBubbleObjectList grunnbokBubbleObjectList = ws.getObjects(grunnbokBubbleObjectIdRettsstiftelse);
+        List<GrunnbokBubbleObject> grunnbokBubbleObjectList = ws.getObjects(rettsstiftelseIds);
 
         //Hent ut rettsstiftelse med det oppgitte rettsstiftelsesnr
-        HeftelseIRegisterenhetsrett heftelseIRegisterenhetsrett = grunnbokBubbleObjectList.getItem().stream()
+        HeftelseIRegisterenhetsrett heftelseIRegisterenhetsrett = grunnbokBubbleObjectList.stream()
             .filter(AnnenHeftelse.class::isInstance) ////tillatteRettstypekoder er alle aktuelle subklasser av HeftelseIRegisterenhetsrett.
             .map(HeftelseIRegisterenhetsrett.class::cast)
             .filter((HeftelseIRegisterenhetsrett h) -> h.getRettsstiftelsesnummer() == rettsstiftelsenr)
@@ -101,7 +79,7 @@ public class RettsstiftelseIntegrationTest {
         /**
          * @see RettsstiftelseWS#findRettsstiftelserForDokument(DokumentId, GrunnbokContext)
          */
-        public RettsstiftelseIdList findRettsstiftelserForDokument(DokumentId dokumentId) throws ServiceException {
+        public List<RettsstiftelseId> findRettsstiftelserForDokument(DokumentId dokumentId) throws ServiceException {
             RettsstiftelseWS ws = new DefaultRettsstiftelseWS(
                 config.getGrunnbokMatFnUsername(),
                 config.getGrunnbokMatFnPassword(),
@@ -110,17 +88,17 @@ public class RettsstiftelseIntegrationTest {
         }
 
         /**
-         * @see IdentWS#findDokumentIdsForIdents(DokumentIdentList, GrunnbokContext)
+         * @see IdentWS#findDokumentIdsForIdents
          */
-        public DokumentIdentTilDokumentIdMap findDokumentIdsForIdents(DokumentIdentList dokumentIdentList) throws ServiceException {
+        public DokumentId findDokumentIdForIdent(DokumentIdent dokumentIdent) throws ServiceException {
             IdentWS ws = new DefaultIdentWS(config.getGrunnbokMatFnUsername(), config.getGrunnbokMatFnPassword(), config.getIdentServiceServiceUrl());
-            return ws.findDokumentIdsForIdents(dokumentIdentList, grunnbokHelper.context());
+            return ws.findDokumentIdForIdent(dokumentIdent, grunnbokHelper.context());
         }
 
         /**
-         * @see StoreWS#getObjects(GrunnbokBubbleObjectIdList, GrunnbokContext)
+         * @see StoreWS#getObjects
          */
-        public GrunnbokBubbleObjectList getObjects(GrunnbokBubbleObjectIdList ids) throws ServiceException {
+        public List<GrunnbokBubbleObject> getObjects(List<? extends GrunnbokBubbleObjectId> ids) throws ServiceException {
             StoreWS ws = new DefaultStoreWS(config.getGrunnbokMatFnUsername(), config.getGrunnbokMatFnPassword(), config.getGrunnbokStoreServiceUrl());
             return ws.getObjects(ids, grunnbokHelper.context());
         }

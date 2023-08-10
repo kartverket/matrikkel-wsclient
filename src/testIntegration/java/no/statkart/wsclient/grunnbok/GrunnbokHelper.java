@@ -6,7 +6,6 @@ import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIde
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdentList;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.MatrikkelenhetId;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
-import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.MatrikkelenhetIdentTilMatrikkelenhetIdMap;
 import no.statkart.skif.exception.ImplementationException;
 import no.statkart.skif.exception.OperationalException;
 import no.statkart.wsclient.IntegrationTestProperties;
@@ -18,6 +17,8 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public class GrunnbokHelper {
     private final transient IntegrationTestProperties config = new IntegrationTestProperties();
@@ -57,10 +58,10 @@ public class GrunnbokHelper {
 
     public MatrikkelenhetId findMatrikkelenhetId(MatrikkelenhetIdent matrikkelenhetIdent) {
         try {
-            final MatrikkelenhetIdentTilMatrikkelenhetIdMap matrikkelenhetIdsForIdents = identService.findMatrikkelenhetIdsForIdents(matrikkelenhetIdentList(matrikkelenhetIdent), context());
-            final Iterator<MatrikkelenhetIdentTilMatrikkelenhetIdMap.Entry> iterator = matrikkelenhetIdsForIdents.getEntry().iterator();
+            final Map<MatrikkelenhetIdent, MatrikkelenhetId> matrikkelenhetIdsForIdents = identService.findMatrikkelenhetIdsForIdents(List.of(matrikkelenhetIdent), context());
+            final Iterator<MatrikkelenhetId> iterator = matrikkelenhetIdsForIdents.values().iterator();
             if (iterator.hasNext()) {
-                return iterator.next().getValue();
+                return iterator.next();
             }
             return null;
         } catch (ServiceException e) {
