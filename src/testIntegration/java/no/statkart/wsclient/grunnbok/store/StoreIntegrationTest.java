@@ -1,8 +1,7 @@
 package no.statkart.wsclient.grunnbok.store;
 
-import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObjectIdList;
-import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObjectList;
-import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
+import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObject;
+import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokBubbleObjectId;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdent;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.Matrikkelenhet;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.MatrikkelenhetId;
@@ -25,19 +24,17 @@ public class StoreIntegrationTest {
 
     @Test
     public void getObjects_returnerBobleObjekt() throws Exception {
-        GrunnbokBubbleObjectIdList grunnbokBubbleObjectIdList = new GrunnbokBubbleObjectIdList();
         final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
         final MatrikkelenhetId matrikkelenhetId = ws.grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
 
         //Hent ut bobla til matrikkelenhetId
-        grunnbokBubbleObjectIdList.getItem().add(matrikkelenhetId);
-        GrunnbokBubbleObjectList objects = ws.getObjects(grunnbokBubbleObjectIdList);
+        List<GrunnbokBubbleObject> objects = ws.getObjects(List.of(matrikkelenhetId));
 
-        assertThat(objects.getItem())
+        assertThat(objects)
             .flatExtracting(Object::getClass)
             .containsExactly(Matrikkelenhet.class);
 
-        Matrikkelenhet matrikkelenhet = (Matrikkelenhet) objects.getItem().get(0);
+        Matrikkelenhet matrikkelenhet = (Matrikkelenhet) objects.get(0);
 
         assertThat(matrikkelenhet).isNotNull();
         assertThat(matrikkelenhet.getGaardsnummer()).isEqualTo(2);
@@ -51,16 +48,12 @@ public class StoreIntegrationTest {
      */
     @Test
     public void getObjects_duplikate_ids_ignoreres() throws Exception {
-        GrunnbokBubbleObjectIdList grunnbokBubbleObjectIdList = new GrunnbokBubbleObjectIdList();
         final MatrikkelenhetIdent matrikkelenhetIdent = IdentWS.matrikkelenhetIdent("0301", 2, 1);
         final MatrikkelenhetId matrikkelenhet1Id = ws.grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
         final MatrikkelenhetId matrikkelenhet2Id = ws.grunnbokHelper.findMatrikkelenhetId(matrikkelenhetIdent);
 
-        //Hent ut bobla til matrikkelenhetId
-        grunnbokBubbleObjectIdList.getItem().addAll(List.of(matrikkelenhet1Id, matrikkelenhet2Id));
-        GrunnbokBubbleObjectList objects = ws.getObjects(grunnbokBubbleObjectIdList);
-
-        assertThat(objects.getItem()).hasSize(1);
+        assertThat(ws.getObjects(List.of(matrikkelenhet1Id, matrikkelenhet2Id)))
+            .hasSize(1);
     }
 
 
@@ -69,9 +62,9 @@ public class StoreIntegrationTest {
         private final IntegrationTestProperties config = new IntegrationTestProperties();
 
         /**
-         * @see StoreWS#getObjects(GrunnbokBubbleObjectIdList, GrunnbokContext)
+         * @see StoreWS#getObjects
          */
-        public GrunnbokBubbleObjectList getObjects(GrunnbokBubbleObjectIdList ids) throws ServiceException {
+        public List<GrunnbokBubbleObject> getObjects(List<? extends GrunnbokBubbleObjectId> ids) throws ServiceException {
             StoreWS ws = new DefaultStoreWS(
                 config.getGrunnbokMatFnUsername(),
                 config.getGrunnbokMatFnPassword(),

@@ -1,14 +1,20 @@
 package no.statkart.wsclient.grunnbokv2.registerenhetsrettsandel;
 
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.person.PersonId;
 import no.kartverket.grunnbok.wsapi.v2.domain.register.person.PersonIdList;
-import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.RegisterenhetsrettIdList;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.RegisterenhetsrettsandelId;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.RegisterenhetsrettsandelIdList;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
 import no.kartverket.grunnbok.wsapi.v2.service.registerenhetsrettsandel.RegisterenhetsrettsandelService;
 import no.kartverket.grunnbok.wsapi.v2.service.registerenhetsrettsandel.RegisterenhetsrettsandelServiceWS;
 import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.PersonIdTilRegisterenhetsrettsandelIdsMap;
-import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap;
 import no.statkart.wsclient.WebServiceBuilder;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DefaultRegisterenhetsrettsandelWS implements RegisterenhetsrettsandelWS {
 
@@ -36,12 +42,23 @@ public class DefaultRegisterenhetsrettsandelWS implements Registerenhetsrettsand
 
 
     @Override
-    public PersonIdTilRegisterenhetsrettsandelIdsMap findAndelerForRettighetshavere(PersonIdList personIds, GrunnbokContext grunnbokContext) throws ServiceException {
-        return registerenhetsrettsandelService.findAndelerForRettighetshavere(personIds, grunnbokContext);
+    public Map<PersonId, List<RegisterenhetsrettsandelId>> findAndelerForRettighetshavere(Collection<PersonId> personIds, GrunnbokContext grunnbokContext) throws ServiceException {
+        PersonIdList idList = new PersonIdList();
+        idList.getItem().addAll(personIds);
+        return unwrap(registerenhetsrettsandelService.findAndelerForRettighetshavere(idList, grunnbokContext));
     }
 
-    @Override
-    public RegisterenhetsrettIdTilRegisterenhetsrettsandelIdsMap findAndelerIRetter(RegisterenhetsrettIdList rettIds, GrunnbokContext grunnbokContext) throws ServiceException {
-        return registerenhetsrettsandelService.findAndelerIRetter(rettIds, grunnbokContext);
+    private static Map<PersonId, List<RegisterenhetsrettsandelId>> unwrap(PersonIdTilRegisterenhetsrettsandelIdsMap personIdTilRegisterenhetsrettsandelIdsMap) {
+        HashMap<PersonId, List<RegisterenhetsrettsandelId>> idMap = new HashMap<>();
+        for (var entry : personIdTilRegisterenhetsrettsandelIdsMap.getEntry()) {
+            idMap.put(entry.getKey(), unwrap(entry.getValue()));
+        }
+        return idMap;
     }
+
+    private static List<RegisterenhetsrettsandelId> unwrap(RegisterenhetsrettsandelIdList registerenhetsrettsandelIdList) {
+        if (registerenhetsrettsandelIdList == null) return null;
+        return registerenhetsrettsandelIdList.getItem();
+    }
+
 }

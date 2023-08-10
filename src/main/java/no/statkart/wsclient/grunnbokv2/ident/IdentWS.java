@@ -2,18 +2,25 @@ package no.statkart.wsclient.grunnbokv2.ident;
 
 import no.kartverket.grunnbok.wsapi.v2.domain.basistyper.GrunnbokContext;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.DokumentIdent;
-import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.DokumentIdentList;
 import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdent;
-import no.kartverket.grunnbok.wsapi.v2.domain.grunnboksidenter.MatrikkelenhetIdentList;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.dokument.DokumentId;
+import no.kartverket.grunnbok.wsapi.v2.domain.register.registerenhet.MatrikkelenhetId;
 import no.kartverket.grunnbok.wsapi.v2.exception.ServiceException;
-import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.DokumentIdentTilDokumentIdMap;
-import no.kartverket.grunnbok.wsapi.v2.service.servicetyper.MatrikkelenhetIdentTilMatrikkelenhetIdMap;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public interface IdentWS {
 
-    MatrikkelenhetIdentTilMatrikkelenhetIdMap findMatrikkelenhetIdsForIdents(MatrikkelenhetIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException;
+    Map<MatrikkelenhetIdent, MatrikkelenhetId> findMatrikkelenhetIdsForIdents(Collection<MatrikkelenhetIdent> idents, GrunnbokContext grunnbokContext) throws ServiceException;
 
-    DokumentIdentTilDokumentIdMap findDokumentIdsForIdents(DokumentIdentList idents, GrunnbokContext grunnbokContext) throws ServiceException;
+    Map<DokumentIdent, DokumentId> findDokumentIdsForIdents(Collection<DokumentIdent> idents, GrunnbokContext grunnbokContext) throws ServiceException;
+    default DokumentId findDokumentIdForIdent(DokumentIdent ident, GrunnbokContext grunnbokContext) throws ServiceException {
+        Map<DokumentIdent, DokumentId> dokumentIdsForIdents = findDokumentIdsForIdents(List.of(ident), grunnbokContext);
+        if (dokumentIdsForIdents.isEmpty()) return null;
+        return dokumentIdsForIdents.values().iterator().next();
+    }
 
     static DokumentIdent dokumentIdent(int dokumentaar, long dokumentnummer, String embetenummer) {
         DokumentIdent ident = new DokumentIdent();
