@@ -88,17 +88,12 @@ configurations {
 }
 
 dependencies {
-  def jaxb2Version = '0.12.0'
   def slf4jVersion = '1.7.36'
   def jaxwsVersion = '2.3.5'
   def skifVersion = '2.10.1'
 
   wsImport "com.sun.xml.ws:jaxws-tools:$jaxwsVersion"
 
-  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-runtime:' + jaxb2Version
-  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics:' + jaxb2Version
-  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-basics-tools:' + jaxb2Version
-  wsImportWithXJCBinding 'org.jvnet.jaxb2_commons:jaxb2-commons-lang:2.4'
   wsImportWithXJCBinding 'org.slf4j:slf4j-simple:' + slf4jVersion
 
   implementation 'com.sun.xml.ws:jaxws-rt:' + jaxwsVersion //bruker Sun/Oracle JAXWS Stack
@@ -107,10 +102,6 @@ dependencies {
   api 'joda-time:joda-time:2.10.1'
   implementation 'com.google.guava:guava:30.1-jre'
   implementation 'org.slf4j:slf4j-api:'+slf4jVersion
-  api ('org.jvnet.jaxb2_commons:jaxb2-basics-runtime:'+jaxb2Version) {
-    exclude module: 'jaxb-runtime' //disse er ekskludert da man ønsker å bruke Weblogic providede biblioteker på runtime
-    exclude module: 'jaxb-api'
-  }
 
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
     implementation 'commons-validator:commons-validator:1.7'
@@ -351,8 +342,6 @@ def wsImportGrunnboksutskriftInternv2 = tasks.register('wsImportGrunnboksutskrif
               wsdlLocation: '/grunnboksutskriftinternv2/' + file.getRelativePath(),
               xnocompile: true,
               encoding: 'UTF-8') {
-        xjcarg(value: "-Xequals")
-        xjcarg(value: "-XhashCode")
       }
     }
     mergeServiceExceptionInDifferentPackages(file(wsGenSrc), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
@@ -376,8 +365,6 @@ def wsImportGrunnbokv2 = tasks.register('wsImportGrunnbokv2') {
               wsdlLocation: '/grunnbokv2/' + file.getRelativePath(),
               xnocompile: true,
               encoding: 'UTF-8') {
-        xjcarg(value: "-Xequals")
-        xjcarg(value: "-XhashCode")
       }
     }
     mergeServiceExceptionInDifferentPackages(file(wsGenSrc), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
