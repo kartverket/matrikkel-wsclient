@@ -1038,4 +1038,52 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <!-- VedleggskategoriKode -->
+
+    <xs:complexType name="VedleggskategoriKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VedleggskategoriKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:VedleggskategoriKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VedleggskategoriKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- FullmaktRettsstiftelsestypegruppeKode -->
+
+    <xs:complexType name="FullmaktRettsstiftelsestypegruppeKodeId">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:KodeId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FullmaktRettsstiftelsestypegruppeKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="register_koderns:FullmaktRettsstiftelsestypegruppeKodeId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FullmaktRettsstiftelsestypegruppeKode">
+        <xs:complexContent>
+            <xs:extension base="kodelistens:GrunnbokKode">
+                <xs:sequence>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
 </xs:schema>
