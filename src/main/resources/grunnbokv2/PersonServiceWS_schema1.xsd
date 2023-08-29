@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/person" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/person" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/person" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/person" version="1.0">
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person" schemaLocation="register_person.xsd"/>
 
@@ -93,17 +93,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="oppdaterAnnetSaerskilteForetak">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ids" type="ns1:JuridiskPersonIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="oppdaterAnnetSaerskilteForetakResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
   <xs:complexType name="hentAnnetSaerskilteForetak">
     <xs:sequence>
       <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
@@ -114,6 +103,17 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns1:JuridiskPersonIdList"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="oppdaterAnnetSaerskilteForetak">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ids" type="ns1:JuridiskPersonIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="oppdaterAnnetSaerskilteForetakResponse">
+    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="oppdaterSaerskilteForetak">

@@ -2,6 +2,7 @@
 <xs:schema
         version="1.0"
         targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper"
+        xmlns:servicetyperns="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper"
         xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
         xmlns:registerns="http://kartverket.no/grunnbok/wsapi/v2/domain/register"
         xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
@@ -21,18 +22,30 @@
 
     <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
     <xs:import schemaLocation="register.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register"/>
-    <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
-    <xs:import schemaLocation="register_registerenhet.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"/>
-    <xs:import schemaLocation="register_person.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
-    <xs:import schemaLocation="register_rettsstiftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
-    <xs:import schemaLocation="register_rettsstiftelse_anmerkning.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/anmerkning"/>
-    <xs:import schemaLocation="register_rettsstiftelse_heftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse"/>
-    <xs:import schemaLocation="register_rettsstiftelse_overdragelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/overdragelse"/>
-    <xs:import schemaLocation="register_rettsstiftelse_registerenhetsendring.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/registerenhetsendring"/>
-    <xs:import schemaLocation="register_rettsstiftelse_rettsendring.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring"/>
-    <xs:import schemaLocation="register_dokument.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"/>
-    <xs:import schemaLocation="register_saksinformasjon.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"/>
-    <xs:import schemaLocation="grunnboksidenter.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"/>
+    <xs:import schemaLocation="register_koder.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
+    <xs:import schemaLocation="register_registerenhet.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"/>
+    <xs:import schemaLocation="register_person.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
+    <xs:import schemaLocation="register_rettsstiftelse.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
+    <xs:import schemaLocation="register_rettsstiftelse_anmerkning.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/anmerkning"/>
+    <xs:import schemaLocation="register_rettsstiftelse_heftelse.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse"/>
+    <xs:import schemaLocation="register_rettsstiftelse_overdragelse.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/overdragelse"/>
+    <xs:import schemaLocation="register_rettsstiftelse_registerenhetsendring.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/registerenhetsendring"/>
+    <xs:import schemaLocation="register_rettsstiftelse_rettsendring.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/rettsendring"/>
+    <xs:import schemaLocation="register_dokument.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"/>
+    <xs:import schemaLocation="register_saksinformasjon.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"/>
+    <xs:import schemaLocation="grunnboksidenter.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"/>
 
     <!-- ========================================================= -->
     <!-- Servicetyper:                                             -->
@@ -424,7 +437,8 @@
 
     <xs:complexType name="RegisterenhetsendringIdListTransfer">
         <xs:sequence>
-            <xs:element name="registerenhetsendringIds" type="register_registerenhetsendringns:RegisterenhetsendringIdList"/>
+            <xs:element name="registerenhetsendringIds"
+                        type="register_registerenhetsendringns:RegisterenhetsendringIdList"/>
             <xs:element name="bubbleObjects" type="basistyperns:GrunnbokBubbleObjectList"/>
         </xs:sequence>
     </xs:complexType>
@@ -442,7 +456,8 @@
             <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetsrettsandelId"/>
+                        <xs:element name="key" nillable="true"
+                                    type="register_registerenhetns:RegisterenhetsrettsandelId"/>
                         <xs:element name="value" type="register_overdragelsens:OverdragelseAvRegisterenhetsrettId"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -563,7 +578,8 @@
             <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetsrettsandelId"/>
+                        <xs:element name="key" nillable="true"
+                                    type="register_registerenhetns:RegisterenhetsrettsandelId"/>
                         <xs:element name="value" type="register_heftelsens:HeftelseIdList"/>
                     </xs:sequence>
                 </xs:complexType>
@@ -624,7 +640,8 @@
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="key" nillable="true" type="registerns:BorettslagId"/>
-                        <xs:element name="value" type="register_registerenhetsendringns:BorettslagsandelsendringIdList"/>
+                        <xs:element name="value"
+                                    type="register_registerenhetsendringns:BorettslagsandelsendringIdList"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -645,7 +662,8 @@
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="key" nillable="true" type="register_registerenhetns:RegisterenhetId"/>
-                        <xs:element name="value" type="register_registerenhetsendringns:BorettslagsandelsendringIdList"/>
+                        <xs:element name="value"
+                                    type="register_registerenhetsendringns:BorettslagsandelsendringIdList"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -792,8 +810,8 @@
             <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="key" type="basistyperns:GrunnbokBubbleObjectId" />
-                        <xs:element name="value" nillable="true" type="grunnboksidenterns:Ident" />
+                        <xs:element name="key" type="basistyperns:GrunnbokBubbleObjectId"/>
+                        <xs:element name="value" nillable="true" type="grunnboksidenterns:Ident"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -970,6 +988,43 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- InnsendingIdService -->
+    <xs:complexType name="SaksinformasjonIdToStringMap">
+        <xs:annotation>
+            <xs:appinfo>
+                <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+                    true
+                </IsDictionary>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" nillable="true" type="register_saksinfons:SaksinformasjonId"/>
+                        <xs:element name="value" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Dataretting">
+        <xs:sequence>
+            <xs:element name="tidspunkt" type="basistyperns:Timestamp"/>
+            <xs:element name="navn" nillable="true" type="xs:string"/>
+            <xs:element name="kommentar" nillable="true" type="xs:string"/>
+            <xs:element name="arkenreferanse" nillable="true" type="xs:string"/>
+            <xs:element name="arkenlenke" nillable="true" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DatarettingList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="servicetyperns:Dataretting"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

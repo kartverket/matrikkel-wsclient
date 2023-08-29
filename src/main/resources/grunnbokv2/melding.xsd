@@ -49,6 +49,7 @@
             <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
                 <xs:sequence>
                     <xs:element name="registreringstidspunkt" type="basistyperns:Timestamp"/>
+                    <xs:element name="linkTilUtskriftBeredt" type="xs:boolean"/>
                     <xs:element name="innsendingId" type="xs:long" minOccurs="0" maxOccurs="1"/>
                     <xs:element name="forsendelsesreferanse" type="xs:string"/>
                     <xs:element name="rekkefoelgenummer" type="xs:int"/>
@@ -58,6 +59,7 @@
                                 type="meldingns:ElektroniskeSignaturerList"/>
                     <xs:element name="dokumentreferanser"
                                 type="meldingns:MeldingDokumentreferanseList"/>
+                    <xs:element name="vedleggListeIds" type="meldingns:VedleggIdsListe"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -67,6 +69,39 @@
         <xs:complexContent>
             <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
         </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VedleggId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokBubbleObjectId"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Vedlegg">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="vedleggsreferanse" type="xs:string"/>
+                    <xs:element name="gjelderDokumentreferanse" type="xs:string"/>
+                    <xs:element name="vedleggskategoriKodeIds" type="meldingns:VedleggskategoriKodeIdList"/>
+                    <xs:element name="pdfVedlegg" type="basistyperns:ByteList"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VedleggIdsListe">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="meldingns:VedleggId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VedleggskategoriKodeIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_koderns:VedleggskategoriKodeId"/>
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="TinglysingBrukerId">
@@ -234,6 +269,8 @@
             <xs:element name="innsendersRef" type="xs:string"/>
             <xs:element name="ident" type="grunnboksidenterns:DokumentIdent"/>
             <xs:element name="signaturer" type="meldingns:PersonSpecificationList"/>
+            <xs:element name="signertForViaFullmakt" type="register_personns:PersonIdList"/>
+            <xs:element name="signaturTider" type="meldingns:SignaturTiderMap" minOccurs="0"/>
             <xs:element name="rettsstiftelser" type="meldingns:RettsstiftelseOperationList"/>
         </xs:sequence>
     </xs:complexType>
@@ -273,6 +310,19 @@
         <xs:sequence>
             <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
                         type="meldingns:RettsstiftelseOperation"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SignaturTiderMap">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="entry">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="key" type="meldingns:PersonSpecification"/>
+                        <xs:element name="value" type="basistyperns:StringList"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
@@ -542,8 +592,10 @@
                 <xs:sequence>
                     <xs:element name="fra" type="meldingns:MatrikkelenhetSpecificationList"/>
                     <xs:element name="til" type="meldingns:MatrikkelenhetSpecificationList"/>
-                    <xs:element name="utgaaendeOgBestaaendeSeksjonssameieandeler" type="meldingns:SeksjonssameieandelFraTilSpecificationList"/>
-                    <xs:element name="omnummereringAvUnderliggende" type="meldingns:MatrikkelenhetFraTilSpecificationList"/>
+                    <xs:element name="utgaaendeOgBestaaendeSeksjonssameieandeler"
+                                type="meldingns:SeksjonssameieandelFraTilSpecificationList"/>
+                    <xs:element name="omnummereringAvUnderliggende"
+                                type="meldingns:MatrikkelenhetFraTilSpecificationList"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -655,6 +707,18 @@
                     <xs:element name="brukstype" type="meldingns:BrukstypeKodeSpecification"/>
                 </xs:sequence>
             </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="EndringAvFestegrunnOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="SplittingAvFestegrunnOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:MatrikkelenhetsendringOperation"/>
         </xs:complexContent>
     </xs:complexType>
 
@@ -771,6 +835,19 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <xs:complexType name="KraftledningOperation">
+        <xs:complexContent>
+            <xs:extension base="meldingns:HeftelseIRegisterenhetsrettOperation">
+                <xs:sequence>
+                    <xs:element name="navn" type="xs:string"/>
+                    <xs:element name="foreloepig" type="xs:boolean"/>
+                    <xs:element name="identifikatorNVE" type="xs:string"/>
+                    <xs:element name="fristForEndeligRegistrering" type="basistyperns:LocalDate"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
     <xs:complexType name="RegisterenhetsrettAndelerSpecificationList">
         <xs:sequence>
             <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
@@ -831,9 +908,25 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="UtstederandelSpecification">
+        <xs:sequence>
+            <xs:element name="teller" type="xs:long"/>
+            <xs:element name="nevner" type="xs:long"/>
+            <xs:element name="utsteder" type="meldingns:PersonSpecification" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="RegisterenhetsrettsandelSpecificationList">
         <xs:sequence>
             <xs:element name="item" type="meldingns:RegisterenhetsrettsandelSpecification" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UtstederandelSpecificationList">
+        <xs:sequence>
+            <xs:element name="item" type="meldingns:UtstederandelSpecification" minOccurs="0"
                         maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -914,6 +1007,8 @@
                                 type="meldingns:RegisterenhetsrettsandelSpecificationList"/>
                     <xs:element name="solgtePersonligeAndeler"
                                 type="meldingns:RegisterenhetsrettsandelSpecificationList"/>
+                    <xs:element name="utstedtePersonligeAndeler"
+                                type="meldingns:UtstederandelSpecificationList"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -1477,6 +1572,7 @@
                     <xs:element name="valideringstidspunkt" type="basistyperns:Timestamp"/>
                     <xs:element name="gjelderDokumentreferanse" type="xs:string"/>
                     <xs:element name="signaturFor" type="meldingns:SignertObjektType"/>
+                    <xs:element name="signeringstidspunkt" type="basistyperns:Timestamp" minOccurs="0"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -1503,7 +1599,8 @@
     <xs:simpleType name="SignertObjektType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="DOKUMENT_OG_FOELGEBREV"/>
-            <xs:enumeration value="DOKUMENT"/>
+            <xs:enumeration value="DOKUMENT_SDO"/>
+            <xs:enumeration value="DOKUMENT_PDF"/>
             <xs:enumeration value="FOLGEBREV"/>
             <xs:enumeration value="GRUNNBOKSUTSKRIFT"/>
         </xs:restriction>

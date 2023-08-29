@@ -6,6 +6,7 @@
         xmlns:basistyperns="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
         xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
         xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+        xmlns:register_heftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse"
         xmlns:register_personns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"
         xmlns:register_registerenhetns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -14,6 +15,7 @@
     <xs:import schemaLocation="basistyper.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"/>
     <xs:import schemaLocation="register_koder.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"/>
     <xs:import schemaLocation="register_rettsstiftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
+    <xs:import schemaLocation="register_rettsstiftelse_heftelse.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse"/>
     <xs:import schemaLocation="register_person.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/person"/>
     <xs:import schemaLocation="register_registerenhet.xsd" namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"/>
 
@@ -764,6 +766,36 @@
             <xs:extension base="register_rettsendringns:Rettsendring">
                 <xs:sequence>
                     <xs:element name="omsetning" type="register_rettsstiftelsens:Omsetning"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- RettsendringPaaKraftledning -->
+
+    <xs:complexType name="RettsendringPaaKraftledningId">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:RettsendringId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringPaaKraftledningIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_rettsendringns:RettsendringPaaKraftledningId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RettsendringPaaKraftledning">
+        <xs:complexContent>
+            <xs:extension base="register_rettsendringns:Rettsendring">
+                <xs:sequence>
+                    <xs:element name="fraNavn" type="xs:string" nillable="true"/>
+                    <xs:element name="tilNavn" type="xs:string" nillable="true"/>
+                    <xs:element name="registerenhetsretterIds"
+                                type="register_registerenhetns:RegisterenhetsrettIdList"/>
+                    <xs:element name="bestaaendeId" type="register_heftelsens:KraftledningId" nillable="true"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

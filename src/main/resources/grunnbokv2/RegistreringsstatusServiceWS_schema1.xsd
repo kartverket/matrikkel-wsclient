@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/registreringsstatus" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/registreringsstatus" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/registreringsstatus" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/registreringsstatus" version="1.0">
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
 

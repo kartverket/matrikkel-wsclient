@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/overfoering" version="1.0">
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse" schemaLocation="register_rettsstiftelse.xsd"/>
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" schemaLocation="servicetyper.xsd"/>
+
+  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" schemaLocation="register_registerenhet.xsd"/>
 
   <xs:element name="findOverfoeringerForOverfoerende" type="tns:findOverfoeringerForOverfoerende"/>
 
@@ -14,6 +16,10 @@
 
   <xs:element name="findOverfoeringerForOverfoerteResponse" type="tns:findOverfoeringerForOverfoerteResponse"/>
 
+  <xs:element name="findOverfoeringerForOverfoerteTil" type="tns:findOverfoeringerForOverfoerteTil"/>
+
+  <xs:element name="findOverfoeringerForOverfoerteTilResponse" type="tns:findOverfoeringerForOverfoerteTilResponse"/>
+
   <xs:complexType name="findOverfoeringerForOverfoerte">
     <xs:sequence>
       <xs:element minOccurs="0" name="overfoerteIds" type="ns1:RettsstiftelseIdList"/>
@@ -22,6 +28,21 @@
   </xs:complexType>
 
   <xs:complexType name="findOverfoeringerForOverfoerteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdTilOverfoeringIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findOverfoeringerForOverfoerteTil">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="overfoerteIds" type="ns1:RettsstiftelseIdList"/>
+      <xs:element minOccurs="0" name="registerenhetsrettIds" type="ns4:RegisterenhetsrettIdList"/>
+      <xs:element minOccurs="0" name="registerenhetsrettsandelIds" type="ns4:RegisterenhetsrettsandelIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findOverfoeringerForOverfoerteTilResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns3:RettsstiftelseIdTilOverfoeringIdsMap"/>
     </xs:sequence>
