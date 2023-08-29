@@ -1,46 +1,60 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/saksinformasjon" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/saksinformasjon" version="1.0">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/saksinformasjon"
+           xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/saksinformasjon"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"
+           xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper"
+           xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling"
+           xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter">
 
-  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
+    <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
 
-  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon" schemaLocation="register_saksinformasjon.xsd"/>
+    <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/saksinformasjon"
+               schemaLocation="register_saksinformasjon.xsd"/>
 
-  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter" schemaLocation="grunnboksidenter.xsd"/>
+    <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
+               schemaLocation="grunnboksidenter.xsd"/>
 
-  <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling" schemaLocation="saksbehandling.xsd"/>
+    <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/saksbehandling"
+               schemaLocation="saksbehandling.xsd"/>
 
-  <xs:element name="findSaksinformasjonForSakerSomHarGrunnboksutskrift" type="tns:findSaksinformasjonForSakerSomHarGrunnboksutskrift"/>
+    <xs:element name="findSaksinformasjonForSakerSomHarGrunnboksutskrift"
+                type="tns:findSaksinformasjonForSakerSomHarGrunnboksutskrift"/>
 
-  <xs:element name="findSaksinformasjonForSakerSomHarGrunnboksutskriftResponse" type="tns:findSaksinformasjonForSakerSomHarGrunnboksutskriftResponse"/>
+    <xs:element name="findSaksinformasjonForSakerSomHarGrunnboksutskriftResponse"
+                type="tns:findSaksinformasjonForSakerSomHarGrunnboksutskriftResponse"/>
 
-  <xs:element name="findSaksinformasjonIdForInnsendingId" type="tns:findSaksinformasjonIdForInnsendingId"/>
+    <xs:element name="findSaksinformasjonIdForInnsendingId" type="tns:findSaksinformasjonIdForInnsendingId"/>
 
-  <xs:element name="findSaksinformasjonIdForInnsendingIdResponse" type="tns:findSaksinformasjonIdForInnsendingIdResponse"/>
+    <xs:element name="findSaksinformasjonIdForInnsendingIdResponse"
+                type="tns:findSaksinformasjonIdForInnsendingIdResponse"/>
 
-  <xs:complexType name="findSaksinformasjonIdForInnsendingId">
-    <xs:sequence>
-      <xs:element form="qualified" minOccurs="0" name="innsendingId" type="xs:string"/>
-      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="findSaksinformasjonIdForInnsendingId">
+        <xs:sequence>
+            <xs:element name="innsendingId" type="xs:string" form="qualified" minOccurs="0"/>
+            <xs:element name="grunnbokContext" type="ns1:GrunnbokContext" form="qualified" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="findSaksinformasjonIdForInnsendingIdResponse">
-    <xs:sequence>
-      <xs:element form="qualified" minOccurs="0" name="return" type="ns2:SaksinformasjonId"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="findSaksinformasjonIdForInnsendingIdResponse">
+        <xs:sequence>
+            <xs:element name="return" type="ns2:SaksinformasjonId" form="qualified" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="findSaksinformasjonForSakerSomHarGrunnboksutskrift">
-    <xs:sequence>
-      <xs:element form="qualified" minOccurs="0" name="registerenhetIdent" type="ns3:RegisterenhetIdent"/>
-      <xs:element form="qualified" minOccurs="0" name="fraDato" type="ns1:LocalDate"/>
-      <xs:element form="qualified" minOccurs="0" name="tilDato" type="ns1:LocalDate"/>
-      <xs:element form="qualified" minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="findSaksinformasjonForSakerSomHarGrunnboksutskrift">
+        <xs:sequence>
+            <xs:element name="registerenhetIdent" type="ns3:RegisterenhetIdent" form="qualified" minOccurs="0"/>
+            <xs:element name="fraDato" type="ns1:LocalDate" form="qualified" minOccurs="0"/>
+            <xs:element name="tilDato" type="ns1:LocalDate" form="qualified" minOccurs="0"/>
+            <xs:element name="grunnbokContext" type="ns1:GrunnbokContext" form="qualified" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-  <xs:complexType name="findSaksinformasjonForSakerSomHarGrunnboksutskriftResponse">
-    <xs:sequence>
-      <xs:element form="qualified" minOccurs="0" name="return" type="ns4:SaksinformasjonIdToLocalDateTimeMap"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:complexType name="findSaksinformasjonForSakerSomHarGrunnboksutskriftResponse">
+        <xs:sequence>
+            <xs:element name="return" type="ns4:SaksinformasjonIdToLocalDateTimeMap" form="qualified" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
+

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/store" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/store" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/store" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/store" version="1.0">
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" schemaLocation="basistyper.xsd"/>
 
@@ -21,39 +21,6 @@
   <xs:element name="getVersionsForListResponse" type="tns:getVersionsForListResponse"/>
 
   <xs:element name="getVersionsResponse" type="tns:getVersionsResponse"/>
-
-  <xs:element name="isLocked" type="tns:isLocked"/>
-
-  <xs:element name="isLockedResponse" type="tns:isLockedResponse"/>
-
-  <xs:element name="lock" type="tns:lock"/>
-
-  <xs:element name="lockForList" type="tns:lockForList"/>
-
-  <xs:element name="lockForListResponse" type="tns:lockForListResponse"/>
-
-  <xs:element name="lockResponse" type="tns:lockResponse"/>
-
-  <xs:element name="unlock" type="tns:unlock"/>
-
-  <xs:element name="unlockForList" type="tns:unlockForList"/>
-
-  <xs:element name="unlockForListResponse" type="tns:unlockForListResponse"/>
-
-  <xs:element name="unlockResponse" type="tns:unlockResponse"/>
-
-  <xs:complexType name="lockForList">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ids" type="ns1:GrunnbokBubbleObjectIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="lockForListResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns1:GrunnbokBubbleObjectList"/>
-    </xs:sequence>
-  </xs:complexType>
 
   <xs:complexType name="getObjects">
     <xs:sequence>
@@ -98,19 +65,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="lock">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="id" type="ns1:GrunnbokBubbleObjectId"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="lockResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns1:GrunnbokBubbleObject"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="getObjectsIgnoreMissing">
     <xs:sequence>
       <xs:element minOccurs="0" name="ids" type="ns1:GrunnbokBubbleObjectIdList"/>
@@ -122,41 +76,6 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns1:GrunnbokBubbleObjectList"/>
     </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="unlockForList">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ids" type="ns1:GrunnbokBubbleObjectIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="unlockForListResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="isLocked">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="id" type="ns1:GrunnbokBubbleObjectId"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="isLockedResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="unlock">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="id" type="ns1:GrunnbokBubbleObjectId"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns1:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="unlockResponse">
-    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="getObject">

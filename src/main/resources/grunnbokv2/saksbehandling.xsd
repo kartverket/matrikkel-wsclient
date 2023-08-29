@@ -6,6 +6,7 @@
         xmlns:grunnboksidenterns="http://kartverket.no/grunnbok/wsapi/v2/domain/grunnboksidenter"
         xmlns:register_dokumentns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"
         xmlns:register_rettsstiftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"
+        xmlns:register_heftelsens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse"
         xmlns:register_registerenhetns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet"
         xmlns:register_koderns="http://kartverket.no/grunnbok/wsapi/v2/domain/register/koder"
         xmlns:register_adressens="http://kartverket.no/grunnbok/wsapi/v2/domain/register/adresse"
@@ -28,6 +29,8 @@
                namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/dokument"/>
     <xs:import schemaLocation="register_rettsstiftelse.xsd"
                namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse"/>
+    <xs:import schemaLocation="register_rettsstiftelse_heftelse.xsd"
+               namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/rettsstiftelse/heftelse"/>
     <xs:import schemaLocation="register_adresse.xsd"
                namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register/adresse"/>
     <xs:import schemaLocation="register_person.xsd"
@@ -112,6 +115,8 @@
                     <xs:element name="arkenDokumentId" type="xs:string"/>
                     <xs:element name="lokalFilstiArkenDokument" type="xs:string"/>
                     <xs:element name="opprettetArkenDokumentFraElida" type="xs:boolean" nillable="true"/>
+                    <xs:element name="oenskerIkkeGrunnboksutskrift" type="xs:boolean" nillable="true"/>
+                    <xs:element name="genereresIkkeGrunnboksutskrift" type="xs:boolean" nillable="true"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -205,8 +210,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <!-- Grunnboksutskrift -->
-
     <xs:complexType name="GrunnboksutskriftId">
         <xs:complexContent>
             <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
@@ -228,6 +231,7 @@
                     <xs:element name="sakId" type="sakns:SakId"/>
                     <xs:element name="pdfUtskrift" type="xs:base64Binary"/>
                     <xs:element name="signertUtskrift" type="xs:base64Binary"/>
+                    <xs:element name="linkTilPdfUtskrift" type="xs:string" nillable="true"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -236,6 +240,37 @@
     <xs:complexType name="GrunnboksutskriftList">
         <xs:sequence>
             <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:Grunnboksutskrift"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KraftledningsbladId">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistoryId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KraftledningsbladIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:KraftledningsbladId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Kraftledningsblad">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
+                <xs:sequence>
+                    <xs:element name="sakId" type="sakns:SakId"/>
+                    <xs:element name="gjelderKraftledningId" type="register_heftelsens:KraftledningId"/>
+                    <xs:element name="blad" type="xs:base64Binary"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KraftledningsbladList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:Kraftledningsblad"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -428,9 +463,9 @@
                         </xs:simpleType>
                     </xs:element>
                     <xs:element name="foreslaattBehandlingsutfall">
-                            <xs:simpleType>
-                                <xs:restriction base="register_registreringns:ForeslaattBehandlingsutfall"/>
-                            </xs:simpleType>
+                        <xs:simpleType>
+                            <xs:restriction base="register_registreringns:ForeslaattBehandlingsutfall"/>
+                        </xs:simpleType>
                     </xs:element>
                     <xs:element name="saksloggId" type="sakns:SaksloggId"/>
                     <xs:element name="tekst" type="xs:string"/>
@@ -490,6 +525,7 @@
             <xs:element name="matrikkelenhetIdent" type="grunnboksidenterns:MatrikkelenhetIdent"/>
             <xs:element name="arealInfo" type="sakns:ArealInfo"/>
             <xs:element name="konsesjonsforhold" type="sakns:KonsesjonsforholdInfoList"/>
+            <xs:element name="kommuneInfo" type="integrasjon_matrikkelen:KommuneInfo"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -863,13 +899,12 @@
                     <xs:element name="satstypeId" type="register_koderns:SatsKodeId"/>
                     <xs:element name="rettstypeId" type="register_koderns:RettstypeKodeId"/>
                     <xs:element name="rettsstiftelsestypeId" type="register_koderns:RettsstiftelsestypeKodeId"/>
-                    <xs:element name="historisk" type="xs:boolean"/>
-                    <xs:element name="panteattest" type="xs:boolean"/>
+                    <xs:element name="papir" type="xs:boolean"/>
+                    <xs:element name="elektronisk" type="xs:boolean"/>
                     <xs:element name="gjelderFraOgMed" type="basistyperns:LocalDate"/>
                     <xs:element name="gjelderTilOgMed" type="basistyperns:LocalDate"/>
                     <xs:element name="minimumsbeloep" type="xs:decimal"/>
-                    <xs:element name="broeksatsTeller" type="xs:decimal" nillable="true"/>
-                    <xs:element name="broeksatsNevner" type="xs:long" nillable="true"/>
+                    <xs:element name="prosentsats" type="xs:decimal" nillable="true"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -980,10 +1015,16 @@
             <xs:extension base="basistyperns:GrunnbokObjectWithHistory">
                 <xs:sequence>
                     <xs:element name="fullmaktspersoner" type="sakns:FullmaktspersonList"/>
-                    <xs:element name="gjelderRettsstiftelsestypeKodeIds"
-                                type="register_koderns:RettsstiftelsestypeKodeIdList"/>
+                    <xs:element name="gjelderGruppeKodeIds"
+                                type="register_koderns:FullmaktRettsstiftelsestypegruppeKodeIdList"/>
                     <xs:element name="fullmaktstypeId" type="register_koderns:FullmaktstypeKodeId"/>
                     <xs:element name="kanTransporteres" type="xs:boolean"/>
+                    <xs:element name="medFradelte" type="xs:boolean"/>
+                    <xs:element name="medSeksjoner" type="xs:boolean"/>
+                    <xs:element name="rettTilSelvkontrahering" type="xs:boolean"/>
+                    <xs:element name="gjelderRegisterenheter" type="sakns:FullmaktsregisterenhetList"/>
+                    <xs:element name="notat" type="xs:string"/>
+                    <xs:element name="gjelderOgsaaPapirinnsending" type="xs:boolean"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -996,6 +1037,7 @@
                     <xs:element name="personId" type="register_personns:PersonId"/>
                     <xs:element name="fullmaktsrolleId" type="register_koderns:FullmaktsrolleKodeId"/>
                     <xs:element name="saksnummerOpprettet" type="xs:string"/>
+                    <xs:element name="urlTilSakenIArken" type="xs:string"/>
                     <xs:element name="saksnummerAvsluttet" type="xs:string"/>
                     <xs:element name="gjelderFraOgMed" type="basistyperns:LocalDate"/>
                     <xs:element name="gjelderTil" type="basistyperns:LocalDate"/>
@@ -1007,6 +1049,23 @@
     <xs:complexType name="FullmaktspersonList">
         <xs:sequence>
             <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:Fullmaktsperson"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Fullmaktsregisterenhet">
+        <xs:complexContent>
+            <xs:extension base="basistyperns:EntityComponentWithHistory">
+                <xs:sequence>
+                    <xs:element name="opprinneligAngittIFullmakt" type="xs:boolean"/>
+                    <xs:element name="registerenhetId" type="register_registerenhetns:RegisterenhetId"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FullmaktsregisterenhetList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item" type="sakns:Fullmaktsregisterenhet"/>
         </xs:sequence>
     </xs:complexType>
 

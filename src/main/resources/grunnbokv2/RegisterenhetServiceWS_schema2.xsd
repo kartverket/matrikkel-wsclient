@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet" version="1.0">
+<?xml version="1.0" encoding="UTF-8"?><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://kartverket.no/grunnbok/wsapi/v2/domain/register" xmlns:ns2="http://kartverket.no/grunnbok/wsapi/v2/domain/basistyper" xmlns:ns3="http://kartverket.no/grunnbok/wsapi/v2/domain/register/registerenhet" xmlns:ns4="http://kartverket.no/grunnbok/wsapi/v2/service/servicetyper" xmlns:tns="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet" elementFormDefault="qualified" targetNamespace="http://kartverket.no/grunnbok/wsapi/v2/service/registerenhet" version="1.0">
 
   <xs:import namespace="http://kartverket.no/grunnbok/wsapi/v2/domain/register" schemaLocation="register.xsd"/>
 
@@ -67,19 +67,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="findBorettslagsandelerFor">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="borettslagIds" type="ns1:BorettslagIdList"/>
-      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="findBorettslagsandelerForResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="ns4:BorettslagIdTilBorettslagsandelIdsMap"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="findFestegrunnerFor">
     <xs:sequence>
       <xs:element minOccurs="0" name="registerenhetIds" type="ns3:RegisterenhetIdList"/>
@@ -90,6 +77,19 @@
   <xs:complexType name="findFestegrunnerForResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="ns4:RegisterenhetIdTilFestegrunnIdsMap"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findBorettslagsandelerFor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="borettslagIds" type="ns1:BorettslagIdList"/>
+      <xs:element minOccurs="0" name="grunnbokContext" type="ns2:GrunnbokContext"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findBorettslagsandelerForResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns4:BorettslagIdTilBorettslagsandelIdsMap"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

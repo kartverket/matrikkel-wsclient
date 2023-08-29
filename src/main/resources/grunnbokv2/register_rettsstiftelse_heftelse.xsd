@@ -964,6 +964,33 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <xs:complexType name="KraftledningId">
+        <xs:complexContent>
+            <xs:extension base="register_heftelsens:HeftelseIRegisterenhetsrettId">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="KraftledningIdList">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="item"
+                        type="register_heftelsens:KraftledningId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Kraftledning">
+        <xs:complexContent>
+            <xs:extension base="register_heftelsens:HeftelseIRegisterenhetsrett">
+                <xs:sequence>
+                    <xs:element name="navn" type="xs:string"/>
+                    <xs:element name="foreloepig" type="xs:boolean"/>
+                    <xs:element name="fristForEndeligRegistrering" type="basistyperns:LocalDate" nillable="true"/>
+                    <xs:element name="identifikatorNVE" type="xs:string" nillable="true"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
 
     <!-- BroekInneholdtIRegisterenhetsrettsandel -->
 
