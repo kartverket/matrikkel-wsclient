@@ -75,8 +75,12 @@ tasks.withType(Test).configureEach {
 }
 
 repositories {
+    mavenCentral()
     maven {
-        name = 'public'; url = MAVEN_REPO
+        name = 'intern-nexus'; url = 'https://nexus.statkart.no/repository/public/'
+        content {
+            includeGroup 'no.statkart.skif'
+        }
     }
 }
 
@@ -483,13 +487,6 @@ manifest {
           'Specification-Title'   : project.name,
           'Specification-Vendor'  : 'Statens kartverk',
           'Specification-Version' : (gradle.startParameter.projectProperties.get('projectVersion') ?: projectVersion).replace('-SNAPSHOT', ''),
-
-          //misc build info
-          'Build-By'              : System.getProperty('user.name'),
-          'Build-Machine'         : InetAddress.localHost.hostName,
-          'Build-Repo'            : MAVEN_REPO,
-          'Build-Gradle'          : gradle.gradleVersion,
-          'Build-JDK'             : System.getProperty('java.version'),
 
           'Implementation-Title'  : "${project.name} bygget for ${(version == null || version.contains('-SNAPSHOT') || version.contains('-build')) ? 'TEST' : 'Produksjon'}",
           'Implementation-Vendor' : 'Statens kartverk',
