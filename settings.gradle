@@ -2,15 +2,15 @@ pluginManagement {
     repositories {
         mavenLocal()
         maven {
-            url = settings.ext.properties.get('MAVEN_REPO', 'https://nexus.statkart.no/repository/public/')
+            name = 'intern-nexus'; url = 'https://nexus.statkart.no/repository/public/'
+            content {
+                includeGroupByRegex 'no\\.statkart\\.sktools(\\..*)?' //includeGroupAndSubgroups
+                includeGroupByRegex 'sktools(\\..*)?' ////includeGroupAndSubgroups
+            }
         }
+        gradlePluginPortal()
+        mavenCentral()
     }
 }
 
 rootProject.name = 'matrikkel-wsclient'
-
-
-gradle.rootProject { project -> //nested projects fallback to properties of root project
-    project.ext.MAVEN_REPO = settings.ext.properties.get('MAVEN_REPO', 'https://nexus.statkart.no/repository/public/')
-}
-
