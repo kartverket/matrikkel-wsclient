@@ -27,8 +27,7 @@ public class DefaultInnsendingServiceWS implements InnsendingServiceWS {
             synchronized (this) {
                 if (webServiceClient == null) {
                     webServiceClient = new no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingServiceWS();
-                    webServiceClient.setHandlerResolver(HandlerResolverBuilder.builder()
-                        .enableLogging().build());
+                    webServiceClient.setHandlerResolver(HandlerResolverBuilder.builder().build());
                 }
             }
         }
