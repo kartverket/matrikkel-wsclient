@@ -25,7 +25,7 @@ public class DefaultStedsnavnAdressenavnServiceTest {
 
     @BeforeMethod
     public void before() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         stedsnavnAdressenavnService = new DefaultStedsnavnAdressenavnService(webservice);
     }
 

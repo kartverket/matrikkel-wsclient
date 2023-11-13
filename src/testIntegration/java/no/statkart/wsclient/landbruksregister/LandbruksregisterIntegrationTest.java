@@ -30,8 +30,9 @@ public class LandbruksregisterIntegrationTest {
         final int grunneiendommer = 1;
         final WsEiendomDTO eiendomDTO = landbruksregister.getEiendom("0605", "262", "141", "", landbrukseiendom, eiere, bedrifter, skonti, grunneiendommer);
         Assertions.assertThat(eiendomDTO)
+            .usingRecursiveComparison()
             .describedAs("Ikke landbrukseiendom returnerer ikke mye data")
-            .isEqualToComparingFieldByField(new WsEiendomDTO());
+            .isEqualTo(new WsEiendomDTO());
     }
 
     @Test
