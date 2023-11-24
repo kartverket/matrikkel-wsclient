@@ -42,12 +42,12 @@ public class LoggingHandler implements SOAPHandler<SOAPMessageContext> {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             message.writeTo(os);
             if (outboundProperty) {
-                logger.info("\nOutbound message:" + os.toString());
+                logger.debug("\nOutbound message: {}", os.toString());
             } else {
-                logger.info("\nInbound message:" + os.toString());
+                logger.debug("\nInbound message: {}", os.toString());
             }
         } catch (Exception e) {
-            logger.error("Exception in handler: " + e.getMessage(), e);
+            logger.error("Exception in handler: {}", e.getMessage(), e);
         }
     }
 }
