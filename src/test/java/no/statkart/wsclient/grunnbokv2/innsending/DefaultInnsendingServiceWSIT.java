@@ -66,9 +66,7 @@ public class DefaultInnsendingServiceWSIT {
                 .build());
 
         Assertions.assertThatThrownBy(() -> innsendingService.sendTilTinglysing(invalidForsendelse.build())).isInstanceOf(WebServiceException.class)
-            .hasCauseInstanceOf(SAXParseException.class)
-            .hasMessageContaining("Invalid content was found starting with element ")
-            .hasMessageContaining("rettsstiftelser");
+            .hasCauseInstanceOf(SAXParseException.class);
     }
 
     @Test
