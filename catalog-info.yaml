@@ -1,0 +1,16 @@
+# nonk8s
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: matrikkel-wsclient
+  tags: [internal]
+  links:
+    - url: https://github.com/kartverket/matrikkel-wsclient
+      title: matrikkel-wsclient på GitHub
+spec:
+  type: library
+  lifecycle: production
+  owner: matrikkel
+  system: matrikkel
+  dependsOn: []
+  providesApis: []
