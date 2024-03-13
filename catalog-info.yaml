@@ -1,0 +1,33 @@
+# nonk8s
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: matrikkel-wsclient-team
+spec:
+  type: team
+  parent: Eiendom
+  children: [matrikkel-wsclient-security-champion]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: matrikkel-wsclient-security-champion
+  annotations:
+    github.com/user-login: lislei
+spec:
+  type: security-champion
+  parent: security-champions-Eiendom
+  members: [Matrikkel]
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: matrikkel-wsclient
+  links:
+    - url: https://github.com/kartverket/matrikkel-wsclient
+      title: matrikkel-wsclient på GitHub
+spec:
+  type: repo
+  lifecycle: production
+  owner: matrikkel-wsclient-team
