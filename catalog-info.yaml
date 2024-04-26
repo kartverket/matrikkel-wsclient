@@ -1,0 +1,38 @@
+# nonk8s
+apiVersion: "backstage.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "matrikkel-wsclient"
+  tags:
+  - "internal"
+spec:
+  type: "library"
+  lifecycle: "production"
+  owner: "heimdall"
+  system: "matrikkel"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Group"
+metadata:
+  name: "security_champion_matrikkel-wsclient"
+  title: "Security Champion matrikkel-wsclient"
+spec:
+  type: "security_champion"
+  parent: "eiendom_security_champions"
+  members:
+  - "lislei"
+  children:
+  - "resource:matrikkel-wsclient"
+---
+apiVersion: "backstage.io/v1alpha1"
+kind: "Resource"
+metadata:
+  name: "matrikkel-wsclient"
+  links:
+  - url: "https://github.com/kartverket/matrikkel-wsclient"
+    title: "matrikkel-wsclient på GitHub"
+spec:
+  type: "repo"
+  owner: "security_champion_matrikkel-wsclient"
+  dependencyOf:
+  - "component:matrikkel-wsclient"
