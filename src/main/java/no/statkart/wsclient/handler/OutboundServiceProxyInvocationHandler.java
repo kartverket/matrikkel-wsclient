@@ -46,12 +46,12 @@ public class OutboundServiceProxyInvocationHandler implements InvocationHandler 
             } catch (InvocationTargetException e) {
                 Throwable t = e.getCause();
                 if (t instanceof ClientTransportException) {
-                    logger.warn(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, t);
+                    logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, t);
                     exception = (Exception) t;
                 } else if (t instanceof WebServiceException) {
                     Throwable cause = t.getCause();
                     if (cause instanceof IOException) {
-                        logger.warn(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, t);
+                        logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, t);
                         exception = (Exception) t;
                     } else {
                         throw t;
@@ -60,12 +60,12 @@ public class OutboundServiceProxyInvocationHandler implements InvocationHandler 
                     throw t;
                 }
             } catch (ClientTransportException e) {
-                logger.warn(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, e);
+                logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, e);
                 exception = e;
             } catch (WebServiceException e) {
                 Throwable cause = e.getCause();
                 if (cause instanceof IOException) {
-                    logger.warn(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, e);
+                    logger.error(method.getDeclaringClass().getSimpleName() + "." + method.getName() + "() feilet på forsøk: " + forsok, e);
                     exception = e;
                 } else {
                     throw e;
