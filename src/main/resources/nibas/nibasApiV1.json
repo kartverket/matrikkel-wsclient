@@ -8,8 +8,17 @@
     "servers": [
         {
             "url": "https://nibas-api.prod.skip.statkart.no",
-            "description": "Generated server url"
+            "description": "Prod"
+        },
+        {
+            "url": "https://nibas-api.test.skip.statkart.no",
+            "description": "Test"
+        },
+        {
+            "url": "https://nibas-api.dev.skip.statkart.no",
+            "description": "Dev"
         }
+
     ],
     "tags": [
         {
