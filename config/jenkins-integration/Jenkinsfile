@@ -21,6 +21,9 @@ pipeline { //declarative pipeline syntax
         jdk 'Java 11 Latest'
     }
     environment {
+       //jenkins-swarm trenger å gå via proxy mot brreg og landbruksregister
+        _JAVA_OPTIONS = "-Dhttps.proxyHost=proxy.kartverket.no -Dhttps.proxyPort=3128"
+
        GRUNNBOK            = credentials('matirkkel-wsclient-grunnbok-mat')
        GRUNNBOK_TINGLYSING = credentials('matrikkel-wsclient-tinglysing')
        LANDBRUKSREGISTER   = credentials('matrikkel-wsclient-landbruksregister')
