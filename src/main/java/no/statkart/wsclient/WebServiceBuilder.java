@@ -4,7 +4,7 @@ import com.sun.xml.ws.developer.JAXWSProperties;
 import no.statkart.wsclient.handler.OutboundServiceProxyInvocationHandler;
 
 import javax.net.ssl.HostnameVerifier;
-import javax.xml.ws.BindingProvider;
+import jakarta.xml.ws.BindingProvider;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.Map;

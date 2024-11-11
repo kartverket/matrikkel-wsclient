@@ -24,7 +24,7 @@ import no.statkart.wsclient.stedsnavn.StedsnavnBobleId;
 import no.statkart.wsclient.stedsnavn.StedsnavnContext;
 import no.statkart.wsclient.stedsnavn.map.Mapper;
 
-import javax.xml.ws.handler.HandlerResolver;
+import jakarta.xml.ws.handler.HandlerResolver;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

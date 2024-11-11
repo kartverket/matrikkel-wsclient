@@ -1,7 +1,7 @@
 package no.statkart.wsclient.grunnbokv2.innsending.domene;
 
 
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElement;
 import java.util.Collections;
 import java.util.List;
 

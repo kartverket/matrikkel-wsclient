@@ -10,7 +10,7 @@ import no.statkart.skif.mapper.TypeMapper;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring;
 import no.statkart.wsclient.grunnbokv2.innsending.domene.Rettsstiftelse.Rettsstiftelsestype;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import java.util.List;
 
 import static no.statkart.wsclient.grunnbokv2.innsending.domene.Matrikkelenhetsendring.TypeMatrikkelenhetsendring.FESTENUMMER_GITT_BRUKSNUMMER;

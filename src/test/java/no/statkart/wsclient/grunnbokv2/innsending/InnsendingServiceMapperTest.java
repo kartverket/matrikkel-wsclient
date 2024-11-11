@@ -24,7 +24,7 @@ import no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFac
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import java.util.List;
 
 import static no.statkart.wsclient.grunnbokv2.innsending.testdatafactory.ForsendelseFactory.BRUKSNUMMER_OSLO;
