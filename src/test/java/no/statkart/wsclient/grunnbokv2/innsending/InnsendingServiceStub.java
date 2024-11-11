@@ -6,7 +6,7 @@ import no.kartverket.grunnbok.wsapi.v2.service.innsending.InnsendingService;
 import no.kartverket.grunnbok.wsapi.v2.service.innsending.ServiceException;
 import no.statkart.wsclient.grunnbokv2.innsending.ws.builder.ForsendelsesstatusBuilder;
 
-import javax.jws.WebService;
+import jakarta.jws.WebService;
 
 /**
  * Dummy stub som ikke returnerer statiske data.

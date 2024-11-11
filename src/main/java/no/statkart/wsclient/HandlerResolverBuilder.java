@@ -3,8 +3,8 @@ package no.statkart.wsclient;
 import no.statkart.wsclient.handler.LoggingHandler;
 import no.statkart.wsclient.handler.WSSecurityUsernameTokenHandler;
 
-import javax.xml.ws.handler.Handler;
-import javax.xml.ws.handler.HandlerResolver;
+import jakarta.xml.ws.handler.Handler;
+import jakarta.xml.ws.handler.HandlerResolver;
 import java.util.ArrayList;
 import java.util.List;
 

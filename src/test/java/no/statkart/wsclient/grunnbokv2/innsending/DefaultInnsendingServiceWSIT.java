@@ -14,8 +14,8 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXParseException;
 
-import javax.xml.ws.Endpoint;
-import javax.xml.ws.WebServiceException;
+import jakarta.xml.ws.Endpoint;
+import jakarta.xml.ws.WebServiceException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
