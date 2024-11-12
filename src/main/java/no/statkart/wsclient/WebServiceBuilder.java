@@ -114,14 +114,10 @@ public final class WebServiceBuilder<T> {
         requestContext.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, endpointUrl);
         requestContext.put(BindingProvider.USERNAME_PROPERTY, brukernavn);
         requestContext.put(BindingProvider.PASSWORD_PROPERTY, passord);
-
-        //TODO: Må en virkelig spesifisere vendor-spesifikk timeout-property?
-        requestContext.put("weblogic.wsee.transport.read.timeout", timeout / 1000);//Sekunder Weblogic HTTP Stack
+        requestContext.put("jakarta.xml.ws.client.connectionTimeout", timeout); //Millis
+        requestContext.put("jakarta.xml.ws.client.receiveTimeout", timeout); //Millis
         requestContext.put(JAXWSProperties.REQUEST_TIMEOUT, timeout);//Millis Sun/Oracle HTTP Stack
-
-        requestContext.put("weblogic.wsee.transport.connection.timeout", timeout / 1000);//Sekunder Weblogic HTTP Stack
         requestContext.put(JAXWSProperties.CONNECT_TIMEOUT, timeout);//Millis Sun/Oracle HTTP Stack
-
         if (createProxy) {
             //The service may be wrapped in a proxy object it self
             T service = clazzOfWebService.cast(unproxiedService);
