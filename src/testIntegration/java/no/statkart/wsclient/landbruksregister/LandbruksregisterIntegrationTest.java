@@ -17,7 +17,7 @@ public class LandbruksregisterIntegrationTest {
 
     @Test
     public void getEiendomKanKalles() {
-        final WsEiendomDTO eiendomDTO = landbruksregister.getEiendom("0605", "262", "141", "", 0, 0, 0, 0, 1);
+        final WsEiendomDTO eiendomDTO = landbruksregister.getEiendom("3305", "262", "141", "", 0, 0, 0, 0, 1);
         Assertions.assertThat(eiendomDTO).isNotNull();
     }
 
@@ -28,7 +28,7 @@ public class LandbruksregisterIntegrationTest {
         final int bedrifter = 0;
         final int skonti = 0;
         final int grunneiendommer = 1;
-        final WsEiendomDTO eiendomDTO = landbruksregister.getEiendom("0605", "262", "141", "", landbrukseiendom, eiere, bedrifter, skonti, grunneiendommer);
+        final WsEiendomDTO eiendomDTO = landbruksregister.getEiendom("3305", "262", "141", "", landbrukseiendom, eiere, bedrifter, skonti, grunneiendommer);
         Assertions.assertThat(eiendomDTO)
             .describedAs("Ikke landbrukseiendom returnerer ikke mye data")
             .isEqualToComparingFieldByField(new WsEiendomDTO());
@@ -41,7 +41,7 @@ public class LandbruksregisterIntegrationTest {
         final int bedrifter = 0;
         final int skonti = 0;
         final int grunneiendommer = 1;
-        final WsEiendomDTO eiendomDTO = landbruksregister.getEiendom("0605", "78", "1", "", landbrukseiendom, eiere, bedrifter, skonti, grunneiendommer);
+        final WsEiendomDTO eiendomDTO = landbruksregister.getEiendom("3305", "78", "1", "", landbrukseiendom, eiere, bedrifter, skonti, grunneiendommer);
         Assertions.assertThat(eiendomDTO.getGrunneiendoms()).isNotEmpty();
     }
 
