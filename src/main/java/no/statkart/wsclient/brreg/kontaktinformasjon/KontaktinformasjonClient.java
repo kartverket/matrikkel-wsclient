@@ -58,7 +58,7 @@ public class KontaktinformasjonClient {
         if (endpointURL != null) {
             this.endpointURL = endpointURL + "?matrikkelenhetid=";
         } else {
-            this.endpointURL = "https://data.ppe.brreg.no:443/enhetsregisteret/api/matrikkelenhet?matrikkelenhetid=";
+            this.endpointURL = "https://data.brreg.no:443/enhetsregisteret/api/matrikkelenhet?matrikkelenhetid=";
         }
     }
 
