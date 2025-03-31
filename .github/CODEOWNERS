@@ -1,1 +1,10 @@
-/.sikkerhet/ @lislei
+# Denne koden forvaltes av: Team Heimdall
+# Dokumentasjon: https://kartverket.atlassian.net/wiki/spaces/HEIM/overview
+
+# Standard eierskap
+* @kartverket/matrikkel-core
+
+# Sikkerhetrelaterte filer
+/.github/CODEOWNERS @kartverket/matrikkel-admin
+/.security/ @kartverket/matrikkel-admin
+catalog-info.yaml @kartverket/matrikkel-admin
