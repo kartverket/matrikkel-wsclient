@@ -104,7 +104,7 @@ dependencies {
 
   api 'no.statkart.skif:skif-service-common:'+skifVersion
   api 'joda-time:joda-time:2.10.1'
-  implementation 'com.google.guava:guava:32.1.2-jre'
+  implementation 'com.google.guava:guava:33.4.8-jre'
   implementation 'org.slf4j:slf4j-api:'+slf4jVersion
 
     implementation 'org.apache.httpcomponents:httpclient:4.5.13'
