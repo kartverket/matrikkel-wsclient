@@ -93,7 +93,7 @@ configurations {
 
 dependencies {
   def slf4jVersion = '1.7.36'
-  def jaxwsVersion = '3.0.2'
+  def jaxwsVersion = '4.0.3'
   def skifVersion = '4.5.1'
 
   wsImport "com.sun.xml.ws:jaxws-tools:$jaxwsVersion"
