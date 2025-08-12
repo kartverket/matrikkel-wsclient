@@ -121,6 +121,7 @@ dependencies {
     api 'io.swagger:swagger-annotations:1.6.16'
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 }
 
 task sourceJar(type: Jar) {
@@ -403,6 +404,7 @@ task generateNibasApiModel(type: org.openapitools.generator.gradle.plugin.tasks.
     invokerPackage = "no.kartverket.nibas.api.v1.invoker"
     modelPackage = "no.kartverket.nibas.api.v1.model"
     configOptions = [
+        useJakartaEe: "true",
         library: "native",
         openApiNullable: "true",
     ]
@@ -431,6 +433,7 @@ task generateNibasEventsApiModel(type: org.openapitools.generator.gradle.plugin.
     invokerPackage = "no.kartverket.nibas.events.v1.invoker"
     modelPackage = "no.kartverket.nibas.events.v1.model"
     configOptions = [
+        useJakartaEe: "true",
         library: "native",
         openApiNullable: "true",
     ]
