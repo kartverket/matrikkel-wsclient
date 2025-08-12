@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -81,6 +82,12 @@ public class KontaktinformasjonClient {
             URL url = new URL(endpointURL + matrikkelenhetId);
             conn = (HttpURLConnection) url.openConnection();
             conn.connect();
+
+            // APIet svarer med 404 dersom ressursen man etterspør ikke finnes. For at det ikke skal feile svarer vi med tom liste.
+            if (conn.getResponseCode() == 404) {
+                logger.warn("404 mot BRREG ved oppslag på kontaktinformasjon for matrikkelenhet id {}", matrikkelenhetId);
+                return Collections.emptyList();
+            }
             conn.setReadTimeout(5000);
 
             //Gjør kall til tjenesten
