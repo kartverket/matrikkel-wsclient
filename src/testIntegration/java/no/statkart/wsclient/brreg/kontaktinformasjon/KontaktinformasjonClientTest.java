@@ -17,4 +17,11 @@ public class KontaktinformasjonClientTest {
         assertThat(klient.findKontaktinformasjonForMatrikkelenhetId(31874161L))
             .containsOnly("917256276", "993265845", "994908782", "996761495");
     }
+
+    @Test
+    public void testKallMotBRREGGirTomListeVed404() {
+        KontaktinformasjonClient klient = new KontaktinformasjonClient(null);
+
+        assertThat(klient.findKontaktinformasjonForMatrikkelenhetId(123L)).isEmpty();
+    }
 }
