@@ -7,8 +7,8 @@
     },
     "servers": [
         {
-            "url": "https://nibas-events-nibas-main.atkv3-dev.kartverket-intern.cloud",
-            "description": "Generated server url"
+            "url": "https://nibas-events.atkv3-prod.kartverket-intern.cloud",
+            "description": "Prod"
         }
     ],
     "tags": [
