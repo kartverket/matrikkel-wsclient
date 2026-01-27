@@ -3,7 +3,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'sktools.xjc' version '7.1'
-    id 'org.openapi.generator' version '6.0.1'
+    id 'org.openapi.generator' version '7.19.0'
 }
 
 group = 'no.statkart.wsclient'
@@ -106,8 +106,10 @@ dependencies {
     api 'joda-time:joda-time:2.10.1'
     implementation 'com.google.guava:guava:33.4.8-jre'
     implementation 'org.slf4j:slf4j-api:' + slf4jVersion
+    implementation "jakarta.annotation:jakarta.annotation-api:3.0.0"
 
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'org.apache.httpcomponents:httpmime:4.5.14'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation(platform('com.fasterxml.jackson:jackson-bom:2.19.0')) //For å få samme versjon som matrikkelen
 
@@ -406,8 +408,10 @@ task generateNibasApiModel(type: org.openapitools.generator.gradle.plugin.tasks.
     invokerPackage = "no.kartverket.nibas.api.v1.invoker"
     modelPackage = "no.kartverket.nibas.api.v1.model"
     configOptions = [
-        library        : "native",
-        openApiNullable: "true",
+        library               : "native",
+        openApiNullable       : "true",
+        enumUnknownDefaultCase: "true",
+        useJakartaEe: "true",
     ]
 }
 
@@ -434,8 +438,10 @@ task generateNibasEventsApiModel(type: org.openapitools.generator.gradle.plugin.
     invokerPackage = "no.kartverket.nibas.events.v1.invoker"
     modelPackage = "no.kartverket.nibas.events.v1.model"
     configOptions = [
-        library        : "native",
-        openApiNullable: "true",
+        library               : "native",
+        openApiNullable       : "true",
+        enumUnknownDefaultCase: "true",
+        useJakartaEe: "true",
     ]
 }
 
