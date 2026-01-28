@@ -1,5 +1,7 @@
 package no.statkart.wsclient.brreg.kontaktinformasjon;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.CharStreams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,12 +9,15 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Klasse for å gjøre kall mot enhetsregisteret sitt api for kontaktinformasjon for seksjonssameier. Alle seksjonssameier
@@ -48,8 +53,11 @@ import java.util.List;
  * Se <a href="https://data.brreg.no/enhetsregisteret/api/docs/index.html">https://data.brreg.no/enhetsregisteret/api/docs/index.html</a> for dokumentasjon av Brønnøysunds tjenester.
  */
 public class KontaktinformasjonClient {
+    public static final Duration READ_TIMEOUT = Duration.ofSeconds(5);
     Logger logger = LoggerFactory.getLogger(KontaktinformasjonClient.class);
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final HttpClient httpClient = HttpClient.newHttpClient();
     private final String endpointURL;
 
     /**
@@ -74,57 +82,36 @@ public class KontaktinformasjonClient {
      * er registrert
      */
     public List<String> findKontaktinformasjonForMatrikkelenhetId(Long matrikkelenhetId) {
-
-        String response = null;
-        HttpURLConnection conn = null;
         try {
-            //Setter opp tilkobling til enhetsregisteret
-            URL url = new URL(endpointURL + matrikkelenhetId);
-            conn = (HttpURLConnection) url.openConnection();
-            conn.connect();
+            var request = HttpRequest.newBuilder()
+                .uri(URI.create(this.endpointURL + matrikkelenhetId))
+                .timeout(READ_TIMEOUT)
+                .build();
+
+            HttpResponse<InputStream> response = httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream());
 
             // APIet svarer med 404 dersom ressursen man etterspør ikke finnes. For at det ikke skal feile svarer vi med tom liste.
-            if (conn.getResponseCode() == 404) {
+            if (response.statusCode() == 404) {
                 logger.warn("404 mot BRREG ved oppslag på kontaktinformasjon for matrikkelenhet id {}", matrikkelenhetId);
                 return Collections.emptyList();
+            } else if (response.statusCode() >= 400) {
+                var error = CharStreams.toString(new InputStreamReader(response.body(), StandardCharsets.UTF_8));
+                logger.error("{} mot BRREG for matrikkelenhet id {}; {}", response.statusCode(), matrikkelenhetId, error);
+                throw new RuntimeException(error);
             }
-            conn.setReadTimeout(5000);
 
-            //Gjør kall til tjenesten
-            try (InputStream is = conn.getInputStream()) {
-                response = CharStreams.toString(new InputStreamReader(is, StandardCharsets.UTF_8));
-            }
-        } catch (IOException e) {
-            String error = null;
-            if (conn != null) {
-                try (InputStream errorStream = conn.getErrorStream()) {
-                    if (errorStream != null) {
-                        error = CharStreams.toString(new InputStreamReader(errorStream, StandardCharsets.UTF_8));
-                    }
-                } catch (IOException ioException) {
-                    //Feil ved feil! Vi ønsker da å kaste opprinnelig feil og ikke denne, så kastet ikke denne videre.
-                    logger.error("Feil oppstod ved uthenting av errorstream etter å ha fått en ioexception. ", ioException);
-                }
-            }
-            if (conn == null || error != null) {
-                throw new RuntimeException("Feil ved oppkobling til " + endpointURL + ", " + error, e);
-            }
-        }
+            List<OrgNr> orgNrs = objectMapper.readValue(response.body(), new TypeReference<>() {});
+            return orgNrs.stream()
+                .map(it -> it.orgnr)
+                .sorted()
+                .collect(Collectors.toList());
 
-        //Henter så ut organisasjonsnummer fra responsen. Er da interessert i alle key-value par som inneholder "orgnr"
-        List<String> orgnr = new ArrayList<>();
-        if (response != null) {
-            String[] split = response.split(",");
-            for (String s : split) {
-                if (s.contains("orgnr")) {
-                    String[] split1 = s.split(":");
-                    String nr = split1[1];
-                    nr = nr.replaceAll("\"", "");
-                    orgnr.add(nr);
-                }
-            }
+        } catch (InterruptedException | IOException e) {
+            throw new RuntimeException(e);
         }
-        orgnr.sort(null); //natural order
-        return List.copyOf(orgnr);
+    }
+
+    private static class OrgNr {
+        public String orgnr;
     }
 }
