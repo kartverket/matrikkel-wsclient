@@ -3,7 +3,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'sktools.xjc' version '7.1'
-    id 'org.openapi.generator' version '6.0.1'
+    id 'org.openapi.generator' version '7.19.0'
 }
 
 group = 'no.statkart.wsclient'
@@ -11,8 +11,8 @@ version = projectVersion + System.getProperty('suffix', '-SNAPSHOT')
 
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 def generatedSrcDir = file("${projectDir}/gen")
@@ -34,7 +34,7 @@ sourceSets {
         xjc {
             schema {
                 srcDir 'src/main/resources/byggesak/xsd'
-                xjcOptions << ['p':'no.statkart.wsclient.byggesak.fiksintegrasjon.generated']
+                xjcOptions << ['p': 'no.statkart.wsclient.byggesak.fiksintegrasjon.generated']
             }
         }
     }
@@ -52,7 +52,7 @@ configurations {
 
 
 idea.module {
-  generatedSourceDirs += generatedMainJavaDir
+    generatedSourceDirs += generatedMainJavaDir
 }
 
 //Create the task that runs the integration tests found from the
@@ -62,7 +62,7 @@ def testIntegration = tasks.register('testIntegration', Test) {
     description = 'Runs the integration tests.'
     testClassesDirs = sourceSets.testIntegration.output.classesDirs
     classpath = sourceSets.testIntegration.runtimeClasspath
-    outputs.upToDateWhen { false /*false ensures integration tests are run every time you invoke this task */}
+    outputs.upToDateWhen { false /*false ensures integration tests are run every time you invoke this task */ }
 
     //Ensure that our unit tests are run before our integration tests
     mustRunAfter tasks.named('test')
@@ -85,29 +85,31 @@ repositories {
 }
 
 configurations {
-  wsImport
-  wsImportWithXJCBinding {
-    extendsFrom wsImport
-  }
+    wsImport
+    wsImportWithXJCBinding {
+        extendsFrom wsImport
+    }
 }
 
 dependencies {
-  def slf4jVersion = '1.7.36'
-  def jaxwsVersion = '3.0.2'
-  def skifVersion = '4.5.1'
+    def slf4jVersion = '1.7.36'
+    def jaxwsVersion = '3.0.2'
+    def skifVersion = '4.5.1'
 
-  wsImport "com.sun.xml.ws:jaxws-tools:$jaxwsVersion"
+    wsImport "com.sun.xml.ws:jaxws-tools:$jaxwsVersion"
 
-  wsImportWithXJCBinding 'org.slf4j:slf4j-simple:' + slf4jVersion
+    wsImportWithXJCBinding 'org.slf4j:slf4j-simple:' + slf4jVersion
 
-  implementation 'com.sun.xml.ws:jaxws-rt:' + jaxwsVersion //bruker Sun/Oracle JAXWS Stack
+    implementation 'com.sun.xml.ws:jaxws-rt:' + jaxwsVersion //bruker Sun/Oracle JAXWS Stack
 
-  api 'no.statkart.skif:skif-service-common:'+skifVersion
-  api 'joda-time:joda-time:2.10.1'
-  implementation 'com.google.guava:guava:33.4.8-jre'
-  implementation 'org.slf4j:slf4j-api:'+slf4jVersion
+    api 'no.statkart.skif:skif-service-common:' + skifVersion
+    api 'joda-time:joda-time:2.10.1'
+    implementation 'com.google.guava:guava:33.4.8-jre'
+    implementation 'org.slf4j:slf4j-api:' + slf4jVersion
+    implementation "jakarta.annotation:jakarta.annotation-api:3.0.0"
 
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'org.apache.httpcomponents:httpmime:4.5.14'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation(platform('com.fasterxml.jackson:jackson-bom:2.19.0')) //For å få samme versjon som matrikkelen
 
@@ -115,7 +117,7 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.27.3'
     testImplementation 'org.mockito:mockito-core:4.7.0'
 
-    testRuntimeOnly 'org.slf4j:slf4j-simple:'+slf4jVersion
+    testRuntimeOnly 'org.slf4j:slf4j-simple:' + slf4jVersion
 
     // dependencies for koden OpenApi Generatoren genererer for Nibas API og Events API
     api 'io.swagger:swagger-annotations:1.6.16'
@@ -125,272 +127,274 @@ dependencies {
 }
 
 task sourceJar(type: Jar) {
-  from sourceSets.main.allJava
-  archiveClassifier = 'sources'
+    from sourceSets.main.allJava
+    archiveClassifier = 'sources'
 }
 
 publishing {
-  publications {
-    mavenJava(MavenPublication) {
-      from components.java
-      artifact sourceJar
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourceJar
 
-      pom.withXml {
-        asNode().dependencies.dependency.findAll { it.groupId.text() == 'com.sun.xml.ws' }.each { it.appendNode('optional', 'true'); it.scope[0].value = 'provided' } //optional avhengighet for jaxws implementasjon da denne ligger som provided i appserver (weblogic)
-      }
+            pom.withXml {
+                asNode().dependencies.dependency.findAll { it.groupId.text() == 'com.sun.xml.ws' }.each { it.appendNode('optional', 'true');
+                    it.scope[0].value = 'provided' }
+                //optional avhengighet for jaxws implementasjon da denne ligger som provided i appserver (weblogic)
+            }
+        }
     }
-  }
 }
 
 def wsImportInnsendingService = tasks.register('wsImportInnsendingService') {
-  def sourceWsdl = file('src/main/resources/innsending/InnsendingServiceWS.wsdl')
-  def wsGenSrc = file("${buildDir}/wsimport/innsending")
-  def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
-  inputs.file jaxbBindingsFile
-  inputs.file sourceWsdl
-  outputs.dir wsGenSrc
+    def sourceWsdl = file('src/main/resources/innsending/InnsendingServiceWS.wsdl')
+    def wsGenSrc = file("${buildDir}/wsimport/innsending")
+    def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
+    inputs.file jaxbBindingsFile
+    inputs.file sourceWsdl
+    outputs.dir wsGenSrc
 
-  doLast {
-    ant.taskdef(name: 'wsimportInnsendingService', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
-    wsGenSrc.mkdirs()
-    ant.wsimportInnsendingService(keep: true,
+    doLast {
+        ant.taskdef(name: 'wsimportInnsendingService', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+        wsGenSrc.mkdirs()
+        ant.wsimportInnsendingService(keep: true,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/innsending/InnsendingServiceWS.wsdl',
             binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
-  }
+    }
 }
 
 def wsImportValideringService = tasks.register('wsImportValideringService') {
-  def sourceWsdl = file('src/main/resources/innsending/ValideringServiceWS.wsdl')
-  def wsGenSrc = file("${buildDir}/wsimport/validering")
-  def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
-  inputs.file jaxbBindingsFile
-  inputs.file sourceWsdl
-  outputs.dir wsGenSrc
+    def sourceWsdl = file('src/main/resources/innsending/ValideringServiceWS.wsdl')
+    def wsGenSrc = file("${buildDir}/wsimport/validering")
+    def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
+    inputs.file jaxbBindingsFile
+    inputs.file sourceWsdl
+    outputs.dir wsGenSrc
 
-  doLast {
-    ant.taskdef(name: 'wsimportValideringService', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
-    wsGenSrc.mkdirs()
-    ant.wsimportValideringService(keep: true,
+    doLast {
+        ant.taskdef(name: 'wsimportValideringService', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+        wsGenSrc.mkdirs()
+        ant.wsimportValideringService(keep: true,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/innsending/ValideringServiceWS.wsdl',
             binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
-  }
+    }
 }
 
 def wsImportStedsnavnAdressenavnInndataService = tasks.register('wsImportStedsnavnAdressenavnInndataService') {
-  def sourceWsdl = file('src/main/resources/stedsnavn/adressenavn/adressenavn.wsdl')
-  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
-  def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
-  inputs.file jaxbBindingsFile
-  inputs.file sourceWsdl
-  outputs.dir wsGenSrcForStedsnavn 
+    def sourceWsdl = file('src/main/resources/stedsnavn/adressenavn/adressenavn.wsdl')
+    def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
+    def jaxbBindingsFile = file('src/main/resources/bindings_java_date_time_api.xml')
+    inputs.file jaxbBindingsFile
+    inputs.file sourceWsdl
+    outputs.dir wsGenSrcForStedsnavn
 
-  doLast {
-    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
-    ant.someTaskName(keep: true,
+    doLast {
+        ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+        ant.someTaskName(keep: true,
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '/stedsnavn/adressenavn/adressenavn.wsdl',
             binding: jaxbBindingsFile,
             xnocompile: true,
             encoding: 'UTF-8')
-  }
+    }
 }
 
 def wsImportStedsnavnStoreService = tasks.register('wsImportStedsnavnStoreService') {
-  def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/StoreServiceWS.wsdl')
-  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
-  inputs.file sourceWsdl
-  outputs.dir wsGenSrcForStedsnavn
+    def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/StoreServiceWS.wsdl')
+    def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
+    inputs.file sourceWsdl
+    outputs.dir wsGenSrcForStedsnavn
 
-  doLast {
-    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
-    ant.someTaskName(keep: true,
+    doLast {
+        ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+        ant.someTaskName(keep: true,
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '/stedsnavn/distribusjon/StoreServiceWS.wsdl',
             xnocompile: true,
             encoding: 'UTF-8')
-  }
+    }
 }
 
 def wsImportStedsnavnEndringsloggService = tasks.register('wsImportStedsnavnEndringsloggService') {
-  def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/EndringsloggServiceWS.wsdl')
-  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
-  inputs.file sourceWsdl
-  outputs.dir wsGenSrcForStedsnavn
+    def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/EndringsloggServiceWS.wsdl')
+    def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
+    inputs.file sourceWsdl
+    outputs.dir wsGenSrcForStedsnavn
 
-  doLast {
-    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
-    ant.someTaskName(keep: true,
+    doLast {
+        ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+        ant.someTaskName(keep: true,
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '/stedsnavn/distribusjon/EndringsloggServiceWS.wsdl',
             xnocompile: true,
             encoding: 'UTF-8')
-  }
+    }
 }
 
 def wsImportStedsnavnService = tasks.register('wsImportStedsnavnService') {
-  def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/StedsnavnServiceWS.wsdl')
-  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
-  inputs.file sourceWsdl
-  outputs.dir wsGenSrcForStedsnavn
+    def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/StedsnavnServiceWS.wsdl')
+    def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
+    inputs.file sourceWsdl
+    outputs.dir wsGenSrcForStedsnavn
 
-  doLast {
-    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
-    ant.someTaskName(keep: true,
+    doLast {
+        ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+        ant.someTaskName(keep: true,
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '/stedsnavn/distribusjon/StedsnavnServiceWS.wsdl',
             xnocompile: true,
             encoding: 'UTF-8')
-  }
+    }
 }
 
 def wsImportSkrivemaateService = tasks.register('wsImportSkrivemaateService') {
-  def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/SkrivemaateServiceWS.wsdl')
-  def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
+    def sourceWsdl = file('src/main/resources/stedsnavn/distribusjon/SkrivemaateServiceWS.wsdl')
+    def wsGenSrcForStedsnavn = file("${buildDir}/wsimport/stedsnavn/$name")
 
-  inputs.file sourceWsdl
-  outputs.dir wsGenSrcForStedsnavn
+    inputs.file sourceWsdl
+    outputs.dir wsGenSrcForStedsnavn
 
-  doLast {
-    ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
-    ant.someTaskName(keep: true,
+    doLast {
+        ant.taskdef(name: 'someTaskName', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+        ant.someTaskName(keep: true,
             sourcedestdir: wsGenSrcForStedsnavn,
             wsdl: sourceWsdl,
             wsdlLocation: '/stedsnavn/distribusjon/SkrivemaateServiceWS.wsdl',
             xnocompile: true,
             encoding: 'UTF-8')
-  }
+    }
 }
 
 def wsImportLandbruksregister = tasks.register('wsImportLandbruksregister') {
-  def sourceWsdl = file('src/main/resources/landbruksregisteret/landbruksregisteret.wsdl')
-  def wsGenSrc = file("${buildDir}/wsimport/landbruksregisteret")
-  inputs.file sourceWsdl
-  outputs.dir wsGenSrc
+    def sourceWsdl = file('src/main/resources/landbruksregisteret/landbruksregisteret.wsdl')
+    def wsGenSrc = file("${buildDir}/wsimport/landbruksregisteret")
+    inputs.file sourceWsdl
+    outputs.dir wsGenSrc
 
-  doLast {
-    ant.taskdef(name: 'wsimportLandbruksregister', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
-    wsGenSrc.mkdirs()
-    ant.wsimportLandbruksregister(keep: true,
+    doLast {
+        ant.taskdef(name: 'wsimportLandbruksregister', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImport.asPath)
+        wsGenSrc.mkdirs()
+        ant.wsimportLandbruksregister(keep: true,
             sourcedestdir: wsGenSrc,
             wsdl: sourceWsdl,
             wsdlLocation: '/landbruksregisteret/landbruksregisteret.wsdl',
             xnocompile: true,
             encoding: 'UTF-8')
-  }
+    }
 }
 
 // Konfigurasjon for å samle "samme" Exception med ulikt pakkenavn
 // TODO: Er det virkelig nødvendig å samle disse exceptionene?
 // TODO: Disse er en del av api-et. En bør fjerne disse ved en renskriving / opprettelse av interfaces for denne modulen.
 final def mergeServiceExceptionInDifferentPackages = { File destination, String packageRoot, String exceptionSubPackage ->
-  def packageString = packageRoot + '.' + exceptionSubPackage
-  def replacePath = new File(destination, packageString.replace('.', '/'))
-  replacePath.mkdirs()
+    def packageString = packageRoot + '.' + exceptionSubPackage
+    def replacePath = new File(destination, packageString.replace('.', '/'))
+    replacePath.mkdirs()
 
-  def exceptionFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*Exception.java'], excludes: ['**/exception/*'])
-  logger.info('replacePath {}', replacePath)
-  exceptionFiles.files.each { logger.info('merging exception {} <- {}', replacePath, it) }
-  //flytter alle exceptions til felles katalog
-  copy {
-    from exceptionFiles.files.first()
-    into replacePath
-  }
-  delete exceptionFiles
-
-  //kjører regexp replace på package statement for flyttet fil
-  File relocatedFile = new File(replacePath, 'ServiceException.java')
-  relocatedFile.setText(relocatedFile.getText('UTF-8').replaceFirst(/(?ms)package[^;]+/, 'package ' + packageString), 'UTF-8')
-
-  def javaFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*.java'])
-  //legger til import statements for de andre java filene
-  javaFiles.files.each { File file ->
-    logger.info('adding exception import statement in {}', file)
-    file.setText(file.getText('UTF-8').replaceFirst('import ', "import ${packageString}.*;\nimport "), 'UTF-8')
-  }
-
-  ant.replaceregexp(encoding: 'UTF-8') {
-    regexp(pattern: /url = new URL\(([^"]+)"\."\), "(.*)"\);/)
-    substitution(expression: ('url = \\1"/\\2"); if (url == null) throw new MalformedURLException("Not found");'))
-    fileset(dir: destination, erroronmissingdir: true) {
-      include(name: '**/*.java')
+    def exceptionFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*Exception.java'], excludes: ['**/exception/*'])
+    logger.info('replacePath {}', replacePath)
+    exceptionFiles.files.each { logger.info('merging exception {} <- {}', replacePath, it) }
+    //flytter alle exceptions til felles katalog
+    copy {
+        from exceptionFiles.files.first()
+        into replacePath
     }
-  }
+    delete exceptionFiles
+
+    //kjører regexp replace på package statement for flyttet fil
+    File relocatedFile = new File(replacePath, 'ServiceException.java')
+    relocatedFile.setText(relocatedFile.getText('UTF-8').replaceFirst(/(?ms)package[^;]+/, 'package ' + packageString), 'UTF-8')
+
+    def javaFiles = fileTree(dir: destination, includes: [packageRoot.replace('.', '/') + '/**/*.java'])
+    //legger til import statements for de andre java filene
+    javaFiles.files.each { File file ->
+        logger.info('adding exception import statement in {}', file)
+        file.setText(file.getText('UTF-8').replaceFirst('import ', "import ${packageString}.*;\nimport "), 'UTF-8')
+    }
+
+    ant.replaceregexp(encoding: 'UTF-8') {
+        regexp(pattern: /url = new URL\(([^"]+)"\."\), "(.*)"\);/)
+        substitution(expression: ('url = \\1"/\\2"); if (url == null) throw new MalformedURLException("Not found");'))
+        fileset(dir: destination, erroronmissingdir: true) {
+            include(name: '**/*.java')
+        }
+    }
 }
 
 def wsImportGrunnboksutskriftInternv2 = tasks.register('wsImportGrunnboksutskriftInternv2') {
-  def sourceWsdlDir = file('src/main/resources/grunnboksutskriftinternv2')
-  def wsGenSrc = file("${buildDir}/wsimport/grunnboksutskriftinternv2")
-  inputs.dir sourceWsdlDir
-  outputs.dir wsGenSrc
+    def sourceWsdlDir = file('src/main/resources/grunnboksutskriftinternv2')
+    def wsGenSrc = file("${buildDir}/wsimport/grunnboksutskriftinternv2")
+    inputs.dir sourceWsdlDir
+    outputs.dir wsGenSrc
 
-  doLast {
-    ant.taskdef(name: 'wsImportGrunnboksutskriftInternv2', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImportWithXJCBinding.asPath)
-    wsGenSrc.mkdirs()
-    fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
-      //noinspection GroovyAssignabilityCheck
-      ant.wsImportGrunnboksutskriftInternv2(keep: true,
-              sourcedestdir: wsGenSrc,
-              wsdl: file.file,
-              wsdlLocation: '/grunnboksutskriftinternv2/' + file.getRelativePath(),
-              xnocompile: true,
-              encoding: 'UTF-8') {
-      }
+    doLast {
+        ant.taskdef(name: 'wsImportGrunnboksutskriftInternv2', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImportWithXJCBinding.asPath)
+        wsGenSrc.mkdirs()
+        fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
+            //noinspection GroovyAssignabilityCheck
+            ant.wsImportGrunnboksutskriftInternv2(keep: true,
+                sourcedestdir: wsGenSrc,
+                wsdl: file.file,
+                wsdlLocation: '/grunnboksutskriftinternv2/' + file.getRelativePath(),
+                xnocompile: true,
+                encoding: 'UTF-8') {
+            }
+        }
+        mergeServiceExceptionInDifferentPackages(file(wsGenSrc), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
     }
-    mergeServiceExceptionInDifferentPackages(file(wsGenSrc), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
-  }
 }
 
 def wsImportGrunnbokv2 = tasks.register('wsImportGrunnbokv2') {
-  def sourceWsdlDir = file('src/main/resources/grunnbokv2')
-  def wsGenSrc = file("${buildDir}/wsimport/grunnbokv2")
-  inputs.dir sourceWsdlDir
-  outputs.dir wsGenSrc
+    def sourceWsdlDir = file('src/main/resources/grunnbokv2')
+    def wsGenSrc = file("${buildDir}/wsimport/grunnbokv2")
+    inputs.dir sourceWsdlDir
+    outputs.dir wsGenSrc
 
-  doLast {
-    ant.taskdef(name: 'wsImportGrunnbokv2', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImportWithXJCBinding.asPath)
-    wsGenSrc.mkdirs()
-    fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
-      //noinspection GroovyAssignabilityCheck
-      ant.wsImportGrunnbokv2(keep: true,
-              sourcedestdir: wsGenSrc,
-              wsdl: file.file,
-              wsdlLocation: '/grunnbokv2/' + file.getRelativePath(),
-              xnocompile: true,
-              encoding: 'UTF-8') {
-      }
+    doLast {
+        ant.taskdef(name: 'wsImportGrunnbokv2', classname: WS_IMPORT_QUAL_NAME, classpath: configurations.wsImportWithXJCBinding.asPath)
+        wsGenSrc.mkdirs()
+        fileTree(dir: sourceWsdlDir, include: '**/*.wsdl').visit { file ->
+            //noinspection GroovyAssignabilityCheck
+            ant.wsImportGrunnbokv2(keep: true,
+                sourcedestdir: wsGenSrc,
+                wsdl: file.file,
+                wsdlLocation: '/grunnbokv2/' + file.getRelativePath(),
+                xnocompile: true,
+                encoding: 'UTF-8') {
+            }
+        }
+        mergeServiceExceptionInDifferentPackages(file(wsGenSrc), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
     }
-    mergeServiceExceptionInDifferentPackages(file(wsGenSrc), 'no.kartverket.grunnbok.wsapi.v2', 'exception')
-  }
 }
 
 def wsImport = tasks.register('wsImport', Sync) {
-  dependsOn processResources
+    dependsOn processResources
 
-  into generatedMainJavaDir
-  duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    into generatedMainJavaDir
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE
 
-  from wsImportInnsendingService
-  from wsImportValideringService
-  from wsImportStedsnavnAdressenavnInndataService
-  from wsImportStedsnavnStoreService
-  from wsImportStedsnavnEndringsloggService
-  from wsImportStedsnavnService
-  from wsImportSkrivemaateService
-  from wsImportLandbruksregister
-  from wsImportGrunnboksutskriftInternv2
-  from wsImportGrunnbokv2
+    from wsImportInnsendingService
+    from wsImportValideringService
+    from wsImportStedsnavnAdressenavnInndataService
+    from wsImportStedsnavnStoreService
+    from wsImportStedsnavnEndringsloggService
+    from wsImportStedsnavnService
+    from wsImportSkrivemaateService
+    from wsImportLandbruksregister
+    from wsImportGrunnboksutskriftInternv2
+    from wsImportGrunnbokv2
 }
 
 def inputFileNibasApi = file("src/main/resources/nibas/nibasApiV1.json").path
@@ -404,8 +408,10 @@ task generateNibasApiModel(type: org.openapitools.generator.gradle.plugin.tasks.
     invokerPackage = "no.kartverket.nibas.api.v1.invoker"
     modelPackage = "no.kartverket.nibas.api.v1.model"
     configOptions = [
-        library: "native",
-        openApiNullable: "true",
+        library               : "native",
+        openApiNullable       : "true",
+        enumUnknownDefaultCase: "true",
+        useJakartaEe: "true",
     ]
 }
 
@@ -432,8 +438,10 @@ task generateNibasEventsApiModel(type: org.openapitools.generator.gradle.plugin.
     invokerPackage = "no.kartverket.nibas.events.v1.invoker"
     modelPackage = "no.kartverket.nibas.events.v1.model"
     configOptions = [
-        library: "native",
-        openApiNullable: "true",
+        library               : "native",
+        openApiNullable       : "true",
+        enumUnknownDefaultCase: "true",
+        useJakartaEe: "true",
     ]
 }
 
@@ -454,20 +462,20 @@ def generateNibasApiFiles = tasks.register("generateNibasApiFiles") {
 }
 
 tasks.named('clean') {
-  delete generatedSrcDir
+    delete generatedSrcDir
 }
 
 tasks.named('compileJava') {
-  dependsOn wsImport, generateNibasApiFiles
+    dependsOn wsImport, generateNibasApiFiles
 }
 
-tasks.named('sourceJar'){
+tasks.named('sourceJar') {
     dependsOn wsImport, copyNibasApiSrcFiles, copyNibasEventsApiSrcFiles
 }
 
 tasks.withType(JavaCompile).configureEach {
-  options.encoding = 'UTF-8'
-  options.compilerArgs << '-Xlint:unchecked' << '-Werror'
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:unchecked' << '-Werror'
 }
 
 tasks.withType(AbstractPublishToMaven).configureEach {
@@ -487,13 +495,13 @@ tasks.named('testIntegration') {
     ])
 }
 manifest {
-  attributes([
-          'Specification-Title'   : project.name,
-          'Specification-Vendor'  : 'Statens kartverk',
-          'Specification-Version' : (gradle.startParameter.projectProperties.get('projectVersion') ?: projectVersion).replace('-SNAPSHOT', ''),
+    attributes([
+        'Specification-Title'   : project.name,
+        'Specification-Vendor'  : 'Statens kartverk',
+        'Specification-Version' : (gradle.startParameter.projectProperties.get('projectVersion') ?: projectVersion).replace('-SNAPSHOT', ''),
 
-          'Implementation-Title'  : "${project.name} bygget for ${(version == null || version.contains('-SNAPSHOT') || version.contains('-build')) ? 'TEST' : 'Produksjon'}",
-          'Implementation-Vendor' : 'Statens kartverk',
-          'Implementation-Version': project.version,
-  ])
+        'Implementation-Title'  : "${project.name} bygget for ${(version == null || version.contains('-SNAPSHOT') || version.contains('-build')) ? 'TEST' : 'Produksjon'}",
+        'Implementation-Vendor' : 'Statens kartverk',
+        'Implementation-Version': project.version,
+    ])
 }
