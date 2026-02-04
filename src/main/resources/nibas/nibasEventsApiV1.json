@@ -2,13 +2,17 @@
     "openapi": "3.1.0",
     "info": {
         "title": "NIBAS Events API",
-        "description": "API for å hente events i Nasjonal inndelingsbase",
+        "description": "API for � hente events i Nasjonal inndelingsbase",
         "version": "v1"
     },
     "servers": [
         {
             "url": "https://nibas-events.atkv3-prod.kartverket-intern.cloud",
             "description": "Prod"
+        },
+        {
+            "url": "https://nibas-events-nibas-main.atkv3-dev.kartverket-intern.cloud",
+            "description": "Dev"
         }
     ],
     "tags": [
@@ -50,11 +54,11 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/EventResponse"
+                                    "$ref": "#/components/schemas/PageEventResponse"
                                 }
                             }
                         }
@@ -137,7 +141,7 @@
                     "inntreffer": {
                         "type": "string",
                         "format": "date",
-                        "description": "Når eventen er gyldig fra"
+                        "description": "N�r eventen er gyldig fra"
                     },
                     "eventRader": {
                         "type": "array",
@@ -185,7 +189,7 @@
                     "eventId": {
                         "type": "integer",
                         "format": "int32",
-                        "description": "Hvilket event hører raden til"
+                        "description": "Hvilket event h�rer raden til"
                     }
                 },
                 "required": [
@@ -202,21 +206,21 @@
                     "id": {
                         "type": "integer",
                         "format": "int32",
-                        "description": "Eventnummer (løpenummer)"
+                        "description": "Eventnummer (l�penummer)"
                     },
                     "inntreffer": {
                         "type": "string",
                         "format": "date",
-                        "description": "Når eventen inntreffer"
+                        "description": "N�r eventen inntreffer"
                     },
                     "timestamp": {
                         "type": "string",
                         "format": "date-time",
-                        "description": "Når eventen skjedde"
+                        "description": "N�r eventen skjedde"
                     },
                     "rader": {
                         "type": "array",
-                        "description": "Radene eventet består av",
+                        "description": "Radene eventet best�r av",
                         "items": {
                             "$ref": "#/components/schemas/EventRadResponse"
                         },
@@ -229,6 +233,92 @@
                     "rader",
                     "timestamp"
                 ]
+            },
+            "PageEventResponse": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EventResponse"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PageableObject": {
+                "type": "object",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "paged": {
+                        "type": "boolean"
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "unpaged": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "SortObject": {
+                "type": "object",
+                "properties": {
+                    "empty": {
+                        "type": "boolean"
+                    },
+                    "sorted": {
+                        "type": "boolean"
+                    },
+                    "unsorted": {
+                        "type": "boolean"
+                    }
+                }
             }
         }
     }
