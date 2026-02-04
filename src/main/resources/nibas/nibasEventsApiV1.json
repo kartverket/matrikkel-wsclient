@@ -2,7 +2,7 @@
     "openapi": "3.1.0",
     "info": {
         "title": "NIBAS Events API",
-        "description": "API for � hente events i Nasjonal inndelingsbase",
+        "description": "API for å hente events i Nasjonal inndelingsbase",
         "version": "v1"
     },
     "servers": [
@@ -141,7 +141,7 @@
                     "inntreffer": {
                         "type": "string",
                         "format": "date",
-                        "description": "N�r eventen er gyldig fra"
+                        "description": "Når eventen er gyldig fra"
                     },
                     "eventRader": {
                         "type": "array",
@@ -189,7 +189,7 @@
                     "eventId": {
                         "type": "integer",
                         "format": "int32",
-                        "description": "Hvilket event h�rer raden til"
+                        "description": "Hvilket event hører raden til"
                     }
                 },
                 "required": [
@@ -206,21 +206,21 @@
                     "id": {
                         "type": "integer",
                         "format": "int32",
-                        "description": "Eventnummer (l�penummer)"
+                        "description": "Eventnummer (løpenummer)"
                     },
                     "inntreffer": {
                         "type": "string",
                         "format": "date",
-                        "description": "N�r eventen inntreffer"
+                        "description": "Når eventen inntreffer"
                     },
                     "timestamp": {
                         "type": "string",
                         "format": "date-time",
-                        "description": "N�r eventen skjedde"
+                        "description": "Når eventen skjedde"
                     },
                     "rader": {
                         "type": "array",
-                        "description": "Radene eventet best�r av",
+                        "description": "Radene eventet består av",
                         "items": {
                             "$ref": "#/components/schemas/EventRadResponse"
                         },
