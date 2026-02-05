@@ -3940,6 +3940,9 @@
                             },
                             {
                                 "$ref": "#/components/schemas/TerritorialgrenseMetadata"
+                            },
+                            {
+                                "type": "null"
                             }
                         ]
                     },
@@ -5689,15 +5692,9 @@
                     "url": {
                         "type": "string",
                         "description": "Lenke til mer informasjon"
-                    },
-                    "features": {
-                        "$ref": "#/components/schemas/FeatureCollection",
-                        "description": "Geometrien til bopliktområdet, dvs representasjonspunkt og flaten"
                     }
                 },
                 "required": [
-                    "delvisBoplikt",
-                    "features",
                     "gyldighet",
                     "id",
                     "kommuneIdentifikator",
@@ -6130,7 +6127,9 @@
                 "properties": {
                     "innhold": {
                         "type": "array",
-                        "items": {}
+                        "items": {
+
+                        }
                     },
                     "side": {
                         "type": "integer",
