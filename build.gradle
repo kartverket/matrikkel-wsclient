@@ -24,6 +24,7 @@ def nibasSrcDir = "${nibasDir}/src/main"
 def nibasJavaSources = "${nibasSrcDir}/java"
 def nibasApiTmpFolder = "${nibasDir}/nibasApiTmp"
 def nibasEventsApiTmpFolder = "${nibasDir}/nibasEventsApiTmp"
+def openApiTemplateDir = file("${projectDir}/config/openapi-generator/templates").path
 
 
 sourceSets {
@@ -403,6 +404,7 @@ task generateNibasApiModel(type: org.openapitools.generator.gradle.plugin.tasks.
     generatorName = "java"
     inputSpec = inputFileNibasApi
     outputDir = nibasApiTmpFolder
+    templateDir = openApiTemplateDir
     packageName = "no.kartverket.nibas.api.v1"
     apiPackage = "no.kartverket.nibas.api.v1.api"
     invokerPackage = "no.kartverket.nibas.api.v1.invoker"
@@ -433,6 +435,7 @@ task generateNibasEventsApiModel(type: org.openapitools.generator.gradle.plugin.
     generatorName = "java"
     inputSpec = inputFileNibasEventsApi
     outputDir = nibasEventsApiTmpFolder
+    templateDir = openApiTemplateDir
     packageName = "no.kartverket.nibas.events.v1"
     apiPackage = "no.kartverket.nibas.events.v1.api"
     invokerPackage = "no.kartverket.nibas.events.v1.invoker"
