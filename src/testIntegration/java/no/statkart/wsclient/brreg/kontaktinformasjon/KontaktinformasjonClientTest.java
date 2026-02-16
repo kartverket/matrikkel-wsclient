@@ -22,7 +22,7 @@ public class KontaktinformasjonClientTest {
             mockHttpServer.enqueue(
                 new MockResponse.Builder()
                     .code(200)
-                    .body("[{\"orgnr\":917256276}, {\"orgnr\":993265845}, {\"orgnr\":994908782}, {\"orgnr\":996761495}]")
+                    .body("[{\"orgnr\":917256276, \"komnr\":123}, {\"orgnr\":993265845}, {\"orgnr\":994908782}, {\"orgnr\":996761495}]")
                     .build()
             );
 
