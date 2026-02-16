@@ -1,6 +1,7 @@
 package no.statkart.wsclient.brreg.kontaktinformasjon;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.CharStreams;
 import org.slf4j.Logger;
@@ -69,6 +70,7 @@ public class KontaktinformasjonClient {
         } else {
             this.endpointURL = "https://data.brreg.no:443/enhetsregisteret/api/matrikkelenhet?matrikkelenhetid=";
         }
+        this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     /**
