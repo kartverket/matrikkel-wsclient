@@ -3,7 +3,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'sktools.xjc' version '7.1'
-    id 'org.openapi.generator' version '7.19.0'
+    id 'org.openapi.generator' version '7.10.0'
 }
 
 group = 'no.statkart.wsclient'

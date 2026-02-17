@@ -1,5 +1,5 @@
 {
-    "openapi": "3.1.0",
+    "openapi": "3.0.1",
     "info": {
         "title": "NIBAS Events API",
         "description": "API for å hente events i Nasjonal inndelingsbase",
@@ -54,7 +54,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -84,9 +84,6 @@
                 "responses": {
                     "201": {
                         "description": "Created"
-                    },
-                    "422": {
-                        "description": "Need atleast one EventRad in Event"
                     }
                 }
             }
@@ -95,6 +92,12 @@
     "components": {
         "schemas": {
             "EventRadRequest": {
+                "required": [
+                    "eventType",
+                    "flateType",
+                    "lokalid",
+                    "uuid"
+                ],
                 "type": "object",
                 "properties": {
                     "uuid": {
@@ -118,8 +121,7 @@
                             "GRUNNKRETS",
                             "KOMMUNE",
                             "FYLKE",
-                            "NASJON",
-                            "BOPLIKTOMRAADE"
+                            "NASJON"
                         ]
                     },
                     "lokalid": {
@@ -127,39 +129,39 @@
                         "description": "Lokalid for objektet"
                     }
                 },
-                "required": [
-                    "eventType",
-                    "flateType",
-                    "lokalid",
-                    "uuid"
-                ]
+                "description": "Liste med relaterte rader"
             },
             "EventRequest": {
+                "required": [
+                    "eventRader",
+                    "inntreffer"
+                ],
                 "type": "object",
-                "description": "event",
                 "properties": {
                     "inntreffer": {
                         "type": "string",
-                        "format": "date",
-                        "description": "Når eventen er gyldig fra"
+                        "description": "Når eventen er gyldig fra",
+                        "format": "date"
                     },
                     "eventRader": {
+                        "uniqueItems": true,
                         "type": "array",
                         "description": "Liste med relaterte rader",
                         "items": {
                             "$ref": "#/components/schemas/EventRadRequest"
-                        },
-                        "uniqueItems": true
+                        }
                     }
                 },
-                "required": [
-                    "eventRader",
-                    "inntreffer"
-                ]
+                "description": "event"
             },
             "EventRadResponse": {
+                "required": [
+                    "eventId",
+                    "flateType",
+                    "lokalId",
+                    "type"
+                ],
                 "type": "object",
-                "description": "Rad med data om endringen",
                 "properties": {
                     "type": {
                         "type": "string",
@@ -178,8 +180,7 @@
                             "GRUNNKRETS",
                             "KOMMUNE",
                             "FYLKE",
-                            "NASJON",
-                            "BOPLIKTOMRAADE"
+                            "NASJON"
                         ]
                     },
                     "lokalId": {
@@ -188,62 +189,57 @@
                     },
                     "eventId": {
                         "type": "integer",
-                        "format": "int32",
-                        "description": "Hvilket event hører raden til"
+                        "description": "Hvilket event hører raden til",
+                        "format": "int32"
                     }
                 },
-                "required": [
-                    "eventId",
-                    "flateType",
-                    "lokalId",
-                    "type"
-                ]
+                "description": "Rad med data om endringen"
             },
             "EventResponse": {
-                "type": "object",
-                "description": "En representasjon av en event",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Eventnummer (løpenummer)"
-                    },
-                    "inntreffer": {
-                        "type": "string",
-                        "format": "date",
-                        "description": "Når eventen inntreffer"
-                    },
-                    "timestamp": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Når eventen skjedde"
-                    },
-                    "rader": {
-                        "type": "array",
-                        "description": "Radene eventet består av",
-                        "items": {
-                            "$ref": "#/components/schemas/EventRadResponse"
-                        },
-                        "uniqueItems": true
-                    }
-                },
                 "required": [
                     "id",
                     "inntreffer",
                     "rader",
                     "timestamp"
-                ]
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Eventnummer (løpenummer)",
+                        "format": "int32"
+                    },
+                    "inntreffer": {
+                        "type": "string",
+                        "description": "Når eventen inntreffer",
+                        "format": "date"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "description": "Når eventen skjedde",
+                        "format": "date-time"
+                    },
+                    "rader": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Radene eventet består av",
+                        "items": {
+                            "$ref": "#/components/schemas/EventRadResponse"
+                        }
+                    }
+                },
+                "description": "En representasjon av en event"
             },
             "PageEventResponse": {
                 "type": "object",
                 "properties": {
-                    "totalElements": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
                     "totalPages": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
                     },
                     "size": {
                         "type": "integer",
@@ -259,15 +255,15 @@
                         "type": "integer",
                         "format": "int32"
                     },
-                    "numberOfElements": {
-                        "type": "integer",
-                        "format": "int32"
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
                     },
                     "pageable": {
                         "$ref": "#/components/schemas/PageableObject"
                     },
-                    "sort": {
-                        "$ref": "#/components/schemas/SortObject"
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "first": {
                         "type": "boolean"
@@ -287,7 +283,13 @@
                         "type": "integer",
                         "format": "int64"
                     },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
                     "paged": {
+                        "type": "boolean"
+                    },
+                    "unpaged": {
                         "type": "boolean"
                     },
                     "pageNumber": {
@@ -297,12 +299,6 @@
                     "pageSize": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "sort": {
-                        "$ref": "#/components/schemas/SortObject"
-                    },
-                    "unpaged": {
-                        "type": "boolean"
                     }
                 }
             },
@@ -312,10 +308,10 @@
                     "empty": {
                         "type": "boolean"
                     },
-                    "sorted": {
+                    "unsorted": {
                         "type": "boolean"
                     },
-                    "unsorted": {
+                    "sorted": {
                         "type": "boolean"
                     }
                 }
