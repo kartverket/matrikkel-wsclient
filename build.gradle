@@ -3,7 +3,11 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'sktools.xjc' version '7.1'
-    id 'org.openapi.generator' version '7.19.0'
+    id 'org.openapi.generator' version '7.10.0' //Fom 7.11.0 er det feil i opeenapi-genereringa,
+    // se https://github.com/OpenAPITools/openapi-generator/issues/20556
+    // Denne gjør at æøå ødelegges i kretsnavn hentet fra Nibas.
+    // Generert kode gjør String(localVarResponse.body().readAllBytes())
+    // som bruker default karaktersett på kjørende maskin. Eksternregisteret har ISO-8859-1.
 }
 
 group = 'no.statkart.wsclient'
