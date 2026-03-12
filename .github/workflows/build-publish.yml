@@ -46,14 +46,6 @@ jobs:
                     distribution: 'temurin'
                     architecture: x64
 
-            -   name: Tailscale
-                uses: tailscale/github-action@v3
-                with:
-                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET  }}
-                    version: "1.48.1"
-                    tags: tag:github-runner
-
             -   name: Valider Gradle wrapper
                 uses: gradle/actions/wrapper-validation@v4
 
