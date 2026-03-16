@@ -80,7 +80,7 @@ jobs:
                 run: chmod +x ./gradlew
 
             -   name: Run tests
-                run: ./gradlew check --continue --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
+                run: ./gradlew check --continue --stacktrace --info -Dsuffix="${{ needs.calculate-version.outputs.version }}"
 
             -   name: Publish Test Report
                 if: ${{ always() }}
