@@ -52,11 +52,11 @@ jobs:
 
             -   name: Debug env
                 run: |
-                    echo "GITHUB_ACTOR is set: ${{ env.GITHUB_ACTOR != '' }}"
-                    echo "GITHUB_TOKEN is set: ${{ env.GITHUB_TOKEN != '' }}"
+                    echo "GITHUB_ACTOR is set: ${{ env.GH_ACTOR != '' }}"
+                    echo "GITHUB_TOKEN is set: ${{ env.GH_TOKEN != '' }}"
 
             -   name: Prepare
-                run: ./gradlew clean assemble --info --debug --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
+                run: ./gradlew clean assemble --info --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
 
     test:
         name: Kjør tester
