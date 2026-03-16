@@ -58,7 +58,7 @@ jobs:
             -   name: Prepare
                 run: ./gradlew clean assemble --info --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
                 env:
-                    GITHUB_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
 
     test:
         name: Kjør tester
@@ -95,7 +95,7 @@ jobs:
             -   name: Run tests
                 run: ./gradlew check --continue --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
                 env:
-                    GITHUB_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
 
             -   name: Publish Test Report
                 if: ${{ always() }}
