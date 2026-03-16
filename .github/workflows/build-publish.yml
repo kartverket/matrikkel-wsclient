@@ -49,6 +49,8 @@ jobs:
 
             -   name: Prepare
                 run: ./gradlew clean assemble --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     test:
         name: Kjør tester
