@@ -50,8 +50,13 @@ jobs:
             -   name: Valider Gradle wrapper
                 uses: gradle/actions/wrapper-validation@v4
 
+            -   name: Debug env
+                run: |
+                    echo "GITHUB_ACTOR is set: ${{ env.GITHUB_ACTOR != '' }}"
+                    echo "GITHUB_TOKEN is set: ${{ env.GITHUB_TOKEN != '' }}"
+
             -   name: Prepare
-                run: ./gradlew clean assemble --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
+                run: ./gradlew clean assemble --info --debug --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
 
     test:
         name: Kjør tester
