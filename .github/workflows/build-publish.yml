@@ -50,10 +50,13 @@ jobs:
             -   name: Valider Gradle wrapper
                 uses: gradle/actions/wrapper-validation@v4
 
-            -   name: Debug package access
-                run: |
-                    curl -v -H "Authorization: token ${{ secrets.GH_PACKAGES_PAT }}" \
-                    "https://maven.pkg.github.com/kartverket/SkTools/sktools/xjc/sktools.xjc.gradle.plugin/7.2026.03.16-08.28-dac1543/sktools.xjc.gradle.plugin-7.2026.03.16-08.28-dac1543.pom"
+            -   name: Sett opp Tailscale
+                uses: tailscale/github-action@v3
+                with:
+                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+                    version: "1.48.1"
+                    tags: tag:github-runner
 
             -   name: Prepare
                 run: ./gradlew clean assemble --info --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
@@ -80,6 +83,14 @@ jobs:
 
             -   name: Validate Gradle wrapper
                 uses: gradle/actions/wrapper-validation@v4
+
+            -   name: Sett opp Tailscale
+                uses: tailscale/github-action@v3
+                with:
+                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+                    version: "1.48.1"
+                    tags: tag:github-runner
 
             -   name: Grant execute permission to Gradlew
                 run: chmod +x ./gradlew
@@ -117,6 +128,14 @@ jobs:
                     java-version: '17'
                     distribution: 'temurin'
                     architecture: x64
+            
+            -   name: Sett opp Tailscale
+                uses: tailscale/github-action@v3
+                with:
+                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+                    version: "1.48.1"
+                    tags: tag:github-runner
 
             -   name: Grant execute permission to Gradlew
                 run: chmod +x ./gradlew

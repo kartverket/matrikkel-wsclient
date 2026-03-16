@@ -9,13 +9,6 @@ pluginManagement {
                 password = System.getenv("GH_TOKEN") ?: System.getenv("GITHUB_TOKEN") ?: System.getenv("KV_PACKAGES_PAT") ?: System.getenv("GH_PACKAGES_PAT")
             }
         }
-        maven {
-            name = 'intern-nexus'
-            url = 'https://nexus.statkart.no/repository/public/'
-            content {
-                includeGroupByRegex 'no\\.statkart\\.skif(\\..*)?'
-            }
-        }
         gradlePluginPortal()
         mavenCentral()
     }
