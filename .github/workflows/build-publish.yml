@@ -135,9 +135,11 @@ jobs:
                 run: chmod +x ./gradlew
 
             -   name: Run integration tests
-                run: ./gradlew testIntegration --continue --stacktrace
+                run: |
+                    ./gradlew testIntegration --continue --stacktrace \
+                    -Dhttps.proxyHost=proxy.kartverket.no \
+                    -Dhttps.proxyPort=3128
                 env:
-                    _JAVA_OPTIONS: "-Dhttps.proxyHost=proxy.kartverket.no -Dhttps.proxyPort=3128"
                     grunnbok.mat.username: ${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_USR }}
                     grunnbok.mat.password: ${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_PSW }}
                     grunnbok.tinglysing.username: ${{ secrets.MATRIKKEL_WSCLIENT_TINGLYSING_USR }}
