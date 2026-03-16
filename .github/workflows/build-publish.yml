@@ -96,7 +96,7 @@ jobs:
                 run: chmod +x ./gradlew
 
             -   name: Run tests
-                run: ./gradlew check --continue --stacktrace --info -Dsuffix="${{ needs.calculate-version.outputs.version }}"
+                run: ./gradlew check --continue --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
 
             -   name: Publish Test Report
                 if: ${{ always() }}
@@ -128,7 +128,7 @@ jobs:
                     java-version: '17'
                     distribution: 'temurin'
                     architecture: x64
-            
+
             -   name: Sett opp Tailscale
                 uses: tailscale/github-action@v3
                 with:
