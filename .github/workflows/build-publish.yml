@@ -1,0 +1,187 @@
+name: Build and Publish
+
+on:
+    push:
+        branches:
+            - 'master'
+    pull_request:
+    workflow_dispatch:
+
+env:
+    ARTIFACT: matrikkel-status
+    MAJOR_VERSION: 5
+
+jobs:
+    calculate-version:
+        name: Calculate Version
+        runs-on: ubuntu-latest
+        outputs:
+            version: ${{ steps.version-string.outputs.version }}
+
+        steps:
+            -   name: Generate version string
+                id: version-string
+                shell: bash
+                run: |
+                    version="${{ env.MAJOR_VERSION }}.$(date -u '+%Y.%m.%d-%H.%M')-$(echo "${GITHUB_SHA}" | cut -c1-7)"
+                    echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        needs: calculate-version
+        permissions:
+            contents: read
+            packages: write
+
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Sett opp JDK 17 for x64
+                uses: actions/setup-java@v4
+                with:
+                    java-version: '17'
+                    distribution: 'temurin'
+                    architecture: x64
+
+            -   name: Valider Gradle wrapper
+                uses: gradle/actions/wrapper-validation@v4
+
+            -   name: Sett opp Tailscale
+                uses: tailscale/github-action@v3
+                with:
+                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+                    version: "1.48.1"
+                    tags: tag:github-runner
+
+            -   name: Prepare
+                run: ./gradlew clean assemble --info --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
+                env:
+                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+
+    test:
+        name: Kjør tester
+        needs: build
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+
+            -   name: Sett opp JDK 17 for x64
+                uses: actions/setup-java@v4
+                with:
+                    java-version: '17'
+                    distribution: 'temurin'
+                    architecture: x64
+
+            -   name: Validate Gradle wrapper
+                uses: gradle/actions/wrapper-validation@v4
+
+            # Trenger tailscale kun til alle pakker er flyttet over til github packages
+            -   name: Sett opp Tailscale
+                uses: tailscale/github-action@v3
+                with:
+                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+                    version: "1.48.1"
+                    tags: tag:github-runner
+
+            -   name: Run tests
+                run: ./gradlew check --continue --stacktrace
+                env:
+                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+
+            -   name: Publish Test Report
+                if: ${{ always() }}
+                uses: mikepenz/action-junit-report@v5
+                with:
+                    report_paths: '**/build/test-results/*/*.xml'
+                    check_name: Test rapport
+                    annotate_only: true
+                    detailed_summary: true
+
+    integration-test:
+        name: Kjør integrasjons tester
+        needs: build
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+
+            -   name: Sett opp JDK 17 for x64
+                uses: actions/setup-java@v4
+                with:
+                    java-version: '17'
+                    distribution: 'temurin'
+                    architecture: x64
+
+            -   name: Validate Gradle wrapper
+                uses: gradle/actions/wrapper-validation@v4
+
+            # Trenger tailscale kun til alle pakker er flyttet over til github packages
+            -   name: Sett opp Tailscale
+                uses: tailscale/github-action@v3
+                with:
+                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+                    version: "1.48.1"
+                    tags: tag:github-runner
+
+            -   name: Run integration tests
+                run: |
+                    ./gradlew testIntegration --continue --stacktrace \
+                    -Dgrunnbok.mat.username=${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_USR }} \
+                    -Dgrunnbok.mat.password=${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_PSW }} \
+                    -Dgrunnbok.tinglysing.username=${{ secrets.MATRIKKEL_WSCLIENT_TINGLYSING_USR }} \
+                    -Dgrunnbok.tinglysing.password=${{ secrets.MATRIKKEL_WSCLIENT_TINGLYSING_PSW }} \
+                    -Dlandbruksregister.username=${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_USR }} \
+                    -Dlandbruksregister.password=${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_PSW }}
+                env:
+                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+
+            -   name: Publish Test Report
+                if: always()
+                uses: mikepenz/action-junit-report@v5
+                with:
+                    report_paths: '**/build/test-results/testIntegration/*.xml'
+                    check_name: Integration test rapport
+                    annotate_only: true
+                    detailed_summary: true
+
+    publish:
+        name: Publish to GitHub Packages
+        runs-on: ubuntu-latest
+        needs:
+            - test
+            - integration-test
+            - calculate-version
+        if: github.ref_name == 'master' && github.event_name == 'push'
+
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v4
+
+            -   name: Sett opp JDK 17 for x64
+                uses: actions/setup-java@v4
+                with:
+                    java-version: '17'
+                    distribution: 'temurin'
+                    architecture: x64
+
+            -   name: Sett opp Tailscale
+                uses: tailscale/github-action@v3
+                with:
+                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+                    version: "1.48.1"
+                    tags: tag:github-runner
+
+            -   name: Publish to GitHub Packages
+                run: ./gradlew publish --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}

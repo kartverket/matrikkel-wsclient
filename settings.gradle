@@ -2,10 +2,11 @@ pluginManagement {
     repositories {
         mavenLocal()
         maven {
-            name = 'intern-nexus'; url = 'https://nexus.statkart.no/repository/public/'
-            content {
-                includeGroupByRegex 'no\\.statkart\\.sktools(\\..*)?' //includeGroupAndSubgroups
-                includeGroupByRegex 'sktools(\\..*)?' ////includeGroupAndSubgroups
+            name = 'GitHubPackages'
+            url = 'https://maven.pkg.github.com/kartverket/SkTools'
+            credentials {
+                username = System.getenv("GITHUB_ACTOR") ?: System.getenv("GITHUB_USER")
+                password = System.getenv("PACKAGES_TOKEN") ?: System.getenv("KV_PACKAGES_PAT") ?: System.getenv("GH_PACKAGES_PAT")
             }
         }
         gradlePluginPortal()

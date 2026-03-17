@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'idea'
     id 'maven-publish'
-    id 'sktools.xjc' version '7.1'
+    id 'sktools.xjc' version '7.2026.03.16-08.28-dac1543'
     id 'org.openapi.generator' version '7.10.0' //Fom 7.11.0 er det feil i opeenapi-genereringa,
     // se https://github.com/OpenAPITools/openapi-generator/issues/20556
     // Denne gjør at æøå ødelegges i kretsnavn hentet fra Nibas.
@@ -78,6 +78,8 @@ tasks.withType(Test).configureEach {
     }
 }
 
+
+// FJERN DENNE NÅR SKIF ER FLYTTET TIL GITHUB PACKAGES
 repositories {
     mavenCentral()
     maven {
@@ -145,6 +147,16 @@ publishing {
                 asNode().dependencies.dependency.findAll { it.groupId.text() == 'com.sun.xml.ws' }.each { it.appendNode('optional', 'true');
                     it.scope[0].value = 'provided' }
                 //optional avhengighet for jaxws implementasjon da denne ligger som provided i appserver (weblogic)
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/kartverket/matrikkel-wsclient"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
