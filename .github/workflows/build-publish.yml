@@ -88,9 +88,6 @@ jobs:
                     version: "1.48.1"
                     tags: tag:github-runner
 
-            -   name: Grant execute permission to Gradlew
-                run: chmod +x ./gradlew
-
             -   name: Run tests
                 run: ./gradlew check --continue --stacktrace
                 env:
@@ -131,9 +128,6 @@ jobs:
                     oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
                     version: "1.48.1"
                     tags: tag:github-runner
-
-            -   name: Grant execute permission to Gradlew
-                run: chmod +x ./gradlew
 
             -   name: Run integration tests
                 run: |
@@ -184,9 +178,6 @@ jobs:
                     oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
                     version: "1.48.1"
                     tags: tag:github-runner
-
-            -   name: Grant execute permission to Gradlew
-                run: chmod +x ./gradlew
 
             -   name: Publish to GitHub Packages
                 run: ./gradlew publish --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
