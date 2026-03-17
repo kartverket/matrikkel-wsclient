@@ -137,8 +137,6 @@ jobs:
             -   name: Run integration tests
                 run: |
                     ./gradlew testIntegration --continue --stacktrace \
-                    -Dhttps.proxyHost=proxy.kartverket.no \
-                    -Dhttps.proxyPort=3128 \
                     -Dgrunnbok.mat.username=${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_USR }} \
                     -Dgrunnbok.mat.password=${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_PSW }} \
                     -Dgrunnbok.tinglysing.username=${{ secrets.MATRIKKEL_WSCLIENT_TINGLYSING_USR }} \
@@ -147,6 +145,8 @@ jobs:
                     -Dlandbruksregister.password=${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_PSW }}
                 env:
                     PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+                    HTTPS_PROXY_HOST: proxy.kartverket.no
+                    HTTPS_PROXY_PORT: "3128"
 
             -   name: Publish Test Report
                 if: always()

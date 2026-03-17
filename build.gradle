@@ -70,6 +70,11 @@ def testIntegration = tasks.register('testIntegration', Test) {
 
     //Ensure that our unit tests are run before our integration tests
     mustRunAfter tasks.named('test')
+    // Only apply proxy if set
+    if (System.getenv("HTTPS_PROXY_HOST")) {
+        jvmArgs "-Dhttps.proxyHost=${System.getenv("HTTPS_PROXY_HOST")}"
+        jvmArgs "-Dhttps.proxyPort=${System.getenv("HTTPS_PROXY_PORT")}"
+    }
 }
 
 tasks.withType(Test).configureEach {
