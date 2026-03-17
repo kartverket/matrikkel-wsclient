@@ -145,8 +145,6 @@ jobs:
                     -Dlandbruksregister.password=${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_PSW }}
                 env:
                     PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
-                    HTTPS_PROXY_HOST: proxy.kartverket.no
-                    HTTPS_PROXY_PORT: "3128"
 
             -   name: Publish Test Report
                 if: always()
