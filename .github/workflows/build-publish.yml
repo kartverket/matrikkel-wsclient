@@ -134,6 +134,9 @@ jobs:
             -   name: Grant execute permission to Gradlew
                 run: chmod +x ./gradlew
 
+            -   name: Prepare
+                run: ./gradlew clean assemble --refresh-dependencies --profile --stacktrace
+
             -   name: Run integration tests
                 run: ./gradlew testIntegration --continue --stacktrace
                 env:
