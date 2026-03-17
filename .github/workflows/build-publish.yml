@@ -134,21 +134,19 @@ jobs:
             -   name: Grant execute permission to Gradlew
                 run: chmod +x ./gradlew
 
-            -   name: Prepare
-                run: ./gradlew clean assemble --refresh-dependencies --profile --stacktrace
-
             -   name: Run integration tests
-                run: ./gradlew testIntegration --continue --stacktrace
+                run: |
+                    ./gradlew testIntegration --continue --stacktrace \
+                    -Dhttps.proxyHost=proxy.kartverket.no \
+                    -Dhttps.proxyPort=3128 \
+                    -Dgrunnbok.mat.username=${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_USR }} \
+                    -Dgrunnbok.mat.password=${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_PSW }} \
+                    -Dgrunnbok.tinglysing.username=${{ secrets.MATRIKKEL_WSCLIENT_TINGLYSING_USR }} \
+                    -Dgrunnbok.tinglysing.password=${{ secrets.MATRIKKEL_WSCLIENT_TINGLYSING_PSW }} \
+                    -Dlandbruksregister.username=${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_USR }} \
+                    -Dlandbruksregister.password=${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_PSW }}
                 env:
                     PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
-                    grunnbok.mat.username: ${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_USR }}
-                    grunnbok.mat.password: ${{ secrets.MATRIKKEL_WSCLIENT_GRUNNBOK_MAT_PSW }}
-                    grunnbok.tinglysing.username: ${{ secrets.MATRIKKEL_WSCLIENT_TINGLYSING_USR }}
-                    grunnbok.tinglysing.password: ${{ secrets.MATRIKKEL_WSCLIENT_TINGLYSING_PSW }}
-                    landbruksregister.username: ${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_USR }}
-                    landbruksregister.password: ${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_PSW }}
-                    HTTPS_PROXY_HOST: proxy.kartverket.no
-                    HTTPS_PROXY_PORT: "3128"
 
             -   name: Publish Test Report
                 if: always()
