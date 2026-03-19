@@ -48,14 +48,6 @@ jobs:
             -   name: Valider Gradle wrapper
                 uses: gradle/actions/wrapper-validation@v4
 
-            -   name: Sett opp Tailscale
-                uses: tailscale/github-action@v3
-                with:
-                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-                    version: "1.48.1"
-                    tags: tag:github-runner
-
             -   name: Prepare
                 run: ./gradlew clean assemble --info --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
                 env:
@@ -79,15 +71,6 @@ jobs:
 
             -   name: Validate Gradle wrapper
                 uses: gradle/actions/wrapper-validation@v4
-
-            # Trenger tailscale kun til alle pakker er flyttet over til github packages
-            -   name: Sett opp Tailscale
-                uses: tailscale/github-action@v3
-                with:
-                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-                    version: "1.48.1"
-                    tags: tag:github-runner
 
             -   name: Run tests
                 run: ./gradlew check --continue --stacktrace
@@ -121,15 +104,6 @@ jobs:
 
             -   name: Validate Gradle wrapper
                 uses: gradle/actions/wrapper-validation@v4
-
-            # Trenger tailscale kun til alle pakker er flyttet over til github packages
-            -   name: Sett opp Tailscale
-                uses: tailscale/github-action@v3
-                with:
-                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-                    version: "1.48.1"
-                    tags: tag:github-runner
 
             -   name: Run integration tests
                 run: |
@@ -171,14 +145,6 @@ jobs:
                     java-version: '17'
                     distribution: 'temurin'
                     architecture: x64
-
-            -   name: Sett opp Tailscale
-                uses: tailscale/github-action@v3
-                with:
-                    oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-                    oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-                    version: "1.48.1"
-                    tags: tag:github-runner
 
             -   name: Publish to GitHub Packages
                 run: ./gradlew publish --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
