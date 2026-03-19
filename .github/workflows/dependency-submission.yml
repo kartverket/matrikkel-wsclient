@@ -11,13 +11,6 @@ jobs:
   dependency-submission:
     runs-on: ubuntu-latest
     steps:
-      - name: Setter opp tilgang til nexus.statkart.no
-        uses: tailscale/github-action@v3
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          version: "1.84.0"
-          tags: tag:github-runner
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
@@ -26,3 +19,5 @@ jobs:
 
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v4
+        env:
+            PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
