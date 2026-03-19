@@ -11,9 +11,6 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
-env:
-    MAJOR_VERSION: 5
-
 jobs:
     calculate-version:
         name: Calculate Version
@@ -26,7 +23,7 @@ jobs:
                 id: version-string
                 shell: bash
                 run: |
-                    version="${{ env.MAJOR_VERSION }}.$(date -u '+%Y.%m.%d-%H.%M')-$(echo "${GITHUB_SHA}" | cut -c1-7)"
+                    version=".$(date -u '+%Y.%m.%d-%H.%M')-$(echo "${GITHUB_SHA}" | cut -c1-7)"
                     echo "version=${version}" >> "$GITHUB_OUTPUT"
 
     build:
