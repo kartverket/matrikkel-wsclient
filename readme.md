@@ -30,7 +30,7 @@ Pakkene har versjonsnummer som er av formatet `[Major version].[Date].[SHA]`
 Alle pakker har samme versjon, og versjonsnummeret oppdateres ved hver publisering.
 
 
-`[Major version]` oppdateres ved breaking changes og kan endres i [build-push.yml](.github/workflows/build-publish.yml) workflowen.
+`[Major version]` oppdateres ved breaking changes og kan endres i [gradle properties](gradle.properties).
 
 # Lokal utvikling og dependencies
 
