@@ -5,7 +5,7 @@ pluginManagement {
             name = 'GitHubPackages'
             url = 'https://maven.pkg.github.com/kartverket/SkTools'
             credentials {
-                username = System.getenv("GITHUB_ACTOR") ?: System.getenv("GITHUB_USER")
+                username = System.getenv("GITHUB_ACTOR") ?: System.getenv("GITHUB_USER") ?: "x-access-token"
                 password = System.getenv("PACKAGES_TOKEN") ?: System.getenv("KV_PACKAGES_PAT") ?: System.getenv("GH_PACKAGES_PAT")
             }
         }
