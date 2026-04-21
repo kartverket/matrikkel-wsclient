@@ -46,7 +46,7 @@ jobs:
                     architecture: x64
 
             -   name: Valider Gradle wrapper
-                uses: gradle/actions/wrapper-validation@v4
+                uses: gradle/actions/wrapper-validation@v6
 
             -   name: Prepare
                 run: ./gradlew clean assemble --info --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
@@ -70,7 +70,7 @@ jobs:
                     architecture: x64
 
             -   name: Validate Gradle wrapper
-                uses: gradle/actions/wrapper-validation@v4
+                uses: gradle/actions/wrapper-validation@v6
 
             -   name: Run tests
                 run: ./gradlew check --continue --stacktrace
@@ -103,7 +103,7 @@ jobs:
                     architecture: x64
 
             -   name: Validate Gradle wrapper
-                uses: gradle/actions/wrapper-validation@v4
+                uses: gradle/actions/wrapper-validation@v6
 
             # Trengs for 1 integrasjonstest mot AAL
             -   name: Sett opp Tailscale
