@@ -1,11 +1,11 @@
 version: 2
 updates:
-    - package-ecosystem: 'github-actions'
-      directory: '.github'
+    - package-ecosystem: "github-actions"
+      directory: ".github/workflows"
       schedule:
-          interval: 'weekly'
-          time: '07:00'
-          timezone: 'Europe/Oslo'
+          interval: "weekly"
+          time: "07:00"
+          timezone: "Europe/Oslo"
     - package-ecosystem: "gradle"
       directory: "/"
       schedule:
