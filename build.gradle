@@ -113,7 +113,7 @@ dependencies {
     implementation 'com.sun.xml.ws:jaxws-rt:' + jaxwsVersion //bruker Sun/Oracle JAXWS Stack
 
     api 'no.statkart.skif:skif-service-common:' + skifVersion
-    api 'joda-time:joda-time:2.14.1'
+    api 'joda-time:joda-time:2.14.2'
     implementation 'com.google.guava:guava:33.6.0-jre'
     implementation 'org.slf4j:slf4j-api:' + slf4jVersion
     implementation "jakarta.annotation:jakarta.annotation-api:3.0.0"
