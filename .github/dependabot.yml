@@ -1,4 +1,10 @@
 version: 2
+registries:
+    github-packages:
+        type: maven-repository
+        url: https://maven.pkg.github.com/kartverket/matrikkel
+        username: x-access-token
+        password: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
 updates:
     -   package-ecosystem: "github-actions"
         directory: ".github/workflows"
@@ -12,6 +18,8 @@ updates:
             interval: "weekly"
             time: '07:00'
             timezone: 'Europe/Oslo'
+        registries:
+            - github-packages
         ignore:
             - dependency-name: "com.sun.xml.ws:*" # samversjoneres med matrikkelen
               update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
