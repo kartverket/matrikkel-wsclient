@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: matrikkel-wsclient
   tags:
-    - internal
+    - public
 spec:
   type: library
   lifecycle: production
