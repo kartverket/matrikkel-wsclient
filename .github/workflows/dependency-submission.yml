@@ -20,4 +20,4 @@ jobs:
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v6
         env:
-            PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+            PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
