@@ -4,7 +4,7 @@ registries:
         type: maven-repository
         url: https://maven.pkg.github.com/kartverket/matrikkel
         username: x-access-token
-        password: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+        password: ${{ secrets.SHARED_PACKAGES_READ_PAT }}
 updates:
     -   package-ecosystem: "github-actions"
         directory: ".github/workflows"
