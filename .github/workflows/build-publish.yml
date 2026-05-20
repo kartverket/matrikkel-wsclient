@@ -51,7 +51,7 @@ jobs:
             -   name: Prepare
                 run: ./gradlew clean assemble --info --refresh-dependencies --profile --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
                 env:
-                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+                    PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     test:
         name: Kjør tester
@@ -75,7 +75,7 @@ jobs:
             -   name: Run tests
                 run: ./gradlew check --continue --stacktrace
                 env:
-                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+                    PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             -   name: Publish Test Report
                 if: ${{ always() }}
@@ -124,7 +124,7 @@ jobs:
                     -Dlandbruksregister.username=${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_USR }} \
                     -Dlandbruksregister.password=${{ secrets.MATRIKKEL_WSCLIENT_LANDBRUKSREGISTER_PSW }}
                 env:
-                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+                    PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             -   name: Publish Test Report
                 if: always()
@@ -159,4 +159,4 @@ jobs:
                 run: ./gradlew publish --stacktrace -Dsuffix="${{ needs.calculate-version.outputs.version }}"
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                    PACKAGES_TOKEN: ${{ secrets.SHARED_PACKAGES_READ_TOKEN }}
+                    PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
