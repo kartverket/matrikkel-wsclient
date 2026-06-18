@@ -108,6 +108,7 @@ dependencies {
 
     api 'no.statkart.skif:skif-service-common:' + skifVersion
     api 'joda-time:joda-time:2.14.2'
+    api "jakarta.ws.rs:jakarta.ws.rs-api:3.1.0" // Samversjoneres med M22
     implementation 'com.google.guava:guava:33.6.0-jre'
     implementation 'org.slf4j:slf4j-api:' + slf4jVersion
     implementation "jakarta.annotation:jakarta.annotation-api:3.0.0"
@@ -122,6 +123,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:5.23.0'
 
     testRuntimeOnly 'org.slf4j:slf4j-simple:' + slf4jVersion
+    testRuntimeOnly 'org.glassfish.jersey.core:jersey-common:3.1.8'
 
     // dependencies for koden OpenApi Generatoren genererer for Nibas API og Events API
     api 'io.swagger:swagger-annotations:1.6.16'
