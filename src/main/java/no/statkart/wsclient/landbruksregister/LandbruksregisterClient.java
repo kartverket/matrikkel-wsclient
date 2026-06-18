@@ -91,7 +91,7 @@ public class LandbruksregisterClient {
         }
     }
 
-    static class EiendomDTO {
+    public static class EiendomDTO {
         public String kommunenr;
         public Integer gaardsnr;
         public Integer bruksnr;
@@ -116,7 +116,7 @@ public class LandbruksregisterClient {
         }
     }
 
-    static class GrunneiendomDTO {
+    public static class GrunneiendomDTO {
         public String kommunenr;
         public Integer gaardsnr;
         public Integer bruksnr;
@@ -137,7 +137,7 @@ public class LandbruksregisterClient {
         }
     }
 
-    static class ErrorDTO {
+    public static class ErrorDTO {
         public String errorId;
         public String errorCode;
         public String errorTitle;
