@@ -18,7 +18,7 @@ public class LandbruksregisterClientTest {
     public void testKallMotLDIR() throws Exception {
         try (var mockserver = new MockWebServer()) {
             mockserver.start();
-            var klient = new LandbruksregisterClient(mockserver.url("").toString());
+            var klient = new LandbruksregisterClient(mockserver.url("").toString(), () -> "");
             var responseDTO = EiendomDTO.create(
                 "1231", 123, 123, 0, List.of(
                     GrunneiendomDTO.create("1231", 123, 124, 0),
@@ -44,7 +44,7 @@ public class LandbruksregisterClientTest {
     public void testkjent404ReturnererTomList() throws Exception {
         try (var mockserver = new MockWebServer()) {
             mockserver.start();
-            var klient = new LandbruksregisterClient(mockserver.url("").toString());
+            var klient = new LandbruksregisterClient(mockserver.url("").toString(), () -> "");
             var responseDTO = errorDTO("error.notfound.landbrukseiendom.notfound");
             mockserver.enqueue(mockResponse(404, responseDTO));
 
@@ -65,7 +65,7 @@ public class LandbruksregisterClientTest {
     public void testukjentFeilKasterFeil() throws Exception {
         try (var mockserver = new MockWebServer()) {
             mockserver.start();
-            var klient = new LandbruksregisterClient(mockserver.url("").toString());
+            var klient = new LandbruksregisterClient(mockserver.url("").toString(), () -> "");
             var responseDTO = errorDTO("error.forbidden");
             mockserver.enqueue(mockResponse(403, responseDTO));
 
