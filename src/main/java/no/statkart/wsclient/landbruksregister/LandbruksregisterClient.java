@@ -16,19 +16,25 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class LandbruksregisterClient {
     public static final Duration READ_TIMEOUT = Duration.ofSeconds(5);
 
     private final Logger logger = LoggerFactory.getLogger(LandbruksregisterClient.class);
     private final String endpointURL;
+    private final Supplier<String> tokenProvider;
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper()
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 
-    public LandbruksregisterClient(String endpointURL) {
+    public LandbruksregisterClient(
+        String endpointURL,
+        Supplier<String> tokenProvider
+    ) {
         this.endpointURL = endpointURL;
+        this.tokenProvider = tokenProvider;
     }
 
     public EiendomDTO getEiendom(
@@ -48,6 +54,7 @@ public class LandbruksregisterClient {
 
             var request = HttpRequest.newBuilder()
                 .uri(uri)
+                .header("Authorization", "Bearer " + tokenProvider.get())
                 .timeout(READ_TIMEOUT)
                 .build();
 
@@ -84,7 +91,7 @@ public class LandbruksregisterClient {
         }
     }
 
-    static class EiendomDTO {
+    public static class EiendomDTO {
         public String kommunenr;
         public Integer gaardsnr;
         public Integer bruksnr;
@@ -109,7 +116,7 @@ public class LandbruksregisterClient {
         }
     }
 
-    static class GrunneiendomDTO {
+    public static class GrunneiendomDTO {
         public String kommunenr;
         public Integer gaardsnr;
         public Integer bruksnr;
@@ -130,7 +137,7 @@ public class LandbruksregisterClient {
         }
     }
 
-    static class ErrorDTO {
+    public static class ErrorDTO {
         public String errorId;
         public String errorCode;
         public String errorTitle;
