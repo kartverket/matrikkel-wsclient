@@ -65,7 +65,7 @@ public class LandbruksregisterClient {
                 ErrorDTO error = objectMapper.readValue(response.body(), new TypeReference<>() {
                 });
 
-                if (statuCode == 404) {
+                if (statuCode == 404 && error.errorCode.toLowerCase().contains("notfound")) {
                     // Velkjent 404 som skyldes at det ikke er en landbrukseiendom,
                     // så vi returnerer bare en tom liste
                     return EiendomDTO.create(
