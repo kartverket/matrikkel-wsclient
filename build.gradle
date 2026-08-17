@@ -23,11 +23,11 @@ def generatedSrcDir = file("${projectDir}/gen")
 def generatedMainJavaDir = file("${generatedSrcDir}/main/java")
 def WS_IMPORT_QUAL_NAME = 'com.sun.tools.ws.ant.WsImport'
 
-def nibasDir = "${buildDir}/nibas"
-def nibasSrcDir = "${nibasDir}/src/main"
-def nibasJavaSources = "${nibasSrcDir}/java"
-def nibasApiTmpFolder = "${nibasDir}/nibasApiTmp"
-def nibasEventsApiTmpFolder = "${nibasDir}/nibasEventsApiTmp"
+def nibasDir = file("${buildDir}/nibas")
+def nibasSrcDir = file("${nibasDir}/src/main")
+def nibasJavaSources = file("${nibasSrcDir}/java")
+def nibasApiTmpFolder = file("${nibasDir}/nibasApiTmp")
+def nibasEventsApiTmpFolder = file("${nibasDir}/nibasEventsApiTmp")
 
 
 sourceSets {
@@ -419,7 +419,7 @@ def wsImport = tasks.register('wsImport', Sync) {
     from wsImportGrunnbokv2
 }
 
-def inputFileNibasApi = file("src/main/resources/nibas/nibasApiV1.json").path
+def inputFileNibasApi = file("src/main/resources/nibas/nibasApiV1.json")
 
 task generateNibasApiModel(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     generatorName = "java"
@@ -449,7 +449,7 @@ def copyNibasApiFiles = tasks.register("copyNibasApiSrcFiles", Copy) {
     }
 }
 
-def inputFileNibasEventsApi = file("src/main/resources/nibas/nibasEventsApiV1.json").path
+def inputFileNibasEventsApi = file("src/main/resources/nibas/nibasEventsApiV1.json")
 
 task generateNibasEventsApiModel(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
     generatorName = "java"
