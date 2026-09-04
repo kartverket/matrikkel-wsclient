@@ -15,8 +15,8 @@ version = projectVersion + System.getProperty('suffix', '-SNAPSHOT')
 
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 def generatedSrcDir = file("${projectDir}/gen")
@@ -103,8 +103,10 @@ configurations {
 
 dependencies {
     def slf4jVersion = '1.7.36'
-    def jaxwsVersion = '3.0.2'
-    def skifVersion = '4.5.1'
+    def jaxwsVersion = '4.0.2'
+    def skifVersion = '8.2026.08.31-11.38-ad0b337'
+
+    api platform("jakarta.platform:jakarta.jakartaee-bom:10.0.0")
 
     wsImport "com.sun.xml.ws:jaxws-tools:$jaxwsVersion"
 
@@ -114,10 +116,13 @@ dependencies {
 
     api 'no.statkart.skif:skif-service-common:' + skifVersion
     api 'joda-time:joda-time:2.14.3'
-    api "jakarta.ws.rs:jakarta.ws.rs-api:3.1.0" // Samversjoneres med M22
+    api 'jakarta.jws:jakarta.jws-api:3.0.0'
+    api 'jakarta.xml.bind:jakarta.xml.bind-api'
+    api 'jakarta.xml.ws:jakarta.xml.ws-api'
     implementation 'com.google.guava:guava:33.7.1-jre'
     implementation 'org.slf4j:slf4j-api:' + slf4jVersion
-    implementation "jakarta.annotation:jakarta.annotation-api:3.0.0"
+    implementation 'jakarta.ws.rs:jakarta.ws.rs-api'
+    implementation 'jakarta.xml.soap:jakarta.xml.soap-api'
 
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'org.apache.httpcomponents:httpmime:4.5.14'
