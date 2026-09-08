@@ -3,7 +3,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'sktools.xjc' version '7.2026.09.01-08.36-56c198f'
-    id 'org.openapi.generator' version '7.10.0' //Fom 7.11.0 er det feil i opeenapi-genereringa,
+    id 'org.openapi.generator' version '7.25.0' //Fom 7.11.0 er det feil i opeenapi-genereringa,
     // se https://github.com/OpenAPITools/openapi-generator/issues/20556
     // Denne gjør at æøå ødelegges i kretsnavn hentet fra Nibas.
     // Generert kode gjør String(localVarResponse.body().readAllBytes())
@@ -28,6 +28,8 @@ def nibasSrcDir = "${nibasDir}/src/main"
 def nibasJavaSources = "${nibasSrcDir}/java"
 def nibasApiTmpFolder = "${nibasDir}/nibasApiTmp"
 def nibasEventsApiTmpFolder = "${nibasDir}/nibasEventsApiTmp"
+def openApiGeneratorTemplateDir = "${projectDir}/src/main/resources/openapi-generator/templates/Java"
+def openApiGeneratorVersion = (buildFile.text =~ /id 'org\.openapi\.generator' version '([^']+)'/)[0][1]
 
 
 sourceSets {
@@ -444,12 +446,27 @@ def wsImport = tasks.register('wsImport', Sync) {
     from wsImportGrunnbokv2
 }
 
-def inputFileNibasApi = file("src/main/resources/nibas/nibasApiV1.json").path
+def inputFileNibasApi = file("src/main/resources/nibas/nibasApiV1.json")
+
+def updateOpenApiNativeTemplate = tasks.register('updateOpenApiNativeTemplate', Exec) {
+    group = 'build setup'
+    description = 'Updates the customized OpenAPI Generator native Java template from upstream.'
+    inputs.file 'scripts/update-openapi-native-template.sh'
+    inputs.property 'openApiGeneratorVersion', openApiGeneratorVersion
+    outputs.file "${openApiGeneratorTemplateDir}/libraries/native/api.mustache"
+    commandLine 'bash', 'scripts/update-openapi-native-template.sh', openApiGeneratorVersion
+}
+
+tasks.named('processResources') {
+    dependsOn updateOpenApiNativeTemplate
+}
 
 task generateNibasApiModel(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    dependsOn updateOpenApiNativeTemplate
     generatorName = "java"
     inputSpec = inputFileNibasApi
-    outputDir = nibasApiTmpFolder
+    outputDir = file(nibasApiTmpFolder)
+    templateDir = file(openApiGeneratorTemplateDir)
     packageName = "no.kartverket.nibas.api.v1"
     apiPackage = "no.kartverket.nibas.api.v1.api"
     invokerPackage = "no.kartverket.nibas.api.v1.invoker"
@@ -474,12 +491,14 @@ def copyNibasApiFiles = tasks.register("copyNibasApiSrcFiles", Copy) {
     }
 }
 
-def inputFileNibasEventsApi = file("src/main/resources/nibas/nibasEventsApiV1.json").path
+def inputFileNibasEventsApi = file("src/main/resources/nibas/nibasEventsApiV1.json")
 
 task generateNibasEventsApiModel(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    dependsOn updateOpenApiNativeTemplate
     generatorName = "java"
     inputSpec = inputFileNibasEventsApi
-    outputDir = nibasEventsApiTmpFolder
+    outputDir = file(nibasEventsApiTmpFolder)
+    templateDir = file(openApiGeneratorTemplateDir)
     packageName = "no.kartverket.nibas.events.v1"
     apiPackage = "no.kartverket.nibas.events.v1.api"
     invokerPackage = "no.kartverket.nibas.events.v1.invoker"
