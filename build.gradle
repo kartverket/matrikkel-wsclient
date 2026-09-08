@@ -103,7 +103,7 @@ configurations {
 
 dependencies {
     def slf4jVersion = '1.7.36'
-    def jaxwsVersion = '4.0.2'
+    def jaxwsVersion = '4.0.5'
     def skifVersion = '8.2026.08.31-11.38-ad0b337'
 
     api platform("jakarta.platform:jakarta.jakartaee-bom:10.0.0")
