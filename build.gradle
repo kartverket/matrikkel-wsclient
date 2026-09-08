@@ -72,6 +72,26 @@ def testIntegration = tasks.register('testIntegration', Test) {
     mustRunAfter tasks.named('test')
 }
 
+def testNibasCharset = tasks.register('testNibasCharset', Test) {
+    group = 'verification'
+    description = 'Runs the Nibas charset test with a Windows default charset.'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    shouldRunAfter tasks.named('test')
+    systemProperty 'file.encoding', 'windows-1252'
+    filter {
+        includeTestsMatching 'no.statkart.wsclient.nibas.NibasCharsetTest'
+    }
+}
+
+tasks.named('test') {
+    exclude '**/NibasCharsetTest.class'
+}
+
+tasks.named('check') {
+    dependsOn testNibasCharset
+}
+
 tasks.withType(Test).configureEach {
     useTestNG() {
         useDefaultListeners = true
