@@ -15,7 +15,7 @@ fi
 
 template_path="Java/libraries/native/api.mustache"
 template_url="https://raw.githubusercontent.com/OpenAPITools/openapi-generator/v${version}/modules/openapi-generator/src/main/resources/${template_path}"
-output_dir="${repo_root}/src/main/resources/openapi-generator/templates/Java/libraries/native"
+output_dir="${repo_root}/build/openapi-generator-templates/libraries/native"
 output_file="${output_dir}/api.mustache"
 tmp_file="$(mktemp)"
 

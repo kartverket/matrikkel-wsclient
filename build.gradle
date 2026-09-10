@@ -28,7 +28,7 @@ def nibasSrcDir = "${nibasDir}/src/main"
 def nibasJavaSources = "${nibasSrcDir}/java"
 def nibasApiTmpFolder = "${nibasDir}/nibasApiTmp"
 def nibasEventsApiTmpFolder = "${nibasDir}/nibasEventsApiTmp"
-def openApiGeneratorTemplateDir = "${projectDir}/src/main/resources/openapi-generator/templates/Java"
+def openApiGeneratorTemplateDir = "${buildDir}/openapi-generator-templates/libraries/native"
 def openApiGeneratorVersion = (buildFile.text =~ /id 'org\.openapi\.generator' version '([^']+)'/)[0][1]
 
 
