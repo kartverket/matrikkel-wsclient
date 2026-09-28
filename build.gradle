@@ -137,7 +137,7 @@ dependencies {
     implementation 'com.sun.xml.ws:jaxws-rt:' + jaxwsVersion //bruker Sun/Oracle JAXWS Stack
 
     api 'no.statkart.skif:skif-service-common:' + skifVersion
-    api 'joda-time:joda-time:2.14.3'
+    api 'joda-time:joda-time:2.14.4'
     api 'jakarta.jws:jakarta.jws-api:3.0.0'
     api 'jakarta.xml.bind:jakarta.xml.bind-api'
     api 'jakarta.xml.ws:jakarta.xml.ws-api'
