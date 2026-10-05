@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.core.UriBuilder;
+import no.statkart.wsclient.RetryUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,22 +44,31 @@ public class LandbruksregisterClient {
         int bruksnr,
         int festenr
     ) {
+        var uri = UriBuilder.fromUri(this.endpointURL)
+            .path("/api/v1/external/landbrukseiendom/matrikkel")
+            .queryParam("kommunenr", kommunenr)
+            .queryParam("gaardsnr", gaardsnr)
+            .queryParam("bruksnr", bruksnr)
+            .queryParam("festenr", festenr)
+            .build();
+
+        var request = HttpRequest.newBuilder()
+            .uri(uri)
+            .header("Authorization", "Bearer " + tokenProvider.get())
+            .timeout(READ_TIMEOUT)
+            .build();
+
+        HttpResponse<InputStream> response;
         try {
-            var uri = UriBuilder.fromUri(this.endpointURL)
-                .path("/api/v1/external/landbrukseiendom/matrikkel")
-                .queryParam("kommunenr", kommunenr)
-                .queryParam("gaardsnr", gaardsnr)
-                .queryParam("bruksnr", bruksnr)
-                .queryParam("festenr", festenr)
-                .build();
+            response = RetryUtils.retry(4,
+                () ->
+                    httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream()));
+        } catch (Exception e) {
+            var errorMsg = "Exception ved kall til LDIR for matrikkelenhet id %s-%d/%d/%d; %s".formatted(kommunenr, gaardsnr, bruksnr, festenr, e.getMessage());
+            throw new RuntimeException(errorMsg, e);
+        }
 
-            var request = HttpRequest.newBuilder()
-                .uri(uri)
-                .header("Authorization", "Bearer " + tokenProvider.get())
-                .timeout(READ_TIMEOUT)
-                .build();
-
-            HttpResponse<InputStream> response = httpClient.send(request, HttpResponse.BodyHandlers.ofInputStream());
+        try {
             var statuCode = response.statusCode();
 
             if (statuCode != 200) {
@@ -86,8 +96,9 @@ public class LandbruksregisterClient {
             return objectMapper.readValue(response.body(), new TypeReference<>() {
             });
 
-        } catch (InterruptedException | IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            var errorMsg = "Exception ved les fra LDIR for matrikkelenhet id %s-%d/%d/%d; %s".formatted(kommunenr, gaardsnr, bruksnr, festenr, e.getMessage());
+            throw new RuntimeException(errorMsg, e);
         }
     }
 
