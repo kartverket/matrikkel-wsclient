@@ -141,7 +141,7 @@ dependencies {
     api 'jakarta.jws:jakarta.jws-api:3.0.0'
     api 'jakarta.xml.bind:jakarta.xml.bind-api'
     api 'jakarta.xml.ws:jakarta.xml.ws-api'
-    implementation 'com.google.guava:guava:33.7.1-jre'
+    implementation 'com.google.guava:guava:33.7.2-jre'
     implementation 'org.slf4j:slf4j-api:' + slf4jVersion
     implementation 'jakarta.ws.rs:jakarta.ws.rs-api'
     implementation 'jakarta.xml.soap:jakarta.xml.soap-api'
