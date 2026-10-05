@@ -1,14 +1,14 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+repo_root="$(cd "$(dirname "$0")/.." && pwd)"
 version="${1:-}"
 
-if [[ -z "${version}" ]]; then
+if [ -z "${version}" ]; then
   version="$(${PERL:-perl} -ne "if (/id 'org\.openapi\.generator' version '([^']+)'/) { print \$1; exit }" "${repo_root}/build.gradle")"
 fi
 
-if [[ -z "${version}" ]]; then
+if [ -z "${version}" ]; then
   printf 'Could not determine OpenAPI Generator version. Pass it explicitly, e.g. %s 7.11.0\n' "${0}" >&2
   exit 1
 fi

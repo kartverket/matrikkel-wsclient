@@ -454,7 +454,7 @@ def updateOpenApiNativeTemplate = tasks.register('updateOpenApiNativeTemplate', 
     inputs.file 'scripts/update-openapi-native-template.sh'
     inputs.property 'openApiGeneratorVersion', openApiGeneratorVersion
     outputs.file "${openApiGeneratorTemplateDir}/libraries/native/api.mustache"
-    commandLine 'bash', 'scripts/update-openapi-native-template.sh', openApiGeneratorVersion
+    commandLine 'sh', 'scripts/update-openapi-native-template.sh', openApiGeneratorVersion
 }
 
 tasks.named('processResources') {
