@@ -12,6 +12,9 @@ updates:
             interval: "weekly"
             time: "07:00"
             timezone: "Europe/Oslo"
+        cooldown:
+            exclude:
+                - "kartverket/*"
     -   package-ecosystem: "gradle"
         directory: "/"
         schedule:
@@ -20,6 +23,10 @@ updates:
             timezone: 'Europe/Oslo'
         registries:
             - github-packages
+        cooldown:
+            exclude:
+                - "no.kartverket.*:*"
+                - "no.statkart.*:*"
         ignore:
             - dependency-name: "com.sun.xml.ws:*" # samversjoneres med matrikkelen
               update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
