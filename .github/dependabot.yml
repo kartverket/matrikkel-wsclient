@@ -13,7 +13,7 @@ updates:
             time: "07:00"
             timezone: "Europe/Oslo"
         cooldown:
-            exclude:
+                exclude: # ikke cooldown for interne pakker
                 - "kartverket/*"
     -   package-ecosystem: "gradle"
         directory: "/"
@@ -24,7 +24,7 @@ updates:
         registries:
             - github-packages
         cooldown:
-            exclude:
+            exclude: # ikke cooldown for interne pakker
                 - "no.kartverket.*:*"
                 - "no.statkart.*:*"
         ignore:
