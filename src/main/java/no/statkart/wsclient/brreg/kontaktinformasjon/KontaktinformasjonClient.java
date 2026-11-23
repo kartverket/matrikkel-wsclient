@@ -55,21 +55,21 @@ import java.util.stream.Collectors;
  */
 public class KontaktinformasjonClient {
     public static final Duration READ_TIMEOUT = Duration.ofSeconds(5);
+    private static final String KARTVERKET_ORGNR = "971040238";
     Logger logger = LoggerFactory.getLogger(KontaktinformasjonClient.class);
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final String endpointURL;
+    private final URI healthCheckURI;
 
     /**
      * Konstruktør for klienten. Hvis parameteren er null vil vi gå mot testsystem for Brønnøysunds tjenester
      */
     public KontaktinformasjonClient(String endpointURL) {
-        if (endpointURL != null) {
-            this.endpointURL = endpointURL + "?matrikkelenhetid=";
-        } else {
-            this.endpointURL = "https://data.brreg.no:443/enhetsregisteret/api/matrikkelenhet?matrikkelenhetid=";
-        }
+        var baseEndpoint = endpointURL != null ? endpointURL : "https://data.brreg.no:443/enhetsregisteret/api/matrikkelenhet";
+        this.endpointURL = baseEndpoint + "?matrikkelenhetid=";
+        this.healthCheckURI = URI.create(baseEndpoint).resolve("enheter/" + KARTVERKET_ORGNR);
         this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
@@ -94,7 +94,6 @@ public class KontaktinformasjonClient {
 
             // APIet svarer med 404 dersom ressursen man etterspør ikke finnes. For at det ikke skal feile svarer vi med tom liste.
             if (response.statusCode() == 404) {
-                logger.warn("404 mot BRREG ved oppslag på kontaktinformasjon for matrikkelenhet id {}", matrikkelenhetId);
                 return Collections.emptyList();
             } else if (response.statusCode() >= 400) {
                 var error = CharStreams.toString(new InputStreamReader(response.body(), StandardCharsets.UTF_8));
@@ -111,6 +110,28 @@ public class KontaktinformasjonClient {
         } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Sjekker at BRREG sitt enhetsregister svarer ved å slå opp Kartverket. Kaster aldri exception.
+     *
+     * @return true hvis oppslaget gir 2xx, ellers false
+     */
+    public boolean isHealthy() {
+        try {
+            var request = HttpRequest.newBuilder().uri(healthCheckURI).timeout(READ_TIMEOUT).build();
+            HttpResponse<Void> response = httpClient.send(request, HttpResponse.BodyHandlers.discarding());
+            if (response.statusCode() / 100 == 2) {
+                return true;
+            }
+            logger.error("Helsesjekk mot BRREG feilet med status {} for {}", response.statusCode(), healthCheckURI);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.error("Helsesjekk mot BRREG ble avbrutt", e);
+        } catch (IOException | RuntimeException e) {
+            logger.error("Helsesjekk mot BRREG feilet for {}", healthCheckURI, e);
+        }
+        return false;
     }
 
     private static class OrgNr {

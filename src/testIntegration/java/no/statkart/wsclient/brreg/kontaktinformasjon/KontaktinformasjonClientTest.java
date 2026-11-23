@@ -4,7 +4,6 @@ import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,6 +47,20 @@ public class KontaktinformasjonClientTest {
             KontaktinformasjonClient klient = new KontaktinformasjonClient(mockHttpServer.url("").toString());
 
             assertThat(klient.findKontaktinformasjonForMatrikkelenhetId(123L)).isEmpty();
+        }
+    }
+
+    @Test
+    public void testHelsesjekkMotBRREG() throws Exception {
+        try (var mockHttpServer = new MockWebServer()) {
+            mockHttpServer.start();
+            mockHttpServer.enqueue(new MockResponse.Builder().code(200).build());
+            mockHttpServer.enqueue(new MockResponse.Builder().code(404).build());
+            KontaktinformasjonClient klient = new KontaktinformasjonClient(mockHttpServer.url("").toString());
+
+            assertThat(klient.isHealthy()).isTrue();
+            assertThat(mockHttpServer.takeRequest().getRequestLine()).contains("/enheter/971040238");
+            assertThat(klient.isHealthy()).isFalse();
         }
     }
 }
