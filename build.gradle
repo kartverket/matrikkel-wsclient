@@ -159,7 +159,7 @@ dependencies {
     testRuntimeOnly 'org.glassfish.jersey.core:jersey-common:4.0.3'
 
     // dependencies for koden OpenApi Generatoren genererer for Nibas API og Events API
-    api 'io.swagger:swagger-annotations:1.6.16'
+    api 'io.swagger:swagger-annotations:1.6.17'
     implementation 'org.openapitools:jackson-databind-nullable:0.2.13'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     testImplementation("com.squareup.okhttp3:mockwebserver:5.5.1")
